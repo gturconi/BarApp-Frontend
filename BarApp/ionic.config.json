@@ -1,0 +1,7 @@
+{
+  "name": "BarApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
