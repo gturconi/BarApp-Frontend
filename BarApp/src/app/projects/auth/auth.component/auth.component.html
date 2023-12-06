@@ -1,0 +1,63 @@
+<ion-content>
+  <div class="form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title><h1>Login</h1></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form
+          [formGroup]="form"
+          class="auth-form"
+          (ngSubmit)="submit()"
+          (keypress.enter)="submit()"
+        >
+          <app-input
+            [icon]="'mail-outline'"
+            [autocomplete]="'email'"
+            [label]="'Email'"
+            [control]="form.controls.email"
+            [type]="'email'"
+          >
+          </app-input>
+
+          @if (form.controls.email.errors && form.controls.email.touched) {
+          <div class="validators">
+            @if (form.controls.email.errors['required']) {
+            <div class="error">El correo es requerido</div>
+            } @if (form.controls.email.errors['email']) {
+            <div class="error">Ingrese un correo valido</div>
+            }
+          </div>
+          }
+
+          <app-input
+            [icon]="'lock-closed-outline'"
+            [control]="form.controls.password"
+            [label]="'Contraseña'"
+            [type]="'password'"
+          >
+          </app-input>
+
+          @if (form.controls.password.errors && form.controls.password.touched)
+          {
+          <div class="validators">
+            @if (form.controls.password.errors['required']) {
+            <div class="error">La contraseña es requerida</div>
+            }
+          </div>
+          }
+
+          <ion-button
+            expand="block"
+            mode="ios"
+            class="submit"
+            type="submit"
+            [disabled]="form.invalid"
+          >
+            Ingresar
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,45 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-container h1 {
+  text-align: center;
+  color: white;
+}
+
+.form-container ion-card {
+  background-color: rgb(241, 186, 107);
+}
+
+.custom-input {
+  --background: rgb(241, 186, 107);
+  color: white;
+}
+
+.custom-input:-webkit-autofill,
+.custom-input:-webkit-autofill:hover,
+.custom-input:-webkit-autofill:focus,
+.custom-input:-webkit-autofill:active,
+.custom-input:-internal-autofill-selected,
+.custom-input:-internal-autofill-previewed {
+  --background: rgb(241, 186, 107);
+  color: white;
+}
+
+ion-icon {
+  color: white;
+}
+
+.validators {
+  color: red;
+}
+
+.submit {
+  margin-top: 1em;
+  --background: rgb(218, 139, 29);
+}
+
+.submit:hover {
+  background-color: rgb(218, 139, 29);
+}
