@@ -3,13 +3,14 @@
   <ion-icon slot="start" name="add" [name]="icon"></ion-icon>
   }
   <ion-input
-    [type]="type"
-    [autocomplete]="autocomplete"
-    [label]="label"
-    [formControl]="control"
-    label-placement="floating"
-  >
-  </ion-input>
+  [type]="type"
+  autocomplete="off"
+  [label]="label"
+  [formControl]="control"
+  label-placement="floating"
+>
+</ion-input>
+
 
   @if (this.isPasswords) {
   <ion-button

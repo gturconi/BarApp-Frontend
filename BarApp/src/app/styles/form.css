@@ -1,3 +1,22 @@
+:root{
+  --tittleForm:#1A1B1F;
+  --formColor:#F6CD8F;
+
+  --inputColor:#f9dfbc;
+  --inputSucces:#008f39;
+  --inputStandard:#1A1B1F;
+  --inputError:#cc0000;
+  --inputIcon:#1A1B1F; 
+
+  --button: #ec9819;
+  --buttonHover: #f0ad48;
+}
+
+/*para cambiar estilos al form */
+.form-container ion-card {
+  background-color: var(--formColor);
+}
+
 .form-container {
   display: flex;
   justify-content: center;
@@ -5,41 +24,45 @@
 
 .form-container h1 {
   text-align: center;
-  color: white;
+  color: var(--tittleForm);
 }
 
-.form-container ion-card {
-  background-color: rgb(241, 186, 107);
-}
 
+/*para cambiar estilos al input */
 .custom-input {
-  --background: rgb(241, 186, 107);
-  color: white;
-}
-
-.custom-input:-webkit-autofill,
-.custom-input:-webkit-autofill:hover,
-.custom-input:-webkit-autofill:focus,
-.custom-input:-webkit-autofill:active,
-.custom-input:-internal-autofill-selected,
-.custom-input:-internal-autofill-previewed {
-  --background: rgb(241, 186, 107);
-  color: white;
+  --background: var(--inputColor);
+  color: var(--inputStandard);
+  margin-bottom: 15px;
 }
 
 ion-icon {
-  color: white;
+  color: var(--inputIcon);
 }
 
 .validators {
-  color: red;
+  color: var( --inputError);
+  margin-top: -10px;
 }
 
+/*para cambiar estilos al boton*/
 .submit {
   margin-top: 1em;
-  --background: rgb(218, 139, 29);
+  --background: var(--button);
 }
 
-.submit:hover {
-  background-color: rgb(218, 139, 29);
+/*para el hover del button
+:host(.button-solid) {
+   --background-activated: var(--buttonHover); 
+   --background-focused: var(--buttonHover); 
+   --background-hover: var(--buttonHover); 
+}
+*/
+
+/*para cambiar de color los labels de los imputs*/
+.sc-ion-input-md-h {
+  --highlight-color-focused: var( --inputSucces);
+  --highlight-color-valid: var( --inputSucces);
+  --highlight-color-invalid: var( --inputError);
+  --highlight-color: var(--inputStandard);
+  font-weight: bold;
 }
