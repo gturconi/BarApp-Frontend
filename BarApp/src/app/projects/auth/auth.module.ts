@@ -6,9 +6,17 @@ import { CommonUiModule } from "@common-ui/common-ui.module";
 import { IonicModule } from "@ionic/angular";
 import { AuthComponent } from "./auth.component/auth.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { RegisterComponent } from "./register/register.component";
+import { LoginComponent } from "./login/login.component";
+import { ForgotComponent } from "./forgot/forgot.component";
 
 @NgModule({
-  declarations: [AuthComponent],
+  declarations: [
+    AuthComponent,
+    RegisterComponent,
+    LoginComponent,
+    ForgotComponent,
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
