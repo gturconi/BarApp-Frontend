@@ -1,4 +1,5 @@
 :root{
+  /*para forms, inputs y buttons*/
   --tittleForm:#1A1B1F;
   --formColor:#F6CD8F;
 
@@ -8,8 +9,7 @@
   --inputError:#cc0000;
   --inputIcon:#1A1B1F; 
 
-  --button: #ec9819;
-  --buttonHover: #f0ad48;
+  --button:#ec9819;
 }
 
 /*para cambiar estilos al form */
@@ -20,6 +20,7 @@
 .form-container {
   display: flex;
   justify-content: center;
+  margin-top: 5rem;
 }
 
 .form-container h1 {
@@ -49,14 +50,6 @@ ion-icon {
   margin-top: 1em;
   --background: var(--button);
 }
-
-/*para el hover del button
-:host(.button-solid) {
-   --background-activated: var(--buttonHover); 
-   --background-focused: var(--buttonHover); 
-   --background-hover: var(--buttonHover); 
-}
-*/
 
 /*para cambiar de color los labels de los imputs*/
 .sc-ion-input-md-h {
