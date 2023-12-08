@@ -1,0 +1,26 @@
+:root{
+    /*para header*/
+    --tittleHeader:#0a0a0a;
+
+    /*para cards categoria*/
+    --backgroundCard:#F6CD8F;
+    --letterCard:#0a0a0a;
+    --borderBottomCard:#ec9819;
+  }
+
+/*para el titulo del header de la carta*/
+.tittle{
+    color: var(--tittleHeader);
+}
+
+/*para los items de la categoria*/
+.categories{    
+    margin: 20px 0px;
+    font-size: 20px;
+    --background: var(--backgroundCard);
+    --color: var(--letterCard);
+    --border-color: var(--borderBottomCard);
+    --border-style: solid;    
+    --border-radius: 15px;
+    --min-height: 75px;
+  }
