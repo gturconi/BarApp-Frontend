@@ -13,6 +13,11 @@ const routes: Routes = [
       import("../app/projects/auth/auth.module").then((x) => x.AuthModule),
   },
   {
+    path: "carta",
+    loadChildren: () =>
+      import("../app/projects/carta/carta.module").then((x) => x.CartaModule),
+  },
+  {
     path: "",
     redirectTo: "home",
     pathMatch: "full",
