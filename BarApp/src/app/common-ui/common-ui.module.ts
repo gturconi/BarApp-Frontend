@@ -5,9 +5,10 @@ import { CommonUiRoutingModule } from "./common-ui-routing.module";
 import { InputComponent } from "./input/input.component";
 import { IonicModule } from "@ionic/angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormComponent } from "./form/form.component";
 
 @NgModule({
-  declarations: [InputComponent],
+  declarations: [InputComponent, FormComponent],
   imports: [
     CommonModule,
     CommonUiRoutingModule,
@@ -15,6 +16,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule,
     FormsModule,
   ],
-  exports: [InputComponent, ReactiveFormsModule],
+  exports: [InputComponent, ReactiveFormsModule, FormComponent],
 })
 export class CommonUiModule {}

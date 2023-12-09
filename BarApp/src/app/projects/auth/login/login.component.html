@@ -5,77 +5,14 @@
         <ion-card-title><h1>Iniciar Sesión</h1></ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <form
-          [formGroup]="form"
-          class="auth-form"
-          (ngSubmit)="submit()"
-          (keypress.enter)="submit()"
+        <app-form
+          [form]="form"
+          [fields]="formFields"
+          [buttons]="myButtons"
+          [validationConfig]="validationConfig"
+          (formSubmit)="submit($event)"
         >
-          <app-input
-            [icon]="'mail-outline'"
-            [autocomplete]="'email'"
-            [label]="'Email'"
-            [control]="form.controls.email"
-            [type]="'email'"
-          >
-          </app-input>
-
-          @if (form.controls.email.errors && form.controls.email.touched) {
-          <div class="validators">
-            @if (form.controls.email.errors['required']) {
-            <div class="error">El correo es requerido</div>
-            } @if (form.controls.email.errors['email']) {
-            <div class="error">Ingrese un correo valido</div>
-            }
-          </div>
-          }
-
-          <app-input
-            [icon]="'lock-closed-outline'"
-            [control]="form.controls.password"
-            [label]="'Contraseña'"
-            [type]="'password'"
-          >
-          </app-input>
-
-          @if (form.controls.password.errors && form.controls.password.touched)
-          {
-          <div class="validators">
-            @if (form.controls.password.errors['required']) {
-            <div class="error">La contraseña es requerida</div>
-            }
-          </div>
-          }
-
-          <p
-            class="ion-text-center"
-            style="text-decoration: underline; cursor: pointer; color: black"
-            routerLink="forgot-password"
-          >
-            ¿Olvidaste tu contraseña?
-          </p>
-
-          <ion-button
-            expand="block"
-            mode="ios"
-            class="submit"
-            type="submit"
-            [disabled]="form.invalid"
-          >
-            Ingresar
-            <ion-icon slot="end" name="log-in-outline"></ion-icon>
-          </ion-button>
-
-          <ion-button
-            class="submit"
-            routerLink="register"
-            expand="block"
-            mode="ios"
-          >
-            Registrarse
-            <ion-icon slot="end" name="person-add-outline"></ion-icon>
-          </ion-button>
-        </form>
+        </app-form>
       </ion-card-content>
     </ion-card>
   </div>

@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { LoginService } from "@common/services/login.service";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { UserRoles } from "@common/constants/user.roles.enum";
@@ -13,10 +13,7 @@ import { finalize } from "rxjs/operators";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-  form = new FormGroup({
-    email: new FormControl("", [Validators.required, Validators.email]),
-    password: new FormControl("", [Validators.required]),
-  });
+  form = new FormGroup({});
 
   validUserRoles = [UserRoles.Admin, UserRoles.Employee, UserRoles.Client];
   helper = new JwtHelperService();
@@ -29,12 +26,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
-  async submit() {
+  async submit(form: FormGroup) {
     const loading = await this.loadingService.loading();
     await loading.present();
 
     this.loginService
-      .authenticateUser(this.form.value.email!, this.form.value.password!)
+      .authenticateUser(form.value.email!, form.value.password!)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe((res: any) => {
         const decodedToken = this.helper.decodeToken(res.token);
@@ -56,4 +53,41 @@ export class LoginComponent implements OnInit {
       this.loginService.logout();
     }
   }
+
+  formFields = [
+    {
+      type: "input",
+      name: "email",
+      label: "Email",
+      autocomplete: "email",
+      inputType: "email",
+      icon: "mail-outline",
+    },
+    {
+      type: "input",
+      name: "password",
+      label: "Contraseña",
+      inputType: "password",
+      icon: "lock-closed-outline",
+    },
+  ];
+
+  myButtons = [
+    {
+      label: "Ingresar",
+      type: "submit",
+      icon: "log-in-outline",
+    },
+    {
+      label: "Registrarse",
+      type: "button",
+      routerLink: "register",
+      icon: "person-add-outline",
+    },
+  ];
+
+  validationConfig = [
+    { controlName: "email", required: true, email: true },
+    { controlName: "password", required: true },
+  ];
 }

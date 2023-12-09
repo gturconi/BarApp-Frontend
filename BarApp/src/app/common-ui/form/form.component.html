@@ -1,0 +1,38 @@
+<form
+  [formGroup]="form"
+  class="auth-form"
+  (ngSubmit)="submit()"
+  (keypress.enter)="submit()"
+>
+  <ng-container *ngFor="let field of fields">
+    <ng-container *ngIf="field.type === 'input'">
+      <app-input
+        [icon]="field.icon"
+        [autocomplete]="field.autocomplete"
+        [label]="field.label"
+        [control]="getFormControl(field.name)"
+        [type]="field.inputType"
+      ></app-input>
+    </ng-container>
+
+    <!-- Puedes agregar más tipos de campos según tus necesidades -->
+    <div class="validators">
+      <div *ngIf="getErrorMessage(field.name)" class="error">
+        {{ getErrorMessage(field.name) }}
+      </div>
+    </div>
+  </ng-container>
+
+  <ion-button
+    expand="block"
+    mode="ios"
+    class="submit"
+    *ngFor="let button of buttons"
+    [type]="button.type"
+    [routerLink]="button.routerLink == '' ? null : button.routerLink"
+    [disabled]="button.type === 'submit' ? form.invalid : false"
+  >
+    {{ button.label }}
+    <ion-icon slot="end" [name]="button.icon"></ion-icon>
+  </ion-button>
+</form>
