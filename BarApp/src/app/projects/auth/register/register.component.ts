@@ -38,11 +38,13 @@ export class RegisterComponent implements OnInit {
       email: form.value.email!,
       tel: form.value.tel!,
       password: form.value.password!,
-      roleName: new UserRole("", form.value.roleName!),
+      role:
+        form.value["rol"] === undefined
+          ? UserRoles.Client
+          : (form.value["rol"] as UserRoles),
     };
     const loading = await this.loadingService.loading();
     await loading.present();
-
     this.userService
       .postUsers(nuevoUsuario)
       .pipe(finalize(() => loading.dismiss()))
@@ -96,8 +98,8 @@ export class RegisterComponent implements OnInit {
   myButtons = [
     {
       label: "Registrarse",
-      type: "button",
-      routerLink: "register",
+      type: "submit",
+      routerLink: "",
       icon: "person-add-outline",
     },
   ];

@@ -29,7 +29,7 @@
     class="submit"
     *ngFor="let button of buttons"
     [type]="button.type"
-    [routerLink]="button.routerLink == '' ? null : button.routerLink"
+    [routerLink]="button.routerLink === '' ? null : button.routerLink"
     [disabled]="button.type === 'submit' ? form.invalid : false"
   >
     {{ button.label }}
