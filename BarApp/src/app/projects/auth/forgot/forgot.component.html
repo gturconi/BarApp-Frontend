@@ -1,3 +1,19 @@
-<p>
-  forgot works!
-</p>
+<ion-content>
+  <div class="form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title><h1>Recuperar contraseña</h1></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <app-form
+          [form]="form"
+          [fields]="formFields"
+          [buttons]="myButtons"
+          [validationConfig]="validationConfig"
+          (formSubmit)="token === undefined ? submit($event) : submit2($event)"
+        >
+        </app-form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

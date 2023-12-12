@@ -1,11 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { LoginService } from "@common/services/login.service";
-import { JwtHelperService } from "@auth0/angular-jwt";
-import { UserRoles } from "@common/constants/user.roles.enum";
-import { Router } from "@angular/router";
-import { LoadingService } from "@common/services/loading.service";
 import { finalize } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { JwtHelperService } from "@auth0/angular-jwt";
+
+import { UserRoles } from "@common/constants/user.roles.enum";
+
+import { LoadingService } from "@common/services/loading.service";
+import { LoginService } from "@common/services/login.service";
 
 @Component({
   selector: "app-login",

@@ -11,6 +11,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { CommonUiModule } from "@common-ui/common-ui.module";
 import { TokenInterceptor } from "src/app/interceptors/token.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
+import { OAuthModule } from "angular-oauth2-oidc";
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { ErrorInterceptor } from "./interceptors/error.interceptor";
     AppRoutingModule,
     CommonUiModule,
     HttpClientModule,
+    OAuthModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

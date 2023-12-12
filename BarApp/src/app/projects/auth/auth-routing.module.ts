@@ -19,6 +19,10 @@ const routes: Routes = [
         path: "forgot-password",
         component: ForgotComponent,
       },
+      {
+        path: "new-password/:token",
+        component: ForgotComponent,
+      },
     ],
   },
 ];

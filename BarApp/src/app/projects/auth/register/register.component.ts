@@ -1,14 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { UserRoles } from "@common/constants/user.roles.enum";
 import { Router } from "@angular/router";
-import { LoadingService } from "@common/services/loading.service";
 import { finalize } from "rxjs/operators";
+
+import { UserRoles } from "@common/constants/user.roles.enum";
 import { User } from "@common/models/user";
+
+import { LoadingService } from "@common/services/loading.service";
 import { UserService } from "../../services/user.service";
 import { NotificationService } from "@common/services/notification.service";
-import { UserRole } from "@common/models/userRole";
 
 @Component({
   selector: "app-register",
@@ -30,7 +31,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {}
 
-  //TO DO: TERMINAR EL REGISTRO
   async submit(form: FormGroup) {
     const nuevoUsuario: User = {
       _id: "",
