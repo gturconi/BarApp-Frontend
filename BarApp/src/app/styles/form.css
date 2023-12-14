@@ -1,12 +1,12 @@
-:root{
-  --tittleForm:#1A1B1F;
-  --formColor:#F6CD8F;
+:root {
+  --tittleForm: #1a1b1f;
+  --formColor: #f6cd8f;
 
-  --inputColor:#f9dfbc;
-  --inputSucces:#008f39;
-  --inputStandard:#1A1B1F;
-  --inputError:#cc0000;
-  --inputIcon:#1A1B1F; 
+  --inputColor: #f9dfbc;
+  --inputSucces: #008f39;
+  --inputStandard: #1a1b1f;
+  --inputError: #cc0000;
+  --inputIcon: #1a1b1f;
 
   --button: #ec9819;
   --buttonHover: #f0ad48;
@@ -27,7 +27,6 @@
   color: var(--tittleForm);
 }
 
-
 /*para cambiar estilos al input */
 .custom-input {
   --background: var(--inputColor);
@@ -40,7 +39,7 @@ ion-icon {
 }
 
 .validators {
-  color: var( --inputError);
+  color: var(--inputError);
   margin-top: -10px;
 }
 
@@ -60,9 +59,9 @@ ion-icon {
 
 /*para cambiar de color los labels de los imputs*/
 .sc-ion-input-md-h {
-  --highlight-color-focused: var( --inputSucces);
-  --highlight-color-valid: var( --inputSucces);
-  --highlight-color-invalid: var( --inputError);
+  --highlight-color-focused: var(--inputSucces);
+  --highlight-color-valid: var(--inputSucces);
+  --highlight-color-invalid: var(--inputError);
   --highlight-color: var(--inputStandard);
   font-weight: bold;
 }

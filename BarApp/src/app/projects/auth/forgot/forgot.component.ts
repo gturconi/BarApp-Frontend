@@ -51,7 +51,8 @@ export class ForgotComponent implements OnInit {
         label: "Email",
         autocomplete: "email",
         inputType: "email",
-        icon: "mail-outline",
+        icon: "material-symbols-outlined",
+        iconName: "mail",
       },
     ];
 
@@ -75,14 +76,16 @@ export class ForgotComponent implements OnInit {
         name: "password",
         label: "Nueva contraseña",
         inputType: "password",
-        icon: "lock-closed-outline",
+        icon: "material-symbols-outlined",
+        iconName: "lock",
       },
       {
         type: "input",
         name: "password2",
         label: "Repetir nueva contraseña",
         inputType: "password",
-        icon: "lock-closed-outline",
+        icon: "material-symbols-outlined",
+        iconName: "lock",
       },
     ];
     this.myButtons = [

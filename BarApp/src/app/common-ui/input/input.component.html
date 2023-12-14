@@ -1,16 +1,15 @@
 <ion-item class="custom-input">
   @if (this.icon) {
-  <ion-icon slot="start" name="add" [name]="icon"></ion-icon>
+  <i slot="start" name="add" [class]="icon"> {{ this.iconName }} </i>
   }
   <ion-input
-  [type]="type"
-  autocomplete="off"
-  [label]="label"
-  [formControl]="control"
-  label-placement="floating"
->
-</ion-input>
-
+    [type]="type"
+    autocomplete="off"
+    [label]="label"
+    [formControl]="control"
+    label-placement="floating"
+  >
+  </ion-input>
 
   @if (this.isPasswords) {
   <ion-button

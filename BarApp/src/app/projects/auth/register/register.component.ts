@@ -68,7 +68,8 @@ export class RegisterComponent implements OnInit {
       label: "Nombre",
       autocomplete: "name",
       inputType: "text",
-      icon: "person",
+      icon: "material-symbols-outlined",
+      iconName: "person",
     },
     {
       type: "input",
@@ -76,7 +77,8 @@ export class RegisterComponent implements OnInit {
       label: "Telefono",
       autocomplete: "tel",
       inputType: "text",
-      icon: "call-outline",
+      icon: "material-symbols-outlined",
+      iconName: "phone",
     },
     {
       type: "input",
@@ -84,14 +86,16 @@ export class RegisterComponent implements OnInit {
       label: "Email",
       autocomplete: "email",
       inputType: "email",
-      icon: "mail-outline",
+      icon: "material-symbols-outlined",
+      iconName: "mail",
     },
     {
       type: "input",
       name: "password",
       label: "Contraseña",
       inputType: "password",
-      icon: "lock-closed-outline",
+      icon: "material-symbols-outlined",
+      iconName: "lock",
     },
   ];
 

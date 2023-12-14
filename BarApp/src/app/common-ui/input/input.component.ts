@@ -12,6 +12,7 @@ export class InputComponent implements OnInit {
   @Input() label!: string;
   @Input() autocomplete!: string;
   @Input() icon!: string;
+  @Input() iconName!: string;
 
   isPasswords!: boolean;
   hide: boolean = true;
@@ -20,6 +21,8 @@ export class InputComponent implements OnInit {
 
   ngOnInit() {
     if (this.type == "password") this.isPasswords = true;
+
+    console.log(this.iconName);
   }
 
   showOrHidePassword() {

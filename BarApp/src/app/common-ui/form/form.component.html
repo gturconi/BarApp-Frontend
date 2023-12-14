@@ -8,6 +8,7 @@
     <ng-container *ngIf="field.type === 'input'">
       <app-input
         [icon]="field.icon"
+        [iconName]="field.iconName"
         [autocomplete]="field.autocomplete"
         [label]="field.label"
         [control]="getFormControl(field.name)"

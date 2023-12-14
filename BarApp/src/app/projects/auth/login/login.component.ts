@@ -64,14 +64,16 @@ export class LoginComponent implements OnInit {
       label: "Email",
       autocomplete: "email",
       inputType: "email",
-      icon: "mail-outline",
+      icon: "material-symbols-outlined",
+      iconName: "mail",
     },
     {
       type: "input",
       name: "password",
       label: "Contraseña",
       inputType: "password",
-      icon: "lock-closed-outline",
+      icon: "material-symbols-outlined",
+      iconName: "lock",
     },
   ];
 
