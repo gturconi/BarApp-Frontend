@@ -2,7 +2,7 @@
   <div class="form-container">
     <ion-card>
       <ion-card-header>
-        <ion-card-title><h1>Registro</h1></ion-card-title>
+        <ion-card-title><h1>Editar Usuario</h1></ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <app-form
@@ -10,7 +10,9 @@
           [fields]="formFields"
           [buttons]="myButtons"
           [validationConfig]="validationConfig"
+          [editMode]="true"
           (formSubmit)="submit($event)"
+          (formEdit)="setUserForm($event)"
         >
         </app-form>
       </ion-card-content>

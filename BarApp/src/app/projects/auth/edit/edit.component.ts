@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { finalize } from "rxjs/operators";
+import { ChangeDetectionStrategy } from "@angular/core";
 
 import { UserRoles } from "@common/constants/user.roles.enum";
 import { User } from "@common/models/user";
@@ -12,52 +13,66 @@ import { UserService } from "../../services/user.service";
 import { NotificationService } from "@common/services/notification.service";
 
 @Component({
-  selector: "app-register",
-  templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: "app-edit",
+  templateUrl: "./edit.component.html",
+  styleUrls: ["./edit.component.scss"],
 })
-export class RegisterComponent implements OnInit {
-  form = new FormGroup({});
-
-  validUserRoles = [UserRoles.Admin, UserRoles.Employee, UserRoles.Client];
-  helper = new JwtHelperService();
+export class EditComponent implements OnInit {
+  form!: FormGroup;
+  id = "";
 
   constructor(
     private userService: UserService,
     private router: Router,
+    private route: ActivatedRoute,
     private loadingService: LoadingService,
     private notificationService: NotificationService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.id = params["id"];
+      if (this.id) {
+        this.autocompleteForm();
+      }
+    });
+  }
+
+  autocompleteForm() {
+    this.userService.getUser(this.id).subscribe(user => {
+      this.form.get("name")?.setValue(user.name);
+      this.form.get("email")?.setValue(user.email);
+      this.form.get("tel")?.setValue(user.tel);
+    });
+  }
+
+  setUserForm(form: FormGroup): void {
+    this.form = form;
+  }
 
   async submit(form: FormGroup) {
-    const nuevoUsuario: User = {
-      id: "",
+    const usuaroActualizado: User = {
+      id: this.id,
       name: form.value.name!,
       email: form.value.email!,
       tel: form.value.tel!,
-      password: form.value.password!,
-      role:
-        form.value["rol"] === undefined
-          ? UserRoles.Client
-          : (form.value["rol"] as UserRoles),
     };
+
     const loading = await this.loadingService.loading();
     await loading.present();
     this.userService
-      .postUsers(nuevoUsuario)
+      .putUsers(usuaroActualizado)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
         this.notificationService.presentToast({
-          message: "Usuario creado con exito, por favor inicie sesion",
+          message: "Usuario editado con exito",
           duration: 2500,
           color: "ion-color-success",
           position: "middle",
           icon: "alert-circle-outline",
         });
-
-        this.router.navigate(["/auth"]);
+        this.router.navigate(["/auth/profile"]);
       });
   }
 
@@ -89,19 +104,11 @@ export class RegisterComponent implements OnInit {
       icon: "material-symbols-outlined",
       iconName: "mail",
     },
-    {
-      type: "input",
-      name: "password",
-      label: "Contraseña",
-      inputType: "password",
-      icon: "material-symbols-outlined",
-      iconName: "lock",
-    },
   ];
 
   myButtons = [
     {
-      label: "Registrarse",
+      label: "Editar",
       type: "submit",
       routerLink: "",
       icon: "person-add-outline",
@@ -112,6 +119,5 @@ export class RegisterComponent implements OnInit {
     { controlName: "name", required: true, minLength: 4 },
     { controlName: "tel", required: true, minLength: 6 },
     { controlName: "email", required: true, email: true },
-    { controlName: "password", required: true },
   ];
 }

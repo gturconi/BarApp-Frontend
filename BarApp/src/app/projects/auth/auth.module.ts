@@ -12,6 +12,7 @@ import { ForgotComponent } from "./forgot/forgot.component";
 import { LoginService } from "@common/services/login.service";
 import { UserService } from "../services/user.service";
 import { ProfileComponent } from "./profile/profile.component";
+import { EditComponent } from "./edit/edit.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ProfileComponent } from "./profile/profile.component";
     LoginComponent,
     ForgotComponent,
     ProfileComponent,
+    EditComponent,
   ],
   imports: [
     CommonModule,

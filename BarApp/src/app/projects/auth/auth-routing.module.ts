@@ -5,6 +5,7 @@ import { LoginComponent } from "./login/login.component";
 import { AuthComponent } from "./auth.component/auth.component";
 import { ForgotComponent } from "./forgot/forgot.component";
 import { ProfileComponent } from "./profile/profile.component";
+import { EditComponent } from "./edit/edit.component";
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
       },
       {
         path: "profile/edit/:id",
-        component: RegisterComponent,
+        component: EditComponent,
       },
     ],
   },

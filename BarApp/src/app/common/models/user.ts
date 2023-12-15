@@ -27,8 +27,8 @@ export class User {
   name: string;
   email: string;
   tel: string;
-  password: string;
-  role: string;
+  password?: string;
+  role?: string;
   baja?: number;
   avatar?: Avatar;
 }
