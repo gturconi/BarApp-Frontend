@@ -10,6 +10,8 @@ import { RegisterComponent } from "./register/register.component";
 import { LoginComponent } from "./login/login.component";
 import { ForgotComponent } from "./forgot/forgot.component";
 import { LoginService } from "@common/services/login.service";
+import { UserService } from "../services/user.service";
+import { ProfileComponent } from "./profile/profile.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { LoginService } from "@common/services/login.service";
     RegisterComponent,
     LoginComponent,
     ForgotComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -25,5 +28,6 @@ import { LoginService } from "@common/services/login.service";
     CommonUiModule,
     ReactiveFormsModule,
   ],
+  providers: [LoginService, UserService],
 })
 export class AuthModule {}

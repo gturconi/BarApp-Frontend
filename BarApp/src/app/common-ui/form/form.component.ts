@@ -17,8 +17,10 @@ export class FormComponent implements OnInit {
   @Input() fields: any[] = [];
   @Input() buttons!: any[];
   @Input() validationConfig!: ValidationConfig[];
+  @Input() editMode: boolean = false;
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
+  @Output() formEdit = new EventEmitter<FormGroup>();
 
   constructor() {}
 
@@ -39,6 +41,7 @@ export class FormComponent implements OnInit {
     });
 
     this.form = new FormGroup(formControls);
+    this.formEdit.emit(this.form);
   }
 
   getFormControl(name: string): FormControl {

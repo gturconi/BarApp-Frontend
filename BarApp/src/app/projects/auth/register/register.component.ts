@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { finalize } from "rxjs/operators";
 
 import { UserRoles } from "@common/constants/user.roles.enum";
@@ -17,7 +17,9 @@ import { NotificationService } from "@common/services/notification.service";
   styleUrls: ["./register.component.scss"],
 })
 export class RegisterComponent implements OnInit {
-  form = new FormGroup({});
+  form!: FormGroup;
+  id = "";
+  editMode = false;
 
   validUserRoles = [UserRoles.Admin, UserRoles.Employee, UserRoles.Client];
   helper = new JwtHelperService();
@@ -25,15 +27,36 @@ export class RegisterComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
+    private route: ActivatedRoute,
     private loadingService: LoadingService,
     private notificationService: NotificationService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.id = params["id"];
+      if (this.id) {
+        this.editMode = true;
+        this.autocompleteForm();
+      }
+    });
+  }
+
+  autocompleteForm() {
+    this.userService.getUser(this.id).subscribe(user => {
+      this.form.get("name")?.setValue(user.name);
+      this.form.get("email")?.setValue(user.email);
+      this.form.get("tel")?.setValue(user.tel);
+    });
+  }
+
+  setUserForm(form: FormGroup): void {
+    this.form = form;
+  }
 
   async submit(form: FormGroup) {
     const nuevoUsuario: User = {
-      _id: "",
+      id: "",
       name: form.value.name!,
       email: form.value.email!,
       tel: form.value.tel!,

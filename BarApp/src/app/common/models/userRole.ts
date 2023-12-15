@@ -1,9 +1,9 @@
 export class UserRole {
-  _id: string;
+  id: string;
   name: string;
 
-  constructor(_id: string, name: string) {
-    this._id = _id;
+  constructor(id: string, name: string) {
+    this.id = id;
     this.name = name;
   }
 }

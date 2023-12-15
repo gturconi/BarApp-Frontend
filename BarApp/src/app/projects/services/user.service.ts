@@ -30,12 +30,12 @@ export class UserService {
 
   putUsers(selectedUser: User) {
     return this.http.put<User>(
-      this.apiUrl + "/users/" + selectedUser._id,
+      this.apiUrl + "/users/" + selectedUser.id,
       selectedUser
     );
   }
 
   deleteUsers(user: User) {
-    return this.http.delete(this.apiUrl + "/users/" + user._id);
+    return this.http.delete(this.apiUrl + "/users/" + user.id);
   }
 }

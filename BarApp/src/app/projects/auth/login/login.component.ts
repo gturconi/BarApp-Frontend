@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
 
     if (this.validUserRoles.includes(role)) {
       console.log(`Role ${role} is valid`);
-      //this.router.navigate(["dashboard"]);
+      this.router.navigate(["/auth/profile"]);
     } else {
       this.loginService.logout();
     }
