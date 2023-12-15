@@ -13,11 +13,16 @@ const routes: Routes = [
       import("../app/projects/auth/auth.module").then((x) => x.AuthModule),
   },
   {
+    path: "intro",
+    loadChildren: () =>
+      import("./projects/intro/intro.module").then((m) => m.IntroModule),
+  },
+  {
     path: "",
-    redirectTo: "home",
+    redirectTo: "intro",
     pathMatch: "full",
   },
-  { path: "**", redirectTo: "home" },
+  { path: "**", redirectTo: "intro" },
 ];
 
 @NgModule({
