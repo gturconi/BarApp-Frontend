@@ -1,4 +1,3 @@
-
 <ion-menu contentId="main-content" class="desktop-menu">
   <ion-header>
     <ion-toolbar>
@@ -6,7 +5,6 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-
     <ion-list>
       <ion-item>
         <ion-icon aria-hidden="true" name="person" slot="start"></ion-icon>
@@ -25,11 +23,14 @@
           <ion-label>Carta</ion-label>
         </ion-item>
         <div class="accordion-padding" slot="content">
-
-          <ion-accordion-group >
+          <ion-accordion-group>
             <ion-accordion value="first">
               <ion-item slot="header" color="light">
-                <ion-icon aria-hidden="true" name="beer" slot="start"></ion-icon>
+                <ion-icon
+                  aria-hidden="true"
+                  name="beer"
+                  slot="start"
+                ></ion-icon>
                 <ion-label>Bebidas</ion-label>
               </ion-item>
               <div class="ion-padding" slot="content">First Content</div>
@@ -37,7 +38,11 @@
 
             <ion-accordion value="second">
               <ion-item slot="header" color="light">
-                <ion-icon aria-hidden="true" name="restaurant" slot="start"></ion-icon>
+                <ion-icon
+                  aria-hidden="true"
+                  name="restaurant"
+                  slot="start"
+                ></ion-icon>
                 <ion-label>Platos Principales</ion-label>
               </ion-item>
               <div class="ion-padding" slot="content">Second Content</div>
@@ -45,13 +50,16 @@
 
             <ion-accordion value="third">
               <ion-item slot="header" color="light">
-                <ion-icon aria-hidden="true" name="ice-cream" slot="start"></ion-icon>
+                <ion-icon
+                  aria-hidden="true"
+                  name="ice-cream"
+                  slot="start"
+                ></ion-icon>
                 <ion-label>Postres</ion-label>
               </ion-item>
               <div class="ion-padding" slot="content">Third Content</div>
             </ion-accordion>
           </ion-accordion-group>
-
         </div>
       </ion-accordion>
     </ion-accordion-group>
@@ -66,8 +74,6 @@
         <ion-label>Preguntas Frecuentes</ion-label>
       </ion-item>
     </ion-list>
-
-
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
@@ -76,18 +82,23 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title class="logo__name">TDG<span class="point">net.</span></ion-title>
+      <ion-title class="logo__name"
+        >TDG<span class="point">net.</span></ion-title
+      >
+      <ion-buttons slot="end">
+        <ion-button (click)="goBack()">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 </div>
-  
 
 <ion-tabs class="mobile-menu" *ngIf="isMobile">
   <ion-tab-bar slot="bottom" class="tabBar">
-
     <ion-tab-button tab="home" class="tabButton">
       <ion-icon name="home-sharp"></ion-icon>
-      Inicio  
+      Inicio
     </ion-tab-button>
 
     <ion-tab-button tab="carta" class="tabButton">
@@ -104,9 +115,9 @@
       <ion-icon name="calendar"></ion-icon>
       Reserva
     </ion-tab-button>
-    
+
     <ion-tab-button tab="ellipsis-vertical-sharp" class="tabButton">
       <ion-icon name="ellipsis-vertical-sharp"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
-</ion-tabs> 
+</ion-tabs>
