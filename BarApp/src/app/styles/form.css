@@ -9,7 +9,7 @@
   --inputIcon: #1a1b1f;
 
   --button: #ec9819;
-  --buttonHover: #f0ad48;
+  --buttonHover: #da6047;
 }
 
 /*para cambiar estilos al form */
@@ -47,15 +47,8 @@ ion-icon {
 .submit {
   margin-top: 1em;
   --background: var(--button);
+  --background-hover: var(--buttonHover);
 }
-
-/*para el hover del button
-:host(.button-solid) {
-   --background-activated: var(--buttonHover); 
-   --background-focused: var(--buttonHover); 
-   --background-hover: var(--buttonHover); 
-}
-*/
 
 /*para cambiar de color los labels de los imputs*/
 .sc-ion-input-md-h {
