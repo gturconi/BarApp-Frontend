@@ -1,12 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-
-export interface ValidationConfig {
-  controlName: string;
-  required?: boolean;
-  email?: boolean;
-  minLength?: number;
-}
+import { ValidationConfig } from "@common/models/validationConfig";
 
 @Component({
   selector: "app-form",
@@ -21,6 +15,9 @@ export class FormComponent implements OnInit {
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
   @Output() formEdit = new EventEmitter<FormGroup>();
+
+  customValidator = false;
+  validator!: any;
 
   constructor() {}
 
@@ -37,10 +34,21 @@ export class FormComponent implements OnInit {
       if (config.minLength) {
         validators.push(Validators.minLength(config.minLength));
       }
+
+      if (config.customValidation) {
+        validators.push(config.customValidation);
+        this.customValidator = true;
+        this.validator = config.customValidation;
+      }
+
       formControls[config.controlName] = new FormControl("", validators);
     });
+    if (this.customValidator) {
+      this.form = new FormGroup(formControls, this.validator);
+    } else {
+      this.form = new FormGroup(formControls);
+    }
 
-    this.form = new FormGroup(formControls);
     this.formEdit.emit(this.form);
   }
 
@@ -48,7 +56,6 @@ export class FormComponent implements OnInit {
     return this.form.get(name) as FormControl;
   }
 
-  // En tu componente
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
 
@@ -63,6 +70,8 @@ export class FormComponent implements OnInit {
           control.errors["minlength"].requiredLength +
           " caracteres"
         );
+      } else if (control.errors["notSame"]) {
+        return "Las contraseñas no coinciden";
       }
       return "Error en el campo " + controlName;
     }

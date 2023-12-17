@@ -18,4 +18,27 @@
       </ion-card-content>
     </ion-card>
   </div>
+
+  <details>
+    <summary class="form-container" style="cursor: pointer">
+      ¿Desea cambiar la contraseña?
+    </summary>
+    <div class="form-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title><h1>Cambiar Contraseña</h1></ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <app-form
+            [form]="form2"
+            [fields]="formFields2"
+            [buttons]="myButtons"
+            [validationConfig]="validationConfig2"
+            (formSubmit)="changePassword($event)"
+          >
+          </app-form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </details>
 </ion-content>

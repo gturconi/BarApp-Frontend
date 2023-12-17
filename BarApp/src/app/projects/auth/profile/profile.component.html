@@ -7,7 +7,13 @@
     }
   </ion-avatar>
 
-  <ion-button mode="ios" class="photo-btn" size="small" shape="round">
+  <ion-button
+    mode="ios"
+    class="photo-btn"
+    size="small"
+    shape="round"
+    (click)="takeImage()"
+  >
     <ion-icon name="camera-outline"></ion-icon>
   </ion-button>
 
@@ -24,5 +30,16 @@
   >
     <ion-icon slot="start" name="person-outline"></ion-icon>
     <ion-label> Editar Perfil</ion-label>
+  </ion-button>
+  <br />
+  <ion-button
+    class="edit-btn"
+    mode="ios"
+    size="small"
+    (click)="logout()"
+    shape="round"
+  >
+    <ion-icon slot="start" name="log-out-outline"></ion-icon>
+    <ion-label> Salir</ion-label>
   </ion-button>
 </ion-content>

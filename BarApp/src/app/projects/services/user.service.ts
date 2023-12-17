@@ -5,6 +5,7 @@ import { EntityListResponse } from "@common/models/entity.list.response";
 
 import { User } from "@common/models/user";
 import { environment } from "src/environments/environment";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -35,7 +36,19 @@ export class UserService {
     );
   }
 
+  updateAvatar(userId: string, formData: FormData): Observable<User> {
+    const url = `${this.apiUrl}/users/${userId}`;
+    return this.http.put<User>(url, formData);
+  }
+
   deleteUsers(user: User) {
     return this.http.delete(this.apiUrl + "/users/" + user.id);
+  }
+
+  changePassword(usuarioActualizado: User) {
+    return this.http.put<User>(
+      this.apiUrl + "/users/change-password/" + usuarioActualizado.id,
+      usuarioActualizado
+    );
   }
 }

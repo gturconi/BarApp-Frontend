@@ -18,10 +18,17 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     let token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "x-access-token": token || "",
-    });
+
+    const isFileUpload = req.body instanceof FormData;
+
+    const headers = isFileUpload
+      ? new HttpHeaders({
+          "x-access-token": token || "",
+        })
+      : new HttpHeaders({
+          "Content-Type": "application/json",
+          "x-access-token": token || "",
+        });
 
     const reqClone = req.clone({
       headers,
