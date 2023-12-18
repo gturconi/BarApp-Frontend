@@ -15,6 +15,7 @@
 /*para cambiar estilos al form */
 .form-container ion-card {
   background-color: var(--formColor);
+  min-width: 400px;
 }
 
 .form-container {
@@ -64,4 +65,10 @@ ion-icon {
   --highlight-color-invalid: var(--inputError);
   --highlight-color: var(--inputStandard);
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .form-container ion-card {
+    min-width: 350px;
+  }
 }
