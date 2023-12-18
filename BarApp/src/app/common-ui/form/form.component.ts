@@ -36,13 +36,13 @@ export class FormComponent implements OnInit {
       }
 
       if (config.customValidation) {
-        validators.push(config.customValidation);
         this.customValidator = true;
         this.validator = config.customValidation;
       }
 
       formControls[config.controlName] = new FormControl("", validators);
     });
+    this.form = new FormGroup(formControls);
     if (this.customValidator) {
       this.form = new FormGroup(formControls, this.validator);
     } else {
