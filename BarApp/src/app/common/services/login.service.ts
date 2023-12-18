@@ -23,10 +23,9 @@ export class LoginService {
   isLoggedIn() {
     const tokenStr = localStorage.getItem("token");
     if (tokenStr !== null) {
-      const { token } = JSON.parse(tokenStr);
       const jwtRegex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$/;
       try {
-        jwtRegex.test(token);
+        jwtRegex.test(tokenStr);
         return true;
       } catch (err) {
         return false;
