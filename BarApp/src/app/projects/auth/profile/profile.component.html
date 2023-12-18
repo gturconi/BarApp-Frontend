@@ -1,45 +1,54 @@
 <ion-content class="ion-padding-top ion-text-center form-container">
-  <ion-avatar>
-    @if(user?.avatar){
-    <img [src]="imageUrl$ | async" />
-    }@else{
-    <ion-icon class="empty-icon" name="person-circle-outline"></ion-icon>
-    }
-  </ion-avatar>
+  <ion-card class="card-profile">
+    <ion-avatar>
+      @if(user?.avatar){
+      <img [src]="imageUrl$ | async" />
+      }@else{
+      <ion-icon class="empty-icon" name="person-circle-outline"></ion-icon>
+      }
+    </ion-avatar>
 
-  <ion-button
-    mode="ios"
-    class="photo-btn"
-    size="small"
-    shape="round"
-    (click)="takeImage()"
-  >
-    <ion-icon name="camera-outline"></ion-icon>
-  </ion-button>
+    <ion-button
+      mode="ios"
+      class="photo-btn"
+      size="small"
+      shape="round"
+      (click)="takeImage()"
+    >
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-button>
 
-  <h1>{{ user?.name }}</h1>
-  <p>Email: {{ user?.email }}</p>
-  <p>Telefono: {{ user?.tel }}</p>
-
-  <ion-button
-    class="edit-btn"
-    mode="ios"
-    size="small"
-    shape="round"
-    (click)="editProfile()"
-  >
-    <ion-icon slot="start" name="person-outline"></ion-icon>
-    <ion-label> Editar Perfil</ion-label>
-  </ion-button>
-  <br />
-  <ion-button
-    class="edit-btn"
-    mode="ios"
-    size="small"
-    (click)="logout()"
-    shape="round"
-  >
-    <ion-icon slot="start" name="log-out-outline"></ion-icon>
-    <ion-label> Salir</ion-label>
-  </ion-button>
+    <div class="info-user">
+      <h2>{{ user?.name }}</h2>
+      <p>
+        <ion-icon class="icon-profile" name="mail-outline"></ion-icon>
+        {{ user?.email }}
+      </p>
+      <p>
+        <ion-icon class="icon-profile" name="call-outline"></ion-icon> Telefono:
+        {{ user?.tel }}
+      </p>
+    </div>
+    <ion-button
+      class="edit-btn"
+      mode="ios"
+      size="small"
+      shape="round"
+      (click)="editProfile()"
+    >
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-label> Editar Perfil</ion-label>
+    </ion-button>
+    <br />
+    <ion-button
+      class="edit-btn"
+      mode="ios"
+      size="small"
+      (click)="logout()"
+      shape="round"
+    >
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      <ion-label> Salir</ion-label>
+    </ion-button>
+  </ion-card>
 </ion-content>
