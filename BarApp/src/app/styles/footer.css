@@ -92,3 +92,13 @@ footer {
   color: var(--letterColorEffectFooter);
   letter-spacing: 0.5px;
 }
+
+.footer-desktop {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .footer-desktop {
+    display: none;
+  }
+}

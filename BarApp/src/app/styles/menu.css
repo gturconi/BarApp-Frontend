@@ -51,3 +51,13 @@ ion-toolbar {
   --margin-right: 0px;
   max-width: 100px;
 }
+
+.item-padding {
+  margin-left: 55px;
+}
+
+@media (max-width: 768px) {
+  .menu-desktop {
+    display: none;
+  }
+}
