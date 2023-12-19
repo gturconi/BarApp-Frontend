@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,19 +9,24 @@ import { Router, NavigationEnd } from '@angular/router';
 export class HeaderComponent implements OnInit {
   showBackButton: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showBackButton = !(
-          event.url === '/home' || event.url === '/intro'
-        );
+      if (event instanceof NavigationEnd || event instanceof NavigationStart) {
+        this.updateBackButtonVisibility(this.router.url);
       }
     });
+  }
+
+  ngOnInit() {
+    this.updateBackButtonVisibility(this.router.url);
+  }
+
+  updateBackButtonVisibility(url: string) {
+    this.showBackButton = !['/home', '/intro'].includes(url);
+    this.cdr.detectChanges();
   }
 
   goBack(): void {
     window.history.back();
   }
-
-  ngOnInit() {}
 }

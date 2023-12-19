@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { EntityListResponse } from '@common/models/entity.list.response';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -20,17 +17,22 @@ export class MenuComponent implements OnInit {
     { icon: 'help-outline', label: 'Preguntas Frecuentes' },
   ];
 
-  constructor(public router: Router) {
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showBackButton = !(
-          event.url === '/home' || event.url === '/intro'
-        );
+      if (event instanceof NavigationEnd || event instanceof NavigationStart) {
+        this.updateBackButtonVisibility(this.router.url);
       }
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.updateBackButtonVisibility(this.router.url);
+  }
+
+  updateBackButtonVisibility(url: string) {
+    this.showBackButton = !['/home', '/intro'].includes(url);
+    this.cdr.detectChanges();
+  }
 
   goBack(): void {
     window.history.back();
