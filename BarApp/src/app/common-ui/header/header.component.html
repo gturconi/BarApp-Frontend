@@ -1,6 +1,6 @@
-<ion-header class="ion-no-border ion-text-center" *ngIf="isMobile">
+<ion-header class="ion-no-border ion-text-center header-mobile">
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" *ngIf="showBackButton">
       <ion-button (click)="goBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
@@ -8,4 +8,4 @@
     <ion-title class="logo__name">TDG<span class="point">net.</span></ion-title>
   </ion-toolbar>
 </ion-header>
-<div class="shapedividers_com-7793" *ngIf="isMobile"></div>
+<div class="shapedividers_com-7793 header-mobile"></div>

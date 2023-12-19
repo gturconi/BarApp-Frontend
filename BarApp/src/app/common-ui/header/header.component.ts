@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HostListener } from '@angular/core';
-import { Location } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,24 +7,21 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isMobile: boolean = false;
+  showBackButton: boolean = false;
 
-  constructor(private location: Location) {}
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showBackButton = !(
+          event.url === '/home' || event.url === '/intro'
+        );
+      }
+    });
+  }
 
   goBack(): void {
-    this.location.back();
+    window.history.back();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkIfMobile();
-  }
-
-  ngOnInit() {
-    this.checkIfMobile();
-  }
-
-  checkIfMobile() {
-    this.isMobile = window.innerWidth <= 768;
-  }
+  ngOnInit() {}
 }
