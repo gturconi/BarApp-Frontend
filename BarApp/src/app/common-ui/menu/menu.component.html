@@ -1,4 +1,5 @@
-<ion-menu contentId="main-content" class="desktop-menu">
+<!-- menu desktop-->
+<ion-menu contentId="main-content" class="menu-desktop">
   <ion-header>
     <ion-toolbar>
       <ion-title class="logo__name">Explorar</ion-title>
@@ -6,78 +7,56 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list>
-      <ion-item>
-        <ion-icon aria-hidden="true" name="person" slot="start"></ion-icon>
-        <ion-label>Iniciar Sesión</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-icon aria-hidden="true" name="calendar" slot="start"></ion-icon>
-        <ion-label>Reserva</ion-label>
+      <ion-item *ngFor="let menuItem of getUpperMenuItems()">
+        <ion-icon
+          aria-hidden="true"
+          [name]="menuItem.icon"
+          slot="start"
+        ></ion-icon>
+        <ion-label>{{ menuItem.label }}</ion-label>
       </ion-item>
     </ion-list>
 
-    <ion-accordion-group>
-      <ion-accordion value="first">
-        <ion-item slot="header" color="light">
-          <ion-icon aria-hidden="true" name="fast-food" slot="start"></ion-icon>
-          <ion-label>Carta</ion-label>
+    <ion-list>
+      <ng-container *ngFor="let accordion of accordionData">
+        <ion-item
+          (click)="accordion.expanded = !accordion.expanded"
+          [class.expanded]="accordion.expanded"
+        >
+          <ion-icon
+            slot="start"
+            [name]="accordion.icon"
+            aria-hidden="true"
+          ></ion-icon>
+          <ion-label>{{ accordion.label }}</ion-label>
+          <ion-icon
+            slot="end"
+            [name]="accordion.expanded ? 'chevron-up' : 'chevron-down'"
+            aria-hidden="true"
+          ></ion-icon>
         </ion-item>
-        <div class="accordion-padding" slot="content">
-          <ion-accordion-group>
-            <ion-accordion value="first">
-              <ion-item slot="header" color="light">
-                <ion-icon
-                  aria-hidden="true"
-                  name="beer"
-                  slot="start"
-                ></ion-icon>
-                <ion-label>Bebidas</ion-label>
-              </ion-item>
-              <div class="ion-padding" slot="content">First Content</div>
-            </ion-accordion>
-
-            <ion-accordion value="second">
-              <ion-item slot="header" color="light">
-                <ion-icon
-                  aria-hidden="true"
-                  name="restaurant"
-                  slot="start"
-                ></ion-icon>
-                <ion-label>Platos Principales</ion-label>
-              </ion-item>
-              <div class="ion-padding" slot="content">Second Content</div>
-            </ion-accordion>
-
-            <ion-accordion value="third">
-              <ion-item slot="header" color="light">
-                <ion-icon
-                  aria-hidden="true"
-                  name="ice-cream"
-                  slot="start"
-                ></ion-icon>
-                <ion-label>Postres</ion-label>
-              </ion-item>
-              <div class="ion-padding" slot="content">Third Content</div>
-            </ion-accordion>
-          </ion-accordion-group>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
+        <ng-container *ngIf="accordion.expanded">
+          <ion-item *ngFor="let p of accordion.subItems" class="item-padding">
+            <ion-label>{{ p.label }}</ion-label>
+          </ion-item>
+        </ng-container>
+      </ng-container>
+    </ion-list>
 
     <ion-list>
-      <ion-item>
-        <ion-icon aria-hidden="true" name="mail" slot="start"></ion-icon>
-        <ion-label>Contacto</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-icon aria-hidden="true" name="help" slot="start"></ion-icon>
-        <ion-label>Preguntas Frecuentes</ion-label>
+      <ion-item *ngFor="let menuItem of getLowerMenuItems()">
+        <ion-icon
+          aria-hidden="true"
+          [name]="menuItem.icon"
+          slot="start"
+        ></ion-icon>
+        <ion-label>{{ menuItem.label }}</ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
-  <ion-header class="desktop-menu">
+  <ion-header class="menu-desktop">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
@@ -85,7 +64,7 @@
       <ion-title class="logo__name"
         >TDG<span class="point">net.</span></ion-title
       >
-      <ion-buttons slot="end">
+      <ion-buttons slot="end" *ngIf="showBackButton">
         <ion-button (click)="goBack()">
           <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
         </ion-button>
@@ -94,7 +73,8 @@
   </ion-header>
 </div>
 
-<ion-tabs class="mobile-menu" *ngIf="isMobile">
+<!-- menu mobile-->
+<ion-tabs class="menu-mobile">
   <ion-tab-bar slot="bottom" class="tabBar">
     <ion-tab-button tab="home" class="tabButton">
       <ion-icon name="home-sharp"></ion-icon>

@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+  .menu-desktop {
+    display: none;
+  }
+}
+
+.menu-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-mobile {
+    display: block;
+  }
+}
+
+.item-padding {
+  margin-left: 55px;
+}
