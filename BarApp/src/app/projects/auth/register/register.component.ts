@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
 
   async submit(form: FormGroup) {
     const nuevoUsuario: User = {
-      _id: "",
+      id: "",
       name: form.value.name!,
       email: form.value.email!,
       tel: form.value.tel!,
