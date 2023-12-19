@@ -1,0 +1,44 @@
+<ion-content scroll-x="true">
+  <table class="table">
+    <thead>
+      <tr class="row">
+        <ng-container *ngFor="let column of columns">
+          <th class="header">{{ column.label }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let d of data">
+        <tr class="row">
+          <ng-container *ngFor="let column of columns">
+            <div
+              *ngIf="columnIsAction(column); then thenBlock; else elseBlock"
+            ></div>
+            <ng-template #thenBlock>
+              <ng-container
+                *ngIf="
+                  shouldHideLabel(column?.hideLabel, d);
+                  then hideLabelBlock;
+                  else showLabelBlock
+                "
+              ></ng-container>
+              <ng-template #hideLabelBlock>
+                <td class="cell"></td>
+              </ng-template>
+              <ng-template #showLabelBlock>
+                <td class="cell">
+                  <button class="buttonTable" (click)="column?.action(d)">
+                    {{ column.label }}
+                  </button>
+                </td>
+              </ng-template>
+            </ng-template>
+            <ng-template #elseBlock>
+              <td class="cell">{{ d[column.key] }}</td>
+            </ng-template>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</ion-content>
