@@ -9,6 +9,9 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginationComponent } from "./pagination/pagination.component";
+import { TableComponent } from "./table/table.component";
+
+
 import { CommonUiRoutingModule } from './common-ui-routing.module';
 
 @NgModule({
@@ -19,6 +22,7 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     MenuComponent,
     FooterComponent,
     PaginationComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +39,7 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     MenuComponent,
     FooterComponent,
     PaginationComponent,
+    TableComponent
   ],
 })
 export class CommonUiModule {}
