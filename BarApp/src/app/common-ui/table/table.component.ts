@@ -6,7 +6,8 @@ export interface TableColumn {
   label: string;
   key: string;
   action?: (data: any) => void;
-  hideLabel?: (data: any) => boolean;
+  hideAction?: (data: any) => boolean;
+  formatter?: (data: any) => any;
 };
 
 @Component({
@@ -15,25 +16,30 @@ export interface TableColumn {
   styleUrls: ["./table.component.scss"],
 })
 
-
 export class TableComponent implements OnInit {
-  @Input() columns!: TableColumn[];
-  @Input() data!: TableData[];
+  @Input({required: true}) columns!: TableColumn[];
+  @Input({required: true}) data!: TableData[];
+  @Input() loading: boolean = false;
 
   constructor() {}
+
+  ngOnInit() {}
 
   columnIsAction(column: TableColumn) {
     return typeof column.action === 'function';
   }
 
-  shouldHideLabel(comparisonFn?: (data: TableData) => void, data?: TableData) {
-    if(!!comparisonFn && data && typeof comparisonFn === 'function') {
+  shouldHideAction(data: TableData, comparisonFn?: (data: TableData) => void) {
+    if(!!comparisonFn && typeof comparisonFn === 'function') {
       return comparisonFn(data);
     }
     return false;
   }
 
-  ngOnInit() {
-    console.log(this.columns, this.data);
+  formatData(key: string, data: TableData, formatter?: (data: TableData) => void) {
+    if(!!formatter && typeof formatter === 'function') {
+      return formatter(data);
+    }
+    return data?.[key] || '';
   }
 }
