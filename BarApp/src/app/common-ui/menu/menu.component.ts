@@ -46,6 +46,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.updateBackButtonVisibility(this.router.url);
     this.updateMenu();
+    /*para saber si esta logueado /TODO: borrarlo en un futuro*/
     const loggedIn = this.isLoggedIn();
     console.log('¿Estoy logueado?', loggedIn);
   }
@@ -99,6 +100,7 @@ export class MenuComponent implements OnInit {
     window.history.back();
   }
 
+  /*para saber si esta logueado /TODO: borrarlo en un futuro*/
   isLoggedIn() {
     return this.loginService.isLoggedIn();
   }
