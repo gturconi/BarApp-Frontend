@@ -16,6 +16,44 @@
         <ion-label>{{ menuItem.label }}</ion-label>
       </ion-item>
     </ion-list>
+
+    <ng-container *ngIf="isAdmin()">
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-icon
+              aria-hidden="true"
+              name="create-outline"
+              slot="start"
+            ></ion-icon>
+            <ion-label>Gestionar</ion-label>
+          </ion-item>
+          <ion-list slot="content">
+            <ion-item *ngFor="let items of manageItems">
+              <ion-label>{{ items.label }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+      </ion-accordion-group>
+
+      <ion-accordion-group>
+        <ion-accordion value="second">
+          <ion-item slot="header" color="light">
+            <ion-icon
+              aria-hidden="true"
+              name="settings-outline"
+              slot="start"
+            ></ion-icon>
+            <ion-label>Configuracion</ion-label>
+          </ion-item>
+          <ion-list slot="content">
+            <ion-item *ngFor="let items of settingItems">
+              <ion-label>{{ items.label }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ng-container>
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">

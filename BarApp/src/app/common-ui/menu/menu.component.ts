@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { LoginService } from '@common/services/login.service';
+import { UserRoles } from '@common/constants/user.roles.enum';
 
 @Component({
   selector: 'app-menu',
@@ -9,15 +11,24 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 export class MenuComponent implements OnInit {
   showBackButton: boolean = false;
 
-  menuItems: any[] = [
-    { icon: 'person-outline', label: 'Iniciar Sesión' },
-    { icon: 'calendar-outline', label: 'Reserva' },
-    { icon: 'fast-food-outline', label: 'Carta' },
-    { icon: 'mail-outline', label: 'Contacto' },
-    { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+  menuItems: any[] = [];
+
+  manageItems: any[] = [
+    { label: 'Usuarios' },
+    { label: 'Mesas' },
+    { label: 'Categorías de Productos' },
+    { label: 'Productos' },
+    { label: 'Promociones' },
+    { label: 'Cartas' },
   ];
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+  settingItems: any[] = [{ label: 'Pantallas' }, { label: 'Temas' }];
+
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private loginService: LoginService
+  ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
         this.updateBackButtonVisibility(this.router.url);
@@ -27,6 +38,58 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.updateBackButtonVisibility(this.router.url);
+    this.updateMenu();
+    const loggedIn = this.isLoggedIn();
+    console.log('¿Estoy logueado?', loggedIn);
+  }
+
+  updateMenu() {
+    const userLoggedIn = this.loginService.isLoggedIn();
+    const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
+
+    if (userLoggedIn && userRole === UserRoles.Client) {
+      this.menuItems = [
+        { icon: 'home-outline', label: 'Inicio' },
+        { icon: 'person-circle-outline', label: 'Mi Perfil' },
+        { icon: 'calendar-outline', label: 'Mis Reservas' },
+        { icon: 'cart-outline', label: 'Mis Pedidos' },
+        { icon: 'fast-food-outline', label: 'Carta' },
+        { icon: 'mail-outline', label: 'Contacto' },
+        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+        { icon: 'log-out-outline', label: 'Cerrar Sesión' },
+      ];
+    } else if (userLoggedIn && userRole === UserRoles.Employee) {
+      this.menuItems = [
+        { icon: 'home-outline', label: 'Inicio' },
+        { icon: 'person-circle-outline', label: 'Mi Perfil' },
+        { icon: 'reader-outline', label: 'Pedidos Actuales' },
+        { icon: 'timer-outline', label: 'Historial de pedidos' },
+        { icon: 'notifications-outline', label: 'Notificación Estado' },
+        { icon: 'fast-food-outline', label: 'Carta' },
+        { icon: 'mail-outline', label: 'Contacto' },
+        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+        { icon: 'log-out-outline', label: 'Cerrar Sesión' },
+      ];
+    } else if (userLoggedIn && userRole === UserRoles.Admin) {
+      this.menuItems = [
+        { icon: 'home-outline', label: 'Inicio' },
+        { icon: 'person-circle-outline', label: 'Mi Perfil' },
+        { icon: 'timer-outline', label: 'Dashboard' },
+        { icon: 'fast-food-outline', label: 'Carta' },
+        { icon: 'mail-outline', label: 'Contacto' },
+        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+        { icon: 'log-out-outline', label: 'Cerrar Sesión' },
+      ];
+    } else {
+      this.menuItems = [
+        { icon: 'home-outline', label: 'Inicio' },
+        { icon: 'person-outline', label: 'Iniciar Sesión' },
+        { icon: 'calendar-outline', label: 'Reserva' },
+        { icon: 'fast-food-outline', label: 'Carta' },
+        { icon: 'mail-outline', label: 'Contacto' },
+        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+      ];
+    }
   }
 
   updateBackButtonVisibility(url: string) {
@@ -36,5 +99,15 @@ export class MenuComponent implements OnInit {
 
   goBack(): void {
     window.history.back();
+  }
+
+  isLoggedIn() {
+    return this.loginService.isLoggedIn();
+  }
+
+  isAdmin(): boolean {
+    const userLoggedIn = this.loginService.isLoggedIn();
+    const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
+    return userLoggedIn && userRole === UserRoles.Admin;
   }
 }
