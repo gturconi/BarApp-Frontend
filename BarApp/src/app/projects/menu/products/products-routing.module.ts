@@ -4,6 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { ProductsComponent } from "./products/products.component";
 import { ProductsListComponent } from "./products.list/products.list.component";
 import { ProductsFormComponent } from "./products.form/products.form.component";
+import { ProductsDetailsComponent } from "./products-details/products-details.component";
 
 import { authGuard } from "@common/guards/auth.guard";
 
@@ -14,15 +15,16 @@ const routes: Routes = [
     children: [
       { path: "", component: ProductsListComponent },
       {
-        path: "edit/:id",
+        path: "edit/:idProd",
         component: ProductsFormComponent,
         canActivate: [authGuard],
       },
       {
-        path: "add/:id",
+        path: "add/:idProd",
         component: ProductsFormComponent,
         canActivate: [authGuard],
       },
+      { path: "details/:idProd", component: ProductsDetailsComponent },
     ],
   },
 ];
