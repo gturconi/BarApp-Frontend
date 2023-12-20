@@ -21,8 +21,6 @@ export class InputComponent implements OnInit {
 
   ngOnInit() {
     if (this.type == "password") this.isPasswords = true;
-
-    console.log(this.iconName);
   }
 
   showOrHidePassword() {

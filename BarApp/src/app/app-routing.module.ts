@@ -5,17 +5,22 @@ const routes: Routes = [
   {
     path: "home",
     loadChildren: () =>
-      import("./projects/home/home.module").then((m) => m.HomePageModule),
+      import("./projects/home/home.module").then(m => m.HomePageModule),
   },
   {
     path: "auth",
     loadChildren: () =>
-      import("../app/projects/auth/auth.module").then((x) => x.AuthModule),
+      import("../app/projects/auth/auth.module").then(x => x.AuthModule),
   },
   {
     path: "intro",
     loadChildren: () =>
-      import("./projects/intro/intro.module").then((m) => m.IntroModule),
+      import("./projects/intro/intro.module").then(m => m.IntroModule),
+  },
+  {
+    path: "menu",
+    loadChildren: () =>
+      import("./projects/menu/menu.module").then(m => m.MenuModule),
   },
   {
     path: "",
