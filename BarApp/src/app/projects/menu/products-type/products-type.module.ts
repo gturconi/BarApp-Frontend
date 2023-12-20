@@ -7,6 +7,8 @@ import { ProductsTypeListComponent } from "./products-type.list/products-type.li
 import { ProductsTypeFormComponent } from "./products-type.form/products-type.form.component";
 import { ProductsTypeComponent } from "./products-type/products-type.component";
 
+import { ProductsTypeService } from "./services/products-type.service";
+
 @NgModule({
   declarations: [
     ProductsTypeListComponent,
@@ -14,5 +16,6 @@ import { ProductsTypeComponent } from "./products-type/products-type.component";
     ProductsTypeComponent,
   ],
   imports: [CommonModule, CommonUiModule, ProductsTypeRoutingModule],
+  providers: [ProductsTypeService],
 })
 export class ProductsTypeModule {}

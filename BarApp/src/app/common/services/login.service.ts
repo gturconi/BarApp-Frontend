@@ -13,11 +13,11 @@ export class LoginService {
 
   authenticateUser(email: string, password: string) {
     const credentials = { email, password };
-    return this.http.post(`${this.apiUrl}/auth/signin`, credentials);
+    return this.http.post<User>(`${this.apiUrl}/auth/signin`, credentials);
   }
 
   getUser(id: string) {
-    return this.http.get(`${this.apiUrl}/users/` + id);
+    return this.http.get<User>(`${this.apiUrl}/users/` + id);
   }
 
   isLoggedIn() {
