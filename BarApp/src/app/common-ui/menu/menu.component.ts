@@ -52,7 +52,6 @@ export class MenuComponent implements OnInit {
 
   updateMenu() {
     const userLoggedIn = this.loginService.isLoggedIn();
-    const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
 
     this.menuItems = [...this.commonItems];
 
