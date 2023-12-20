@@ -29,9 +29,11 @@
             <ion-label>Gestionar</ion-label>
           </ion-item>
           <ion-list slot="content">
-            <ion-item *ngFor="let items of manageItems">
-              <ion-label>{{ items.label }}</ion-label>
-            </ion-item>
+            <div class="item-padding">
+              <ion-item *ngFor="let items of manageItems">
+                <ion-label>{{ items.label }}</ion-label>
+              </ion-item>
+            </div>
           </ion-list>
         </ion-accordion>
       </ion-accordion-group>
@@ -47,9 +49,11 @@
             <ion-label>Configuracion</ion-label>
           </ion-item>
           <ion-list slot="content">
-            <ion-item *ngFor="let items of settingItems">
-              <ion-label>{{ items.label }}</ion-label>
-            </ion-item>
+            <div class="item-padding">
+              <ion-item *ngFor="let items of settingItems">
+                <ion-label>{{ items.label }}</ion-label>
+              </ion-item>
+            </div>
           </ion-list>
         </ion-accordion>
       </ion-accordion-group>
@@ -76,7 +80,7 @@
 
 <!-- menu mobile-->
 <ion-tabs class="menu-mobile">
-  <ion-tab-bar slot="bottom" class="tabBar">
+  <ion-tab-bar class="tabBar">
     <ion-tab-button tab="home" class="tabButton">
       <ion-icon name="home-sharp"></ion-icon>
       Inicio

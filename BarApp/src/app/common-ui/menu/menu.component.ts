@@ -13,6 +13,13 @@ export class MenuComponent implements OnInit {
 
   menuItems: any[] = [];
 
+  commonItems: any[] = [
+    { icon: 'home-outline', label: 'Inicio' },
+    { icon: 'fast-food-outline', label: 'Carta' },
+    { icon: 'mail-outline', label: 'Contacto' },
+    { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+  ];
+
   manageItems: any[] = [
     { label: 'Usuarios' },
     { label: 'Mesas' },
@@ -47,48 +54,40 @@ export class MenuComponent implements OnInit {
     const userLoggedIn = this.loginService.isLoggedIn();
     const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
 
+    this.menuItems = [...this.commonItems];
+
     if (userLoggedIn && userRole === UserRoles.Client) {
-      this.menuItems = [
-        { icon: 'home-outline', label: 'Inicio' },
+      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
+      this.menuItems.splice(
+        1,
+        0,
         { icon: 'person-circle-outline', label: 'Mi Perfil' },
         { icon: 'calendar-outline', label: 'Mis Reservas' },
-        { icon: 'cart-outline', label: 'Mis Pedidos' },
-        { icon: 'fast-food-outline', label: 'Carta' },
-        { icon: 'mail-outline', label: 'Contacto' },
-        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
-        { icon: 'log-out-outline', label: 'Cerrar Sesión' },
-      ];
+        { icon: 'cart-outline', label: 'Mis Pedidos' }
+      );
     } else if (userLoggedIn && userRole === UserRoles.Employee) {
-      this.menuItems = [
-        { icon: 'home-outline', label: 'Inicio' },
+      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
+      this.menuItems.splice(
+        1,
+        0,
         { icon: 'person-circle-outline', label: 'Mi Perfil' },
         { icon: 'reader-outline', label: 'Pedidos Actuales' },
         { icon: 'timer-outline', label: 'Historial de pedidos' },
-        { icon: 'notifications-outline', label: 'Notificación Estado' },
-        { icon: 'fast-food-outline', label: 'Carta' },
-        { icon: 'mail-outline', label: 'Contacto' },
-        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
-        { icon: 'log-out-outline', label: 'Cerrar Sesión' },
-      ];
+        { icon: 'notifications-outline', label: 'Notificación Estado' }
+      );
     } else if (userLoggedIn && userRole === UserRoles.Admin) {
-      this.menuItems = [
-        { icon: 'home-outline', label: 'Inicio' },
+      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
+      this.menuItems.splice(
+        1,
+        0,
         { icon: 'person-circle-outline', label: 'Mi Perfil' },
-        { icon: 'timer-outline', label: 'Dashboard' },
-        { icon: 'fast-food-outline', label: 'Carta' },
-        { icon: 'mail-outline', label: 'Contacto' },
-        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
-        { icon: 'log-out-outline', label: 'Cerrar Sesión' },
-      ];
+        { icon: 'timer-outline', label: 'Dashboard' }
+      );
     } else {
-      this.menuItems = [
-        { icon: 'home-outline', label: 'Inicio' },
-        { icon: 'person-outline', label: 'Iniciar Sesión' },
-        { icon: 'calendar-outline', label: 'Reserva' },
-        { icon: 'fast-food-outline', label: 'Carta' },
-        { icon: 'mail-outline', label: 'Contacto' },
-        { icon: 'help-outline', label: 'Preguntas Frecuentes' },
-      ];
+      this.menuItems.splice(1, 0, {
+        icon: 'person-circle-outline',
+        label: 'Iniciar Sesión',
+      });
     }
   }
 
