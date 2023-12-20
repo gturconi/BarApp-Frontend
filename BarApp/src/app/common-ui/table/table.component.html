@@ -1,5 +1,11 @@
 <ion-content scroll-x="true">
-  <table class="table">
+  <div *ngIf="loading">
+    <p style="text-align: center">Loading...</p>
+  </div>
+  <div *ngIf="!data.length && !loading">
+    <p style="text-align: center">No hay registros para mostrar</p>
+  </div>
+  <table *ngIf="data.length > 0 && !loading" class="table">
     <thead>
       <tr class="row">
         <ng-container *ngFor="let column of columns">
@@ -17,7 +23,7 @@
             <ng-template #thenBlock>
               <ng-container
                 *ngIf="
-                  shouldHideLabel(column?.hideLabel, d);
+                  shouldHideAction(d, column?.hideAction);
                   then hideLabelBlock;
                   else showLabelBlock
                 "
@@ -34,7 +40,9 @@
               </ng-template>
             </ng-template>
             <ng-template #elseBlock>
-              <td class="cell">{{ d[column.key] }}</td>
+              <td class="cell">
+                {{ formatData(column.key, d, column.formatter) }}
+              </td>
             </ng-template>
           </ng-container>
         </tr>
