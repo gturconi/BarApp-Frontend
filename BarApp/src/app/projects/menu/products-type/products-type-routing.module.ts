@@ -24,7 +24,7 @@ const routes: Routes = [
         canActivate: [authGuard],
       },
       {
-        path: ":id/products",
+        path: ":idCat/products",
         loadChildren: () =>
           import("../products/products.module").then(m => m.ProductsModule),
       },
