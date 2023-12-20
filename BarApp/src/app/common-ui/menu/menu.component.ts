@@ -56,7 +56,7 @@ export class MenuComponent implements OnInit {
 
     this.menuItems = [...this.commonItems];
 
-    if (userLoggedIn && userRole === UserRoles.Client) {
+    if (userLoggedIn && this.loginService.isClient()) {
       this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
       this.menuItems.splice(
         1,
@@ -65,7 +65,7 @@ export class MenuComponent implements OnInit {
         { icon: 'calendar-outline', label: 'Mis Reservas' },
         { icon: 'cart-outline', label: 'Mis Pedidos' }
       );
-    } else if (userLoggedIn && userRole === UserRoles.Employee) {
+    } else if (userLoggedIn && this.loginService.isEmployee()) {
       this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
       this.menuItems.splice(
         1,
@@ -75,7 +75,7 @@ export class MenuComponent implements OnInit {
         { icon: 'timer-outline', label: 'Historial de pedidos' },
         { icon: 'notifications-outline', label: 'Notificación Estado' }
       );
-    } else if (userLoggedIn && userRole === UserRoles.Admin) {
+    } else if (userLoggedIn && this.loginService.isAdmin()) {
       this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
       this.menuItems.splice(
         1,
