@@ -83,13 +83,9 @@
 </div>
 
 <!-- menu mobile-->
-<ion-tabs>
-  <ion-tab-bar class="menu-mobile">
-    <ion-tab-button
-      *ngFor="let tab of tabsItem"
-      [tab]="tab.tab"
-      class="tabButton"
-    >
+<ion-tabs class="menu-mobile">
+  <ion-tab-bar class="tabBar">
+    <ion-tab-button *ngFor="let tab of tabsItem" class="tabButton">
       <ion-icon [name]="tab.icon"></ion-icon>
       {{ tab.label }}
     </ion-tab-button>

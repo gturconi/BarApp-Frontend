@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
   showBackButton: boolean = false;
 
   menuItems: any[] = [];
+  tabsItem: any[] = [];
 
   commonItems: any[] = [
     { icon: 'home-outline', label: 'Inicio' },
@@ -30,18 +31,6 @@ export class MenuComponent implements OnInit {
   ];
 
   settingItems: any[] = [{ label: 'Pantallas' }, { label: 'Temas' }];
-
-  tabsItem = [
-    { tab: 'home', icon: 'home-sharp', label: 'Inicio' },
-    { tab: 'carta', icon: 'fast-food', label: 'Carta' },
-    { tab: 'cart', icon: 'cart', label: 'Orden' },
-    { tab: 'calendar', icon: 'calendar', label: 'Reserva' },
-    {
-      tab: 'ellipsis-vertical-sharp',
-      icon: 'ellipsis-vertical-sharp',
-      label: '',
-    },
-  ];
 
   constructor(
     private router: Router,
@@ -67,6 +56,7 @@ export class MenuComponent implements OnInit {
     const userLoggedIn = this.loginService.isLoggedIn();
 
     this.menuItems = [...this.commonItems];
+    this.tabsItem = [...this.commonItems];
 
     if (userLoggedIn && this.loginService.isClient()) {
       this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
@@ -77,6 +67,13 @@ export class MenuComponent implements OnInit {
         { icon: 'calendar-outline', label: 'Mis Reservas' },
         { icon: 'cart-outline', label: 'Mis Pedidos' }
       );
+      this.tabsItem.splice(
+        2,
+        3,
+        { icon: 'calendar-outline', label: 'Mis Reservas' },
+        { icon: 'cart-outline', label: 'Mis Pedidos' },
+        { icon: 'ellipsis-vertical-sharp', label: '' }
+      );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
       this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
       this.menuItems.splice(
@@ -86,6 +83,14 @@ export class MenuComponent implements OnInit {
         { icon: 'reader-outline', label: 'Pedidos Actuales' },
         { icon: 'timer-outline', label: 'Historial de pedidos' },
         { icon: 'notifications-outline', label: 'Notificación Estado' }
+      );
+      this.tabsItem.splice(
+        1,
+        3,
+        { icon: 'reader-outline', label: 'Pedidos Actuales' },
+        { icon: 'timer-outline', label: 'Historial Pedidos' },
+        { icon: 'notifications-outline', label: 'Notificación Estado' },
+        { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isAdmin()) {
       this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
