@@ -25,7 +25,7 @@
   color: #fff;
   cursor: default;
   background-color: #ec9819;
-  border-color: #ec9819;
+  border-color: rgb(78, 75, 75);
 }
 .page-item.disabled .page-link,
 .page-item.disabled .page-link:focus,
@@ -34,7 +34,7 @@
   pointer-events: none;
   cursor: not-allowed;
   background-color: #fff;
-  border-color: #ddd;
+  border-color: rgb(78, 75, 75);
 }
 .page-link {
   position: relative;
@@ -44,14 +44,14 @@
   color: white;
   text-decoration: none;
   background-color: #f6cd8f;
-  border: 1px solid #f6cd8f;
+  border: 1px solid rgb(78, 75, 75);
   cursor: pointer;
 }
 .page-link:focus,
 .page-link:hover {
   color: white;
   background-color: #f0ad48;
-  border-color: #f0ad48;
+  border-color: rgb(78, 75, 75);
   animation-name: pulse;
   animation-duration: 2s;
   animation-timing-function: ease-in-out;
