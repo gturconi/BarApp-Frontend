@@ -57,7 +57,7 @@ ion-toolbar {
 }
 
 @media (max-width: 768px) {
-  .menu-desktop {
+  .menu-desktop:not(.admin-menu) {
     display: none;
   }
 }

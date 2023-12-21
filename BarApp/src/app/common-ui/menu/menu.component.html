@@ -1,5 +1,9 @@
 <!-- menu desktop-->
-<ion-menu contentId="main-content" class="menu-desktop">
+<ion-menu
+  contentId="main-content"
+  class="menu-desktop"
+  [ngClass]="{ 'admin-menu': isAdmin() }"
+>
   <ion-header>
     <ion-toolbar>
       <ion-title class="logo__name">Explorar</ion-title>
@@ -61,7 +65,7 @@
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
-  <ion-header class="menu-desktop">
+  <ion-header class="menu-desktop" [ngClass]="{ 'admin-menu': isAdmin() }">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
