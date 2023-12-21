@@ -83,30 +83,15 @@
 </div>
 
 <!-- menu mobile-->
-<ion-tabs class="menu-mobile">
-  <ion-tab-bar class="tabBar">
-    <ion-tab-button tab="home" class="tabButton">
-      <ion-icon name="home-sharp"></ion-icon>
-      Inicio
-    </ion-tab-button>
-
-    <ion-tab-button tab="carta" class="tabButton">
-      <ion-icon name="fast-food"></ion-icon>
-      Carta
-    </ion-tab-button>
-
-    <ion-tab-button tab="cart" class="tabButton">
-      <ion-icon name="cart"></ion-icon>
-      Orden
-    </ion-tab-button>
-
-    <ion-tab-button tab="calendar" class="tabButton">
-      <ion-icon name="calendar"></ion-icon>
-      Reserva
-    </ion-tab-button>
-
-    <ion-tab-button tab="ellipsis-vertical-sharp" class="tabButton">
-      <ion-icon name="ellipsis-vertical-sharp"></ion-icon>
+<ion-tabs>
+  <ion-tab-bar class="menu-mobile">
+    <ion-tab-button
+      *ngFor="let tab of tabsItem"
+      [tab]="tab.tab"
+      class="tabButton"
+    >
+      <ion-icon [name]="tab.icon"></ion-icon>
+      {{ tab.label }}
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

@@ -4,6 +4,10 @@
 
 @media (max-width: 768px) {
   .menu-mobile {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    --background: #da6047;
   }
 }

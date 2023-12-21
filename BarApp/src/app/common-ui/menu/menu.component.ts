@@ -31,6 +31,18 @@ export class MenuComponent implements OnInit {
 
   settingItems: any[] = [{ label: 'Pantallas' }, { label: 'Temas' }];
 
+  tabsItem = [
+    { tab: 'home', icon: 'home-sharp', label: 'Inicio' },
+    { tab: 'carta', icon: 'fast-food', label: 'Carta' },
+    { tab: 'cart', icon: 'cart', label: 'Orden' },
+    { tab: 'calendar', icon: 'calendar', label: 'Reserva' },
+    {
+      tab: 'ellipsis-vertical-sharp',
+      icon: 'ellipsis-vertical-sharp',
+      label: '',
+    },
+  ];
+
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
