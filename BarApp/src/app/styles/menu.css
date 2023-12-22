@@ -31,6 +31,10 @@ ion-toolbar {
 .accordion-padding {
   padding-top: 0;
 }
+/*para agregar padding a los items del accordeon*/
+.item-padding {
+  margin-left: 55px;
+}
 
 /*----------------------*/
 
@@ -50,10 +54,6 @@ ion-toolbar {
   --margin-left: 0px;
   --margin-right: 0px;
   max-width: 100px;
-}
-
-.item-padding {
-  margin-left: 55px;
 }
 
 @media (max-width: 768px) {

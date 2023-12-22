@@ -70,8 +70,8 @@ export class MenuComponent implements OnInit {
       this.tabsItem.splice(
         2,
         3,
-        { icon: 'calendar-outline', label: 'Mis Reservas' },
-        { icon: 'cart-outline', label: 'Mis Pedidos' },
+        { icon: 'calendar-outline', label: 'Reservas' },
+        { icon: 'cart-outline', label: 'Pedidos' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
@@ -87,9 +87,9 @@ export class MenuComponent implements OnInit {
       this.tabsItem.splice(
         1,
         3,
-        { icon: 'reader-outline', label: 'Pedidos Actuales' },
-        { icon: 'timer-outline', label: 'Historial Pedidos' },
-        { icon: 'notifications-outline', label: 'Notificación Estado' },
+        { icon: 'reader-outline', label: 'Pedidos' },
+        { icon: 'timer-outline', label: 'Historial' },
+        { icon: 'notifications-outline', label: 'Notificación' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isAdmin()) {
