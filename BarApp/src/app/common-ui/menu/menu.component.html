@@ -83,7 +83,7 @@
 </div>
 
 <!-- menu mobile-->
-<ion-content class="menu-mobile">
+<ion-content class="menu-mobile" *ngIf="!isAdmin()">
   <ion-tabs>
     <ion-tab-bar class="tabBar">
       <ion-tab-button *ngFor="let tab of tabsItem" class="tabButton">

@@ -56,6 +56,23 @@ ion-toolbar {
   max-width: 100px;
 }
 
+.menu-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    position: absolute;
+    bottom: 0px;
+    height: 55px;
+    overflow-y: hidden;
+  }
+}
+
 @media (max-width: 768px) {
   .menu-desktop:not(.admin-menu) {
     display: none;

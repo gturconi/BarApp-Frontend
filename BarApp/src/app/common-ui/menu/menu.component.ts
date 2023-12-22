@@ -105,6 +105,11 @@ export class MenuComponent implements OnInit {
         icon: 'person-circle-outline',
         label: 'Iniciar Sesión',
       });
+      this.tabsItem.splice(this.tabsItem.length - 2, 0, {
+        icon: 'cart-outline',
+        label: 'Pedido',
+      });
+      this.tabsItem.pop();
     }
   }
 
