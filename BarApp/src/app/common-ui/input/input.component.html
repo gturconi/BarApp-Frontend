@@ -1,7 +1,22 @@
 <ion-item class="custom-input">
   @if (this.icon) {
   <i slot="start" name="add" [class]="icon"> {{ this.iconName }} </i>
-  }
+  } @if(type === 'file'){
+  <ion-item class="image-item">
+    <ion-button size="default" class="image-btn" (click)="f.click()">
+      <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+      <ion-label slot="end">{{ label }}</ion-label>
+    </ion-button>
+    <input
+      class="ion-hide"
+      #f
+      type="file"
+      id="file-input"
+      accept="image/png, image/jpeg, image/jpg"
+      (change)="onFileSelected($event)"
+    />
+  </ion-item>
+  }@else{
   <ion-input
     [type]="type"
     autocomplete="off"
@@ -10,8 +25,7 @@
     label-placement="floating"
   >
   </ion-input>
-
-  @if (this.isPasswords) {
+  } @if (this.isPasswords) {
   <ion-button
     (click)="showOrHidePassword()"
     slot="end"

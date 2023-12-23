@@ -32,14 +32,14 @@ export class ProductsTypeService {
 
   putProductsTypes(productsType: ProductsType) {
     return this.http.put<ProductsType>(
-      `${this.apiUrl}/productsType/` + productsType.id,
+      `${this.apiUrl}/productsType/` + productsType.idProductType,
       productsType
     );
   }
 
   deleteProductsTypes(productsType: ProductsType) {
     return this.http.delete<ProductsType>(
-      `${this.apiUrl}/productsType/` + productsType.id
+      `${this.apiUrl}/productsType/` + productsType.idProductType
     );
   }
 

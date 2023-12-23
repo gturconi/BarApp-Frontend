@@ -2,12 +2,12 @@ import { Avatar, PhotoResult } from "@common/models/avatar";
 
 export class ProductsType {
   constructor(id = "", description = "", image: Avatar | PhotoResult) {
-    this.id = id;
+    this.idProductType = id;
     this.description = description;
     this.image = image;
   }
 
-  id: string;
+  idProductType: string;
   description?: string;
   image?: Avatar | PhotoResult;
 }

@@ -8,6 +8,7 @@ import { ProductsTypeFormComponent } from "./products-type.form/products-type.fo
 import { ProductsTypeComponent } from "./products-type/products-type.component";
 
 import { ProductsTypeService } from "./services/products-type.service";
+import { IonicModule } from "@ionic/angular";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,12 @@ import { ProductsTypeService } from "./services/products-type.service";
     ProductsTypeFormComponent,
     ProductsTypeComponent,
   ],
-  imports: [CommonModule, CommonUiModule, ProductsTypeRoutingModule],
+  imports: [
+    CommonModule,
+    CommonUiModule,
+    ProductsTypeRoutingModule,
+    IonicModule,
+  ],
   providers: [ProductsTypeService],
 })
 export class ProductsTypeModule {}

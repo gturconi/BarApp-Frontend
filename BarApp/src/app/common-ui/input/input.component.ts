@@ -29,4 +29,9 @@ export class InputComponent implements OnInit {
     if (this.hide) this.type = "password";
     else this.type = "text";
   }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.control.setValue(file);
+  }
 }

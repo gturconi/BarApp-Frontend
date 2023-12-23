@@ -1,1 +1,29 @@
-<p>products-type.list works!</p>
+<ion-content>
+  @for( productsType of productsTypeList; track productsType.idProductType; let
+  idx = $index) {
+  <div class="card" style="display: flex; gap: 10px">
+    <span class="title">{{ productsType.description }}</span>
+    <img
+      [src]="imagesUrl$[idx] | async"
+      alt=""
+      style="width: 10em; height: 10em"
+    />
+    <div class="actions">
+      <ion-button
+        [routerLink]="['/menu/categories/edit', productsType.idProductType]"
+        expand="block"
+        fill="clear"
+        shape="round"
+      >
+        Editar
+      </ion-button>
+      <ion-button expand="block" fill="clear" shape="round">
+        Eliminar
+      </ion-button>
+    </div>
+  </div>
+  }
+  <ion-fab-button>
+    <ion-icon name="add" [routerLink]="['/menu/categories/add']"></ion-icon>
+  </ion-fab-button>
+</ion-content>

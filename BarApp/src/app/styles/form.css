@@ -50,6 +50,31 @@ ion-icon {
   --background: var(--button);
 }
 
+.image-btn {
+  --background: var(--inputColor);
+  color: black;
+  font-weight: bold;
+  width: 80vh;
+}
+
+.image-item {
+  --background: var(--inputColor);
+
+}
+
+.custom-input .image-item {
+  --background: transparent !important;
+  --border-width: 0;
+  --padding-end: 0px;
+  --padding-start: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --inner-padding-end: 0px;
+  --inner-padding-start: 0px;
+  --inner-padding-top: 0px;
+  --inner-padding-bottom: 0px;
+}
+
 /*para el hover del button
 :host(.button-solid) {
    --background-activated: var(--buttonHover); 
