@@ -15,6 +15,15 @@
         [type]="field.inputType"
       ></app-input>
     </ng-container>
+    <ng-container *ngIf="field.type === 'select'">
+      <app-dropdown
+        [options]="field.options"
+        [autocomplete]="field.autocomplete"
+        [label]="field.label"
+        [control]="getFormControl(field.name)"
+        [placeholder]="field.placeholder"
+      ></app-dropdown>
+    </ng-container>
 
     <div class="validators">
       <div *ngIf="getErrorMessage(field.name)" class="error">

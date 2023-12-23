@@ -48,8 +48,8 @@ export class UserService {
     return this.http.put<User>(url, formData);
   }
 
-  deleteUsers(user: User) {
-    return this.http.delete(this.apiUrl + "/users/" + user.id);
+  deleteUsers(id: string) {
+    return this.http.delete(this.apiUrl + "/users/" + id);
   }
 
   changePassword(usuarioActualizado: User) {

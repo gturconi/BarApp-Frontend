@@ -10,6 +10,7 @@ import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginationComponent } from "./pagination/pagination.component";
 import { TableComponent } from "./table/table.component";
+import { DropdownComponent } from "./dropdown/dropdown.component";
 
 
 import { CommonUiRoutingModule } from './common-ui-routing.module';
@@ -22,7 +23,8 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     MenuComponent,
     FooterComponent,
     PaginationComponent,
-    TableComponent
+    TableComponent,
+    DropdownComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     MenuComponent,
     FooterComponent,
     PaginationComponent,
-    TableComponent
+    TableComponent,
+    DropdownComponent
   ],
 })
 export class CommonUiModule {}
