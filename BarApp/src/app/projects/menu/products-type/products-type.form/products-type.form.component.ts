@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormGroup } from "@angular/forms";
+import { finalize } from "rxjs/operators";
 
 import { ProductsTypeService } from "../services/products-type.service";
 import { NotificationService } from "@common/services/notification.service";
 import { LoadingService } from "@common/services/loading.service";
+import { ImageService } from "@common/services/image.service";
 
 @Component({
   selector: "app-products-type.form",
@@ -18,8 +20,10 @@ export class ProductsTypeFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private productsTypeService: ProductsTypeService,
     private notificationService: NotificationService,
+    private imageService: ImageService,
     private loadingService: LoadingService
   ) {}
 
@@ -34,8 +38,39 @@ export class ProductsTypeFormComponent implements OnInit {
     });
   }
 
-  submit(form: FormGroup) {
-    console.log(form);
+  async submit(form: FormGroup) {
+    const fileControl = form.controls["image"];
+    const imageFile: File = fileControl.value;
+
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    formData.append('description', form.controls["description"].value);
+
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.productsTypeService.postProductsTypes(formData)
+    .pipe(finalize(() => loading.dismiss()))
+    .subscribe(
+      () => {
+        this.notificationService.presentToast({
+          message: "Categoría anadida",
+          duration: 2500,
+          color: "ion-color-success",
+          position: "middle",
+          icon: "alert-circle-outline",
+        })
+        loading.dismiss();
+        this.router.navigate(["/menu/categories"]);
+      }
+    )
+   
+    /*
+    const productType = {
+      id: "",
+      description: form.value.description,
+      image: form.value.image,
+    };
+    }*/
   }
 
   formFields = [

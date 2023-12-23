@@ -23,10 +23,10 @@ export class ProductsTypeService {
     return this.http.get<ProductsType>(`${this.apiUrl}/productsType/` + id);
   }
 
-  postProductsTypes(productsType: ProductsType) {
+  postProductsTypes(formData: FormData) {
     return this.http.post<ProductsType>(
       `${this.apiUrl}/productsType`,
-      productsType
+      formData
     );
   }
 
