@@ -28,6 +28,11 @@ const routes: Routes = [
       import("./projects/faq/faq.module").then(m => m.FaqModule),
   },
   {
+    path: "users",
+    loadChildren: () =>
+      import("./projects/users/users.module").then((x) => x.UsersPageModule),
+  },
+  {
     path: "",
     redirectTo: "intro",
     pathMatch: "full",
