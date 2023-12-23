@@ -11,8 +11,10 @@
           [form]="form"
           [fields]="formFields"
           [buttons]="myButtons"
+          [editMode]="editMode"
           [validationConfig]="validationConfig"
-          (formSubmit)="submit($event)"
+          (formSubmit)="editMode ? edit($event) : add($event)"          
+          (formEdit)="setForm($event)"
         >
         </app-form>
       </ion-card-content>

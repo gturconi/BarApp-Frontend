@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
+import { finalize } from "rxjs/operators";
 
 import { ProductsTypeService } from "../services/products-type.service";
 import { ImageService } from "@common/services/image.service";
@@ -7,6 +8,7 @@ import { ImageService } from "@common/services/image.service";
 import { ProductsType } from "../models/productsType";
 import { Avatar } from "@common/models/avatar";
 import { LoadingService } from "@common/services/loading.service";
+import { NotificationService } from "@common/services/notification.service";
 
 @Component({
   selector: "app-products-type.list",
@@ -20,10 +22,15 @@ export class ProductsTypeListComponent implements OnInit {
   constructor(
     private productsTypeService: ProductsTypeService,
     private imageService: ImageService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private notificationService: NotificationService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.doSearch();
+  }
+
+  async doSearch(){
     const loading = await this.loadingService.loading();
     await loading.present();
     this.productsTypeService.getProductsTypes().subscribe(data => {
@@ -42,5 +49,23 @@ export class ProductsTypeListComponent implements OnInit {
   getImage(productsType: ProductsType) {
     const image = productsType.image as Avatar;
     return this.imageService.getImage(image.data, image.type);
+  }
+
+  async delete(id: string) {  
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.productsTypeService.deleteProductsTypes(id)
+    .pipe(finalize(() => loading.dismiss()))
+    .subscribe(() => {
+      this.notificationService.presentToast({
+          message: "Categoría eliminada",
+          duration: 2500,
+          color: "ion-color-success",
+          position: "middle",
+          icon: "alert-circle-outline",
+      })
+      loading.dismiss();
+      this.doSearch();
+    });  
   }
 }

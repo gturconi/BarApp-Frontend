@@ -30,16 +30,16 @@ export class ProductsTypeService {
     );
   }
 
-  putProductsTypes(productsType: ProductsType) {
+  putProductsTypes(id: string, formData: FormData) {
     return this.http.put<ProductsType>(
-      `${this.apiUrl}/productsType/` + productsType.idProductType,
-      productsType
+      `${this.apiUrl}/productsType/` + id,
+      formData
     );
   }
 
-  deleteProductsTypes(productsType: ProductsType) {
+  deleteProductsTypes(id: string) {
     return this.http.delete<ProductsType>(
-      `${this.apiUrl}/productsType/` + productsType.idProductType
+      `${this.apiUrl}/productsType/` + id
     );
   }
 
