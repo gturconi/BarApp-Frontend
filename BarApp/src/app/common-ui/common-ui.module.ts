@@ -7,9 +7,10 @@ import { IonicModule } from "@ionic/angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormComponent } from "./form/form.component";
 import { TableComponent } from "./table/table.component";
+import { DropdownComponent } from "./dropdown/dropdown.component";
 
 @NgModule({
-  declarations: [InputComponent, FormComponent, TableComponent],
+  declarations: [InputComponent, FormComponent, TableComponent, DropdownComponent],
   imports: [
     CommonModule,
     CommonUiRoutingModule,
@@ -17,6 +18,6 @@ import { TableComponent } from "./table/table.component";
     ReactiveFormsModule,
     FormsModule,
   ],
-  exports: [InputComponent, ReactiveFormsModule, FormComponent, TableComponent],
+  exports: [InputComponent, ReactiveFormsModule, FormComponent, TableComponent, DropdownComponent],
 })
 export class CommonUiModule {}

@@ -18,6 +18,11 @@ const routes: Routes = [
       import("./projects/intro/intro.module").then((m) => m.IntroModule),
   },
   {
+    path: "users",
+    loadChildren: () =>
+      import("./projects/users/users.module").then((x) => x.UsersPageModule),
+  },
+  {
     path: "",
     redirectTo: "intro",
     pathMatch: "full",
