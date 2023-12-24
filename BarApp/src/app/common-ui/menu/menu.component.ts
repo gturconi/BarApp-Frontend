@@ -3,12 +3,15 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { UserRoles } from '@common/constants/user.roles.enum';
 
+import { Output, EventEmitter } from '@angular/core';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
+  @Output() menuToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
   showBackButton: boolean = false;
   showDesktopMenu: boolean = true;
   isScreenSmall: boolean = false;
@@ -80,8 +83,8 @@ export class MenuComponent implements OnInit {
     if (!this.showDesktopMenu) {
       this.showDesktopMenu = false;
     }
+    this.menuToggled.emit(this.showDesktopMenu); // Emitir el estado del menú
   }
-
   updateMenu() {
     const userLoggedIn = this.loginService.isLoggedIn();
 

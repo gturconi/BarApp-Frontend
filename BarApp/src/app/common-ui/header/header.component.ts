@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { UserRoles } from '@common/constants/user.roles.enum';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,12 @@ import { UserRoles } from '@common/constants/user.roles.enum';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Input() showMenu: boolean = false;
   showBackButton: boolean = false;
+
+  onMenuToggle(showMenu: boolean) {
+    this.showMenu = showMenu;
+  }
 
   constructor(
     private router: Router,
