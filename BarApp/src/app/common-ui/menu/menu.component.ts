@@ -10,6 +10,8 @@ import { UserRoles } from '@common/constants/user.roles.enum';
 })
 export class MenuComponent implements OnInit {
   showBackButton: boolean = false;
+  showDesktopMenu: boolean = true;
+  isScreenSmall: boolean = false;
 
   menuItems: any[] = [];
   tabsItem: any[] = [];
@@ -47,9 +49,37 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.updateBackButtonVisibility(this.router.url);
     this.updateMenu();
+    this.checkScreenSize();
+    window.addEventListener('resize', () => {
+      this.checkScreenSize();
+    });
     /*para saber si esta logueado /TODO: borrarlo en un futuro*/
     const loggedIn = this.isLoggedIn();
     console.log('¿Estoy logueado?', loggedIn);
+  }
+
+  checkScreenSize() {
+    const screenWidth = window.innerWidth;
+    this.isScreenSmall = screenWidth <= 768;
+
+    if (this.isScreenSmall) {
+      if (!this.isLoggedIn()) {
+        this.showDesktopMenu = false;
+      } else if (this.loginService.isAdmin()) {
+        this.showDesktopMenu = true;
+      } else {
+        this.showDesktopMenu = screenWidth > 768;
+      }
+    } else {
+      this.showDesktopMenu = true;
+    }
+  }
+
+  toggleDesktopMenu(tabIcon: string) {
+    this.showDesktopMenu = tabIcon === 'ellipsis-vertical-sharp';
+    if (!this.showDesktopMenu) {
+      this.showDesktopMenu = false;
+    }
   }
 
   updateMenu() {

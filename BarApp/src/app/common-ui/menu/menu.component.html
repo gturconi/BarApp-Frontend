@@ -1,9 +1,5 @@
 <!-- menu desktop-->
-<ion-menu
-  contentId="main-content"
-  class="menu-desktop"
-  [ngClass]="{ 'admin-menu': isAdmin() }"
->
+<ion-menu contentId="main-content" class="menu-desktop" *ngIf="showDesktopMenu">
   <ion-header>
     <ion-toolbar>
       <ion-title class="logo__name">Explorar</ion-title>
@@ -65,7 +61,7 @@
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
-  <ion-header class="menu-desktop" [ngClass]="{ 'admin-menu': isAdmin() }">
+  <ion-header class="menu-desktop" *ngIf="showDesktopMenu">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
@@ -87,7 +83,10 @@
   <ion-tabs>
     <ion-tab-bar class="tabBar">
       <ion-tab-button *ngFor="let tab of tabsItem" class="tabButton">
-        <ion-icon [name]="tab.icon"></ion-icon>
+        <ion-icon
+          [name]="tab.icon"
+          (click)="toggleDesktopMenu(tab.icon)"
+        ></ion-icon>
         {{ tab.label }}
       </ion-tab-button>
     </ion-tab-bar>
