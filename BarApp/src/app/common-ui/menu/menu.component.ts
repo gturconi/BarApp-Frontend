@@ -143,6 +143,7 @@ export class MenuComponent implements OnInit {
         label: 'Pedido',
       });
       this.tabsItem.pop();
+      this.tabsItem.push({ icon: 'ellipsis-vertical-sharp', label: '' });
     }
   }
 
