@@ -8,7 +8,8 @@
       alt=""
       style="width: 10em; height: 10em"
     />
-    <div class="actions">
+
+    <div class="actions" *ngIf="admin">
       <ion-button
         [routerLink]="['/menu/categories/edit', productsType.idProductType]"
         expand="block"
@@ -17,13 +18,18 @@
       >
         Editar
       </ion-button>
-      <ion-button expand="block" fill="clear" shape="round" (click)="delete(productsType.idProductType)">
+      <ion-button
+        expand="block"
+        fill="clear"
+        shape="round"
+        (click)="delete(productsType.idProductType)"
+      >
         Eliminar
       </ion-button>
     </div>
   </div>
   }
-  <ion-fab-button>
+  <ion-fab-button *ngIf="admin">
     <ion-icon name="add" [routerLink]="['/menu/categories/add']"></ion-icon>
   </ion-fab-button>
 </ion-content>

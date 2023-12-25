@@ -9,6 +9,7 @@ import { ProductsType } from "../models/productsType";
 import { Avatar } from "@common/models/avatar";
 import { LoadingService } from "@common/services/loading.service";
 import { NotificationService } from "@common/services/notification.service";
+import { LoginService } from "@common/services/login.service";
 
 @Component({
   selector: "app-products-type.list",
@@ -18,8 +19,10 @@ import { NotificationService } from "@common/services/notification.service";
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
   imagesUrl$!: Observable<string>[];
+  admin: boolean = false;
 
   constructor(
+    private loginService: LoginService,
     private productsTypeService: ProductsTypeService,
     private imageService: ImageService,
     private loadingService: LoadingService,
@@ -27,10 +30,11 @@ export class ProductsTypeListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.admin = this.loginService.isAdmin();
     this.doSearch();
   }
 
-  async doSearch(){
+  async doSearch() {
     const loading = await this.loadingService.loading();
     await loading.present();
     this.productsTypeService.getProductsTypes().subscribe(data => {
@@ -51,21 +55,22 @@ export class ProductsTypeListComponent implements OnInit {
     return this.imageService.getImage(image.data, image.type);
   }
 
-  async delete(id: string) {  
+  async delete(id: string) {
     const loading = await this.loadingService.loading();
     await loading.present();
-    this.productsTypeService.deleteProductsTypes(id)
-    .pipe(finalize(() => loading.dismiss()))
-    .subscribe(() => {
-      this.notificationService.presentToast({
+    this.productsTypeService
+      .deleteProductsTypes(id)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(() => {
+        this.notificationService.presentToast({
           message: "Categoría eliminada",
           duration: 2500,
           color: "ion-color-success",
           position: "middle",
           icon: "alert-circle-outline",
-      })
-      loading.dismiss();
-      this.doSearch();
-    });  
+        });
+        loading.dismiss();
+        this.doSearch();
+      });
   }
 }

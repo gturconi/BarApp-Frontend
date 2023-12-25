@@ -53,6 +53,11 @@ export class LoginService {
     return JSON.parse(userStr).roleName;
   }
 
+  isAdmin() {
+    let userStr = localStorage.getItem("user") ?? "";
+    return JSON.parse(userStr).roleName === "admin";
+  }
+
   recoveryPassword(email: string) {
     const credentials = { email };
     return this.http.post(`${this.apiUrl}/auth/forgot`, credentials);
