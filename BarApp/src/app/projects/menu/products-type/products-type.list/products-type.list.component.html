@@ -13,10 +13,10 @@
         <h3>{{ slide.title }}</h3>
         <p>{{ slide.description }}</p>
         <div class="button-container">
-          <ion-button class="btn-prom">
+          <ion-button class="btn-prom tooltip" data-tooltip="Editar">
             <ion-icon name="create-outline"></ion-icon>
           </ion-button>
-          <ion-button class="btn-prom">
+          <ion-button class="btn-prom tooltip" data-tooltip="Eliminar">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </div>
@@ -59,7 +59,8 @@
                       <ion-button
                         expand="block"
                         fill="clear"
-                        class="smaller-button"
+                        class="smaller-button tooltip"
+                        data-tooltip="Editar"
                       >
                         <ion-icon name="create-outline"></ion-icon>
                       </ion-button>
@@ -68,7 +69,8 @@
                       <ion-button
                         expand="block"
                         fill="clear"
-                        class="smaller-button"
+                        class="smaller-button tooltip"
+                        data-tooltip="Eliminar"
                       >
                         <ion-icon name="trash-outline"></ion-icon>
                       </ion-button>
