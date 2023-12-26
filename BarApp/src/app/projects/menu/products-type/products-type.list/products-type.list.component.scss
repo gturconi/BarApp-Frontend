@@ -1,0 +1,134 @@
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+/*para promociones*/
+
+.slider-card {
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #f6cd8f;
+}
+
+.slide-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.slide-content h3,
+.slide-content p {
+  color: black;
+}
+
+.slide-content p {
+  margin-bottom: 30px;
+}
+
+.addButtonProm {
+  font-size: 18px;
+  padding: 5px;
+  background-color: #f9dfbc;
+  border-radius: 10px;
+  color: black;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  margin-bottom: 30px;
+  margin-left: 25px;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-prom {
+  margin-bottom: 30px;
+  --background: #f9dfbc;
+  --color: black;
+  font-size: 18px;
+  padding: 5px;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  width: 100px;
+}
+
+.btn-prom:hover {
+  --background: #f0ad48;
+  --color: black;
+}
+
+.img-slider {
+  padding: 20px;
+  width: 80%;
+}
+
+/*para categorias*/
+
+.addButtonCategory {
+  font-size: 18px;
+  padding: 5px;
+  background-color: #f9dfbc;
+  border-radius: 10px;
+  color: black;
+  text-transform: capitalize;
+  letter-spacing: 0;
+}
+
+.addButtonProm:hover,
+.addButtonCategory:hover {
+  background-color: #f6cd8f;
+}
+
+.card-products {
+  background-color: #f6cd8f;
+  border-radius: 20px;
+}
+
+.image {
+  border-radius: 10px;
+  padding-top: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 350px;
+  max-height: 350px;
+  object-fit: cover;
+}
+
+.description {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  margin-top: 20px;
+}
+
+.smaller-button {
+  font-size: 18px;
+  padding: 5px;
+  background-color: #f9dfbc;
+  border-radius: 10px;
+}
+
+.smaller-button:hover {
+  background-color: #f0ad48;
+}
+
+@media (max-width: 768px) {
+  .slider-card {
+    width: calc(100% - 45px);
+    max-width: none;
+    margin: 0 25px;
+  }
+}

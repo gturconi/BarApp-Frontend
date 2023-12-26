@@ -1,1 +1,87 @@
-<p>products-type.list works!</p>
+<ion-content>
+  <div class="title-container">
+    <h1>Promociones</h1>
+  </div>
+  <ion-button fill="clear" class="addButtonProm">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    Añadir
+  </ion-button>
+  <ion-card class="slider-card">
+    <swiper-container [navigation]="true" [pagination]="{ clickable: true }">
+      <swiper-slide *ngFor="let slide of slides" class="slide-content">
+        <img [src]="slide.imgSrc" class="img-slider" />
+        <h3>{{ slide.title }}</h3>
+        <p>{{ slide.description }}</p>
+        <div class="button-container">
+          <ion-button class="btn-prom">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button class="btn-prom">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </ion-card>
+  <div class="title-container">
+    <h1>Categorias de productos</h1>
+  </div>
+  <div class="glass-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="ion-padding">
+          <ion-button fill="clear" class="addButtonCategory">
+            <ion-icon name="add-circle-outline"></ion-icon>
+            Añadir
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        @for( productsType of productsTypeList; track
+        productsType.idProductType; let idx = $index) {
+        <ion-col size-lg="6" size-md="6" size-sm="12" size="12">
+          <ion-card class="card-products">
+            <ion-grid>
+              <ion-row>
+                <ion-col size-lg="4" size-md="4" size-sm="4" size="12">
+                  <img class="image" [src]="imagesUrl$[idx] | async" />
+                </ion-col>
+                <ion-col
+                  class="ion-text-center"
+                  size-lg="8"
+                  size-md="8"
+                  size-sm="8"
+                  size="12"
+                >
+                  <div class="description">{{ productsType.description }}</div>
+                  <ion-row class="ion-padding-top">
+                    <ion-col size="6">
+                      <ion-button
+                        expand="block"
+                        fill="clear"
+                        class="smaller-button"
+                      >
+                        <ion-icon name="create-outline"></ion-icon>
+                      </ion-button>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-button
+                        expand="block"
+                        fill="clear"
+                        class="smaller-button"
+                      >
+                        <ion-icon name="trash-outline"></ion-icon>
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- TODO: Agregar infinite scroll -->
+</ion-content>
