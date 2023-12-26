@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { User } from "@common/models/user";
-import { environment } from "src/environments/environment";
+import { User } from '@common/models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class LoginService {
   apiUrl: string = environment.apiUrl;
@@ -21,7 +21,7 @@ export class LoginService {
   }
 
   isLoggedIn() {
-    const tokenStr = localStorage.getItem("token");
+    const tokenStr = localStorage.getItem('token');
     if (tokenStr !== null) {
       const jwtRegex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$/;
       try {
@@ -35,21 +35,21 @@ export class LoginService {
   }
 
   setUser(user: User) {
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   setToken(token: string) {
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
   }
 
   logout() {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     return true;
   }
 
   getUserRole() {
-    let userStr = localStorage.getItem("user") ?? "";
+    let userStr = localStorage.getItem('user') ?? '';
     return JSON.parse(userStr).roleName;
   }
 
@@ -61,5 +61,10 @@ export class LoginService {
   resetPassword(password: string) {
     const credentials = { password };
     return this.http.put(`${this.apiUrl}/auth/reset`, credentials);
+  }
+
+  isAdmin() {
+    let userStr = localStorage.getItem('user') ?? '';
+    return JSON.parse(userStr).roleName === 'admin';
   }
 }
