@@ -1,0 +1,28 @@
+<div class="main-container">
+  <h1 class="titulo">Preguntas Frecuentes</h1>
+  <p class="subtitulo">Seleccione la categoria...</p>
+
+  <div class="categorias">
+    <div
+      *ngFor="let categoria of categorias"
+      class="categoria"
+      (click)="filterQuestionsByCategory(categoria)"
+    >
+      <ion-icon [name]="categoria.icono" class="categories-icon"></ion-icon>
+      <p>{{ categoria.nombre }}</p>
+    </div>
+  </div>
+
+  <p class="subtitulo">Inquietudes y respuestas...</p>
+
+  <ion-accordion-group>
+    <ion-accordion *ngFor="let item of preguntasFiltradas">
+      <ion-item slot="header">
+        <ion-label class="date-label">{{ item.pregunta }}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label class="date-content">{{ item.respuesta }}</ion-label>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</div>
