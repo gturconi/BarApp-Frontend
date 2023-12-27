@@ -12,6 +12,8 @@ import { CommonUiModule } from "@common-ui/common-ui.module";
 import { TokenInterceptor } from "src/app/interceptors/token.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { OAuthModule } from "angular-oauth2-oidc";
+import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +24,14 @@ import { OAuthModule } from "angular-oauth2-oidc";
     CommonUiModule,
     HttpClientModule,
     OAuthModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 2500,
+      positionClass: "toast-bottom-center",
+      preventDuplicates: true,
+      progressBar: true,
+      progressAnimation: "decreasing",
+    }),
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

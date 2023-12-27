@@ -7,11 +7,11 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, of } from "rxjs";
-import { NotificationService } from "@common/services/notification.service";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private notificationService: NotificationService) {}
+  constructor(private toastrService: ToastrService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -36,13 +36,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(reqClone).pipe(
       catchError(exception => {
-        this.notificationService.presentToast({
-          message: exception.error.message,
-          duration: 2500,
-          color: "ion-color-danger",
-          position: "middle",
-          icon: "alert-circle-outline",
-        });
+        this.toastrService.error(exception.error.message);
         return of(exception);
       })
     );

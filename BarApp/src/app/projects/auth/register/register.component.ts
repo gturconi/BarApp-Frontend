@@ -9,7 +9,7 @@ import { User } from "@common/models/user";
 
 import { LoadingService } from "@common/services/loading.service";
 import { UserService } from "../../services/user.service";
-import { NotificationService } from "@common/services/notification.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-register",
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private loadingService: LoadingService,
-    private notificationService: NotificationService
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit() {}
@@ -49,14 +49,9 @@ export class RegisterComponent implements OnInit {
       .postUsers(nuevoUsuario)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
-        this.notificationService.presentToast({
-          message: "Usuario creado con exito, por favor inicie sesion",
-          duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
-        });
-
+        this.toastrService.success(
+          "Usuario creado con exito, por favor inicie sesion"
+        );
         this.router.navigate(["/auth"]);
       });
   }

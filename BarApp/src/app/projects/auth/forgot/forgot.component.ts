@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { finalize } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { LoadingService } from "@common/services/loading.service";
 import { LoginService } from "@common/services/login.service";
-import { NotificationService } from "@common/services/notification.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-forgot",
@@ -22,7 +22,7 @@ export class ForgotComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private loadingService: LoadingService,
-    private notificationService: NotificationService,
+    private toastrService: ToastrService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -110,14 +110,7 @@ export class ForgotComponent implements OnInit {
       .recoveryPassword(form.value.email!)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe((res: any) => {
-        this.notificationService.presentToast({
-          message: res.message,
-          duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
-        });
-        loading.dismiss();
+        this.toastrService.success(res.message);
       });
   }
 
@@ -127,13 +120,7 @@ export class ForgotComponent implements OnInit {
 
     if (form.value.password != form.value.password2) {
       loading.dismiss();
-      this.notificationService.presentToast({
-        message: "Las contraseñas no coinciden",
-        duration: 2500,
-        color: "ion-color-danger",
-        position: "middle",
-        icon: "alert-circle-outline",
-      });
+      this.toastrService.error("Las contraseñas no coinciden");
       return;
     }
 
@@ -143,13 +130,7 @@ export class ForgotComponent implements OnInit {
         .resetPassword(form.value.password!)
         .pipe(finalize(() => loading.dismiss()))
         .subscribe((res: any) => {
-          this.notificationService.presentToast({
-            message: res.message,
-            duration: 2500,
-            color: "ion-color-success",
-            position: "middle",
-            icon: "alert-circle-outline",
-          });
+          this.toastrService.success(res.message);
           loading.dismiss();
           this.router.navigate(["auth"]);
         });
