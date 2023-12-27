@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '@common/services/login.service';
 
 @Component({
   selector: 'app-faq',
@@ -7,110 +6,116 @@ import { LoginService } from '@common/services/login.service';
   styleUrls: ['./faq.component.scss'],
 })
 export class FaqComponent implements OnInit {
-  categorias: any[] = [];
-  preguntas: any[] = [];
+  categoriaSeleccionada: any;
+
+  categorias = [
+    { nombre: 'Cuenta', icono: 'people-outline' },
+    { nombre: 'Pedido', icono: 'reader-outline' },
+    { nombre: 'Reserva', icono: 'calendar-outline' },
+    { nombre: 'Escanear QR', icono: 'qr-code-outline' },
+  ];
+
+  preguntas = [
+    {
+      categoria: 'Cuenta',
+      pregunta: ' ¿Cómo creo una cuenta?',
+      respuesta:
+        'Puedes crear una cuenta nueva haciendo clic en el botón "Registrarse" en la pantalla de inicio. Luego, sigue las instrucciones para completar tu registro con la información solicitada.',
+    },
+    {
+      categoria: 'Cuenta',
+      pregunta: ' ¿Olvidé mi contraseña? ¿Cómo puedo restablecerla?',
+      respuesta:
+        'Si olvidaste tu contraseña, ve a la pantalla de inicio de sesión y selecciona "¿Olvidaste tu contraseña?" Sigue los pasos indicados para restablecerla a través del correo electrónico asociado a tu cuenta.',
+    },
+    {
+      categoria: 'Cuenta',
+      pregunta:
+        '¿Puedo cambiar mi dirección de correo electrónico o información personal?',
+      respuesta:
+        'Sí, puedes actualizar tu información personal en la sección de "Perfil" dentro de la App. Allí encontrarás opciones para editar tu correo electrónico, nombre y otros detalles personales.',
+    },
+    {
+      categoria: 'Cuenta',
+      pregunta: '¿Qué hago si encuentro un problema técnico con mi cuenta?',
+      respuesta:
+        'Si tienes problemas técnicos, te recomendamos contactar a nuestro equipo de soporte. En la sección de "Sobre nosotros"/"Contacto", encontrarás las instrucciones para comunicarte con nosotros.',
+    },
+    {
+      categoria: 'Pedido',
+      pregunta: '¿Cómo realizo un pedido en la App?',
+      respuesta:
+        'Para realizar un pedido, inicia sesión en la App, selecciona los productos que te gustaría pedir, escanee el QR y procede al checkout para confirmar tu pedido.',
+    },
+    {
+      categoria: 'Pedido',
+      pregunta: '¿Qué métodos de pago están disponibles?',
+      respuesta:
+        'Aceptamos pagos mediante Mercado Pago y también ofrecemos opciones de pago en efectivo al momento de la entrega.',
+    },
+    {
+      categoria: 'Pedido',
+      pregunta: '¿Puedo modificar o cancelar mi pedido después de realizarlo?',
+      respuesta:
+        'Una vez realizado el pedido, las modificaciones o cancelaciones están sujetas a disponibilidad y deben ser realizadas lo antes posible.',
+    },
+    {
+      categoria: 'Reserva',
+      pregunta: '¿Cómo puedo realizar una reserva en su bar?',
+      respuesta:
+        'Para reservar utiliza nuestra App en la sección "Reservas". También puedes visitarnos personalmente.',
+    },
+    {
+      categoria: 'Reserva',
+      pregunta: '¿Cuál es la política de cancelación para las reservas?',
+      respuesta:
+        'Apreciamos la notificación anticipada en caso de cancelación. Por favor, notifique en la App con  antelación para cualquier cambio o cancelación.',
+    },
+    {
+      categoria: 'Reserva',
+      pregunta: '¿Puedo hacer cambios en mi reserva una vez confirmada?',
+      respuesta:
+        '¡Por supuesto! Estaremos encantados de ayudarte con cualquier cambio en tu reserva, siempre y cuando haya disponibilidad desde la App.',
+    },
+    {
+      categoria: 'Reserva',
+      pregunta: '¿Tienen horarios específicos para las reservas?',
+      respuesta:
+        'Nuestro horario para reservas varía. Te recomendamos consultar nuestros horarios de apertura y disponibilidad actualizada desde la App.',
+    },
+    {
+      categoria: 'Escanear QR',
+      pregunta: '¿Por qué debo escanear el código QR en la app del bar?',
+      respuesta:
+        'Escanear el código QR te permite acceder fácilmente al menú digital, realizar pedidos desde tu mesa y disfrutar de una experiencia sin contacto.',
+    },
+    {
+      categoria: 'Escanear QR',
+      pregunta: '¿Cómo escaneo el código QR desde la app del bar?',
+      respuesta:
+        'Abre la app, selecciona la opción "Escanear QR", apunta la cámara del teléfono al código y espera a que se cargue el menú en tu dispositivo.',
+    },
+    {
+      categoria: 'Escanear QR',
+      pregunta: '¿El escaneo del código QR requiere conexión a internet?',
+      respuesta:
+        'Sí, para acceder al menú digital y realizar pedidos necesitas conexión a internet.',
+    },
+  ];
+
   preguntasFiltradas: any[] = [];
 
-  constructor(private loginService: LoginService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.loadFaq();
+    const categoriaPredeterminada = this.categorias[0];
+    this.seleccionarCategoria(categoriaPredeterminada);
   }
 
-  loadFaq() {
-    if (this.loginService.isLoggedIn()) {
-      if (this.loginService.isAdmin()) {
-        this.loadFaqAdmin();
-      } else if (this.loginService.isEmployee()) {
-        this.loadFaqEmployee();
-      } else {
-        this.loadFaqUsers();
-      }
-    } else {
-      this.loadFaqUsers();
-    }
-  }
-
-  loadFaqAdmin() {
-    this.categorias = [
-      { nombre: 'Forma de pago', icono: 'card-outline' },
-      { nombre: 'Cuenta', icono: 'people-outline' },
-      { nombre: 'Pedido', icono: 'reader-outline' },
-      { nombre: 'Reserva', icono: 'calendar-outline' },
-      { nombre: 'Escanear QR', icono: 'qr-code-outline' },
-    ];
-    this.preguntas = [
-      {
-        categoria: 'Forma de pago',
-        pregunta: '¿Cómo pago?',
-        respuesta: 'Respuesta 1',
-      },
-      {
-        categoria: 'Forma de pago',
-        pregunta: '¿Cómo pago?',
-        respuesta: 'Respuesta 1',
-      },
-      {
-        categoria: 'Cuenta',
-        pregunta: 'Otra pregunta',
-        respuesta: 'Respuesta 2',
-      },
-    ];
-    this.filterQuestionsByCategory(this.categorias[0]); // Seleccionar la primera categoría
-  }
-
-  loadFaqEmployee() {
-    // Cargar categorías y preguntas específicas para el empleado
-    this.categorias = [
-      // Categorías para el empleado
-    ];
-    this.preguntas = [
-      // Preguntas para el empleado
-    ];
-    this.filterQuestionsByCategory(this.categorias[0]); // Seleccionar la primera categoría
-  }
-
-  loadFaqUsers() {
-    this.categorias = [
-      { nombre: 'Forma de pago', icono: 'card-outline' },
-      { nombre: 'Cuenta', icono: 'people-outline' },
-      { nombre: 'Pedido', icono: 'reader-outline' },
-      { nombre: 'Reserva', icono: 'calendar-outline' },
-      { nombre: 'Escanear QR', icono: 'qr-code-outline' },
-    ];
-    this.preguntas = [
-      {
-        categoria: 'Forma de pago',
-        pregunta: '¿Cómo pago?',
-        respuesta: 'Respuesta 1',
-      },
-      {
-        categoria: 'Forma de pago',
-        pregunta: '¿Cómo pago?',
-        respuesta: 'Respuesta 1',
-      },
-      {
-        categoria: 'Cuenta',
-        pregunta: '¿Cómo me registro?',
-        respuesta: 'Respuesta 2',
-      },
-      {
-        categoria: 'Cuenta',
-        pregunta: '¿Cómo inicio sesión?',
-        respuesta: 'Respuesta 2',
-      },
-      {
-        categoria: 'Cuenta',
-        pregunta: '¿Puedo editar los datos de mi cuenta?',
-        respuesta: 'Respuesta 2',
-      },
-    ];
-    this.filterQuestionsByCategory(this.categorias[0]); // Seleccionar la primera categoría
-  }
-
-  filterQuestionsByCategory(categoria: any) {
+  seleccionarCategoria(categoria: any) {
     this.preguntasFiltradas = this.preguntas.filter(
       pregunta => pregunta.categoria === categoria.nombre
     );
+    this.categoriaSeleccionada = categoria;
   }
 }
