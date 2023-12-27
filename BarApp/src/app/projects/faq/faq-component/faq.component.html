@@ -20,7 +20,7 @@
     <p class="subtitulo">Inquietudes y respuestas...</p>
     <div class="accordion-container">
       <ion-accordion-group class="accordion">
-        <ion-accordion *ngFor="let item of preguntasFiltradas">
+        <ion-accordion class="answer" *ngFor="let item of preguntasFiltradas">
           <ion-item slot="header">
             <ion-label class="date-label">{{ item.pregunta }}</ion-label>
           </ion-item>
