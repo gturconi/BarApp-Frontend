@@ -79,12 +79,21 @@ export class MenuComponent implements OnInit {
   }
 
   toggleDesktopMenu(tabIcon: string) {
-    this.showDesktopMenu = tabIcon === 'ellipsis-vertical-sharp';
-    if (!this.showDesktopMenu) {
+    if (tabIcon === 'ellipsis-vertical-sharp') {
+      this.showDesktopMenu = true;
+      this.menuToggled.emit(this.showDesktopMenu);
+      setTimeout(() => {
+        const menuButton = document.getElementById('menuButton');
+        if (menuButton) {
+          menuButton.click();
+        }
+      }, 0);
+    } else {
       this.showDesktopMenu = false;
+      this.menuToggled.emit(this.showDesktopMenu);
     }
-    this.menuToggled.emit(this.showDesktopMenu); // Emitir el estado del menú
   }
+
   updateMenu() {
     const userLoggedIn = this.loginService.isLoggedIn();
 
