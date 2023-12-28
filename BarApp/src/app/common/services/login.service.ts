@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
-import { User } from '@common/models/user';
-import { environment } from 'src/environments/environment';
+import { User } from "@common/models/user";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class LoginService {
   apiUrl: string = environment.apiUrl;
@@ -13,15 +13,15 @@ export class LoginService {
 
   authenticateUser(email: string, password: string) {
     const credentials = { email, password };
-    return this.http.post(`${this.apiUrl}/auth/signin`, credentials);
+    return this.http.post<User>(`${this.apiUrl}/auth/signin`, credentials);
   }
 
   getUser(id: string) {
-    return this.http.get(`${this.apiUrl}/users/` + id);
+    return this.http.get<User>(`${this.apiUrl}/users/` + id);
   }
 
   isLoggedIn() {
-    const tokenStr = localStorage.getItem('token');
+    const tokenStr = localStorage.getItem("token");
     if (tokenStr !== null) {
       const jwtRegex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$/;
       try {
@@ -35,40 +35,22 @@ export class LoginService {
   }
 
   setUser(user: User) {
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
   }
 
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem("token", token);
   }
 
   logout() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     return true;
   }
 
   getUserRole() {
-    let userStr = localStorage.getItem('user') ?? '';
+    let userStr = localStorage.getItem("user") ?? "";
     return JSON.parse(userStr).roleName;
-  }
-
-  isAdmin(): boolean {
-    const userStr = localStorage.getItem('user') ?? '';
-    const userRole = JSON.parse(userStr).roleName;
-    return userRole === 'admin';
-  }
-
-  isEmployee(): boolean {
-    const userStr = localStorage.getItem('user') ?? '';
-    const userRole = JSON.parse(userStr).roleName;
-    return userRole === 'employee';
-  }
-
-  isClient(): boolean {
-    const userStr = localStorage.getItem('user') ?? '';
-    const userRole = JSON.parse(userStr).roleName;
-    return userRole === 'customer';
   }
 
   recoveryPassword(email: string) {
