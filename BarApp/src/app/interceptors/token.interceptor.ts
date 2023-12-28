@@ -7,11 +7,11 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, of } from "rxjs";
-import { ToastrService } from "ngx-toastr";
+import { NotificationService } from "@common/services/notification.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private toastrService: ToastrService) {}
+  constructor(private notificationService: NotificationService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -36,7 +36,9 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(reqClone).pipe(
       catchError(exception => {
-        this.toastrService.error(exception.error.message);
+        this.notificationService.presentToast({
+          message: exception.error.message,
+        });
         return of(exception);
       })
     );

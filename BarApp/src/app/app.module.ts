@@ -30,6 +30,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
       preventDuplicates: true,
       progressBar: true,
       progressAnimation: "decreasing",
+      enableHtml: true,
     }),
     BrowserAnimationsModule,
   ],
@@ -37,12 +38,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
+      useClass: TokenInterceptor,
       multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: ErrorInterceptor,
       multi: true,
     },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize } from "rxjs/operators";
 import { ChangeDetectionStrategy } from "@angular/core";
@@ -63,7 +63,7 @@ export class EditComponent implements OnInit {
     const loading = await this.loadingService.loading();
     await loading.present();
     this.userService
-      .putUsers(usuaroActualizado)
+      .editUserData(usuaroActualizado)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(user => {
         this.toastrService.success("Usuario editado con exito");

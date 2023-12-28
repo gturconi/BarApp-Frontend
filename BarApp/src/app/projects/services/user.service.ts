@@ -36,6 +36,13 @@ export class UserService {
     );
   }
 
+  editUserData(selectedUser: User) {
+    return this.http.put<User>(
+      this.apiUrl + "/auth/edit/" + selectedUser.id,
+      selectedUser
+    );
+  }
+
   updateAvatar(userId: string, formData: FormData): Observable<User> {
     const url = `${this.apiUrl}/users/${userId}`;
     return this.http.put<User>(url, formData);

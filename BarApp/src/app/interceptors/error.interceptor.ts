@@ -6,21 +6,22 @@ import {
 } from "@angular/common/http";
 
 import { tap } from "rxjs";
-import { ToastrService } from "ngx-toastr";
+import { NotificationService } from "@common/services/notification.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class ErrorInterceptor {
-  constructor(private toastrService: ToastrService) {}
+  constructor(private notificationService: NotificationService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
     return next.handle(request).pipe(
       tap(event => {
         //  console.log(event);
         if (event instanceof HttpErrorResponse) {
-          //console.log("HTTP Response:", event.error.message);
-          this.toastrService.error(event.error.message);
+          this.notificationService.presentToast({
+            message: event.error.message,
+          });
         }
       })
     );
