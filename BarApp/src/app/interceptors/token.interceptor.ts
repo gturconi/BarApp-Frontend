@@ -18,6 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     let token = localStorage.getItem("token");
+    let error = { message: "" };
 
     const isFileUpload = req.body instanceof FormData;
 
@@ -36,9 +37,10 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(reqClone).pipe(
       catchError(exception => {
-        this.notificationService.presentToast({
-          message: exception.error.message,
-        });
+        exception.status
+          ? (error.message = exception.error.message)
+          : (error.message = "No se pudo completar la solicitud");
+        this.notificationService.presentToast(error);
         return of(exception);
       })
     );
