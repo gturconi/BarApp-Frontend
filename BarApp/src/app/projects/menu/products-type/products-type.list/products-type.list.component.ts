@@ -1,25 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
-import { ProductsTypeService } from "../services/products-type.service";
-import { ImageService } from "@common/services/image.service";
+import { ProductsTypeService } from '../services/products-type.service';
+import { ImageService } from '@common/services/image.service';
 
-import { ProductsType } from "../models/productsType";
-import { Avatar } from "@common/models/avatar";
-import { LoadingService } from "@common/services/loading.service";
-import { NotificationService } from "@common/services/notification.service";
-import { LoginService } from "@common/services/login.service";
+import { ProductsType } from '../models/productsType';
+import { Avatar } from '@common/models/avatar';
+import { LoadingService } from '@common/services/loading.service';
+import { NotificationService } from '@common/services/notification.service';
+import { LoginService } from '@common/services/login.service';
 
 @Component({
-  selector: "app-products-type.list",
-  templateUrl: "./products-type.list.component.html",
-  styleUrls: ["./products-type.list.component.scss"],
+  selector: 'app-products-type.list',
+  templateUrl: './products-type.list.component.html',
+  styleUrls: ['./products-type.list.component.scss'],
 })
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
   imagesUrl$!: Observable<string>[];
   admin: boolean = false;
+  showData: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -40,6 +41,7 @@ export class ProductsTypeListComponent implements OnInit {
     this.productsTypeService.getProductsTypes().subscribe(data => {
       this.productsTypeList = data.results;
       this.setImages(this.productsTypeList);
+      this.showData = true;
       loading.dismiss();
     });
   }
@@ -63,11 +65,11 @@ export class ProductsTypeListComponent implements OnInit {
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
         this.notificationService.presentToast({
-          message: "Categoría eliminada",
+          message: 'Categoría eliminada',
           duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
+          color: 'ion-color-success',
+          position: 'middle',
+          icon: 'alert-circle-outline',
         });
         loading.dismiss();
         this.doSearch();
