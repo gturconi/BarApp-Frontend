@@ -51,9 +51,24 @@
       }
     </div>
     <div class="button-add-container" *ngIf="showData && admin">
-      <ion-fab-button class="button-add">
-        <ion-icon name="add" [routerLink]="['/menu/categories/add']"></ion-icon>
-      </ion-fab-button>
+      <ion-fab slot="fixed" vertical="bottom" horizontal="start" class="add">
+        <ion-fab-button class="button-add">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+          <ion-fab-button class="botton-add-expand">
+            <ion-icon name="pricetags-outline"></ion-icon>
+            <span>Promoción</span>
+          </ion-fab-button>
+          <ion-fab-button
+            class="botton-add-expand"
+            [routerLink]="['/menu/categories/add']"
+          >
+            <ion-icon name="reader-outline"></ion-icon>
+            <span>Categoría</span>
+          </ion-fab-button>
+        </ion-fab-list>
+      </ion-fab>
     </div>
   </body>
 </ion-content>
