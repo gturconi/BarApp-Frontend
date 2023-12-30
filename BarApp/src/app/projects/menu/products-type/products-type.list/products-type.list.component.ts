@@ -22,6 +22,39 @@ export class ProductsTypeListComponent implements OnInit {
   admin: boolean = false;
   showData: boolean = false;
 
+  boxes = [
+    {
+      title: 'Title 1',
+      description: 'Todos los jueves a la tarde',
+      image: 'assets/img/logoTGDnet.png',
+    },
+    {
+      title: 'Title 2',
+      description: 'valida del 15/7 al 48/7',
+      image: 'assets/img/fondoIntro.jpg',
+    },
+    {
+      title: 'Title 3',
+      description: 'Description 3',
+      image: 'assets/img/prueba.jpg',
+    },
+    {
+      title: 'Title 4',
+      description: 'Description 4',
+      image: 'ruta_imagen_4',
+    },
+    {
+      title: 'Title 5',
+      description: 'Description 5',
+      image: 'ruta_imagen_5',
+    },
+    {
+      title: 'Title 6',
+      description: 'Description 6',
+      image: 'ruta_imagen_6',
+    },
+  ];
+
   constructor(
     private loginService: LoginService,
     private productsTypeService: ProductsTypeService,
