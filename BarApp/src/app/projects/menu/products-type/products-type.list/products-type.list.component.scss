@@ -1,6 +1,6 @@
 body {
   display: grid;
-  grid-template-rows: 30% auto;
+  grid-template-rows: auto 1fr;
   justify-content: center;
 }
 .wrapper {
@@ -11,10 +11,12 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   max-width: 600px;
+  border: none;
+  padding-bottom: 10px;
 }
 
 .wrapper .item {
-  border-radius: 10%;
+  border-radius: 20px;
   min-width: 110px;
   height: 100%;
   line-height: 110px;
@@ -32,12 +34,10 @@ body {
   height: 7px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #f6cd8f;
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #d4d4d4;
-}
+
 ::-webkit-scrollbar-track {
   background: #da6047;
   border-radius: 8px;
@@ -231,7 +231,8 @@ body {
     padding-right: 5px;
   }
 
-  .section-title {
+  .section-title,
+  .wrapper {
     margin-left: 5px;
     margin-right: 5px;
   }
