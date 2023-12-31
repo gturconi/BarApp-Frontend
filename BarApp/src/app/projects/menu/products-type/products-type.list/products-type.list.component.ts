@@ -12,6 +12,8 @@ import { LoginService } from '@common/services/login.service';
 import { ProductsTypeService } from '../services/products-type.service';
 import { ProductsType } from '../models/productsType';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-products-type.list',
   templateUrl: './products-type.list.component.html',
@@ -98,25 +100,34 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   async delete(id: string) {
-    const confirmDelete = confirm(DELETE_CONFIRMATION_MESSAGE);
-
-    if (confirmDelete) {
-      const loading = await this.loadingService.loading();
-      await loading.present();
-      this.productsTypeService
-        .deleteProductsTypes(id)
-        .pipe(finalize(() => loading.dismiss()))
-        .subscribe(() => {
-          this.notificationService.presentToast({
-            message: 'Categoría eliminada',
-            duration: 2500,
-            color: 'ion-color-success',
-            position: 'middle',
-            icon: 'alert-circle-outline',
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: DELETE_CONFIRMATION_MESSAGE,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then(async result => {
+      if (result.isConfirmed) {
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.productsTypeService
+          .deleteProductsTypes(id)
+          .pipe(finalize(() => loading.dismiss()))
+          .subscribe(() => {
+            this.notificationService.presentToast({
+              message: 'Categoría eliminada',
+              duration: 2500,
+              color: 'ion-color-success',
+              position: 'middle',
+              icon: 'alert-circle-outline',
+            });
+            loading.dismiss();
+            this.doSearch();
           });
-          loading.dismiss();
-          this.doSearch();
-        });
-    }
+      }
+    });
   }
 }
