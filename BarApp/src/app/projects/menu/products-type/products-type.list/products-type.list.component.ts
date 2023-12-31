@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { ProductsTypeService } from '../services/products-type.service';
-import { ImageService } from '@common/services/image.service';
-
-import { ProductsType } from '../models/productsType';
+import { DELETE_CONFIRMATION_MESSAGE } from 'src/app/common/constants/messages.constant';
 import { Avatar } from '@common/models/avatar';
+import { ImageService } from '@common/services/image.service';
 import { LoadingService } from '@common/services/loading.service';
 import { NotificationService } from '@common/services/notification.service';
 import { LoginService } from '@common/services/login.service';
+
+import { ProductsTypeService } from '../services/products-type.service';
+import { ProductsType } from '../models/productsType';
 
 @Component({
   selector: 'app-products-type.list',
@@ -97,21 +98,25 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   async delete(id: string) {
-    const loading = await this.loadingService.loading();
-    await loading.present();
-    this.productsTypeService
-      .deleteProductsTypes(id)
-      .pipe(finalize(() => loading.dismiss()))
-      .subscribe(() => {
-        this.notificationService.presentToast({
-          message: 'Categoría eliminada',
-          duration: 2500,
-          color: 'ion-color-success',
-          position: 'middle',
-          icon: 'alert-circle-outline',
+    const confirmDelete = confirm(DELETE_CONFIRMATION_MESSAGE);
+
+    if (confirmDelete) {
+      const loading = await this.loadingService.loading();
+      await loading.present();
+      this.productsTypeService
+        .deleteProductsTypes(id)
+        .pipe(finalize(() => loading.dismiss()))
+        .subscribe(() => {
+          this.notificationService.presentToast({
+            message: 'Categoría eliminada',
+            duration: 2500,
+            color: 'ion-color-success',
+            position: 'middle',
+            icon: 'alert-circle-outline',
+          });
+          loading.dismiss();
+          this.doSearch();
         });
-        loading.dismiss();
-        this.doSearch();
-      });
+    }
   }
 }

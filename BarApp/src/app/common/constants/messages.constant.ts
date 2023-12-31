@@ -1,0 +1,1 @@
+export const DELETE_CONFIRMATION_MESSAGE: string = '¿Estás seguro de que quieres eliminar el elemento?';
