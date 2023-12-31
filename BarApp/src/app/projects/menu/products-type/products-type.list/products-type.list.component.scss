@@ -69,6 +69,18 @@ body {
   overflow: hidden;
   animation: scrollText 6s linear infinite;
 }
+
+.offer-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #dc143c;
+  color: #fff;
+  padding: 5px 10px;
+  border-top-left-radius: 10px;
+  font-weight: bold;
+}
+
 .wrapper::-webkit-scrollbar {
   width: 4px;
 }

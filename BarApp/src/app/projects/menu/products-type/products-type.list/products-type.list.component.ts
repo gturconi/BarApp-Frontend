@@ -27,31 +27,37 @@ export class ProductsTypeListComponent implements OnInit {
       title: 'Title 1',
       description: 'Todos los jueves a la tarde',
       image: 'assets/img/logoTGDnet.png',
+      onSale: true,
     },
     {
       title: 'Title 2',
       description: 'valida del 15/7 al 48/7',
       image: 'assets/img/fondoIntro.jpg',
+      onSale: true,
     },
     {
       title: 'Title 3',
       description: 'Description 3',
       image: 'assets/img/prueba.jpg',
+      onSale: false,
     },
     {
       title: 'Title 4',
       description: 'Description 4',
       image: 'ruta_imagen_4',
+      onSale: true,
     },
     {
       title: 'Title 5',
       description: 'Description 5',
       image: 'ruta_imagen_5',
+      onSale: false,
     },
     {
       title: 'Title 6',
       description: 'Description 6',
       image: 'ruta_imagen_6',
+      onSale: false,
     },
   ];
 
