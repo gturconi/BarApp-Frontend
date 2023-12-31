@@ -3,7 +3,9 @@
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper">
       <div class="item" *ngFor="let box of boxes">
-        <div class="offer-label" *ngIf="box.onSale">Oferta</div>
+        <div class="offer-label" *ngIf="box.onSale">
+          Oferta <span class="material-symbols-outlined"> verified </span>
+        </div>
         <img [src]="box.image" class="item1-image" />
         <h3 class="item1-title">{{ box.title }}</h3>
         <div *ngIf="box.description.length > 14" class="scrollable">
