@@ -24,17 +24,11 @@
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ productsType.description }}</span>
         <div class="actions" *ngIf="!admin">
-          <ion-button
-            [routerLink]="['/menu/categories/edit', productsType.idProductType]"
-            expand="block"
-            fill="clear"
-            shape="round"
-            class="buttons-notadmin"
-            >Ver más<ion-icon
-              name="chevron-forward-circle-outline"
-              class="icons-show"
-            ></ion-icon
-          ></ion-button>
+          <ion-icon
+            [routerLink]="[]"
+            class="icons-show"
+            name="chevron-forward-circle-outline"
+          ></ion-icon>
         </div>
         <div class="actions" *ngIf="admin">
           <ion-button

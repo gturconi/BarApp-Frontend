@@ -168,10 +168,12 @@ body {
   max-width: 200px;
 }
 
-.actions .icons-show {
-  font-size: 20px;
-  margin-left: 5px;
+.icons-show {
+  font-size: 30px;
+  cursor: pointer;
   color: #da6047;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .actions .icons-accions {
@@ -188,21 +190,6 @@ body {
 
 .actions .buttons-admin:hover {
   background-color: #da6047;
-}
-
-.actions .buttons-notadmin {
-  background-color: #f9dfbc;
-  padding: 0px;
-  border-radius: 17px;
-  border: 1px solid #da6047;
-  color: #da6047;
-  text-transform: capitalize;
-  letter-spacing: 0;
-}
-
-.actions .buttons-notadmin:hover {
-  background-color: #da6047;
-  color: #f9dfbc;
 }
 
 .actions .buttons-notadmin:hover .icons-show {
@@ -246,11 +233,6 @@ body {
 
 .botton-add-expand span {
   margin-left: 5px;
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
 }
 
 .wrapper2::-webkit-scrollbar {
