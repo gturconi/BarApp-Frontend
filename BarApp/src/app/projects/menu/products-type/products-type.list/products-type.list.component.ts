@@ -24,21 +24,21 @@ export class ProductsTypeListComponent implements OnInit {
 
   boxes = [
     {
-      title: 'Title 1',
+      title: 'Hamburguesas',
       description: 'Todos los jueves a la tarde',
-      image: 'assets/img/logoTGDnet.png',
+      image: 'assets/img/hamburguesa.jpg',
       onSale: true,
     },
     {
-      title: 'Title 2',
-      description: 'valida del 15/7 al 48/7',
-      image: 'assets/img/fondoIntro.jpg',
+      title: 'Vinos',
+      description: 'válida del 15/7 al 25/7',
+      image: 'assets/img/vino.jpg',
       onSale: true,
     },
     {
-      title: 'Title 3',
-      description: 'Description 3',
-      image: 'assets/img/prueba.jpg',
+      title: 'Tortas',
+      description: 'Viernes 10% off',
+      image: 'assets/img/torta.jpg',
       onSale: false,
     },
     {
