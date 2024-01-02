@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 
-import { DELETE_CONFIRMATION_MESSAGE } from "src/app/common/constants/messages.constant";
+import { DELETE_OPTS } from "src/app/common/constants/messages.constant";
 import { Avatar } from "@common/models/avatar";
 import { ImageService } from "@common/services/image.service";
 import { LoadingService } from "@common/services/loading.service";
@@ -100,17 +100,7 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   async delete(id: string) {
-    Swal.fire({
-      heightAuto: false,
-      title: "¿Estás seguro?",
-      text: DELETE_CONFIRMATION_MESSAGE,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    }).then(async result => {
+    Swal.fire(DELETE_OPTS).then(async result => {
       if (result.isConfirmed) {
         const loading = await this.loadingService.loading();
         await loading.present();
