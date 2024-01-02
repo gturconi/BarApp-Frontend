@@ -1,4 +1,4 @@
-body {
+.container-body {
   display: grid;
   /*grid-template-rows: auto 1fr;*/
   justify-content: center;
@@ -139,6 +139,7 @@ body {
   border-radius: 15px;
   height: 100px;
   position: relative;
+  cursor: pointer;
 }
 
 .item-image {
