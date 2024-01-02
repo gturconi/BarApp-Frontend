@@ -17,7 +17,7 @@
       </div>
     </div>
     <h2 class="section-title" *ngIf="showData">Categorias de productos</h2>
-    <div class="wrapper2">
+    <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
       @for(productsType of productsTypeList; track productsType.idProductType;
       let idx = $index) {
       <div class="item2">

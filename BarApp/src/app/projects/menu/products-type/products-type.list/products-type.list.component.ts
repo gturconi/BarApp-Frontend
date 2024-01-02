@@ -1,23 +1,29 @@
-import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
-import { DELETE_OPTS } from "src/app/common/constants/messages.constant";
-import { Avatar } from "@common/models/avatar";
-import { ImageService } from "@common/services/image.service";
-import { LoadingService } from "@common/services/loading.service";
-import { NotificationService } from "@common/services/notification.service";
-import { LoginService } from "@common/services/login.service";
+import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
+import { Avatar } from '@common/models/avatar';
+import { ImageService } from '@common/services/image.service';
+import { LoadingService } from '@common/services/loading.service';
+import { NotificationService } from '@common/services/notification.service';
+import { LoginService } from '@common/services/login.service';
 
-import { ProductsTypeService } from "../services/products-type.service";
-import { ProductsType } from "../models/productsType";
+import { ProductsTypeService } from '../services/products-type.service';
+import { ProductsType } from '../models/productsType';
 
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: "app-products-type.list",
-  templateUrl: "./products-type.list.component.html",
-  styleUrls: ["./products-type.list.component.scss"],
+  selector: 'app-products-type.list',
+  templateUrl: './products-type.list.component.html',
+  styleUrls: ['./products-type.list.component.scss'],
 })
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
@@ -25,41 +31,58 @@ export class ProductsTypeListComponent implements OnInit {
   admin: boolean = false;
   showData: boolean = false;
 
+  @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
+  scrollingTimer: any;
+
+  onScroll(event: Event) {
+    const element = event.target as HTMLElement;
+    const wrapper = this.wrapperRef.nativeElement;
+
+    if (element.scrollHeight > element.clientHeight) {
+      wrapper.classList.add('show-scrollbar');
+      clearTimeout(this.scrollingTimer);
+
+      this.scrollingTimer = setTimeout(() => {
+        wrapper.classList.remove('show-scrollbar');
+      }, 1500);
+    }
+  }
+
   boxes = [
     {
-      title: "Hamburguesas",
-      description: "Todos los jueves a la tarde",
-      image: "assets/img/hamburguesa.jpg",
+      title: 'Hamburguesas',
+      description: 'Todos los jueves a la tarde',
+      image: 'assets/img/hamburguesa.jpg',
       onSale: true,
     },
     {
-      title: "Vinos",
-      description: "válida del 15/7 al 25/7",
-      image: "assets/img/vino.jpg",
+      title: 'Vinos',
+      description: 'válida del 15/7 al 25/7',
+      image: 'assets/img/vino.jpg',
       onSale: true,
     },
     {
-      title: "Tortas",
-      description: "Viernes 10% off",
-      image: "assets/img/torta.jpg",
+      title: 'Tortas',
+      description: 'Viernes 10% off',
+      image: 'assets/img/torta.jpg',
       onSale: false,
     },
     {
-      title: "Title 4",
-      description: "Description 4",
-      image: "ruta_imagen_4",
+      title: 'Title 4',
+      description: 'Description 4',
+      image: 'ruta_imagen_4',
       onSale: true,
     },
     {
-      title: "Title 5",
-      description: "Description 5",
-      image: "ruta_imagen_5",
+      title: 'Title 5',
+      description: 'Description 5',
+      image: 'ruta_imagen_5',
       onSale: false,
     },
     {
-      title: "Title 6",
-      description: "Description 6",
-      image: "ruta_imagen_6",
+      title: 'Title 6',
+      description: 'Description 6',
+      image: 'ruta_imagen_6',
       onSale: false,
     },
   ];
@@ -109,11 +132,11 @@ export class ProductsTypeListComponent implements OnInit {
           .pipe(finalize(() => loading.dismiss()))
           .subscribe(() => {
             this.notificationService.presentToast({
-              message: "Categoría eliminada",
+              message: 'Categoría eliminada',
               duration: 2500,
-              color: "ion-color-success",
-              position: "middle",
-              icon: "alert-circle-outline",
+              color: 'ion-color-success',
+              position: 'middle',
+              icon: 'alert-circle-outline',
             });
             loading.dismiss();
             this.doSearch();
