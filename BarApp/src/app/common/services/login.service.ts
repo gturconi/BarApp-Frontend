@@ -54,21 +54,30 @@ export class LoginService {
   }
 
   isAdmin(): boolean {
-    const userStr = localStorage.getItem('user') ?? '';
-    const userRole = JSON.parse(userStr).roleName;
-    return userRole === 'admin';
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const userRole = JSON.parse(userStr).roleName;
+      return userRole === 'admin';
+    }
+    return false;
   }
 
   isEmployee(): boolean {
-    const userStr = localStorage.getItem('user') ?? '';
-    const userRole = JSON.parse(userStr).roleName;
-    return userRole === 'employee';
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const userRole = JSON.parse(userStr).roleName;
+      return userRole === 'employee';
+    }
+    return false;
   }
 
   isClient(): boolean {
-    const userStr = localStorage.getItem('user') ?? '';
-    const userRole = JSON.parse(userStr).roleName;
-    return userRole === 'customer';
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const userRole = JSON.parse(userStr).roleName;
+      return userRole === 'customer';
+    }
+    return false;
   }
 
   recoveryPassword(email: string) {
