@@ -1,0 +1,50 @@
+.container-app {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto calc(100vh - 180px);
+
+  // Estilos para usuarios normales
+  .main-content {
+    grid-row: 1 / 2;
+    margin-bottom: calc(180px - 100vh);
+  }
+
+  // Estilos para administradores
+  &.admin-style {
+    .main-content {
+      grid-row: 1 / 2;
+      margin-bottom: calc(180px - 100vh);
+    }
+    grid-template-rows: auto calc(100vh - 180px);
+  }
+
+  ion-app {
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  app-footer {
+    grid-row: 2 / 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-app {
+    grid-template-rows: auto calc(100vh - 98px);
+
+    // Estilos para usuarios normales
+    .main-content {
+      grid-row: 1 / 2;
+      margin-bottom: calc(98px - 100vh);
+    }
+
+    // Estilos para administradores
+    &.admin-style {
+      .main-content {
+        grid-row: 1 / 2;
+        margin-bottom: calc(0px - 100vh);
+      }
+    }
+  }
+}
