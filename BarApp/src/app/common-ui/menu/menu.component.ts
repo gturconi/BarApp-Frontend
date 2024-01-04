@@ -66,19 +66,15 @@ export class MenuComponent implements OnInit {
     const screenWidth = window.innerWidth;
     this.isScreenSmall = screenWidth <= 768;
 
+    const userLoggedIn = this.isLoggedIn();
+    const isAdmin = this.isAdmin();
+
     if (this.isScreenSmall) {
-      if (!this.isLoggedIn()) {
-        this.showDesktopMenu = false;
-      } else if (this.loginService.isAdmin()) {
-        this.showDesktopMenu = true;
-      } else {
-        this.showDesktopMenu = screenWidth > 768;
-      }
+      this.showDesktopMenu = userLoggedIn && isAdmin && screenWidth > 768;
     } else {
       this.showDesktopMenu = true;
     }
   }
-
   toggleDesktopMenu(tabIcon: string) {
     if (tabIcon === 'ellipsis-vertical-sharp') {
       this.showDesktopMenu = true;
