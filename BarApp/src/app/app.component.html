@@ -1,10 +1,8 @@
-<div class="container-app" [ngClass]="{ 'admin-style': admin }">
+<div class="main-container-app">
   <ion-app>
-    <div class="main-content">
-      <app-header [showMenu]="showMenu"></app-header>
-      <app-menu (menuToggled)="onMenuToggle($event)"></app-menu>
-      <router-outlet></router-outlet>
-    </div>
+    <app-header [showMenu]="showMenu"></app-header>
+    <app-menu (menuToggled)="onMenuToggle($event)"></app-menu>
+    <router-outlet></router-outlet>
     <app-footer></app-footer>
   </ion-app>
 </div>

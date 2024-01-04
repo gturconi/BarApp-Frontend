@@ -71,9 +71,9 @@ ion-toolbar {
     justify-content: space-between;
     align-items: center;
     z-index: 2;
-    position: absolute;
     bottom: 0px;
     height: 55px;
-    overflow-y: hidden;
+    overflow-y: auto;
+    position: fixed;
   }
 }

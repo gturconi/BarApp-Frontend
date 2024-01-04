@@ -16,6 +16,7 @@
 .form-container ion-card {
   background-color: var(--formColor);
   min-width: 400px;
+  overflow-y: auto;
 }
 
 .form-container {
@@ -26,6 +27,9 @@
 .form-container h1 {
   text-align: center;
   color: var(--tittleForm);
+  font-size: 20px;
+  margin: 0;
+  text-transform: capitalize;
 }
 
 /*para cambiar estilos al input */
@@ -33,6 +37,10 @@
   --background: var(--inputColor);
   color: var(--inputStandard);
   margin-bottom: 15px;
+}
+
+.material-symbols-outlined {
+  margin-right: 10px;
 }
 
 ion-icon {
@@ -62,10 +70,15 @@ ion-icon {
 
 @media (max-width: 768px) {
   .form-container ion-card {
-    min-width: 340px;
+    min-width: 320px;
+    overflow-y: auto;
   }
 
   .custom-input {
     font-size: 14px;
+  }
+
+  .form-container h1 {
+    font-size: 16px;
   }
 }

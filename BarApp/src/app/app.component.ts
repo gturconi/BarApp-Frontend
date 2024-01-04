@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LoginService } from '@common/services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +7,8 @@ import { LoginService } from '@common/services/login.service';
 })
 export class AppComponent {
   showMenu: boolean = false;
-  admin: boolean = false;
 
-  constructor(private loginService: LoginService) {
-    this.admin = this.loginService.isAdmin();
-  }
+  constructor() {}
 
   onMenuToggle(showMenu: boolean) {
     this.showMenu = showMenu;
