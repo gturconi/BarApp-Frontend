@@ -45,6 +45,7 @@ export class MenuComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
         this.updateBackButtonVisibility(this.router.url);
+        this.updateMenu();
       }
     });
   }
