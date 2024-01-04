@@ -6,7 +6,7 @@
   --colorInfo: #0a0a0a;
 }
 
-ion-avatar {
+.avatar {
   width: 140px;
   height: 140px;
   margin: 0 auto;
@@ -43,11 +43,7 @@ ion-avatar {
   opacity: 30%;
 }
 
-ion-item {
-  width: 20em;
-}
-
-ion-content {
+.profile-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
