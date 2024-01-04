@@ -53,6 +53,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.updateBackButtonVisibility(this.router.url);
     this.updateMenu();
+
     this.checkScreenSize();
     window.addEventListener('resize', () => {
       this.checkScreenSize();
@@ -66,11 +67,14 @@ export class MenuComponent implements OnInit {
     const screenWidth = window.innerWidth;
     this.isScreenSmall = screenWidth <= 768;
 
-    const userLoggedIn = this.isLoggedIn();
-    const isAdmin = this.isAdmin();
-
     if (this.isScreenSmall) {
-      this.showDesktopMenu = userLoggedIn && isAdmin && screenWidth > 768;
+      if (!this.isLoggedIn()) {
+        this.showDesktopMenu = false;
+      } else if (this.loginService.isAdmin()) {
+        this.showDesktopMenu = true;
+      } else {
+        this.showDesktopMenu = screenWidth > 768;
+      }
     } else {
       this.showDesktopMenu = true;
     }
@@ -96,6 +100,8 @@ export class MenuComponent implements OnInit {
 
     this.menuItems = [...this.commonItems];
     this.tabsItem = [...this.commonItems];
+
+    this.checkScreenSize();
 
     if (userLoggedIn && this.loginService.isClient()) {
       this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
