@@ -1,0 +1,97 @@
+:root {
+  --colorBtn: #ec9819;
+  --colorBtnHover: #da6047;
+  --colorCard: #f6cd8f;
+  --colorLetter: #ffff;
+  --colorInfo: #0a0a0a;
+}
+
+ion-avatar {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+}
+
+.photo-btn {
+  position: relative;
+  bottom: 25px;
+  height: 35px;
+  --background: var(--colorBtn);
+  --background-hover: var(--colorBtnHover);
+}
+
+.photo-btn::after {
+  content: "Agregar foto";
+  position: absolute;
+  background-color: var(--colorInfo);
+  color: var(--colorLetter);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.photo-btn:hover::after {
+  visibility: visible;
+  opacity: 1;
+}
+
+.empty-icon {
+  font-size: 140px;
+  opacity: 30%;
+}
+
+ion-item {
+  width: 20em;
+}
+
+ion-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.edit-btn {
+  width: 20em;
+  --background: var(--colorBtn);
+  width: 250px;
+  height: 45px;
+  margin-top: 10px;
+  font-size: 15px;
+  --background-hover: var(--colorBtnHover);
+}
+
+.card-profile {
+  background-color: var(--colorCard);
+  padding: 25px;
+  margin: 0px 30%;
+}
+
+.info-user {
+  color: var(--colorInfo);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  margin-bottom: 40px;
+}
+
+.icon-profile {
+  margin-right: 5px;
+  font-size: 17px;
+  vertical-align: text-bottom;
+}
+
+@media (max-width: 1150px) {
+  .card-profile {
+    padding: 25px;
+    margin: 0px 20%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-profile {
+    padding: 20px;
+    margin: 15px;
+  }
+}
