@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { UserRoles } from '@common/constants/user.roles.enum';
+import { Location } from '@angular/common';
 
 import { Output, EventEmitter } from '@angular/core';
 
@@ -40,7 +41,8 @@ export class MenuComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private location: Location
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
@@ -165,10 +167,9 @@ export class MenuComponent implements OnInit {
   }
 
   goBack(): void {
-    window.history.back();
+    this.location.back();
   }
 
-  /*para saber si esta logueado /TODO: borrarlo en un futuro*/
   isLoggedIn() {
     return this.loginService.isLoggedIn();
   }
