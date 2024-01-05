@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
 
-import { LoginService } from '@common/services/login.service';
-import { UserService } from '../../services/user.service';
-import { ImageService } from '@common/services/image.service';
-import { ToastrService } from 'ngx-toastr';
+import { LoginService } from "@common/services/login.service";
+import { UserService } from "../../services/user.service";
+import { ImageService } from "@common/services/image.service";
+import { ToastrService } from "ngx-toastr";
 
-import { User } from '@common/models/user';
-import { Avatar } from '@common/models/avatar';
+import { User } from "@common/models/user";
+import { Avatar } from "@common/models/avatar";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent implements OnInit {
   public user: User | null = null;
@@ -28,9 +28,9 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let userStr = localStorage.getItem('user');
+    let userStr = localStorage.getItem("user");
     this.user = JSON.parse(userStr!);
-    if (this.user && this.user.avatar && 'data' in this.user.avatar) {
+    if (this.user && this.user.avatar && "data" in this.user.avatar) {
       const avatar = this.user.avatar as Avatar;
       this.imageUrl$ = this.imageService.getImage(avatar.data, avatar.type);
     }
@@ -38,16 +38,16 @@ export class ProfileComponent implements OnInit {
 
   logout() {
     this.loginService.logout();
-    this.router.navigate(['/auth']);
-    window.location.reload();
+    this.router.navigate(["/auth"]);
+    // window.location.reload();
   }
 
   editProfile() {
-    this.router.navigate(['/auth/profile/edit/' + this.user?.id]);
+    this.router.navigate(["/auth/profile/edit/" + this.user?.id]);
   }
 
   async takeImage() {
-    const imageUrl = (await this.imageService.takePicture('Avatar del usuario'))
+    const imageUrl = (await this.imageService.takePicture("Avatar del usuario"))
       .dataUrl;
     if (imageUrl) {
       const newAvatar = this.imageService.convertBase64ToAvatar(imageUrl);
@@ -55,14 +55,14 @@ export class ProfileComponent implements OnInit {
 
       const formData = new FormData();
       formData.append(
-        'avatar',
+        "avatar",
         new Blob([new Uint8Array(newAvatar.data)], {
           type: `image/${newAvatar.type}`,
         })
       );
 
       this.userService.updateAvatar(this.user!.id, formData).subscribe(user => {
-        this.toastrService.success('Avatar actualizado');
+        this.toastrService.success("Avatar actualizado");
         this.loginService.setUser(user);
         this.updateImageUrl();
       });
@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private updateImageUrl() {
-    if (this.user && this.user.avatar && 'data' in this.user.avatar) {
+    if (this.user && this.user.avatar && "data" in this.user.avatar) {
       const avatar = this.user.avatar as Avatar;
       this.imageUrl$ = this.imageService.getImage(avatar.data, avatar.type);
     }

@@ -16,7 +16,6 @@
 .form-container ion-card {
   background-color: var(--formColor);
   min-width: 400px;
-  overflow-y: auto;
 }
 
 .form-container {

@@ -4,6 +4,10 @@
   height: 100vh;
   overflow-y: auto;
   position: relative;
+
+  .content {
+    height: 120%;
+  }
 }
 
 ion-app {
@@ -15,7 +19,6 @@ ion-app {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow-y: hidden;
     position: relative;
   }
 

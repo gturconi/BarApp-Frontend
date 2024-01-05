@@ -2,7 +2,9 @@
   <ion-app>
     <app-header [showMenu]="showMenu"></app-header>
     <app-menu (menuToggled)="onMenuToggle($event)"></app-menu>
-    <router-outlet></router-outlet>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
     <app-footer></app-footer>
   </ion-app>
 </div>
