@@ -1,15 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { LoginService } from '@common/services/login.service';
-import { UserRoles } from '@common/constants/user.roles.enum';
-import { Location } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Router, NavigationEnd, NavigationStart } from "@angular/router";
+import { LoginService } from "@common/services/login.service";
+import { UserRoles } from "@common/constants/user.roles.enum";
+import { Location } from "@angular/common";
 
-import { Output, EventEmitter } from '@angular/core';
+import { Output, EventEmitter } from "@angular/core";
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
+  selector: "app-menu",
+  templateUrl: "./menu.component.html",
+  styleUrls: ["./menu.component.scss"],
 })
 export class MenuComponent implements OnInit {
   @Output() menuToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -21,22 +21,22 @@ export class MenuComponent implements OnInit {
   tabsItem: any[] = [];
 
   commonItems: any[] = [
-    { icon: 'home-outline', label: 'Inicio' },
-    { icon: 'fast-food-outline', label: 'Carta' },
-    { icon: 'mail-outline', label: 'Contacto' },
-    { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+    { icon: "home-outline", label: "Inicio" },
+    { icon: "fast-food-outline", label: "Carta" },
+    { icon: "mail-outline", label: "Contacto" },
+    { icon: "help-outline", label: "Preguntas Frecuentes" },
   ];
 
   manageItems: any[] = [
-    { label: 'Usuarios' },
-    { label: 'Mesas' },
-    { label: 'Categorías de Productos' },
-    { label: 'Productos' },
-    { label: 'Promociones' },
-    { label: 'Cartas' },
+    { label: "Usuarios" },
+    { label: "Mesas" },
+    { label: "Categorías de Productos" },
+    { label: "Productos" },
+    { label: "Promociones" },
+    { label: "Cartas" },
   ];
 
-  settingItems: any[] = [{ label: 'Pantallas' }, { label: 'Temas' }];
+  settingItems: any[] = [{ label: "Pantallas" }, { label: "Temas" }];
 
   constructor(
     private router: Router,
@@ -57,12 +57,11 @@ export class MenuComponent implements OnInit {
     this.updateMenu();
 
     this.checkScreenSize();
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       this.checkScreenSize();
     });
     /*para saber si esta logueado /TODO: borrarlo en un futuro*/
     const loggedIn = this.isLoggedIn();
-    console.log('¿Estoy logueado?', loggedIn);
   }
 
   checkScreenSize() {
@@ -82,11 +81,11 @@ export class MenuComponent implements OnInit {
     }
   }
   toggleDesktopMenu(tabIcon: string) {
-    if (tabIcon === 'ellipsis-vertical-sharp') {
+    if (tabIcon === "ellipsis-vertical-sharp") {
       this.showDesktopMenu = true;
       this.menuToggled.emit(this.showDesktopMenu);
       setTimeout(() => {
-        const menuButton = document.getElementById('menuButton');
+        const menuButton = document.getElementById("menuButton");
         if (menuButton) {
           menuButton.click();
         }
@@ -106,63 +105,63 @@ export class MenuComponent implements OnInit {
     this.checkScreenSize();
 
     if (userLoggedIn && this.loginService.isClient()) {
-      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
+      this.menuItems.push({ icon: "log-out-outline", label: "Cerrar Sesión" });
       this.menuItems.splice(
         1,
         0,
-        { icon: 'person-circle-outline', label: 'Mi Perfil' },
-        { icon: 'calendar-outline', label: 'Mis Reservas' },
-        { icon: 'cart-outline', label: 'Mis Pedidos' }
+        { icon: "person-circle-outline", label: "Mi Perfil" },
+        { icon: "calendar-outline", label: "Mis Reservas" },
+        { icon: "cart-outline", label: "Mis Pedidos" }
       );
       this.tabsItem.splice(
         2,
         3,
-        { icon: 'calendar-outline', label: 'Reservas' },
-        { icon: 'cart-outline', label: 'Pedidos' },
-        { icon: 'ellipsis-vertical-sharp', label: '' }
+        { icon: "calendar-outline", label: "Reservas" },
+        { icon: "cart-outline", label: "Pedidos" },
+        { icon: "ellipsis-vertical-sharp", label: "" }
       );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
-      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
+      this.menuItems.push({ icon: "log-out-outline", label: "Cerrar Sesión" });
       this.menuItems.splice(
         1,
         0,
-        { icon: 'person-circle-outline', label: 'Mi Perfil' },
-        { icon: 'reader-outline', label: 'Pedidos Actuales' },
-        { icon: 'timer-outline', label: 'Historial de pedidos' },
-        { icon: 'notifications-outline', label: 'Notificación Estado' }
+        { icon: "person-circle-outline", label: "Mi Perfil" },
+        { icon: "reader-outline", label: "Pedidos Actuales" },
+        { icon: "timer-outline", label: "Historial de pedidos" },
+        { icon: "notifications-outline", label: "Notificación Estado" }
       );
       this.tabsItem.splice(
         1,
         3,
-        { icon: 'reader-outline', label: 'Pedidos' },
-        { icon: 'timer-outline', label: 'Historial' },
-        { icon: 'notifications-outline', label: 'Notificación' },
-        { icon: 'ellipsis-vertical-sharp', label: '' }
+        { icon: "reader-outline", label: "Pedidos" },
+        { icon: "timer-outline", label: "Historial" },
+        { icon: "notifications-outline", label: "Notificación" },
+        { icon: "ellipsis-vertical-sharp", label: "" }
       );
     } else if (userLoggedIn && this.loginService.isAdmin()) {
-      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
+      this.menuItems.push({ icon: "log-out-outline", label: "Cerrar Sesión" });
       this.menuItems.splice(
         1,
         0,
-        { icon: 'person-circle-outline', label: 'Mi Perfil' },
-        { icon: 'timer-outline', label: 'Dashboard' }
+        { icon: "person-circle-outline", label: "Mi Perfil" },
+        { icon: "timer-outline", label: "Dashboard" }
       );
     } else {
       this.menuItems.splice(1, 0, {
-        icon: 'person-circle-outline',
-        label: 'Iniciar Sesión',
+        icon: "person-circle-outline",
+        label: "Iniciar Sesión",
       });
       this.tabsItem.splice(this.tabsItem.length - 2, 0, {
-        icon: 'cart-outline',
-        label: 'Pedido',
+        icon: "cart-outline",
+        label: "Pedido",
       });
       this.tabsItem.pop();
-      this.tabsItem.push({ icon: 'ellipsis-vertical-sharp', label: '' });
+      this.tabsItem.push({ icon: "ellipsis-vertical-sharp", label: "" });
     }
   }
 
   updateBackButtonVisibility(url: string) {
-    this.showBackButton = !['/home', '/intro'].includes(url);
+    this.showBackButton = !["/home", "/intro"].includes(url);
     this.cdr.detectChanges();
   }
 

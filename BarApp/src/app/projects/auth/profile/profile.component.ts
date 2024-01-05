@@ -37,9 +37,8 @@ export class ProfileComponent implements OnInit {
   }
 
   logout() {
-    this.loginService.logout();
     this.router.navigate(["/auth"]);
-    // window.location.reload();
+    this.loginService.logout();
   }
 
   editProfile() {

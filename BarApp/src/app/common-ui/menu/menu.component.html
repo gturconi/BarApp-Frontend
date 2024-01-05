@@ -7,7 +7,7 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list>
-      <ion-item *ngFor="let menuItem of menuItems">
+      <ion-item *ngFor="let menuItem of menuItems" class="menuItem">
         <ion-icon
           aria-hidden="true"
           [name]="menuItem.icon"
@@ -20,7 +20,7 @@
     <ng-container *ngIf="isAdmin()">
       <ion-accordion-group>
         <ion-accordion value="first">
-          <ion-item slot="header" color="light">
+          <ion-item slot="header" color="light" class="menuItem">
             <ion-icon
               aria-hidden="true"
               name="create-outline"
@@ -40,7 +40,7 @@
 
       <ion-accordion-group>
         <ion-accordion value="second">
-          <ion-item slot="header" color="light">
+          <ion-item slot="header" color="light" class="menuItem">
             <ion-icon
               aria-hidden="true"
               name="settings-outline"
@@ -50,7 +50,7 @@
           </ion-item>
           <ion-list slot="content">
             <div class="item-padding">
-              <ion-item *ngFor="let items of settingItems">
+              <ion-item *ngFor="let items of settingItems" class="menuItem">
                 <ion-label>{{ items.label }}</ion-label>
               </ion-item>
             </div>
