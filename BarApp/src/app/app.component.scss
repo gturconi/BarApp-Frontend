@@ -6,7 +6,8 @@
   position: relative;
 
   .content {
-    height: 120%;
+    height: 130%;
+    overflow-y: hidden !important;
   }
 }
 

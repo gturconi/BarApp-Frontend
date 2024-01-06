@@ -2,7 +2,13 @@
   display: grid;
   /*grid-template-rows: auto 1fr;*/
   justify-content: center;
+  overflow-y: hidden !important;
 }
+
+.product-content {
+  overflow-y: hidden !important;
+}
+
 .wrapper {
   max-height: 300px;
   border: 1px solid #ddd;
