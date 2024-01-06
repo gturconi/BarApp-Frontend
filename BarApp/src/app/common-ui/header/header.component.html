@@ -8,6 +8,10 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="logo__name">TDG<span class="point">net.</span></ion-title>
+    <ion-title
+      [ngClass]="{ logo_name_header: showBackButton }"
+      class="logo__name"
+      >TDG<span class="point">net.</span></ion-title
+    >
   </ion-toolbar>
 </ion-header>
