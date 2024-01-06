@@ -36,6 +36,35 @@ ion-toolbar {
   margin-left: 55px;
 }
 
+.background-menu {
+  --background: #da6047;
+  background-color: #da6047;
+}
+
+ion-menu {
+  height: 145.8vh;
+  top: 0;
+  left: 0;
+}
+
+ion-menu::part(container) {
+  height: 100%;
+  box-shadow: none;
+  border: none;
+  background-color: #da6047;
+  position: fixed;
+}
+
+/*Oculta scrollbar del menu*/
+ion-menu > ion-content {
+  --offset-bottom: auto !important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /*----------------------*/
 
 /*para el menu celular*/
@@ -65,27 +94,12 @@ ion-toolbar {
   display: none;
 }
 
-/*Quitar sombra*/
-ion-menu::part(backdrop) {
-  background: transparent !important;
-}
-
 ion-menu::part(container) {
   --height: 100% !important;
 }
 
 ion-menu {
   --height: 150% !important;
-}
-
-/*Oculta scrollbar del menu*/
-ion-menu > ion-content {
-  --offset-bottom: auto !important;
-  --overflow: hidden;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .menuItem:hover {
@@ -107,5 +121,11 @@ ion-menu > ion-content {
     height: 55px;
     overflow-y: auto;
     position: fixed;
+  }
+
+  ion-menu {
+    height: 130vh;
+    top: 0;
+    left: 0;
   }
 }

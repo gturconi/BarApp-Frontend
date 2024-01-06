@@ -6,8 +6,11 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <ion-list>
-      <ion-item *ngFor="let menuItem of menuItems" class="menuItem">
+    <ion-list class="background-menu">
+      <ion-item
+        *ngFor="let menuItem of menuItems"
+        class="menuItem background-menu"
+      >
         <ion-icon
           aria-hidden="true"
           [name]="menuItem.icon"
@@ -19,7 +22,7 @@
 
     <ng-container *ngIf="isAdmin()">
       <ion-accordion-group>
-        <ion-accordion value="first">
+        <ion-accordion value="first" class="background-menu">
           <ion-item slot="header" color="light" class="menuItem">
             <ion-icon
               aria-hidden="true"
@@ -28,9 +31,12 @@
             ></ion-icon>
             <ion-label>Gestionar</ion-label>
           </ion-item>
-          <ion-list slot="content">
+          <ion-list slot="content" class="background-menu">
             <div class="item-padding">
-              <ion-item *ngFor="let items of manageItems">
+              <ion-item
+                *ngFor="let items of manageItems"
+                class="background-menu"
+              >
                 <ion-label>{{ items.label }}</ion-label>
               </ion-item>
             </div>
@@ -39,7 +45,7 @@
       </ion-accordion-group>
 
       <ion-accordion-group>
-        <ion-accordion value="second">
+        <ion-accordion value="second" class="background-menu">
           <ion-item slot="header" color="light" class="menuItem">
             <ion-icon
               aria-hidden="true"
@@ -48,9 +54,12 @@
             ></ion-icon>
             <ion-label>Configuracion</ion-label>
           </ion-item>
-          <ion-list slot="content">
+          <ion-list slot="content" class="background-menu">
             <div class="item-padding">
-              <ion-item *ngFor="let items of settingItems" class="menuItem">
+              <ion-item
+                *ngFor="let items of settingItems"
+                class="menuItem background-menu"
+              >
                 <ion-label>{{ items.label }}</ion-label>
               </ion-item>
             </div>
