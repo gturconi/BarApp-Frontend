@@ -1,6 +1,8 @@
-<ion-content class="ion-padding-top ion-text-center form-container">
+<ion-content
+  class="ion-padding-top ion-text-center form-container profile-content"
+>
   <ion-card class="card-profile">
-    <ion-avatar>
+    <ion-avatar class="avatar">
       @if(user?.avatar){
       <img [src]="imageUrl$ | async" />
       }@else{

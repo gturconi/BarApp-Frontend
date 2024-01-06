@@ -1,14 +1,24 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
-import { CommonUiRoutingModule } from "./common-ui-routing.module";
-import { InputComponent } from "./input/input.component";
-import { IonicModule } from "@ionic/angular";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { FormComponent } from "./form/form.component";
+import { InputComponent } from './input/input.component';
+import { FormComponent } from './form/form.component';
+import { HeaderComponent } from './header/header.component';
+import { MenuComponent } from './menu/menu.component';
+import { FooterComponent } from './footer/footer.component';
+
+import { CommonUiRoutingModule } from './common-ui-routing.module';
 
 @NgModule({
-  declarations: [InputComponent, FormComponent],
+  declarations: [
+    InputComponent,
+    FormComponent,
+    HeaderComponent,
+    MenuComponent,
+    FooterComponent,
+  ],
   imports: [
     CommonModule,
     CommonUiRoutingModule,
@@ -16,6 +26,13 @@ import { FormComponent } from "./form/form.component";
     ReactiveFormsModule,
     FormsModule,
   ],
-  exports: [InputComponent, ReactiveFormsModule, FormComponent],
+  exports: [
+    InputComponent,
+    ReactiveFormsModule,
+    FormComponent,
+    HeaderComponent,
+    MenuComponent,
+    FooterComponent,
+  ],
 })
 export class CommonUiModule {}

@@ -1,29 +1,29 @@
 import { Injectable } from "@angular/core";
-import { ToastController, ToastOptions } from "@ionic/angular";
+import { ToastOptions } from "@ionic/angular";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable({
   providedIn: "root",
 })
 export class NotificationService {
-  constructor(private toastCtrl: ToastController) {}
+  constructor(private toastrService: ToastrService) {}
 
   async presentToast(opts?: ToastOptions) {
     let errorMessage = "";
     if (typeof opts?.message === "string") {
-      const toast = await this.toastCtrl.create(opts);
-      toast.present();
+      this.toastrService.error(opts?.message);
     } else if (typeof opts?.message === "object") {
       const keys = Object.keys(opts?.message) as Array<
         keyof typeof opts.message
       >;
-      for (const key of keys) {
-        errorMessage += String(opts?.message[key]) + "\n";
+      for (let i = 0; i < keys.length; i++) {
+        errorMessage += String(opts?.message[keys[i]]);
+
+        if (i < keys.length - 1) {
+          errorMessage += "<br><br>";
+        }
       }
-      const toast = await this.toastCtrl.create({
-        ...opts,
-        message: errorMessage,
-      });
-      toast.present();
+      this.toastrService.error(errorMessage);
     }
   }
 }

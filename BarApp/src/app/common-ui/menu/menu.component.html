@@ -1,0 +1,94 @@
+<!-- menu desktop-->
+<ion-menu contentId="main-content" class="menu-desktop" *ngIf="showDesktopMenu">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title class="logo__name">Explorar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item *ngFor="let menuItem of menuItems" class="menuItem">
+        <ion-icon
+          aria-hidden="true"
+          [name]="menuItem.icon"
+          slot="start"
+        ></ion-icon>
+        <ion-label>{{ menuItem.label }}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ng-container *ngIf="isAdmin()">
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light" class="menuItem">
+            <ion-icon
+              aria-hidden="true"
+              name="create-outline"
+              slot="start"
+            ></ion-icon>
+            <ion-label>Gestionar</ion-label>
+          </ion-item>
+          <ion-list slot="content">
+            <div class="item-padding">
+              <ion-item *ngFor="let items of manageItems">
+                <ion-label>{{ items.label }}</ion-label>
+              </ion-item>
+            </div>
+          </ion-list>
+        </ion-accordion>
+      </ion-accordion-group>
+
+      <ion-accordion-group>
+        <ion-accordion value="second">
+          <ion-item slot="header" color="light" class="menuItem">
+            <ion-icon
+              aria-hidden="true"
+              name="settings-outline"
+              slot="start"
+            ></ion-icon>
+            <ion-label>Configuracion</ion-label>
+          </ion-item>
+          <ion-list slot="content">
+            <div class="item-padding">
+              <ion-item *ngFor="let items of settingItems" class="menuItem">
+                <ion-label>{{ items.label }}</ion-label>
+              </ion-item>
+            </div>
+          </ion-list>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ng-container>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header class="menu-desktop" *ngIf="showDesktopMenu">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button id="menuButton"></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="logo__name"
+        >TDG<span class="point">net.</span></ion-title
+      >
+      <ion-buttons slot="end" *ngIf="showBackButton">
+        <ion-button (click)="goBack()">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+</div>
+
+<!-- menu mobile-->
+<ion-content class="menu-mobile" *ngIf="!isAdmin()">
+  <ion-tabs>
+    <ion-tab-bar class="tabBar">
+      <ion-tab-button *ngFor="let tab of tabsItem" class="tabButton">
+        <ion-icon
+          [name]="tab.icon"
+          (click)="toggleDesktopMenu(tab.icon)"
+        ></ion-icon>
+        {{ tab.label }}
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize } from "rxjs/operators";
 import { ChangeDetectionStrategy } from "@angular/core";
@@ -8,8 +8,8 @@ import { User } from "@common/models/user";
 
 import { LoadingService } from "@common/services/loading.service";
 import { UserService } from "../../services/user.service";
-import { NotificationService } from "@common/services/notification.service";
 import { LoginService } from "@common/services/login.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,7 +28,7 @@ export class EditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private loadingService: LoadingService,
-    private notificationService: NotificationService
+    private toastrService: ToastrService
   ) {}
 
   async ngOnInit() {
@@ -63,16 +63,10 @@ export class EditComponent implements OnInit {
     const loading = await this.loadingService.loading();
     await loading.present();
     this.userService
-      .putUsers(usuaroActualizado)
+      .editUserData(usuaroActualizado)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(user => {
-        this.notificationService.presentToast({
-          message: "Usuario editado con exito",
-          duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
-        });
+        this.toastrService.success("Usuario editado con exito");
         this.loginService.setUser(user);
         loading.dismiss();
         this.router.navigate(["/auth/profile"]);
@@ -92,13 +86,7 @@ export class EditComponent implements OnInit {
       .changePassword(usuaroActualizado)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
-        this.notificationService.presentToast({
-          message: "Contraseña cambiada con exito",
-          duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
-        });
+        this.toastrService.success("Contraseña cambiada con exito");
         loading.dismiss();
         this.router.navigate(["/auth/profile"]);
       });

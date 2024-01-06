@@ -50,7 +50,36 @@ export class LoginService {
 
   getUserRole() {
     let userStr = localStorage.getItem("user") ?? "";
-    return JSON.parse(userStr).roleName;
+    if (userStr) {
+      return JSON.parse(userStr).roleName;
+    }
+  }
+
+  isAdmin(): boolean {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      const userRole = JSON.parse(userStr).roleName;
+      return userRole === "admin";
+    }
+    return false;
+  }
+
+  isEmployee(): boolean {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      const userRole = JSON.parse(userStr).roleName;
+      return userRole === "employee";
+    }
+    return false;
+  }
+
+  isClient(): boolean {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      const userRole = JSON.parse(userStr).roleName;
+      return userRole === "customer";
+    }
+    return false;
   }
 
   isAdmin() {

@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { LoginService } from "@common/services/login.service";
 import { UserService } from "../../services/user.service";
 import { ImageService } from "@common/services/image.service";
-import { NotificationService } from "@common/services/notification.service";
+import { ToastrService } from "ngx-toastr";
 
 import { User } from "@common/models/user";
 import { Avatar } from "@common/models/avatar";
@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
     private loginService: LoginService,
     private userService: UserService,
     private imageService: ImageService,
-    private notificationService: NotificationService,
+    private toastrService: ToastrService,
     private router: Router
   ) {}
 
@@ -37,8 +37,8 @@ export class ProfileComponent implements OnInit {
   }
 
   logout() {
-    this.loginService.logout();
     this.router.navigate(["/auth"]);
+    this.loginService.logout();
   }
 
   editProfile() {
@@ -61,13 +61,7 @@ export class ProfileComponent implements OnInit {
       );
 
       this.userService.updateAvatar(this.user!.id, formData).subscribe(user => {
-        this.notificationService.presentToast({
-          message: "Avatar actualizado",
-          duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
-        });
+        this.toastrService.success("Avatar actualizado");
         this.loginService.setUser(user);
         this.updateImageUrl();
       });
