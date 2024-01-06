@@ -42,7 +42,6 @@ ion-toolbar {
 }
 
 ion-menu {
-  height: 155.8vh;
   top: 0;
   left: 0;
 }
@@ -124,7 +123,6 @@ ion-menu {
   }
 
   ion-menu {
-    height: 130vh;
     top: 0;
     left: 0;
   }
