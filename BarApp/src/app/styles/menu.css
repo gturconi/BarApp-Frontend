@@ -1,0 +1,111 @@
+:root {
+  /*para menu escritorio*/
+  --letterColor: #ffff;
+  --letterColorSpan: #f9dfbc;
+  --menuBar: #da6047;
+
+  /*para menu mobile*/
+  --menuBarMobile: #da6047;
+  --letterColorMobile: #0a0a0a;
+  --letterColorMobileHover: #ffff;
+}
+
+/*para el menu desplegable*/
+
+/*para color del logo*/
+.logo__name {
+  font-size: 24px;
+  color: var(--letterColor);
+}
+
+.point {
+  color: var(--letterColorSpan);
+}
+
+/*para cambiar el color barra menu*/
+ion-toolbar {
+  --background: var(--menuBar);
+}
+
+/*para que no haya espacio entre los desplegables principales*/
+.accordion-padding {
+  padding-top: 0;
+}
+/*para agregar padding a los items del accordeon*/
+.item-padding {
+  margin-left: 55px;
+}
+
+/*----------------------*/
+
+/*para el menu celular*/
+.tabBar {
+  --background: var(--menuBarMobile);
+}
+
+.tabButton {
+  font-size: 15px;
+  --background-focused: var(--letterColorMobile);
+  --color-selected: var(--letterColorMobileHover);
+  color: var(--letterColorMobile);
+  --padding-end: 0px;
+  --padding-start: 10px;
+  --padding-bottom: 0px;
+  --margin-left: 0px;
+  --margin-right: 0px;
+  max-width: 100px;
+}
+
+.tabButton:hover {
+  scale: 1.1;
+  font-weight: bold;
+}
+
+.menu-mobile {
+  display: none;
+}
+
+/*Quitar sombra*/
+ion-menu::part(backdrop) {
+  background: transparent !important;
+}
+
+ion-menu::part(container) {
+  --height: 100% !important;
+}
+
+ion-menu {
+  --height: 150% !important;
+}
+
+/*Oculta scrollbar del menu*/
+ion-menu > ion-content {
+  --offset-bottom: auto !important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.menuItem:hover {
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.menuItem::part(native):hover {
+  opacity: 1 !important;
+}
+
+@media (max-width: 768px) {
+  .menu-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    bottom: 0px;
+    height: 55px;
+    overflow-y: auto;
+    position: fixed;
+  }
+}

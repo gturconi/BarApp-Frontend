@@ -23,6 +23,11 @@ const routes: Routes = [
       import("./projects/menu/menu.module").then(m => m.MenuModule),
   },
   {
+    path: "faq",
+    loadChildren: () =>
+      import("./projects/faq/faq.module").then(m => m.FaqModule),
+  },
+  {
     path: "",
     redirectTo: "intro",
     pathMatch: "full",
@@ -32,7 +37,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    }),
   ],
   exports: [RouterModule],
 })

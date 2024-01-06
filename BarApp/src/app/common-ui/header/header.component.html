@@ -1,0 +1,13 @@
+<ion-header
+  class="ion-no-border ion-text-center header-mobile"
+  *ngIf="!isAdmin() && !showMenu"
+>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="showBackButton">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="logo__name">TDG<span class="point">net.</span></ion-title>
+  </ion-toolbar>
+</ion-header>

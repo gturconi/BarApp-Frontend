@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
 
   private validateRol(): void {
     let role: UserRoles = this.loginService.getUserRole();
-
     if (this.validUserRoles.includes(role)) {
       console.log(`Role ${role} is valid`);
       this.router.navigate(["/auth/profile"]);
