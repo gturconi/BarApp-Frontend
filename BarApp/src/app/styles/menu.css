@@ -52,6 +52,7 @@ ion-menu::part(container) {
   box-shadow: none;
   border: none;
   background-color: #da6047;
+  position: fixed;
 }
 
 /*Oculta scrollbar del menu*/
@@ -93,11 +94,6 @@ ion-menu > ion-content {
   display: none;
 }
 
-/*Quitar sombra*/
-ion-menu::part(backdrop) {
-  background: transparent !important;
-}
-
 ion-menu::part(container) {
   --height: 100% !important;
 }
@@ -128,6 +124,8 @@ ion-menu {
   }
 
   ion-menu {
-    height: 100vh;
+    height: 130vh;
+    top: 0;
+    left: 0;
   }
 }
