@@ -4,7 +4,12 @@
   } @if(type === 'file'){
   <ion-item class="image-item">
     <ion-button size="default" class="image-btn" (click)="f.click()">
-      <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+      <ion-icon
+        class="icon-img"
+        lazy="true"
+        slot="start"
+        name="image"
+      ></ion-icon>
       <ion-label slot="end">{{ label }}</ion-label>
     </ion-button>
     <input

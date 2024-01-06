@@ -62,7 +62,17 @@ ion-icon {
   --background: var(--inputColor);
   color: black;
   font-weight: bold;
-  width: 80vh;
+  width: 350px;
+  text-align: start;
+  text-transform: capitalize;
+  letter-spacing: normal;
+  font-size: 15px;
+}
+
+.icon-img {
+  margin-left: -15px;
+  font-size: 20px;
+  margin-right: 10px;
 }
 
 .image-item {
