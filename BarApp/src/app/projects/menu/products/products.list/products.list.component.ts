@@ -1,14 +1,71 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
+import { Avatar } from '@common/models/avatar';
+
+import { ImageService } from '@common/services/image.service';
+import { LoadingService } from '@common/services/loading.service';
+import { LoginService } from '@common/services/login.service';
+import { ToastrService } from 'ngx-toastr';
+import { ProductsService } from '../services/products.service';
+
+import { Products } from '../models/products';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-products.list',
   templateUrl: './products.list.component.html',
   styleUrls: ['./products.list.component.scss'],
 })
-export class ProductsListComponent  implements OnInit {
+export class ProductsListComponent implements OnInit {
+  productsList!: Products[];
+  imagesUrl$!: Observable<string>[];
+  admin: boolean = false;
+  showData: boolean = false;
 
-  constructor() { }
+  products: Products[] = [];
 
-  ngOnInit() {}
+  constructor(
+    private loginService: LoginService,
+    private productsService: ProductsService,
+    private imageService: ImageService,
+    private loadingService: LoadingService,
+    private toastrService: ToastrService,
+    private route: ActivatedRoute
+  ) {}
 
+  ngOnInit() {
+    this.admin = this.loginService.isAdmin();
+    this.route.params.subscribe(params => {
+      const typeId = params['idCat'];
+      if (typeId) {
+        this.doSearch(typeId);
+      }
+    });
+  }
+
+  async doSearch(typeId: string) {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.productsService.getProductsByType(typeId).subscribe(data => {
+      this.productsList = data.results;
+      this.setImages(this.productsList);
+      this.showData = true;
+      loading.dismiss();
+    });
+  }
+
+  setImages(productsList: Products[]) {
+    this.imagesUrl$ = productsList.map(products => {
+      return this.getImage(products);
+    });
+  }
+
+  getImage(products: Products) {
+    const image = products.image as Avatar;
+    return this.imageService.getImage(image.data, image.type);
+  }
 }

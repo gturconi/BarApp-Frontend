@@ -21,7 +21,10 @@
     <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
       @for(productsType of productsTypeList; track productsType.idProductType;
       let idx = $index) {
-      <div class="item2">
+      <div
+        class="item2"
+        (click)="redirectToProducts(productsType.idProductType)"
+      >
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ productsType.description }}</span>
         <div class="actions" *ngIf="!admin">
