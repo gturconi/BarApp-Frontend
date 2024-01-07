@@ -1,7 +1,14 @@
+@import "variables.css";
+
 .header-mobile {
   display: none;
 }
 
+.logo_name_header {
+  font-size: 24px;
+  color: var(--color-7);
+  margin-left: -48px;
+}
 @media (max-width: 768px) {
   .header-mobile {
     display: block;

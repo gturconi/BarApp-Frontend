@@ -1,3 +1,23 @@
-<p>
-  products-type.form works!
-</p>
+<ion-content>
+  <div class="form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title
+          ><h1>{{ formTitle }}</h1></ion-card-title
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <app-form
+          [form]="form"
+          [fields]="formFields"
+          [buttons]="myButtons"
+          [editMode]="editMode"
+          [validationConfig]="validationConfig"
+          (formSubmit)="editMode ? edit($event) : add($event)"          
+          (formEdit)="setForm($event)"
+        >
+        </app-form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

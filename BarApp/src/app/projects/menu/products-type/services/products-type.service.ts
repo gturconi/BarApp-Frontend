@@ -23,23 +23,23 @@ export class ProductsTypeService {
     return this.http.get<ProductsType>(`${this.apiUrl}/productsType/` + id);
   }
 
-  postProductsTypes(productsType: ProductsType) {
+  postProductsTypes(formData: FormData) {
     return this.http.post<ProductsType>(
       `${this.apiUrl}/productsType`,
-      productsType
+      formData
     );
   }
 
-  putProductsTypes(productsType: ProductsType) {
+  putProductsTypes(id: string, formData: FormData) {
     return this.http.put<ProductsType>(
-      `${this.apiUrl}/productsType/` + productsType.id,
-      productsType
+      `${this.apiUrl}/productsType/` + id,
+      formData
     );
   }
 
-  deleteProductsTypes(productsType: ProductsType) {
+  deleteProductsTypes(id: string) {
     return this.http.delete<ProductsType>(
-      `${this.apiUrl}/productsType/` + productsType.id
+      `${this.apiUrl}/productsType/` + id
     );
   }
 

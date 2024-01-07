@@ -18,6 +18,9 @@
 @import "./app/styles/header.css";
 @import "./app/styles/faq.css";
 @import "./app/styles/profile.css";
+@import "./app/styles/productsType.css";
+
+@import "./app/styles/variables.css";
 
 @import "ngx-toastr/toastr";
 
@@ -31,5 +34,5 @@ body {
 }
 
 html {
-  --ion-background-color: rgb(235, 139, 101);
+  --ion-background-color: var(--color-1);
 }

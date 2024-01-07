@@ -1,15 +1,8 @@
-:root {
-  /*para el footer*/
-  --backgroundFooter: #da6047;
-  --letterColorFooter: #ffff;
-  --letterColumnColorFooter: #f9dfbc;
-  --letterColorEffectFooter: #f9dfbc;
-  --colorIconsFooter: #f9dfbc;
-}
+@import "variables.css";
 
 footer {
   width: 100%;
-  background-color: var(--backgroundFooter);
+  background-color: var(--color-2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,13 +25,13 @@ footer {
 
 .col {
   min-width: 250px;
-  color: var(--letterColorFooter);
+  color: var(--color-7);
   padding: 0 2rem;
   font-size: 15px;
   letter-spacing: 0.5px;
 }
 .col h3 {
-  color: var(--letterColumnColorFooter);
+  color: var(--color-3);
   margin-bottom: 10px;
   position: relative;
   cursor: pointer;
@@ -47,7 +40,7 @@ footer {
   content: "";
   height: 3px;
   width: 0px;
-  background-color: var(--letterColorEffectFooter);
+  background-color: var(--color-3);
   position: absolute;
   bottom: 0;
   left: 0;
@@ -57,7 +50,7 @@ footer {
   width: 30px;
 }
 .col .social a i {
-  color: var(--colorIconsFooter);
+  color: var(--color-3);
   margin-top: 2rem;
   margin-right: 25px;
   transition: 0.3s ease;
@@ -69,7 +62,7 @@ footer {
 .col .links a {
   display: block;
   text-decoration: none;
-  color: var(--letterColorFooter);
+  color: var(--color-7);
   margin-bottom: 5px;
   position: relative;
   transition: 0.3s ease;
@@ -81,7 +74,7 @@ footer {
   position: absolute;
   top: 5px;
   left: -10px;
-  background-color: var(--letterColorEffectFooter);
+  background-color: var(--color-3);
   transition: 0.5s ease;
   opacity: 0;
 }
@@ -90,7 +83,7 @@ footer {
 }
 .col .links a:hover {
   transform: translateX(-8px);
-  color: var(--letterColorEffectFooter);
+  color: var(--color-3);
   letter-spacing: 0.5px;
 }
 

@@ -1,30 +1,18 @@
-:root {
-  /*para menu escritorio*/
-  --letterColor: #ffff;
-  --letterColorSpan: #f9dfbc;
-  --menuBar: #da6047;
-
-  /*para menu mobile*/
-  --menuBarMobile: #da6047;
-  --letterColorMobile: #0a0a0a;
-  --letterColorMobileHover: #ffff;
-}
-
-/*para el menu desplegable*/
+@import "variables.css";
 
 /*para color del logo*/
 .logo__name {
   font-size: 24px;
-  color: var(--letterColor);
+  color: var(--color-7);
 }
 
 .point {
-  color: var(--letterColorSpan);
+  color: var(--color-3);
 }
 
 /*para cambiar el color barra menu*/
 ion-toolbar {
-  --background: var(--menuBar);
+  --background: var(--color-2);
 }
 
 /*para que no haya espacio entre los desplegables principales*/
@@ -37,12 +25,11 @@ ion-toolbar {
 }
 
 .background-menu {
-  --background: #da6047;
-  background-color: #da6047;
+  --background: var(--color-2);
+  background-color: var(--color-2);
 }
 
 ion-menu {
-  height: 145.8vh;
   top: 0;
   left: 0;
 }
@@ -51,7 +38,7 @@ ion-menu::part(container) {
   height: 100%;
   box-shadow: none;
   border: none;
-  background-color: #da6047;
+  background-color: var(--color-2);
   position: fixed;
 }
 
@@ -69,14 +56,14 @@ ion-menu > ion-content {
 
 /*para el menu celular*/
 .tabBar {
-  --background: var(--menuBarMobile);
+  --background: var(--color-2);
 }
 
 .tabButton {
   font-size: 15px;
-  --background-focused: var(--letterColorMobile);
-  --color-selected: var(--letterColorMobileHover);
-  color: var(--letterColorMobile);
+  --background-focused: var(--color-8);
+  --color-selected: var(--color-7);
+  color: var(--color-8);
   --padding-end: 0px;
   --padding-start: 10px;
   --padding-bottom: 0px;
@@ -124,7 +111,6 @@ ion-menu {
   }
 
   ion-menu {
-    height: 130vh;
     top: 0;
     left: 0;
   }

@@ -1,10 +1,4 @@
-:root {
-  --colorBtn: #ec9819;
-  --colorBtnHover: #da6047;
-  --colorCard: #f6cd8f;
-  --colorLetter: #ffff;
-  --colorInfo: #0a0a0a;
-}
+@import "variables.css";
 
 .avatar {
   width: 140px;
@@ -16,15 +10,15 @@
   position: relative;
   bottom: 25px;
   height: 35px;
-  --background: var(--colorBtn);
-  --background-hover: var(--colorBtnHover);
+  --background: var(--color-5);
+  --background-hover: var(--color-2);
 }
 
 .photo-btn::after {
   content: "Agregar foto";
   position: absolute;
-  background-color: var(--colorInfo);
-  color: var(--colorLetter);
+  background-color: var(--color-8);
+  color: var(--color-7);
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 12px;
@@ -51,25 +45,24 @@
 
 .edit-btn {
   width: 20em;
-  --background: var(--colorBtn);
+  --background: var(--color-5);
   width: 250px;
   height: 45px;
   margin-top: 10px;
   font-size: 15px;
-  --background-hover: var(--colorBtnHover);
+  --background-hover: var(--color-2);
 }
 
 .card-profile {
-  background-color: var(--colorCard);
+  background-color: var(--color-4);
   padding: 25px;
   margin: 0px 30%;
 }
 
 .info-user {
-  color: var(--colorInfo);
+  color: var(--color-8);
   font-weight: bold;
   letter-spacing: 0.5px;
-  margin-bottom: 40px;
 }
 
 .icon-profile {

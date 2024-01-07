@@ -1,1 +1,78 @@
-<p>products-type.list works!</p>
+<ion-content class="product-content">
+  <div class="container-body">
+    <h2 class="section-title" *ngIf="showData">Promociones</h2>
+    <div class="wrapper">
+      <div class="item" *ngFor="let box of boxes">
+        <div class="offer-label" *ngIf="box.onSale">
+          Oferta
+          <span class="material-symbols-outlined icon-sale"> verified </span>
+        </div>
+        <img [src]="box.image" class="item1-image" />
+        <h3 class="item1-title">{{ box.title }}</h3>
+        <div *ngIf="box.description.length > 14" class="scrollable">
+          <p class="item1-description">{{ box.description }}</p>
+        </div>
+        <div *ngIf="box.description.length <= 14" class="item1-description">
+          {{ box.description }}
+        </div>
+      </div>
+    </div>
+    <h2 class="section-title" *ngIf="showData">Categorias de productos</h2>
+    <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
+      @for(productsType of productsTypeList; track productsType.idProductType;
+      let idx = $index) {
+      <div class="item2">
+        <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
+        <span class="title">{{ productsType.description }}</span>
+        <div class="actions" *ngIf="!admin">
+          <ion-icon
+            [routerLink]="[]"
+            class="icons-show"
+            name="chevron-forward-circle-outline"
+          ></ion-icon>
+        </div>
+        <div class="actions" *ngIf="admin">
+          <ion-button
+            [routerLink]="['/menu/categories/edit', productsType.idProductType]"
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="buttons-admin"
+            ><ion-icon name="create-outline" class="icons-accions"></ion-icon
+          ></ion-button>
+          <ion-button
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="buttons-admin"
+            (click)="delete(productsType.idProductType)"
+            ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
+          ></ion-button>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="grid-item">
+      <div class="button-add-container" *ngIf="showData && admin">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
+          <ion-fab-button class="button-add">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="top">
+            <ion-fab-button class="botton-add-expand">
+              <ion-icon name="pricetags-outline"></ion-icon>
+              <span>Promoción</span>
+            </ion-fab-button>
+            <ion-fab-button
+              class="botton-add-expand"
+              [routerLink]="['/menu/categories/add']"
+            >
+              <ion-icon name="reader-outline"></ion-icon>
+              <span>Categoría</span>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </div>
+    </div>
+  </div>
+</ion-content>
