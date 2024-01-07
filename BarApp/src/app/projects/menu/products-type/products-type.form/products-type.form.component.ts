@@ -5,9 +5,8 @@ import { finalize } from "rxjs/operators";
 import { ChangeDetectionStrategy } from "@angular/core";
 
 import { ProductsTypeService } from "../services/products-type.service";
-import { NotificationService } from "@common/services/notification.service";
 import { LoadingService } from "@common/services/loading.service";
-import { ImageService } from "@common/services/image.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +24,7 @@ export class ProductsTypeFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productsTypeService: ProductsTypeService,
-    private notificationService: NotificationService,
+    private toastrService: ToastrService,
     private loadingService: LoadingService
   ) {}
 
@@ -35,14 +34,14 @@ export class ProductsTypeFormComponent implements OnInit {
       if (this.id) {
         this.editMode = true;
         this.formTitle = "Editar Categoría";
-         this.autocompleteForm();
+        this.autocompleteForm();
       }
     });
   }
 
   async autocompleteForm() {
     this.productsTypeService.getProductsType(this.id).subscribe(data => {
-      this.form.get("description")?.setValue(data.description);   
+      this.form.get("description")?.setValue(data.description);
     });
   }
 
@@ -56,55 +55,41 @@ export class ProductsTypeFormComponent implements OnInit {
 
     const formData = new FormData();
     formData.append("image", imageFile);
-    formData.append('description', form.controls["description"].value);
+    formData.append("description", form.controls["description"].value);
 
     const loading = await this.loadingService.loading();
     await loading.present();
-    this.productsTypeService.postProductsTypes(formData)
-    .pipe(finalize(() => loading.dismiss()))
-    .subscribe(
-      () => {
-        this.notificationService.presentToast({
-          message: "Categoría anadida",
-          duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
-        })
+    this.productsTypeService
+      .postProductsTypes(formData)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(() => {
+        this.toastrService.success("Categoria añadida");
         loading.dismiss();
         this.router.navigate(["/menu/categories"]);
-      }
-    )
+      });
   }
 
   async edit(form: FormGroup) {
-    let imageFile = null;    
+    let imageFile = null;
     const formData = new FormData();
 
     const fileControl = form.controls["image"];
-    if(fileControl.value){
+    if (fileControl.value) {
       imageFile = fileControl.value;
       formData.append("image", imageFile);
     }
-    formData.append('description', form.controls["description"].value);
+    formData.append("description", form.controls["description"].value);
 
     const loading = await this.loadingService.loading();
     await loading.present();
-    this.productsTypeService.putProductsTypes(this.id, formData)
-    .pipe(finalize(() => loading.dismiss()))
-    .subscribe(
-      () => {
-        this.notificationService.presentToast({
-          message: "Categoría editada",
-          duration: 2500,
-          color: "ion-color-success",
-          position: "middle",
-          icon: "alert-circle-outline",
-        })
+    this.productsTypeService
+      .putProductsTypes(this.id, formData)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(() => {
+        this.toastrService.success("Categoria editada");
         loading.dismiss();
         this.router.navigate(["/menu/categories"]);
-      }
-    )
+      });
   }
 
   formFields = [
@@ -135,6 +120,6 @@ export class ProductsTypeFormComponent implements OnInit {
 
   validationConfig = [
     { controlName: "description", required: true },
-    { controlName: "image", required: this.editMode!},
+    { controlName: "image", required: this.editMode! },
   ];
 }
