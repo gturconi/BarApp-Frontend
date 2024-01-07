@@ -4,7 +4,8 @@
     <div class="wrapper">
       <div class="item" *ngFor="let box of boxes">
         <div class="offer-label" *ngIf="box.onSale">
-          Oferta <span class="material-symbols-outlined"> verified </span>
+          Oferta
+          <span class="material-symbols-outlined icon-sale"> verified </span>
         </div>
         <img [src]="box.image" class="item1-image" />
         <h3 class="item1-title">{{ box.title }}</h3>

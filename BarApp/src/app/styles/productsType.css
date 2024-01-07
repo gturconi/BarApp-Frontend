@@ -44,6 +44,10 @@
   overflow: hidden;
 }
 
+.icon-sale {
+  font-size: 14px;
+}
+
 .wrapper .item .item1-image {
   width: 85px;
   height: 85px;
