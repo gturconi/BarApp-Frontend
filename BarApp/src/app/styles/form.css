@@ -118,4 +118,8 @@ ion-icon {
   .form-container h1 {
     font-size: 16px;
   }
+
+  .form-content > details {
+    margin-bottom: 4rem;
+  }
 }
