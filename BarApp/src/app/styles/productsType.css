@@ -1,11 +1,4 @@
-:root {
-  --backgroundItems: #f6cd8f;
-  --backgroundButtons: #f9dfbc;
-  --letterColor: #ffff;
-  --titleColor: #dc2d22;
-  --backgoundDesc-Sale: #d53032;
-  --backgoundBar-title: #da6047;
-}
+@import "variables.css";
 
 .container-body {
   display: grid;
@@ -32,7 +25,7 @@
   border-radius: 20px;
   min-width: 110px;
   height: 100%;
-  background-color: var(--backgroundItems);
+  background-color: var(--color-4);
   margin-right: 2px;
   flex-basis: auto;
   animation: itemReveal 1.5s ease-in-out;
@@ -65,8 +58,8 @@
 
 .wrapper .item .item1-description {
   font-size: 13px;
-  color: var(--letterColor);
-  background: var(--backgoundDesc-Sale);
+  color: var(--color-7);
+  background: var(--color-12);
   border-radius: 5px;
   padding: 5px 10px;
   margin-top: 7px;
@@ -92,8 +85,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--backgoundDesc-Sale);
-  color: var(--letterColor);
+  background-color: var(--color-12);
+  color: var(--color-7);
   padding: 5px 10px;
   border-top-left-radius: 10px;
   font-weight: bold;
@@ -108,12 +101,12 @@
   height: 7px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--backgroundItems);
+  background: var(--color-4);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--backgoundBar-title);
+  background: var(--color-2);
   border-radius: 8px;
 }
 
@@ -121,11 +114,11 @@
   text-align: left;
   margin-bottom: 15px;
   font-size: 18px;
-  color: var(--titleColor);
+  color: var(--color-11);
   text-transform: capitalize;
   letter-spacing: 1px;
   font-weight: bold;
-  border-bottom: 2px solid var(--backgoundBar-title);
+  border-bottom: 2px solid var(--color-2);
 }
 
 .wrapper2 {
@@ -147,7 +140,7 @@
   display: flex;
   align-items: center;
   padding: 0.5em;
-  background-color: var(--backgroundItems);
+  background-color: var(--color-4);
   margin-bottom: 2px;
   animation: reveal linear both;
   animation-timeline: view();
@@ -192,7 +185,7 @@
 .icons-show {
   font-size: 30px;
   cursor: pointer;
-  color: var(--backgoundBar-title);
+  color: var(--color-2);
   margin-right: 10px;
   margin-bottom: 10px;
 }
@@ -202,19 +195,19 @@
 }
 
 .actions .buttons-admin {
-  background-color: var(--backgroundButtons);
+  background-color: var(--color-3);
   padding: 0px;
   border-radius: 17px;
-  border: 1px solid var(--backgoundBar-title);
-  color: var(--backgoundBar-title);
+  border: 1px solid var(--color-2);
+  color: var(--color-2);
 }
 
 .actions .buttons-admin:hover {
-  background-color: var(--backgoundBar-title);
+  background-color: var(--color-2);
 }
 
 .actions .buttons-notadmin:hover .icons-show {
-  color: var(--backgroundButtons);
+  color: var(--color-3);
 }
 
 .button-add-container {
@@ -234,7 +227,7 @@
 }
 
 .button-add {
-  --background: var(--backgroundButtons);
+  --background: var(--color-3);
   --border-radius: 20px;
   --color: black;
   width: 50px;
@@ -242,11 +235,11 @@
 }
 
 .button-add:hover {
-  --background: var(--backgroundItems);
+  --background: var(--color-4);
 }
 
 .botton-add-expand {
-  --background: var(--backgroundButtons);
+  --background: var(--color-3);
   --border-radius: 20px;
   --color: black;
   width: 120px;
@@ -255,7 +248,7 @@
 }
 
 .botton-add-expand:hover {
-  --background: var(--backgroundItems);
+  --background: var(--color-4);
 }
 
 .botton-add-expand span {
@@ -267,7 +260,7 @@
 }
 
 .wrapper2::-webkit-scrollbar-thumb {
-  background: var(--backgroundItems);
+  background: var(--color-4);
   border-radius: 8px;
 }
 

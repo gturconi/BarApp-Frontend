@@ -1,8 +1,4 @@
-:root {
-  --colorTittle: #000;
-  --backgroundCat: #f9dfbc;
-  --backgroundCatActive: #da6047;
-}
+@import "variables.css";
 
 .main-container {
   max-width: 1000px;
@@ -11,7 +7,7 @@
 }
 
 .titulo {
-  color: var(--colorTittle);
+  color: var(--color-8);
   font-weight: 500;
   font-size: 25px;
   text-align: center;
@@ -20,7 +16,7 @@
 }
 
 .subtitulo {
-  color: var(--colorTittle);
+  color: var(--color-8);
   font-size: 17px;
   margin: 20px 0;
 }
@@ -39,7 +35,7 @@
   text-align: center;
   padding: 10px;
   border-radius: 15px;
-  background: var(--backgroundCat);
+  background: var(--color-3);
   font-weight: 500;
   color: var(--gris-claro);
   border: 3px solid transparent;
@@ -56,10 +52,10 @@
 }
 
 .categoria-seleccionada .categories-icon {
-  color: var(--backgroundCatActive);
+  color: var(--color-2);
 }
 .categoria-seleccionada {
-  border: 2px solid var(--backgroundCatActive);
+  border: 2px solid var(--color-2);
 }
 
 /*para preguntas y respuestas*/
@@ -86,12 +82,12 @@
 }
 
 .answer {
-  background-color: var(--backgroundCat);
+  background-color: var(--color-3);
 }
 
 /*cambia el color de los accordeon*/
 ion-accordion.answer ion-item[slot="header"] {
-  --background: var(--backgroundCat);
+  --background: var(--color-3);
   font-size: 13px;
 }
 
