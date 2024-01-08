@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ValidationConfig } from "@common/models/validationConfig";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ValidationConfig } from '@common/models/validationConfig';
 
 @Component({
-  selector: "app-form",
-  templateUrl: "./form.component.html",
+  selector: 'app-form',
+  templateUrl: './form.component.html',
 })
 export class FormComponent implements OnInit {
   @Input() form!: FormGroup<any>;
@@ -12,6 +12,9 @@ export class FormComponent implements OnInit {
   @Input() buttons!: any[];
   @Input() validationConfig!: ValidationConfig[];
   @Input() editMode: boolean = false;
+
+  @Input() combos: string[] = [];
+  @Input() combosFields: string[][] = [];
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
   @Output() formEdit = new EventEmitter<FormGroup>();
@@ -40,7 +43,7 @@ export class FormComponent implements OnInit {
         this.validator = config.customValidation;
       }
 
-      formControls[config.controlName] = new FormControl("", validators);
+      formControls[config.controlName] = new FormControl('', validators);
     });
     this.form = new FormGroup(formControls);
     if (this.customValidator) {
@@ -48,6 +51,14 @@ export class FormComponent implements OnInit {
     } else {
       this.form = new FormGroup(formControls);
     }
+
+    this.combos.forEach((combo, index) => {
+      const comboFormControl = new FormControl('', [Validators.required]);
+      this.form.addControl(combo, comboFormControl);
+      if (this.combosFields[index]?.length > 0) {
+        comboFormControl.setValue(this.combosFields[index][0]);
+      }
+    });
 
     this.formEdit.emit(this.form);
   }
@@ -60,20 +71,20 @@ export class FormComponent implements OnInit {
     const control = this.form.get(controlName);
 
     if (control?.errors && control.touched) {
-      if (control.errors["required"]) {
-        return "Este campo es requerido";
-      } else if (control.errors["email"]) {
-        return "Ingrese un correo válido";
-      } else if (control.errors["minlength"]) {
+      if (control.errors['required']) {
+        return 'Este campo es requerido';
+      } else if (control.errors['email']) {
+        return 'Ingrese un correo válido';
+      } else if (control.errors['minlength']) {
         return (
-          "El campo debe tener al menos " +
-          control.errors["minlength"].requiredLength +
-          " caracteres"
+          'El campo debe tener al menos ' +
+          control.errors['minlength'].requiredLength +
+          ' caracteres'
         );
-      } else if (control.errors["notSame"]) {
-        return "Las contraseñas no coinciden";
+      } else if (control.errors['notSame']) {
+        return 'Las contraseñas no coinciden';
       }
-      return "Error en el campo " + controlName;
+      return 'Error en el campo ' + controlName;
     }
     return null;
   }
