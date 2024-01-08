@@ -3,7 +3,7 @@
     <h2 class="section-title" *ngIf="showData">Productos</h2>
     <div class="wrapper2">
       @for(products of productsList; track products.id; let idx = $index) {
-      <div class="item2">
+      <div class="item2" (click)="redirectToDetails(products.id)">
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ products.description }}</span>
         <div class="actions" *ngIf="!admin">
