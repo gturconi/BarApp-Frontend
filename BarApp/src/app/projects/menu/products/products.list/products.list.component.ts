@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
@@ -32,6 +32,7 @@ export class ProductsListComponent implements OnInit {
     private imageService: ImageService,
     private loadingService: LoadingService,
     private toastrService: ToastrService,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -46,6 +47,12 @@ export class ProductsListComponent implements OnInit {
       if (typeId) {
         this.doSearch(typeId);
       }
+    });
+  }
+
+  redirectToProductsEdit(productId: string) {
+    this.router.navigate(['edit/', productId], {
+      relativeTo: this.route.parent,
     });
   }
 

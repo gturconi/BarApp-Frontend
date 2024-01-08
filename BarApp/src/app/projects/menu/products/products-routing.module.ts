@@ -1,30 +1,30 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { ProductsComponent } from "./products/products.component";
-import { ProductsListComponent } from "./products.list/products.list.component";
-import { ProductsFormComponent } from "./products.form/products.form.component";
-import { ProductsDetailsComponent } from "./products-details/products-details.component";
+import { ProductsComponent } from './products/products.component';
+import { ProductsListComponent } from './products.list/products.list.component';
+import { ProductsFormComponent } from './products.form/products.form.component';
+import { ProductsDetailsComponent } from './products-details/products-details.component';
 
-import { authGuard } from "@common/guards/auth.guard";
+import { authGuard } from '@common/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: ProductsComponent,
     children: [
-      { path: "", component: ProductsListComponent },
+      { path: '', component: ProductsListComponent },
       {
-        path: "edit/:idProd",
+        path: 'edit/:id',
         component: ProductsFormComponent,
         canActivate: [authGuard],
       },
       {
-        path: "add/:idProd",
+        path: 'add',
         component: ProductsFormComponent,
         canActivate: [authGuard],
       },
-      { path: "details/:idProd", component: ProductsDetailsComponent },
+      { path: 'details/:idProd', component: ProductsDetailsComponent },
     ],
   },
 ];

@@ -15,7 +15,7 @@
         </div>
         <div class="actions" *ngIf="admin">
           <ion-button
-            [routerLink]="['', products.id]"
+            (click)="redirectToProductsEdit(products.id)"
             expand="block"
             fill="clear"
             shape="round"
