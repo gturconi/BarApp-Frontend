@@ -3,7 +3,7 @@
     <h2 class="section-title" *ngIf="showData">Productos</h2>
     <div class="wrapper2 productsList">
       @for(products of productsList; track products.id; let idx = $index) {
-      <div class="item2" (click)="redirectToDetails(products.id)">
+      <div class="item2 productsItem" (click)="redirectToDetails(products.id)">
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ products.description }}</span>
         <div class="actions" *ngIf="!admin">
@@ -14,6 +14,12 @@
           ></ion-icon>
         </div>
         <div class="actions" *ngIf="admin">
+          <ion-icon
+            [name]="hide ? 'eye-outline' : 'eye-off-outline'"
+            title="Ocultar producto al usuario"
+            (click)="$event.stopPropagation(); showOrHideProduct(products)"
+            class="icons-admin"
+          ></ion-icon>
           <ion-button
             (click)="redirectToProductsEdit(products.id)"
             expand="block"

@@ -4,8 +4,25 @@
   width: 40vw;
 }
 
-@media (max-width: 768px) {
+.icons-admin {
+  background-color: var(--color-3);
+  padding: 5px;
+  border-radius: 17px;
+  border: 1px solid var(--color-2);
+  color: var(--color-8);
+}
+
+@media (max-width: 830px) {
   .productsList {
     width: 90vw;
+  }
+}
+
+@media (max-width: 400px) {
+  .productsItem {
+    height: 22vh;
+  }
+  .item-image {
+    scale: 1.3;
   }
 }
