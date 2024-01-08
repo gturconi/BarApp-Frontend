@@ -24,5 +24,9 @@
     </p>
   </div>
   <button class="buttonAdd" (click)="agregarUsuario()">Agregar Usuario</button>
+  <app-search
+    id="search-filter"
+    (searchChanged)="filtrarUsuarios($event)"
+  ></app-search>
   <app-table [columns]="columns" [data]="data" [loading]="isLoading" />
 </ion-content>

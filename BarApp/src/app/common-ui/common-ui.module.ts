@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PaginationComponent } from "./pagination/pagination.component";
 import { TableComponent } from "./table/table.component";
 import { DropdownComponent } from "./dropdown/dropdown.component";
+import { AppSearchComponent } from "./search/search.component";
 
 
 import { CommonUiRoutingModule } from './common-ui-routing.module';
@@ -24,7 +25,8 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     FooterComponent,
     PaginationComponent,
     TableComponent,
-    DropdownComponent
+    DropdownComponent,
+    AppSearchComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     FooterComponent,
     PaginationComponent,
     TableComponent,
-    DropdownComponent
+    DropdownComponent,
+    AppSearchComponent
   ],
 })
 export class CommonUiModule {}

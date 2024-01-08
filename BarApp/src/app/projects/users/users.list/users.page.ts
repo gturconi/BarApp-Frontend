@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { TableColumn, TableData } from "@common-ui/table/table.component";
-import { LoginService } from "@common/services/login.service";
 import { UserService } from "src/app/projects/services/user.service";
 
 @Component({
@@ -75,5 +74,13 @@ export class UsersPage {
 
   editarUsuario(user: TableData){
     this.router.navigate(['/edit/', user['id']])
+  }
+
+  filtrarUsuarios(value: string) {
+    this.isLoading = true;
+    this.usersService.getUsers(undefined, undefined, value).subscribe((response) => {
+      this.data = response.results as unknown as TableData[];
+      this.isLoading = false;
+    })
   }
 }
