@@ -23,7 +23,11 @@
       let idx = $index) {
       <div
         class="item2"
-        (click)="redirectToProducts(productsType.idProductType)"
+        [routerLink]="[
+          '/menu/categories/',
+          productsType.idProductType,
+          'products'
+        ]"
       >
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ productsType.description }}</span>
