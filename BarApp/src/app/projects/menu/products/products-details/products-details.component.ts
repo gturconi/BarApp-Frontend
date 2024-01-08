@@ -16,6 +16,7 @@ export class ProductsDetailsComponent implements OnInit {
   product!: Products;
   isLoading = true;
   imagesUrl$!: Observable<string>;
+  quantity: number = 1;
 
   constructor(
     private productsService: ProductsService,
@@ -36,16 +37,29 @@ export class ProductsDetailsComponent implements OnInit {
   async doSearch(id: string) {
     const loading = await this.loadingService.loading();
     await loading.present();
-    this.productsService.getProduct(id).subscribe(data => {
-      this.product = data;
-      this.imagesUrl$ = this.getImage(this.product);
+    try {
+      this.productsService.getProduct(id).subscribe(data => {
+        this.product = data;
+        this.imagesUrl$ = this.getImage(this.product);
+        this.isLoading = false;
+      });
+    } finally {
       loading.dismiss();
-      this.isLoading = false;
-    });
+    }
   }
 
   getImage(products: Products) {
     const image = products.image as Avatar;
     return this.imageService.getImage(image.data, image.type);
+  }
+
+  decrement() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  increment() {
+    this.quantity++;
   }
 }

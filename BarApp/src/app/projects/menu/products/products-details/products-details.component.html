@@ -1,23 +1,38 @@
 <ion-content class="product-content">
   <div class="container-body">
     @if(this.product){
-    <ion-card *ngIf="!this.product.baja" class="details-product">
+    <ion-card class="details-product">
       <img
         [alt]="this.product.name"
         [src]="imagesUrl$ | async"
         class="details-image"
       />
-      <ion-card-header>
+      <ion-card-header class="details-header">
         <ion-card-title class="details-title">{{
           this.product.name
         }}</ion-card-title>
-        <ion-card-subtitle>${{ this.product.price }}</ion-card-subtitle>
+        <ion-card-subtitle class="details-price"
+          ><span>${{ this.product.price! * this.quantity }}</span>
+          <div class="quantity">
+            <ion-icon
+              (click)="decrement()"
+              name="remove-circle"
+              class="quantity-icons"
+            ></ion-icon>
+            <span>{{ this.quantity }}</span>
+            <ion-icon
+              (click)="increment()"
+              name="add-circle"
+              class="quantity-icons"
+            ></ion-icon>
+          </div>
+        </ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content class="details-content">
         {{ this.product.description }}
-        <div class="comments">
-          <p>Desea aclarar algo?</p>
+        <div *ngIf="this.product.stock && !this.product.baja" class="comments">
+          <p>Quieres aclarar algo:</p>
           <ion-textarea
             labelPlacement="floating"
             fill="solid"
@@ -26,12 +41,29 @@
             maxlength="100"
           ></ion-textarea>
         </div>
-        <ion-button expand="full">AGREGAR AL CARRITO</ion-button>
+        <ion-button
+          *ngIf="this.product.stock && !this.product.baja"
+          expand="full"
+          class="details-button"
+        >
+          <div>
+            <ion-icon name="cart" class="details-icons"></ion-icon>
+            <p>AGREGAR AL CARRITO</p>
+          </div>
+        </ion-button>
       </ion-card-content>
-      <p *ngIf="!this.product.stock">Sin Stock</p>
+      <div *ngIf="!this.product.stock" class="details-stock">
+        <p>Sin Stock</p>
+      </div>
+      <div *ngIf="this.product.baja" class="details-stock">
+        <p>Este producto ya no esta disponible</p>
+      </div>
     </ion-card>
     }@else if(!this.isLoading){
-    <h2 class="section-title">Producto no encontrado</h2>
+    <div class="details-error">
+      <h2>Producto no encontrado</h2>
+      <ion-icon name="sad-outline"></ion-icon>
+    </div>
     }
   </div>
 </ion-content>
