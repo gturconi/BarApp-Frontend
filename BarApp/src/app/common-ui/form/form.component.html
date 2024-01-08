@@ -22,6 +22,21 @@
       </div>
     </div>
   </ng-container>
+  <ng-container *ngFor="let combo of combos; let i = index">
+    <ion-list>
+      <ion-item>
+        <ion-select placeholder="" [formControlName]="combo">
+          <div slot="label">{{ combo | titlecase }}</div>
+          <ion-select-option
+            *ngFor="let item of combosFields[i]"
+            [value]="item"
+          >
+            {{ item }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ng-container>
 
   <ion-button
     expand="block"

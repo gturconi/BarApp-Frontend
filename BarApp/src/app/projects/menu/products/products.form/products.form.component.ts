@@ -5,6 +5,7 @@ import { finalize } from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from '@common/services/loading.service';
+import { ProductsTypeService } from '../../products-type/services/products-type.service';
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -19,10 +20,13 @@ export class ProductsFormComponent implements OnInit {
   editMode = false;
   form!: FormGroup;
 
+  productTypeList: string[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productsService: ProductsService,
+    private productsTypeService: ProductsTypeService,
     private toastrService: ToastrService,
     private loadingService: LoadingService
   ) {}
@@ -36,13 +40,27 @@ export class ProductsFormComponent implements OnInit {
         this.autocompleteForm();
       }
     });
+
+    this.loadCombos();
   }
 
   async autocompleteForm() {
     this.productsService.getProduct(this.id).subscribe(data => {
       this.form.get('name')?.setValue(data.name);
       this.form.get('description')?.setValue(data.description);
+      this.form.get('price')?.setValue(data.price);
+      this.form.controls['Tipo de producto'].setValue(data.idCat);
       //agregar mas
+    });
+  }
+
+  loadCombos() {
+    this.productsTypeService.getProductsTypes().subscribe(response => {
+      if (response.results) {
+        this.productTypeList = response.results
+          .map(result => result.description)
+          .filter(description => description !== undefined) as string[];
+      }
     });
   }
 
@@ -83,6 +101,7 @@ export class ProductsFormComponent implements OnInit {
     }
     formData.append('name', form.controls['name'].value);
     formData.append('description', form.controls['description'].value);
+    formData.append('price', form.controls['price'].value);
     //agregar mas
 
     const loading = await this.loadingService.loading();
@@ -118,6 +137,14 @@ export class ProductsFormComponent implements OnInit {
     },
     {
       type: 'input',
+      name: 'price',
+      label: 'Precio',
+      inputType: 'number',
+      icon: 'material-symbols-outlined',
+      iconName: 'paid',
+    },
+    {
+      type: 'input',
       name: 'image',
       label: 'Imagen',
       inputType: 'file',
@@ -137,6 +164,7 @@ export class ProductsFormComponent implements OnInit {
   validationConfig = [
     { controlName: 'name', required: true },
     { controlName: 'description', required: true },
+    { controlName: 'price', required: true },
     { controlName: 'image', required: this.editMode! },
   ];
 }
