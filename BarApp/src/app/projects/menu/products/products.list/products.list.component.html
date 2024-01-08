@@ -1,11 +1,8 @@
 <ion-content class="product-content">
   <div class="container-body">
-    <h2 class="section-title" *ngIf="showData">
-      Productos de la categoria: agregar nombre
-    </h2>
+    <h2 class="section-title" *ngIf="showData">Productos</h2>
     <div class="wrapper2">
-      @for(products of productsList; track products.idProduct; let idx = $index)
-      {
+      @for(products of productsList; track products.id; let idx = $index) {
       <div class="item2">
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ products.description }}</span>
@@ -15,6 +12,24 @@
             class="icons-show"
             name="chevron-forward-circle-outline"
           ></ion-icon>
+        </div>
+        <div class="actions" *ngIf="admin">
+          <ion-button
+            [routerLink]="['', products.id]"
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="buttons-admin"
+            ><ion-icon name="create-outline" class="icons-accions"></ion-icon
+          ></ion-button>
+          <ion-button
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="buttons-admin"
+            (click)="delete(products.id)"
+            ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
+          ></ion-button>
         </div>
       </div>
       }

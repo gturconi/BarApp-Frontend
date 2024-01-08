@@ -26,8 +26,6 @@ export class ProductsListComponent implements OnInit {
   admin: boolean = false;
   showData: boolean = false;
 
-  products: Products[] = [];
-
   constructor(
     private loginService: LoginService,
     private productsService: ProductsService,
@@ -39,6 +37,10 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
+    this.getAndSearchByType();
+  }
+
+  getAndSearchByType(): void {
     this.route.params.subscribe(params => {
       const typeId = params['idCat'];
       if (typeId) {
@@ -67,5 +69,23 @@ export class ProductsListComponent implements OnInit {
   getImage(products: Products) {
     const image = products.image as Avatar;
     return this.imageService.getImage(image.data, image.type);
+  }
+
+  async delete(id: string) {
+    console.log(id);
+    Swal.fire(DELETE_OPTS).then(async result => {
+      if (result.isConfirmed) {
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.productsService
+          .deleteProducts(id)
+          .pipe(finalize(() => loading.dismiss()))
+          .subscribe(() => {
+            this.toastrService.success('Producto eliminado');
+            loading.dismiss();
+            this.getAndSearchByType();
+          });
+      }
+    });
   }
 }

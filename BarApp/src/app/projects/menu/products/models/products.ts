@@ -12,7 +12,7 @@ export class Products {
     promotions: number[],
     baja = 0
   ) {
-    this.idProduct = id;
+    this.id = id;
     this.name = name;
     this.description = description;
     this.image = image;
@@ -23,7 +23,7 @@ export class Products {
     this.baja = baja;
   }
 
-  idProduct: string;
+  id: string;
   name?: string;
   description?: string;
   image?: Avatar | PhotoResult;
