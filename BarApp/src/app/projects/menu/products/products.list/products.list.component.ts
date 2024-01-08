@@ -56,6 +56,12 @@ export class ProductsListComponent implements OnInit {
     });
   }
 
+  redirectToDetails(productId: string) {
+    this.router.navigate(['details/', productId], {
+      relativeTo: this.route.parent,
+    });
+  }
+
   async doSearch(typeId: string) {
     const loading = await this.loadingService.loading();
     await loading.present();
