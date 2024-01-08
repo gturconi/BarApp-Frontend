@@ -38,3 +38,11 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 
 }
+
+@media (max-width: 800px ){
+  .buttonAdd{
+    margin: 8px;
+    font-size: 14px;
+  
+  }
+}

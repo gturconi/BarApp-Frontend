@@ -45,3 +45,39 @@
     background-color: #d1d1d1;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   }
+
+  @media(max-width: 800px){
+    table {
+      border:0;
+      margin-bottom: 40px;
+    }
+
+    table tr {
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: block;
+        border-bottom: 2px solid #794522;
+
+    }
+    table tr:last-child{
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+
+    }
+
+    table td {
+        display: block;
+        text-align: left;
+        font-size: 16px;
+        border-bottom: 1px #6b7377;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
+
+    table thead {
+        display: none;
+    }
+
+  }
