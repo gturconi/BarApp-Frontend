@@ -1,7 +1,7 @@
 <ion-content class="product-content">
   <div class="container-body">
     <h2 class="section-title" *ngIf="showData">Productos</h2>
-    <div class="wrapper2">
+    <div class="wrapper2 productsList">
       @for(products of productsList; track products.id; let idx = $index) {
       <div class="item2" (click)="redirectToDetails(products.id)">
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
