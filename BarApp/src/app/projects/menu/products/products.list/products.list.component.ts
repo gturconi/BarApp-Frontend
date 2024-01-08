@@ -72,7 +72,6 @@ export class ProductsListComponent implements OnInit {
   }
 
   async delete(id: string) {
-    console.log(id);
     Swal.fire(DELETE_OPTS).then(async result => {
       if (result.isConfirmed) {
         const loading = await this.loadingService.loading();
