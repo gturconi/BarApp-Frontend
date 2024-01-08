@@ -48,7 +48,9 @@
             fill="clear"
             shape="round"
             class="buttons-admin"
-            (click)="delete(productsType.idProductType)"
+            (click)="
+              $event.stopPropagation(); delete(productsType.idProductType)
+            "
             ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
           ></ion-button>
         </div>
