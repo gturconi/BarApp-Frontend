@@ -1,18 +1,36 @@
 <ion-content class="product-content">
   <div class="container-body">
     @if(this.product){
-    <ion-card>
-      <img alt="Silhouette of mountains" [src]="imagesUrl$ | async" />
+    <ion-card *ngIf="!this.product.baja" class="details-product">
+      <img
+        [alt]="this.product.name"
+        [src]="imagesUrl$ | async"
+        class="details-image"
+      />
       <ion-card-header>
-        <ion-card-title>{{ this.product.name }}</ion-card-title>
-        <ion-card-subtitle>$ {{ this.product.price }}</ion-card-subtitle>
+        <ion-card-title class="details-title">{{
+          this.product.name
+        }}</ion-card-title>
+        <ion-card-subtitle>${{ this.product.price }}</ion-card-subtitle>
       </ion-card-header>
 
-      <ion-card-content>
+      <ion-card-content class="details-content">
         {{ this.product.description }}
+        <div class="comments">
+          <p>Desea aclarar algo?</p>
+          <ion-textarea
+            labelPlacement="floating"
+            fill="solid"
+            label="Escriba su comentario..."
+            counter="true"
+            maxlength="100"
+          ></ion-textarea>
+        </div>
+        <ion-button expand="full">AGREGAR AL CARRITO</ion-button>
       </ion-card-content>
+      <p *ngIf="!this.product.stock">Sin Stock</p>
     </ion-card>
-    }@else{
+    }@else if(!this.isLoading){
     <h2 class="section-title">Producto no encontrado</h2>
     }
   </div>

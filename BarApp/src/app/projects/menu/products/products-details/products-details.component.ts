@@ -14,6 +14,7 @@ import { Observable } from "rxjs";
 })
 export class ProductsDetailsComponent implements OnInit {
   product!: Products;
+  isLoading = true;
   imagesUrl$!: Observable<string>;
 
   constructor(
@@ -39,6 +40,7 @@ export class ProductsDetailsComponent implements OnInit {
       this.product = data;
       this.imagesUrl$ = this.getImage(this.product);
       loading.dismiss();
+      this.isLoading = false;
     });
   }
 

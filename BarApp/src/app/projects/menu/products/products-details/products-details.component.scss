@@ -1,0 +1,27 @@
+.details-product {
+  --background: #f6cd8f;
+  --color: black;
+  width: 40vw;
+}
+
+.details-image {
+  width: 100%;
+}
+
+.details-title {
+  font-weight: bold;
+}
+
+.comments {
+  margin-top: 1rem;
+}
+
+ion-textarea {
+  --background: #f6cd8f;
+}
+
+@media (max-width: 768px) {
+  .details-product {
+    width: 70vw;
+  }
+}

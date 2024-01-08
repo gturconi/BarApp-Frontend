@@ -1,0 +1,6 @@
+@import "variables.css";
+
+.details-product {
+  --background: --color-7;
+  --color: white;
+}
