@@ -5,6 +5,7 @@
   --color: var(--color-8);
   width: 40vw;
   font-weight: bold;
+  margin-bottom: 4rem;
 }
 
 .details-price {
@@ -46,6 +47,7 @@
 
 .details-button > div {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   align-items: baseline;
   gap: 0.5em;
@@ -92,5 +94,11 @@
 @media (max-width: 768px) {
   .details-product {
     width: 70vw;
+  }
+}
+
+@media (max-width: 352px) {
+  .details-button > div {
+    justify-content: center;
   }
 }

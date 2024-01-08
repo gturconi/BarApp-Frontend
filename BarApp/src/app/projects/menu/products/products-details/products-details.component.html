@@ -13,7 +13,7 @@
         }}</ion-card-title>
         <ion-card-subtitle class="details-price"
           ><span>${{ this.product.price! * this.quantity }}</span>
-          <div class="quantity">
+          <div *ngIf="!admin" class="quantity">
             <ion-icon
               (click)="decrement()"
               name="remove-circle"
@@ -31,7 +31,10 @@
 
       <ion-card-content class="details-content">
         {{ this.product.description }}
-        <div *ngIf="this.product.stock && !this.product.baja" class="comments">
+        <div
+          *ngIf="this.product.stock && !this.product.baja && !admin"
+          class="comments"
+        >
           <p>Quieres aclarar algo:</p>
           <ion-textarea
             labelPlacement="floating"
@@ -42,7 +45,7 @@
           ></ion-textarea>
         </div>
         <ion-button
-          *ngIf="this.product.stock && !this.product.baja"
+          *ngIf="this.product.stock && !this.product.baja && !admin"
           expand="full"
           class="details-button"
         >

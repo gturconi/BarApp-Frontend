@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { ProductsService } from "../services/products.service";
-import { Products } from "../models/products";
 import { ActivatedRoute } from "@angular/router";
+
+import { ProductsService } from "../services/products.service";
 import { LoadingService } from "@common/services/loading.service";
 import { ImageService } from "@common/services/image.service";
+import { LoginService } from "@common/services/login.service";
+
+import { Products } from "../models/products";
 import { Avatar } from "@common/models/avatar";
 import { Observable } from "rxjs";
 
@@ -17,8 +20,10 @@ export class ProductsDetailsComponent implements OnInit {
   isLoading = true;
   imagesUrl$!: Observable<string>;
   quantity: number = 1;
+  admin: boolean = false;
 
   constructor(
+    private loginService: LoginService,
     private productsService: ProductsService,
     private loadingService: LoadingService,
     private imageService: ImageService,
@@ -26,6 +31,7 @@ export class ProductsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.admin = this.loginService.isAdmin();
     this.route.params.subscribe(params => {
       const typeId = params["idProd"];
       if (typeId) {
