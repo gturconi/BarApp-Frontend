@@ -17,7 +17,7 @@
         </div>
         <div class="actions" *ngIf="admin">
           <ion-icon
-            [name]="hide ? 'eye-outline' : 'eye-off-outline'"
+            [name]="!products.baja ? 'eye-outline' : 'eye-off-outline'"
             title="Ocultar producto al usuario"
             (click)="$event.stopPropagation(); showOrHideProduct(products)"
             class="icons-admin"
