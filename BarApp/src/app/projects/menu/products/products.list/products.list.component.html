@@ -1,5 +1,6 @@
 <ion-content class="product-content">
   <div class="container-body">
+    @if(this.productsList.length > 0){
     <h2 class="section-title" *ngIf="showData">Productos</h2>
     <div class="wrapper2 productsList">
       @for(products of productsList; track products.id; let idx = $index) {
@@ -40,5 +41,10 @@
       </div>
       }
     </div>
+    }@else if(showData){
+    <div class="details-error">
+      <h2>Aún no hay productos cargados para esta categoría</h2>
+    </div>
+    }
   </div>
 </ion-content>
