@@ -26,7 +26,9 @@ export class LoginComponent implements OnInit {
     private loadingService: LoadingService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.validateRol();
+  }
 
   async submit(form: FormGroup) {
     const loading = await this.loadingService.loading();
@@ -49,8 +51,8 @@ export class LoginComponent implements OnInit {
   private validateRol(): void {
     let role: UserRoles = this.loginService.getUserRole();
     if (this.validUserRoles.includes(role)) {
-      this.router.navigate(["/auth/profile"]);
       console.log(`Role ${role} is valid`);
+      this.router.navigate(["/auth/profile"]);
     } else {
       this.loginService.logout();
     }
