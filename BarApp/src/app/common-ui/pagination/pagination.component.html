@@ -1,0 +1,10 @@
+<ul class="pagination">
+  @for( page of pages; track page){
+  <li
+    [ngClass]="{ 'page-item': true, active: currentPage === page }"
+    (click)="changePage.emit(page)"
+  >
+    <span class="page-link">{{ page }}</span>
+  </li>
+  }
+</ul>

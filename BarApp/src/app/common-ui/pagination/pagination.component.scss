@@ -1,0 +1,71 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+.page-item {
+  display: inline;
+}
+.page-item:first-child .page-link {
+  margin-left: 0;
+  border-bottom-left-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+}
+.page-item:last-child .page-link {
+  border-bottom-right-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+.page-item.active .page-link,
+.page-item.active .page-link:focus,
+.page-item.active .page-link:hover {
+  z-index: 2;
+  color: #fff;
+  cursor: default;
+  background-color: #ec9819;
+  border-color: rgb(78, 75, 75);
+}
+.page-item.disabled .page-link,
+.page-item.disabled .page-link:focus,
+.page-item.disabled .page-link:hover {
+  color: #818a91;
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #fff;
+  border-color: rgb(78, 75, 75);
+}
+.page-link {
+  position: relative;
+  float: left;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  color: white;
+  text-decoration: none;
+  background-color: #f6cd8f;
+  border: 1px solid rgb(78, 75, 75);
+  cursor: pointer;
+}
+.page-link:focus,
+.page-link:hover {
+  color: white;
+  background-color: #f0ad48;
+  border-color: rgb(78, 75, 75);
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    scale: 1.4;
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
