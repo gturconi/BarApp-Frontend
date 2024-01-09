@@ -4,6 +4,7 @@
     <h2 class="section-title" *ngIf="showData">Productos</h2>
     <div class="wrapper2 productsList">
       @for(products of productsList; track products.id; let idx = $index) {
+      @if(admin || !products.baja){
       <div class="item2 productsItem" (click)="redirectToDetails(products.id)">
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ products.description }}</span>
@@ -39,7 +40,7 @@
           ></ion-button>
         </div>
       </div>
-      }
+      } }
     </div>
     }@else if(showData){
     <div class="details-error">
