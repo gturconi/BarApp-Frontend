@@ -1,13 +1,27 @@
 <ion-content class="product-content">
   <div class="container-body">
-    @if(this.productsList.length > 0){
     <h2 class="section-title" *ngIf="showData">Productos</h2>
     <div class="wrapper2 productsList">
       @for(products of productsList; track products.id; let idx = $index) {
       @if(admin || !products.baja){
-      <div class="item2 productsItem" (click)="redirectToDetails(products.id)">
-        <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
-        <span class="title">{{ products.description }}</span>
+      <div class="item-p productsItem" (click)="redirectToDetails(products.id)">
+        <div class="image-container-p">
+          <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
+        </div>
+        @if(products.stock == 0){
+        <div class="text-container-p">
+          <span class="title-p strikethrough">{{ products.name }}</span>
+          <span class="out-of-stock">
+            <ion-icon name="warning-outline" class="icon-warning-p"></ion-icon
+            >Agotado
+          </span>
+        </div>
+        } @else{
+        <div class="text-container-p">
+          <span class="title-p">{{ products.name }}</span>
+          <span class="price-p">$ {{ products.price }}</span>
+        </div>
+        }
         <div class="actions" *ngIf="!admin">
           <ion-icon
             [routerLink]="[]"
@@ -35,17 +49,12 @@
             fill="clear"
             shape="round"
             class="buttons-admin"
-            (click)="delete(products.id)"
+            (click)="$event.stopPropagation(); delete(products.id)"
             ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
           ></ion-button>
         </div>
       </div>
-      } }
+      }}
     </div>
-    }@else if(showData){
-    <div class="details-error">
-      <h2>Aún no hay productos cargados para esta categoría</h2>
-    </div>
-    }
   </div>
 </ion-content>
