@@ -32,6 +32,11 @@
   }
 }
 
+.quantity-icons.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .details-image {
   width: 100%;
 }

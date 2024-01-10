@@ -18,12 +18,14 @@
               (click)="decrement()"
               name="remove-circle"
               class="quantity-icons"
+              [class.disabled]="!product.stock"
             ></ion-icon>
             <span>{{ this.quantity }}</span>
             <ion-icon
               (click)="increment()"
               name="add-circle"
               class="quantity-icons"
+              [class.disabled]="!product.stock"
             ></ion-icon>
           </div>
         </ion-card-subtitle>
