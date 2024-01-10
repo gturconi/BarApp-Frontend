@@ -12,6 +12,10 @@
   color: var(--color-8);
 }
 
+div.description {
+  padding-bottom: 20px;
+}
+
 @media (max-width: 830px) {
   .productsList {
     width: 90vw;

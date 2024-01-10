@@ -32,7 +32,9 @@
       </ion-card-header>
 
       <ion-card-content class="details-content">
-        {{ this.product.description }}
+        <div class="description">
+          {{ this.product.description }}
+        </div>
         <div
           *ngIf="this.product.stock && !this.product.baja && !admin"
           class="comments"
