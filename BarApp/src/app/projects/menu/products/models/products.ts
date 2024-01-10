@@ -7,7 +7,7 @@ export class Products {
     description = '',
     image: Avatar | PhotoResult,
     price: number,
-    idCat: number,
+    idCat: string,
     stock: number,
     promotions: number[],
     baja = 0
@@ -28,7 +28,7 @@ export class Products {
   description?: string;
   image?: Avatar | PhotoResult;
   price?: number;
-  idCat?: number;
+  idCat?: string;
   stock?: number;
   promotions: number[];
   baja?: number;
