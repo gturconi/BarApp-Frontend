@@ -1,16 +1,17 @@
-import { Avatar, PhotoResult } from '@common/models/avatar';
+import { Avatar, PhotoResult } from "@common/models/avatar";
 
 export class Products {
   constructor(
-    id = '',
-    name = '',
-    description = '',
+    id = "",
+    name = "",
+    description = "",
     image: Avatar | PhotoResult,
     price: number,
     idCat: string,
     stock: number,
     promotions: number[],
-    baja = 0
+    baja = 0,
+    quantity = 1
   ) {
     this.id = id;
     this.name = name;
@@ -21,6 +22,7 @@ export class Products {
     this.stock = stock;
     this.promotions = promotions;
     this.baja = baja;
+    this.quantity = quantity;
   }
 
   id: string;
@@ -32,4 +34,5 @@ export class Products {
   stock?: number;
   promotions: number[];
   baja?: number;
+  quantity?: number;
 }

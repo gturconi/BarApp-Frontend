@@ -1,14 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { AlertController } from "@ionic/angular";
 
 import { ProductsService } from "../services/products.service";
 import { LoadingService } from "@common/services/loading.service";
 import { ImageService } from "@common/services/image.service";
 import { LoginService } from "@common/services/login.service";
+import { CartService } from "@common/services/cart.service";
 
 import { Products } from "../models/products";
 import { Avatar } from "@common/models/avatar";
-import { Observable } from "rxjs";
 
 @Component({
   selector: "app-products-details",
@@ -27,7 +29,10 @@ export class ProductsDetailsComponent implements OnInit {
     private productsService: ProductsService,
     private loadingService: LoadingService,
     private imageService: ImageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private alertController: AlertController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -67,5 +72,29 @@ export class ProductsDetailsComponent implements OnInit {
 
   increment() {
     this.quantity++;
+  }
+
+  async addToCart() {
+    this.product.quantity = this.quantity;
+    this.cartService.addToCart(this.product);
+    const alert = await this.alertController.create({
+      header: "Producto agregado",
+      buttons: [
+        {
+          text: "Ir al carrito",
+          handler: () => {
+            //  this.router.navigate(["cart"]);
+          },
+        },
+        {
+          text: "Seguir comprando",
+          handler: () => {
+            this.router.navigate(["menu/categories"]);
+          },
+        },
+      ],
+      cssClass: "custom-alert",
+    });
+    await alert.present();
   }
 }
