@@ -12,6 +12,32 @@
   color: var(--color-8);
 }
 
+.icon-eye {
+  overflow: visible; /* O ajusta según sea necesario */
+  position: relative;
+  z-index: 1;
+}
+
+.icon-tooltip::after {
+  content: attr(title);
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1000;
+}
+
+.icon-tooltip:hover::after {
+  content: attr(title);
+  visibility: visible;
+  opacity: 1;
+}
+
 div.description {
   padding-bottom: 20px;
 }

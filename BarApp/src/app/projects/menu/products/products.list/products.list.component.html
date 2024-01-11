@@ -30,12 +30,13 @@
           ></ion-icon>
         </div>
         <div class="actions" *ngIf="admin">
-          <ion-icon
-            [name]="!products.baja ? 'eye-outline' : 'eye-off-outline'"
-            title="Ocultar producto al usuario"
-            (click)="$event.stopPropagation(); showOrHideProduct(products)"
-            class="icons-admin"
-          ></ion-icon>
+          <span title="Ocultar producto al usuario" class="icon-tooltip">
+            <ion-icon
+              [name]="!products.baja ? 'eye-outline' : 'eye-off-outline'"
+              (click)="$event.stopPropagation(); showOrHideProduct(products)"
+              class="icons-admin icon-eye"
+            ></ion-icon>
+          </span>
           <ion-button
             (click)="redirectToProductsEdit(products.id)"
             expand="block"
