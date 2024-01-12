@@ -7,11 +7,18 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, of } from "rxjs";
+
 import { NotificationService } from "@common/services/notification.service";
+import { Router } from "@angular/router";
+import { LoginService } from "@common/services/login.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -38,7 +45,9 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(reqClone).pipe(
       catchError(exception => {
         exception.status
-          ? (error.message = exception.error.message)
+          ? ((error.message = exception.error.message),
+            this.router.navigate(["/auth"]),
+            this.loginService.logout())
           : (error.message = "No se pudo completar la solicitud");
         this.notificationService.presentToast(error);
         return of(exception);
