@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from "@angular/core";
 
 @Component({
   selector: "app-pagination",
   templateUrl: "./pagination.component.html",
   styleUrls: ["./pagination.component.scss"],
 })
+
 export class PaginationComponent implements OnInit {
   @Input() currentPage: number = 0;
   @Input() totalPages: number = 0;
-  @Input() limit: number = 0;
+  @Input() limit: number = 1;
   @Output() changePage = new EventEmitter<number>();
 
   pages: number[] = [];
@@ -16,9 +17,15 @@ export class PaginationComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    const pagesCount = Math.ceil(this.totalPages / this.limit);
-    this.pages = this.range(1, pagesCount);
-    console.log(this.pages);
+    this.pages = this.range(1, this.totalPages);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // This method will be called whenever any input property changes
+    if (changes['totalPages']) {
+      this.pages = this.range(1,changes['totalPages'].currentValue);
+      // You can perform additional actions here based on the changes
+    }
   }
 
   range(start: number, end: number): number[] {

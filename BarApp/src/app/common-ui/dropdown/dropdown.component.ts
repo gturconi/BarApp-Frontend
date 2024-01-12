@@ -22,10 +22,6 @@ export class DropdownComponent implements OnInit {
 
   constructor() {}
 
-  /*isMobile(): boolean {
-    return !isPlatform('mobileweb') && !isPlatform('desktop');
-  }*/
-
   ngOnInit() {
   }
 }

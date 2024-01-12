@@ -1,6 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-//import { Subject } from 'rxjs';
-//import { debounceTime, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-search',

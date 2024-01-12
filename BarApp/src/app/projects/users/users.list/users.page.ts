@@ -17,6 +17,12 @@ export class UsersPage {
 
   isLoading = false;
 
+  totalPages: number = 1;
+
+  pageSize: number = 2;
+
+  pageIndex: number = 1;
+
   constructor(private usersService: UserService, private router: Router) {}
 
   ngOnInit() {
@@ -48,11 +54,20 @@ export class UsersPage {
     }] as TableColumn[];
 
     this.isLoading = true;
+    this.doSearch();
+  }
 
-    this.usersService.getUsers().subscribe((response) => {
+  doSearch(): void {
+    this.usersService.getUsers(this.pageIndex, this.pageSize).subscribe((response) => {
       this.data = response.results as unknown as TableData[];
       this.isLoading = false;
+      this.totalPages = response.totalPages;
     })
+  }
+
+  onPageChanged(e: number): void {
+    this.pageIndex = e;
+    this.doSearch();
   }
 
   ocultarAccion(user: TableData) {
