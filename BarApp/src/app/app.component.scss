@@ -1,12 +1,11 @@
 .main-container-app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   overflow-y: auto;
   position: relative;
 
   .content {
-    flex-grow: 1;
     height: 100%;
   }
 }
@@ -28,4 +27,8 @@ ion-app {
   ion-app {
     flex: 1;
   }
+}
+
+.footer {
+  position: relative;
 }

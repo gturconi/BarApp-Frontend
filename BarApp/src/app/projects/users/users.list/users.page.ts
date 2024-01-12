@@ -19,7 +19,7 @@ export class UsersPage {
 
   totalPages: number = 1;
 
-  pageSize: number = 2;
+  pageSize: number = 10;
 
   pageIndex: number = 1;
 
@@ -55,6 +55,10 @@ export class UsersPage {
 
     this.isLoading = true;
     this.doSearch();
+  }
+
+  getContainerClasses(): string {
+    return this.isLoading || !this.data.length ? "usersListContainer fullHeight" : "usersListContainer";
   }
 
   doSearch(): void {

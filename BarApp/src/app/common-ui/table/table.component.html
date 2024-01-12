@@ -1,13 +1,13 @@
-<ion-content scroll-x="true">
-  <div *ngIf="loading">
+<div class="tableContainer">
+  <div class="overlay" *ngIf="loading">
     <p style="text-align: center">Loading...</p>
   </div>
-  <div *ngIf="!data.length && !loading">
+  <div class="overlay" *ngIf="!data.length && !loading">
     <p style="text-align: center">No hay registros para mostrar</p>
   </div>
   <table *ngIf="data.length > 0 && !loading" class="table">
     <thead>
-      <tr class="row">
+      <tr class="tableRow">
         <ng-container *ngFor="let column of columns">
           <th class="headerTable">{{ column.label }}</th>
         </ng-container>
@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let d of data">
-        <tr class="row">
+        <tr class="tableRow">
           <ng-container *ngFor="let column of columns">
             <div
               *ngIf="columnIsAction(column); then thenBlock; else elseBlock"
@@ -49,4 +49,4 @@
       </ng-container>
     </tbody>
   </table>
-</ion-content>
+</div>
