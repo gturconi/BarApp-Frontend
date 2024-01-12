@@ -25,8 +25,15 @@
   </div>
   <button class="buttonAdd" (click)="agregarUsuario()">Agregar Usuario</button>
   <app-search
+    class="searchComp"
     id="search-filter"
     (searchChanged)="filtrarUsuarios($event)"
   ></app-search>
   <app-table [columns]="columns" [data]="data" [loading]="isLoading" />
+  <app-pagination
+    [currentPage]="pageIndex"
+    [totalPages]="totalPages"
+    [limit]="pageSize"
+    (changePage)="onPageChanged($event)"
+  />
 </ion-content>

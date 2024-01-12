@@ -1,24 +1,25 @@
-/* Add this to your global styles or component-specific styles */
+
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Optional: Adjust the margin as needed */
+    margin-top: 20px; 
     overflow: auto;
   }
   
-  .header, .row {
+  .headerTable, .row {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
     min-width: 150px;
   }
   
-  .header {
+  .headerTable {
     background-color: #f2f2f2;
   }
   
   .cell{
     padding: 8px;
+    text-align: left;
   }
 
   .row{
@@ -46,7 +47,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   }
 
-  @media(max-width: 800px){
+  @media(max-width: 768px){
     table {
       border:0;
       margin-bottom: 40px;
