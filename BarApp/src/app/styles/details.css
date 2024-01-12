@@ -50,6 +50,10 @@
   --color: var(--color-7);
 }
 
+.isInCart {
+  --background: var(--color-10) !important;
+}
+
 .details-button > div {
   display: flex;
   flex-wrap: wrap;

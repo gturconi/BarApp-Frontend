@@ -52,10 +52,13 @@
           *ngIf="this.product.stock && !this.product.baja && !admin"
           expand="full"
           class="details-button"
+          [ngClass]="{ isInCart: isInCart }"
         >
-          <div (click)="addToCart()">
+          <div (click)="isInCart ? removeFromCart() : addToCart()">
             <ion-icon name="cart" class="details-icons"></ion-icon>
-            <p>AGREGAR AL CARRITO</p>
+            <p>
+              {{ this.isInCart ? "QUITAR DEL CARRITO" : "AGREGAR AL CARRITO" }}
+            </p>
           </div>
         </ion-button>
       </ion-card-content>

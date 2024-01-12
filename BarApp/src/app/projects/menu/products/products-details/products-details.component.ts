@@ -11,6 +11,7 @@ import { CartService } from "@common/services/cart.service";
 
 import { Products } from "../models/products";
 import { Avatar } from "@common/models/avatar";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-products-details",
@@ -23,11 +24,13 @@ export class ProductsDetailsComponent implements OnInit {
   imagesUrl$!: Observable<string>;
   quantity: number = 1;
   admin: boolean = false;
+  isInCart: boolean = false;
 
   constructor(
     private loginService: LoginService,
     private productsService: ProductsService,
     private loadingService: LoadingService,
+    private toastrService: ToastrService,
     private imageService: ImageService,
     private route: ActivatedRoute,
     private cartService: CartService,
@@ -56,6 +59,7 @@ export class ProductsDetailsComponent implements OnInit {
       });
     } finally {
       loading.dismiss();
+      this.isInCart = this.cartService.isProductInCart(id);
     }
   }
 
@@ -96,5 +100,11 @@ export class ProductsDetailsComponent implements OnInit {
       cssClass: "custom-alert",
     });
     await alert.present();
+  }
+
+  async removeFromCart() {
+    this.cartService.removeFromCart(this.product.id);
+    this.isInCart = false;
+    this.toastrService.success("Producto eliminado");
   }
 }
