@@ -62,8 +62,9 @@
           </div>
         </ion-button>
       </ion-card-content>
-      <div *ngIf="!this.product.stock" class="details-stock">
-        <p>Sin Stock</p>
+      <div *ngIf="!this.product.stock" class="details-stock no-stock">
+        <ion-icon name="warning-outline" class="icon-warning-p"></ion-icon>
+        <p>SIN STOCK</p>
       </div>
       <div *ngIf="this.product.baja" class="details-stock">
         <p>Este producto ya no esta disponible</p>

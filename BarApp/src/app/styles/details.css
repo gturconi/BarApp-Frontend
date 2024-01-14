@@ -100,6 +100,19 @@
   color: var(--color-10);
 }
 
+.no-stock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-10);
+  color: var(--color-7);
+  font-size: 17px;
+}
+.no-stock > ion-icon {
+  --ionicon-stroke-width: 54px;
+}
+
 @media (max-width: 768px) {
   .details-product {
     width: 70vw;
