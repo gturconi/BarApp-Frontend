@@ -28,12 +28,13 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getUser();
+    this.updateImageUrl();
+  }
+
+  getUser() {
     let userStr = localStorage.getItem("user");
     this.user = JSON.parse(userStr!);
-    if (this.user && this.user.avatar && "data" in this.user.avatar) {
-      const avatar = this.user.avatar as Avatar;
-      this.imageUrl$ = this.imageService.getImage(avatar.data, avatar.type);
-    }
   }
 
   logout() {
