@@ -25,6 +25,12 @@ ion-app {
     position: relative;
   }
 
+  .content {
+    &.add-margin-bottom {
+      margin-bottom: 45px;
+    }
+  }
+
   ion-app {
     flex: 1;
   }
