@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { UserRoles } from '@common/constants/user.roles.enum';
@@ -16,7 +16,6 @@ export class MenuComponent implements OnInit {
   showBackButton: boolean = false;
   showDesktopMenu: boolean = true;
   isScreenSmall: boolean = false;
-  isAdminUser!: boolean;
 
   menuItems: any[] = [];
   tabsItem: any[] = [];
@@ -25,7 +24,7 @@ export class MenuComponent implements OnInit {
     { icon: 'home-outline', label: 'Inicio' },
     { icon: 'fast-food-outline', label: 'Carta' },
     { icon: 'mail-outline', label: 'Contacto' },
-    { icon: 'help-outline', label: 'Preguntas Frecuentes' },
+    { icon: 'help-outline', label: 'FAQs' },
   ];
 
   manageItems: any[] = [
@@ -56,7 +55,6 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.updateBackButtonVisibility(this.router.url);
     this.updateMenu();
-    this.isAdminUser = this.loginService.isAdmin();
 
     this.checkScreenSize();
     window.addEventListener('resize', () => {
@@ -173,5 +171,11 @@ export class MenuComponent implements OnInit {
 
   isLoggedIn() {
     return this.loginService.isLoggedIn();
+  }
+
+  isAdmin(): boolean {
+    const userLoggedIn = this.loginService.isLoggedIn();
+    const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
+    return userLoggedIn && userRole === UserRoles.Admin;
   }
 }
