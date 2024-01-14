@@ -10,14 +10,15 @@ import { LoginService } from '@common/services/login.service';
 export class AppComponent implements OnInit {
   showMenu: boolean = false;
   addMarginBottom: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private router: Router, private loginService: LoginService) {}
 
   ngOnInit() {
-    const isAdmin = this.loginService.isAdmin();
+    this.isAdmin = this.loginService.isAdmin();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.addMarginBottom = event.url === '/auth/profile' && !isAdmin;
+        this.addMarginBottom = event.url === '/auth/profile' && !this.isAdmin;
       }
     });
   }
