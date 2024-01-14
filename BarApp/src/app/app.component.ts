@@ -15,10 +15,12 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private loginService: LoginService) {}
 
   ngOnInit() {
-    this.isAdmin = this.loginService.isAdmin();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.addMarginBottom = event.url === '/auth/profile' && !this.isAdmin;
+        if (event.url === '/auth/profile') {
+          this.isAdmin = this.loginService.isAdmin();
+          this.addMarginBottom = !this.isAdmin;
+        }
       }
     });
   }
