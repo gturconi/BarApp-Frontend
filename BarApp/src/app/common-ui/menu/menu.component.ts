@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { UserRoles } from '@common/constants/user.roles.enum';
@@ -16,6 +16,7 @@ export class MenuComponent implements OnInit {
   showBackButton: boolean = false;
   showDesktopMenu: boolean = true;
   isScreenSmall: boolean = false;
+  admin = this.isAdmin();
 
   menuItems: any[] = [];
   tabsItem: any[] = [];
@@ -97,6 +98,12 @@ export class MenuComponent implements OnInit {
   }
 
   updateMenu() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart && this.router.url === '/auth') {
+        this.admin = this.isAdmin();
+      }
+    });
+
     const userLoggedIn = this.loginService.isLoggedIn();
 
     this.menuItems = [...this.commonItems];
@@ -173,7 +180,7 @@ export class MenuComponent implements OnInit {
     return this.loginService.isLoggedIn();
   }
 
-  isAdmin(): boolean {
+  isAdmin() {
     const userLoggedIn = this.loginService.isLoggedIn();
     const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
     return userLoggedIn && userRole === UserRoles.Admin;
