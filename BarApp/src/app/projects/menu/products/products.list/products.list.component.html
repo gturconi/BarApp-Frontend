@@ -22,14 +22,8 @@
           <span class="price-p">$ {{ products.price }}</span>
         </div>
         }
-        <div class="actions" *ngIf="!admin">
-          <ion-icon
-            [routerLink]="[]"
-            class="icons-show"
-            name="chevron-forward-circle-outline"
-          ></ion-icon>
-        </div>
-        <div class="actions" *ngIf="admin">
+
+        <div class="actions products-actions" *ngIf="admin">
           <span title="Ocultar producto al usuario" class="icon-tooltip">
             <ion-icon
               [name]="!products.baja ? 'eye-outline' : 'eye-off-outline'"
@@ -37,22 +31,37 @@
               class="icons-admin icon-eye"
             ></ion-icon>
           </span>
+
           <ion-button
             (click)="redirectToProductsEdit(products.id)"
             expand="block"
             fill="clear"
             shape="round"
-            class="buttons-admin"
+            class="buttons-admin products-buttons"
             ><ion-icon name="create-outline" class="icons-accions"></ion-icon
           ></ion-button>
           <ion-button
             expand="block"
             fill="clear"
             shape="round"
-            class="buttons-admin"
+            class="buttons-admin products-buttons"
             (click)="$event.stopPropagation(); delete(products.id)"
             ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
           ></ion-button>
+          <span>
+            <ion-icon
+              (click)="redirectToProductsEdit(products.id)"
+              name="create-outline"
+              class="icons-admin icon-eye products-icons"
+            ></ion-icon>
+          </span>
+          <span>
+            <ion-icon
+              (click)="$event.stopPropagation(); delete(products.id)"
+              name="trash-outline"
+              class="icons-admin icon-eye products-icons"
+            ></ion-icon
+          ></span>
         </div>
       </div>
       }}

@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 .avatar {
   width: 140px;
@@ -15,7 +15,7 @@
 }
 
 .photo-btn::after {
-  content: "Agregar foto";
+  content: 'Agregar foto';
   position: absolute;
   background-color: var(--color-8);
   color: var(--color-7);
