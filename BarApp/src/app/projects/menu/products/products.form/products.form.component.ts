@@ -2,11 +2,16 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from '@common/services/loading.service';
 import { ProductsTypeService } from '../../products-type/services/products-type.service';
 import { ProductsService } from '../services/products.service';
+
+import { EntityListResponse } from '@common/models/entity.list.response';
+import { ProductsType } from '../../products-type/models/productsType';
+import { DropdownParam } from '@common/models/dropdown';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,7 +25,15 @@ export class ProductsFormComponent implements OnInit {
   editMode = false;
   form!: FormGroup;
 
-  productTypeList: string[] = [];
+  productTypeList = new Subject<EntityListResponse<ProductsType>>();
+
+  comboParam: DropdownParam[] = [
+    {
+      title: 'Tipo de producto',
+      fields: new Subject<EntityListResponse<any>>(),
+      defaultValue: new Subject<string>(),
+    },
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -34,14 +47,12 @@ export class ProductsFormComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params['id'];
+      this.loadCombos();
       if (this.id) {
         this.editMode = true;
         this.formTitle = 'Editar Producto';
-        this.autocompleteForm();
       }
     });
-
-    this.loadCombos();
   }
 
   async autocompleteForm() {
@@ -49,18 +60,14 @@ export class ProductsFormComponent implements OnInit {
       this.form.get('name')?.setValue(data.name);
       this.form.get('description')?.setValue(data.description);
       this.form.get('price')?.setValue(data.price);
-      this.form.controls['Tipo de producto'].setValue(data.idCat);
-      //agregar mas
+      this.comboParam[0].defaultValue!.next(data.category!);
     });
   }
 
   loadCombos() {
     this.productsTypeService.getProductsTypes().subscribe(response => {
-      if (response.results) {
-        this.productTypeList = response.results
-          .map(result => result.description)
-          .filter(description => description !== undefined) as string[];
-      }
+      this.comboParam[0].fields!.next(response);
+      this.autocompleteForm();
     });
   }
 
@@ -76,6 +83,7 @@ export class ProductsFormComponent implements OnInit {
     formData.append('image', imageFile);
     formData.append('name', form.controls['name'].value);
     formData.append('description', form.controls['description'].value);
+
     //agregar mas
     const loading = await this.loadingService.loading();
     await loading.present();
@@ -91,6 +99,8 @@ export class ProductsFormComponent implements OnInit {
   }
 
   async edit(form: FormGroup) {
+    console.log(form.controls['Tipo de producto'].value);
+    /*
     let imageFile = null;
     const formData = new FormData();
 
@@ -114,7 +124,7 @@ export class ProductsFormComponent implements OnInit {
         loading.dismiss();
         //TODO cambiar el routeo
         this.router.navigate(['/menu/categories']);
-      });
+      });*/
   }
 
   //agregar mas

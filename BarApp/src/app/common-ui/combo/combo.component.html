@@ -1,0 +1,15 @@
+<form [formGroup]="form">
+  <ion-list>
+    <ion-item>
+      <ion-select
+        [formControlName]="title"
+        [value]="defaultValue ? defaultValue : undefined"
+        [placeholder]="title"
+      >
+        <ion-select-option *ngFor="let item of comboItems" [value]="item">
+          {{ item }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</form>

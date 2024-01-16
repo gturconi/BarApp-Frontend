@@ -8,6 +8,7 @@ import { FormComponent } from './form/form.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
+import { ComboComponent } from './combo/combo.component';
 
 import { CommonUiRoutingModule } from './common-ui-routing.module';
 
@@ -18,6 +19,7 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     HeaderComponent,
     MenuComponent,
     FooterComponent,
+    ComboComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     HeaderComponent,
     MenuComponent,
     FooterComponent,
+    ComboComponent,
   ],
 })
 export class CommonUiModule {}

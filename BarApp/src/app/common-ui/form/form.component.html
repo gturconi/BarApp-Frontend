@@ -22,23 +22,14 @@
       </div>
     </div>
   </ng-container>
+
   <ng-container *ngFor="let combo of combos; let i = index">
-    <ion-list>
-      <ion-item>
-        <ion-select
-          placeholder=""
-          [formControlName]="combo"
-          [value]="combosFields[i][0]"
-        >
-          <ion-select-option
-            *ngFor="let item of combosFields[i]"
-            [value]="item"
-          >
-            {{ item }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+    <app-combo
+      [form]="form"
+      [title]="combo.title"
+      [comboItems]="combosFields[i]"
+      [defaultValue]="defaultValues[i]"
+    ></app-combo>
   </ng-container>
 
   <ion-button

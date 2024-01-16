@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Dropdown } from '@common/models/dropdown';
+import { EntityListResponse } from '@common/models/entity.list.response';
 import { ValidationConfig } from '@common/models/validationConfig';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -13,8 +16,10 @@ export class FormComponent implements OnInit {
   @Input() validationConfig!: ValidationConfig[];
   @Input() editMode: boolean = false;
 
-  @Input() combos: string[] = [];
-  @Input() combosFields: string[][] = [];
+  @Input() combos?: Dropdown[];
+
+  combosFields: string[][] = [];
+  defaultValues: string[] = [];
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
   @Output() formEdit = new EventEmitter<FormGroup>();
@@ -25,40 +30,11 @@ export class FormComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    const formControls: { [key: string]: FormControl } = {};
-    this.validationConfig.forEach(config => {
-      const validators = [];
-      if (config.required) {
-        validators.push(Validators.required);
-      }
-      if (config.email) {
-        validators.push(Validators.email);
-      }
-      if (config.minLength) {
-        validators.push(Validators.minLength(config.minLength));
-      }
+    this.SetvalidationConfig();
 
-      if (config.customValidation) {
-        this.customValidator = true;
-        this.validator = config.customValidation;
-      }
-
-      formControls[config.controlName] = new FormControl('', validators);
-    });
-    this.form = new FormGroup(formControls);
-    if (this.customValidator) {
-      this.form = new FormGroup(formControls, this.validator);
-    } else {
-      this.form = new FormGroup(formControls);
+    if (this.combos) {
+      this.setCombos();
     }
-
-    this.combos.forEach((combo, index) => {
-      const comboFormControl = new FormControl('', [Validators.required]);
-      this.form.addControl(combo, comboFormControl);
-      if (this.combosFields[index]?.length > 0) {
-        comboFormControl.setValue(this.combosFields[index][0]);
-      }
-    });
 
     this.formEdit.emit(this.form);
   }
@@ -91,5 +67,50 @@ export class FormComponent implements OnInit {
 
   submit(): void {
     this.formSubmit.emit(this.form);
+  }
+
+  SetvalidationConfig() {
+    const formControls: { [key: string]: FormControl } = {};
+
+    this.validationConfig.forEach(config => {
+      const validators = [];
+      if (config.required) {
+        validators.push(Validators.required);
+      }
+      if (config.email) {
+        validators.push(Validators.email);
+      }
+      if (config.minLength) {
+        validators.push(Validators.minLength(config.minLength));
+      }
+
+      if (config.customValidation) {
+        this.customValidator = true;
+        this.validator = config.customValidation;
+      }
+
+      formControls[config.controlName] = new FormControl('', validators);
+    });
+    this.form = new FormGroup(formControls);
+    if (this.customValidator) {
+      this.form = new FormGroup(formControls, this.validator);
+    } else {
+      this.form = new FormGroup(formControls);
+    }
+  }
+  setCombos() {
+    this.combos?.forEach((combo, index) => {
+      const comboFormControl = new FormControl('', [Validators.required]);
+      combo.fields.subscribe(field => {
+        this.combosFields.push([]);
+        combo.defaultValue?.subscribe(defaultValue => {
+          this.defaultValues[index] = defaultValue;
+        });
+        field.results.map(result => {
+          this.combosFields[index].push(result.description);
+        });
+      });
+      this.form.addControl(combo.title, comboFormControl);
+    });
   }
 }
