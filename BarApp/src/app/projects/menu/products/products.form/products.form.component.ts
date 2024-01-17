@@ -24,6 +24,7 @@ export class ProductsFormComponent implements OnInit {
   formTitle = 'Añadir Producto';
   editMode = false;
   form!: FormGroup;
+  validationConfig: { controlName: string; required: boolean }[] = [];
 
   productTypeList = new Subject<EntityListResponse<ProductsType>>();
 
@@ -52,6 +53,7 @@ export class ProductsFormComponent implements OnInit {
         this.editMode = true;
         this.formTitle = 'Editar Producto';
       }
+      this.setupValidationConfig();
     });
   }
 
@@ -170,12 +172,13 @@ export class ProductsFormComponent implements OnInit {
     },
   ];
 
-  //agregar mas
-  validationConfig = [
-    { controlName: 'name', required: true },
-    { controlName: 'description', required: true },
-    { controlName: 'price', required: true },
-    { controlName: 'image', required: this.editMode! },
-    { controlName: 'Tipo de Producto', required: true },
-  ];
+  setupValidationConfig() {
+    this.validationConfig = [
+      { controlName: 'name', required: true },
+      { controlName: 'description', required: true },
+      { controlName: 'price', required: true },
+      { controlName: 'image', required: !this.editMode },
+      { controlName: 'Tipo de Producto', required: true },
+    ];
+  }
 }
