@@ -27,6 +27,7 @@
     <app-combo
       [form]="form"
       [title]="combo.title"
+      [control]="getFormControl(combo.title)"
       [comboItems]="combosFields[i]"
       [defaultValue]="defaultValues[i]"
     ></app-combo>

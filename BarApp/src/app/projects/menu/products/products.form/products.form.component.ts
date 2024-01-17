@@ -30,7 +30,7 @@ export class ProductsFormComponent implements OnInit {
 
   comboParam: DropdownParam[] = [
     {
-      title: 'Tipo de producto',
+      title: 'Categoria',
       fields: new Subject<EntityListResponse<any>>(),
       defaultValue: new Subject<string>(),
     },
@@ -178,7 +178,7 @@ export class ProductsFormComponent implements OnInit {
       { controlName: 'description', required: true },
       { controlName: 'price', required: true },
       { controlName: 'image', required: !this.editMode },
-      { controlName: 'Tipo de Producto', required: true },
+      { controlName: 'Categoria', required: !this.editMode },
     ];
   }
 }

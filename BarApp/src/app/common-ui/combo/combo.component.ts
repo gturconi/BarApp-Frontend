@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-combo',
@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class ComboComponent implements OnInit {
   @Input() form: FormGroup = new FormGroup({});
+  @Input() control!: FormControl;
   @Input() title: string = '';
   @Input() comboItems: string[] = [];
   @Input() defaultValue?: string;

@@ -30,11 +30,10 @@ export class FormComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.SetvalidationConfig();
-
     if (this.combos) {
       this.setCombos();
     }
+    this.SetvalidationConfig();
 
     this.formEdit.emit(this.form);
   }
@@ -100,7 +99,6 @@ export class FormComponent implements OnInit {
   }
   setCombos() {
     this.combos?.forEach((combo, index) => {
-      const comboFormControl = new FormControl('', [Validators.required]);
       combo.fields.subscribe(field => {
         this.combosFields.push([]);
         combo.defaultValue?.subscribe(defaultValue => {
@@ -110,7 +108,6 @@ export class FormComponent implements OnInit {
           this.combosFields[index].push(result.description);
         });
       });
-      this.form.addControl(combo.title, comboFormControl);
     });
   }
 }
