@@ -23,6 +23,7 @@ export class ProductsFormComponent implements OnInit {
   id = '';
   formTitle = 'Añadir Producto';
   editMode = false;
+
   form!: FormGroup;
   validationConfig: { controlName: string; required: boolean }[] = [];
 
@@ -45,7 +46,7 @@ export class ProductsFormComponent implements OnInit {
     private loadingService: LoadingService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.loadCombos();
@@ -66,10 +67,13 @@ export class ProductsFormComponent implements OnInit {
     });
   }
 
-  loadCombos() {
+  async loadCombos() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
     this.productsTypeService.getProductsTypes().subscribe(response => {
       this.comboParam[0].fields!.next(response);
       if (this.id) this.autocompleteForm();
+      loading.dismiss();
     });
   }
 

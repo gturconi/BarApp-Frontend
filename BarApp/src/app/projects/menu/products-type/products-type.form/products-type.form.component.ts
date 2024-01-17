@@ -42,8 +42,11 @@ export class ProductsTypeFormComponent implements OnInit {
   }
 
   async autocompleteForm() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
     this.productsTypeService.getProductsType(this.id).subscribe(data => {
       this.form.get('description')?.setValue(data.description);
+      loading.dismiss();
     });
   }
 
