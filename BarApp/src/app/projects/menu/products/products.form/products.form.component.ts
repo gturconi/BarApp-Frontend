@@ -67,7 +67,7 @@ export class ProductsFormComponent implements OnInit {
   loadCombos() {
     this.productsTypeService.getProductsTypes().subscribe(response => {
       this.comboParam[0].fields!.next(response);
-      this.autocompleteForm();
+      if (this.id) this.autocompleteForm();
     });
   }
 
@@ -176,5 +176,6 @@ export class ProductsFormComponent implements OnInit {
     { controlName: 'description', required: true },
     { controlName: 'price', required: true },
     { controlName: 'image', required: this.editMode! },
+    { controlName: 'Tipo de Producto', required: true },
   ];
 }

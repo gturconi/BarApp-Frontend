@@ -62,6 +62,11 @@ export class ProductsListComponent implements OnInit {
       relativeTo: this.route.parent,
     });
   }
+  redirectToProductsAdd() {
+    this.router.navigate(['add/'], {
+      relativeTo: this.route.parent,
+    });
+  }
   redirectToDetails(productId: string) {
     this.router.navigate(['details/', productId], {
       relativeTo: this.route.parent,

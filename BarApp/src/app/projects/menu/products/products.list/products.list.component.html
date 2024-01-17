@@ -66,5 +66,15 @@
       </div>
       }}
     </div>
+
+    <div class="grid-item">
+      <div class="button-add-container" *ngIf="showData && admin">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
+          <ion-fab-button class="button-add" (click)="redirectToProductsAdd()">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+    </div>
   </div>
 </ion-content>
