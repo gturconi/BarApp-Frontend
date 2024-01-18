@@ -113,11 +113,10 @@ export class FormComponent implements OnInit {
         });
         field.results.map(result => {
           const option = {
-            id: result.idProductType, // Suponiendo que result tiene una propiedad 'id'
+            id: result.id,
             description: result.description,
           };
           this.combosFields[index].push(option);
-          // this.combosFields[index].push(result.description);
         });
       });
     });

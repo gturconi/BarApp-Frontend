@@ -25,15 +25,11 @@
     } @if(this.productsTypeList){
     <h2 class="section-title" *ngIf="showData">Categorias de productos</h2>
     <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
-      @for(productsType of productsTypeList; track productsType.idProductType;
-      let idx = $index) {
+      @for(productsType of productsTypeList; track productsType.id; let idx =
+      $index) {
       <div
         class="item2"
-        [routerLink]="[
-          '/menu/categories/',
-          productsType.idProductType,
-          'products'
-        ]"
+        [routerLink]="['/menu/categories/', productsType.id, 'products']"
       >
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ productsType.description }}</span>
@@ -46,7 +42,7 @@
         </div>
         <div class="actions" *ngIf="admin">
           <ion-button
-            [routerLink]="['/menu/categories/edit', productsType.idProductType]"
+            [routerLink]="['/menu/categories/edit', productsType.id]"
             expand="block"
             fill="clear"
             shape="round"
@@ -58,9 +54,7 @@
             fill="clear"
             shape="round"
             class="buttons-admin"
-            (click)="
-              $event.stopPropagation(); delete(productsType.idProductType)
-            "
+            (click)="$event.stopPropagation(); delete(productsType.id)"
             ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
           ></ion-button>
         </div>
