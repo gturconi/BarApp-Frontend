@@ -81,7 +81,7 @@ export class ProductsListComponent implements OnInit {
         this.productsList = data.results;
         this.setImages(this.productsList);
         this.showData = true;
-        if (this.productsList.length === 0) {
+        if (!this.admin && this.productsList.length === 0) {
           Swal.fire({
             icon: 'info',
             title: 'No hay productos',
