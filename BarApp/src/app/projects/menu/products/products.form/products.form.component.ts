@@ -22,6 +22,7 @@ import { ValidationConfig } from '@common/models/validationConfig';
 })
 export class ProductsFormComponent implements OnInit {
   id = '';
+  idCat = '';
   formTitle = 'Añadir Producto';
   editMode = false;
 
@@ -54,6 +55,10 @@ export class ProductsFormComponent implements OnInit {
       if (this.id) {
         this.editMode = true;
         this.formTitle = 'Editar Producto';
+      } else {
+        this.route.parent!.params.subscribe(parentParams => {
+          this.idCat = parentParams['idCat'];
+        });
       }
       this.setupValidationConfig();
     });
@@ -75,6 +80,12 @@ export class ProductsFormComponent implements OnInit {
     this.productsTypeService.getProductsTypes().subscribe(response => {
       this.comboParam[0].fields!.next(response);
       if (this.id) this.autocompleteForm();
+      else {
+        const cat = response.results.find(
+          (type: ProductsType) => type.id == this.idCat
+        );
+        this.comboParam[0].defaultValue!.next(cat?.description!);
+      }
       loading.dismiss();
     });
   }
