@@ -4,11 +4,11 @@
       <ion-select
         [formControlName]="title"
         [formControl]="control"
-        [value]="defaultValue ? defaultValue : undefined"
+        [value]="getSelectedValue(defaultValue)"
         [placeholder]="title"
       >
-        <ion-select-option *ngFor="let item of comboItems" [value]="item">
-          {{ item }}
+        <ion-select-option *ngFor="let item of comboItems" [value]="item.id">
+          {{ item.description }}
         </ion-select-option>
       </ion-select>
     </ion-item>

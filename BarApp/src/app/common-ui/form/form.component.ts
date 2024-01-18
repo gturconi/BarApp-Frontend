@@ -18,7 +18,7 @@ export class FormComponent implements OnInit {
 
   @Input() combos?: Dropdown[];
 
-  combosFields: string[][] = [];
+  combosFields: { id: string; description: string }[][] = [];
   defaultValues: string[] = [];
 
   @Output() formSubmit = new EventEmitter<FormGroup>();
@@ -58,6 +58,8 @@ export class FormComponent implements OnInit {
         );
       } else if (control.errors['notSame']) {
         return 'Las contraseñas no coinciden';
+      } else if (control.errors['min']) {
+        return 'El valor debe ser mayor o igual a ' + control.errors['min'].min;
       }
       return 'Error en el campo ' + controlName;
     }
@@ -73,6 +75,7 @@ export class FormComponent implements OnInit {
 
     this.validationConfig.forEach(config => {
       const validators = [];
+
       if (config.required) {
         validators.push(Validators.required);
       }
@@ -81,6 +84,10 @@ export class FormComponent implements OnInit {
       }
       if (config.minLength) {
         validators.push(Validators.minLength(config.minLength));
+      }
+
+      if (config.min != undefined) {
+        validators.push(Validators.min(config.min));
       }
 
       if (config.customValidation) {
@@ -105,7 +112,12 @@ export class FormComponent implements OnInit {
           this.defaultValues[index] = defaultValue;
         });
         field.results.map(result => {
-          this.combosFields[index].push(result.description);
+          const option = {
+            id: result.idProductType, // Suponiendo que result tiene una propiedad 'id'
+            description: result.description,
+          };
+          this.combosFields[index].push(option);
+          // this.combosFields[index].push(result.description);
         });
       });
     });

@@ -12,6 +12,7 @@ import { ProductsService } from '../services/products.service';
 import { EntityListResponse } from '@common/models/entity.list.response';
 import { ProductsType } from '../../products-type/models/productsType';
 import { DropdownParam } from '@common/models/dropdown';
+import { ValidationConfig } from '@common/models/validationConfig';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +26,7 @@ export class ProductsFormComponent implements OnInit {
   editMode = false;
 
   form!: FormGroup;
-  validationConfig: { controlName: string; required: boolean }[] = [];
+  validationConfig: ValidationConfig[] = [];
 
   productTypeList = new Subject<EntityListResponse<ProductsType>>();
 
@@ -63,6 +64,7 @@ export class ProductsFormComponent implements OnInit {
       this.form.get('name')?.setValue(data.name);
       this.form.get('description')?.setValue(data.description);
       this.form.get('price')?.setValue(data.price);
+      this.form.get('stock')?.setValue(data.stock);
       this.comboParam[0].defaultValue!.next(data.category!);
     });
   }
@@ -82,13 +84,18 @@ export class ProductsFormComponent implements OnInit {
   }
 
   async add(form: FormGroup) {
-    const fileControl = form.controls['image'];
+    console.log(form);
+    /*   const fileControl = form.controls['image'];
     const imageFile: File = fileControl.value;
+    const stockValue = form.controls['stock'].value ? 1 : 0;
+    const category = form.controls['category'].value;
 
     const formData = new FormData();
     formData.append('image', imageFile);
     formData.append('name', form.controls['name'].value);
     formData.append('description', form.controls['description'].value);
+    formData.append('price', form.controls['price'].value);
+    formData.append('stock', stockValue.toString());
 
     //agregar mas
     const loading = await this.loadingService.loading();
@@ -101,7 +108,7 @@ export class ProductsFormComponent implements OnInit {
         loading.dismiss();
         //TODO cambiar el routeo
         this.router.navigate(['/menu/categories']);
-      });
+      });*/
   }
 
   async edit(form: FormGroup) {
@@ -165,6 +172,14 @@ export class ProductsFormComponent implements OnInit {
       label: 'Imagen',
       inputType: 'file',
     },
+    {
+      type: 'checkbox',
+      name: 'stock',
+      label: 'Tiene stock',
+      inputType: 'checkbox',
+      icon: 'material-symbols-outlined',
+      iconName: 'inventory',
+    },
   ];
 
   myButtons = [
@@ -180,8 +195,9 @@ export class ProductsFormComponent implements OnInit {
     this.validationConfig = [
       { controlName: 'name', required: true },
       { controlName: 'description', required: true },
-      { controlName: 'price', required: true },
+      { controlName: 'price', required: true, min: 0 },
       { controlName: 'image', required: !this.editMode },
+      { controlName: 'stock' },
       { controlName: 'Categoria', required: !this.editMode },
     ];
   }

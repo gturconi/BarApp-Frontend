@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 /*para cambiar estilos al form */
 .form-container ion-card {
@@ -37,6 +37,19 @@ ion-icon {
 .validators {
   color: var(--color-10);
   margin-top: -10px;
+}
+
+/* para cambiar estilos al checkbox */
+.custom-input ion-checkbox {
+  --size: 32px;
+  --checkbox-background-checked: var(--color-6);
+  --checkbox-background: var(--color-3);
+  font-weight: bold;
+}
+
+.custom-input ion-checkbox::part(container) {
+  border-radius: 6px;
+  border: 2px solid var(--color-6);
 }
 
 /*para cambiar estilos al boton*/
