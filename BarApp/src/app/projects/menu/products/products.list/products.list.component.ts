@@ -22,7 +22,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./products.list.component.scss'],
 })
 export class ProductsListComponent implements OnInit {
-  productsList!: Products[];
+  productsList: Products[] = [];
   imagesUrl$!: Observable<string>[];
   admin: boolean = false;
   showData: boolean = false;
@@ -80,17 +80,16 @@ export class ProductsListComponent implements OnInit {
       this.productsService.getProducts(this.category).subscribe(data => {
         this.productsList = data.results;
         this.setImages(this.productsList);
-        this.showData = true;
-        if (!this.admin && this.productsList.length === 0) {
+        if (!this.admin && data.results.length === 0) {
           Swal.fire({
             icon: 'info',
             title: 'No hay productos',
             text: 'Aun no hay productos cargados para esta categoría.',
           }).then(() => {
-            this.router.navigate(['/menu/categories']); // Redirecciona al menú de categorías
+            this.router.navigate(['/menu/categories']);
           });
-          this.showData = false;
         }
+        this.showData = true;
       });
     } finally {
       loading.dismiss();

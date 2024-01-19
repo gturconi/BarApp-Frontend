@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Location } from '@angular/common';
 
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from '@common/services/loading.service';
@@ -13,6 +14,7 @@ import { EntityListResponse } from '@common/models/entity.list.response';
 import { ProductsType } from '../../products-type/models/productsType';
 import { DropdownParam } from '@common/models/dropdown';
 import { ValidationConfig } from '@common/models/validationConfig';
+import { Button, FormField } from '@common/models/formTypes';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +30,8 @@ export class ProductsFormComponent implements OnInit {
 
   form!: FormGroup;
   validationConfig: ValidationConfig[] = [];
+  formFields: FormField[] = [];
+  myButtons: Button[] = [];
 
   productTypeList = new Subject<EntityListResponse<ProductsType>>();
 
@@ -41,11 +45,11 @@ export class ProductsFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private productsService: ProductsService,
     private productsTypeService: ProductsTypeService,
     private toastrService: ToastrService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private location: Location
   ) {}
 
   async ngOnInit() {
@@ -55,11 +59,11 @@ export class ProductsFormComponent implements OnInit {
       if (this.id) {
         this.editMode = true;
         this.formTitle = 'Editar Producto';
-      } else {
-        this.route.parent!.params.subscribe(parentParams => {
-          this.idCat = parentParams['idCat'];
-        });
       }
+      this.route.parent!.params.subscribe(parentParams => {
+        this.idCat = parentParams['idCat'];
+      });
+      this.setFormInputs();
       this.setupValidationConfig();
     });
   }
@@ -71,6 +75,7 @@ export class ProductsFormComponent implements OnInit {
       this.form.get('price')?.setValue(data.price);
       this.form.get('stock')?.setValue(data.stock);
       this.comboParam[0].defaultValue!.next(data.category!);
+      this.form.controls['Categoria']?.setValue(this.idCat);
     });
   }
 
@@ -85,6 +90,7 @@ export class ProductsFormComponent implements OnInit {
           (type: ProductsType) => type.id == this.idCat
         );
         this.comboParam[0].defaultValue!.next(cat?.description!);
+        this.form.controls['Categoria']?.setValue(this.idCat);
       }
       loading.dismiss();
     });
@@ -95,11 +101,10 @@ export class ProductsFormComponent implements OnInit {
   }
 
   async add(form: FormGroup) {
-    console.log(form);
-    /*   const fileControl = form.controls['image'];
+    const fileControl = form.controls['image'];
     const imageFile: File = fileControl.value;
     const stockValue = form.controls['stock'].value ? 1 : 0;
-    const category = form.controls['category'].value;
+    const category = form.controls['Categoria'].value;
 
     const formData = new FormData();
     formData.append('image', imageFile);
@@ -107,8 +112,8 @@ export class ProductsFormComponent implements OnInit {
     formData.append('description', form.controls['description'].value);
     formData.append('price', form.controls['price'].value);
     formData.append('stock', stockValue.toString());
+    formData.append('idCat', category);
 
-    //agregar mas
     const loading = await this.loadingService.loading();
     await loading.present();
     this.productsService
@@ -117,15 +122,16 @@ export class ProductsFormComponent implements OnInit {
       .subscribe(() => {
         this.toastrService.success('Producto añadido');
         loading.dismiss();
-        //TODO cambiar el routeo
-        this.router.navigate(['/menu/categories']);
-      });*/
+        this.location.back();
+      });
   }
 
   async edit(form: FormGroup) {
-    console.log(form.controls['Tipo de producto'].value);
-    /*
+    console.log(form);
+
     let imageFile = null;
+    const stockValue = form.controls['stock'].value ? 1 : 0;
+    const category = form.controls['Categoria'].value;
     const formData = new FormData();
 
     const fileControl = form.controls['image'];
@@ -136,7 +142,8 @@ export class ProductsFormComponent implements OnInit {
     formData.append('name', form.controls['name'].value);
     formData.append('description', form.controls['description'].value);
     formData.append('price', form.controls['price'].value);
-    //agregar mas
+    formData.append('stock', stockValue.toString());
+    formData.append('idCat', category);
 
     const loading = await this.loadingService.loading();
     await loading.present();
@@ -146,61 +153,61 @@ export class ProductsFormComponent implements OnInit {
       .subscribe(() => {
         this.toastrService.success('Producto editado');
         loading.dismiss();
-        //TODO cambiar el routeo
-        this.router.navigate(['/menu/categories']);
-      });*/
+        this.location.back();
+      });
   }
 
-  //agregar mas
-  formFields = [
-    {
-      type: 'input',
-      name: 'name',
-      label: 'Nombre',
-      inputType: 'text',
-      icon: 'material-symbols-outlined',
-      iconName: 'restaurant',
-    },
-    {
-      type: 'input',
-      name: 'description',
-      label: 'Descripción',
-      inputType: 'text',
-      icon: 'material-symbols-outlined',
-      iconName: 'restaurant',
-    },
-    {
-      type: 'input',
-      name: 'price',
-      label: 'Precio',
-      inputType: 'number',
-      icon: 'material-symbols-outlined',
-      iconName: 'paid',
-    },
-    {
-      type: 'input',
-      name: 'image',
-      label: 'Imagen',
-      inputType: 'file',
-    },
-    {
-      type: 'checkbox',
-      name: 'stock',
-      label: 'Tiene stock',
-      inputType: 'checkbox',
-      icon: 'material-symbols-outlined',
-      iconName: 'inventory',
-    },
-  ];
+  setFormInputs() {
+    this.formFields = [
+      {
+        type: 'input',
+        name: 'name',
+        label: 'Nombre',
+        inputType: 'text',
+        icon: 'material-symbols-outlined',
+        iconName: 'restaurant',
+      },
+      {
+        type: 'input',
+        name: 'description',
+        label: 'Descripción',
+        inputType: 'text',
+        icon: 'material-symbols-outlined',
+        iconName: 'restaurant',
+      },
+      {
+        type: 'input',
+        name: 'price',
+        label: 'Precio',
+        inputType: 'number',
+        icon: 'material-symbols-outlined',
+        iconName: 'paid',
+      },
+      {
+        type: 'input',
+        name: 'image',
+        label: 'Imagen',
+        inputType: 'file',
+      },
+      {
+        type: 'checkbox',
+        name: 'stock',
+        label: 'Tiene stock',
+        inputType: 'checkbox',
+        icon: 'material-symbols-outlined',
+        iconName: 'inventory',
+      },
+    ];
 
-  myButtons = [
-    {
-      label: this.editMode ? 'Editar' : 'Añadir',
-      type: 'submit',
-      routerLink: '',
-      icon: 'add-circle-outline',
-    },
-  ];
+    this.myButtons = [
+      {
+        label: this.editMode ? 'Editar' : 'Añadir',
+        type: 'submit',
+        routerLink: '',
+        icon: 'add-circle-outline',
+      },
+    ];
+  }
 
   setupValidationConfig() {
     this.validationConfig = [
@@ -209,7 +216,7 @@ export class ProductsFormComponent implements OnInit {
       { controlName: 'price', required: true, min: 0 },
       { controlName: 'image', required: !this.editMode },
       { controlName: 'stock' },
-      { controlName: 'Categoria', required: !this.editMode },
+      { controlName: 'Categoria' },
     ];
   }
 }

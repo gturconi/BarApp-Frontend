@@ -4,7 +4,7 @@
       <ion-select
         [formControlName]="title"
         [formControl]="control"
-        [value]="getSelectedValue(defaultValue)"
+        [value]="getSelectedValue()"
         [placeholder]="title"
       >
         <ion-select-option *ngFor="let item of comboItems" [value]="item.id">

@@ -7,6 +7,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { ProductsTypeService } from '../services/products-type.service';
 import { LoadingService } from '@common/services/loading.service';
 import { ToastrService } from 'ngx-toastr';
+import { Button, FormField } from '@common/models/formTypes';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +21,8 @@ export class ProductsTypeFormComponent implements OnInit {
   editMode = false;
   form!: FormGroup;
   validationConfig: { controlName: string; required: boolean }[] = [];
+  formFields: FormField[] = [];
+  myButtons: Button[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +40,7 @@ export class ProductsTypeFormComponent implements OnInit {
         this.formTitle = 'Editar Categoría';
         this.autocompleteForm();
       }
+      this.setFormInputs();
       this.setupValidationConfig();
     });
   }
@@ -97,31 +101,32 @@ export class ProductsTypeFormComponent implements OnInit {
       });
   }
 
-  formFields = [
-    {
-      type: 'input',
-      name: 'description',
-      label: 'Descripción',
-      inputType: 'text',
-      icon: 'material-symbols-outlined',
-      iconName: 'restaurant',
-    },
-    {
-      type: 'input',
-      name: 'image',
-      label: 'Imagen',
-      inputType: 'file',
-    },
-  ];
-
-  myButtons = [
-    {
-      label: this.editMode ? 'Editar' : 'Añadir',
-      type: 'submit',
-      routerLink: '',
-      icon: 'add-circle-outline',
-    },
-  ];
+  setFormInputs() {
+    this.formFields = [
+      {
+        type: 'input',
+        name: 'description',
+        label: 'Descripción',
+        inputType: 'text',
+        icon: 'material-symbols-outlined',
+        iconName: 'restaurant',
+      },
+      {
+        type: 'input',
+        name: 'image',
+        label: 'Imagen',
+        inputType: 'file',
+      },
+    ];
+    this.myButtons = [
+      {
+        label: this.editMode ? 'Editar' : 'Añadir',
+        type: 'submit',
+        routerLink: '',
+        icon: 'add-circle-outline',
+      },
+    ];
+  }
 
   setupValidationConfig() {
     this.validationConfig = [

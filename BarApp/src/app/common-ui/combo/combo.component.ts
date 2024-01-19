@@ -17,10 +17,10 @@ export class ComboComponent implements OnInit {
 
   ngOnInit() {}
 
-  getSelectedValue(defaultValue: string | undefined): string | undefined {
-    if (defaultValue) {
+  getSelectedValue(): string | undefined {
+    if (this.defaultValue) {
       const selectedItem = this.comboItems.find(
-        item => item.description === defaultValue
+        item => item.description === this.defaultValue
       );
       return selectedItem ? selectedItem.id : undefined;
     }
