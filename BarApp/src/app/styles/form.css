@@ -140,6 +140,8 @@ ion-icon {
 .form-combo::part(icon) {
   width: 20px;
 }
+
+/* Estilos de los modals */
 .alert-radio-label.sc-ion-alert-md {
   font-weight: bold;
   background: var(--color-4);
