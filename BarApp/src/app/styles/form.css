@@ -118,6 +118,55 @@ ion-icon {
   color: green;
 }
 
+/* Para cambiar estilos al combo */
+.form-combo {
+  --background: var(--color-3);
+  color: var(--color-8);
+  font-weight: bold;
+  font-size: 16px;
+  --highlight-color-valid: var(--color-6);
+}
+
+.form-combo::part(placeholder) {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.form-combo::part(text) {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.form-combo::part(icon) {
+  width: 20px;
+}
+.alert-radio-label.sc-ion-alert-md {
+  font-weight: bold;
+  background: var(--color-4);
+}
+
+.alert-button-inner.sc-ion-alert-md {
+  background: var(--color-4);
+  color: var(--color-8);
+  font-weight: bold;
+}
+
+.alert-button-group.sc-ion-alert-md {
+  background: var(--color-4);
+}
+
+.alert-head.sc-ion-alert-md {
+  background: var(--color-4);
+}
+
+[aria-checked='true'].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {
+  border-color: var(--color-6);
+}
+
+.alert-radio-inner.sc-ion-alert-md {
+  background: var(--color-6);
+}
+
 @media (max-width: 768px) {
   .form-container ion-card {
     min-width: 320px;
