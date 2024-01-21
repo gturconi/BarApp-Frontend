@@ -159,6 +159,7 @@ ion-icon {
 
 .alert-head.sc-ion-alert-md {
   background: var(--color-4);
+  border-bottom: 1px solid var(--color-6) !important;
 }
 
 [aria-checked='true'].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {

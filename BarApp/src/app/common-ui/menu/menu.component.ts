@@ -5,6 +5,7 @@ import { UserRoles } from '@common/constants/user.roles.enum';
 import { Location } from '@angular/common';
 
 import { Output, EventEmitter } from '@angular/core';
+import { BadgeService } from '@common/services/badge.service';
 
 @Component({
   selector: 'app-menu',
@@ -13,10 +14,12 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
   @Output() menuToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   showBackButton: boolean = false;
   showDesktopMenu: boolean = true;
   isScreenSmall: boolean = false;
   admin = this.isAdmin();
+  badgeValue = 0;
 
   menuItems: any[] = [];
   tabsItem: any[] = [];
@@ -43,7 +46,8 @@ export class MenuComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private loginService: LoginService,
-    private location: Location
+    private location: Location,
+    private badgeService: BadgeService
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
@@ -61,8 +65,11 @@ export class MenuComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.checkScreenSize();
     });
-    /*para saber si esta logueado /TODO: borrarlo en un futuro*/
+
     const loggedIn = this.isLoggedIn();
+    this.badgeService.getBadgeCount().subscribe(count => {
+      this.badgeValue = count;
+    });
   }
 
   checkScreenSize() {
@@ -102,6 +109,10 @@ export class MenuComponent implements OnInit {
       if (event instanceof NavigationStart && this.router.url === '/auth') {
         this.admin = this.isAdmin();
       }
+    });
+
+    this.badgeService.getBadgeCount().subscribe(count => {
+      this.badgeValue = count;
     });
 
     const userLoggedIn = this.loginService.isLoggedIn();

@@ -91,7 +91,14 @@
 <ion-content class="menu-mobile" *ngIf="!admin">
   <ion-tabs>
     <ion-tab-bar class="tabBar">
-      <ion-tab-button *ngFor="let tab of tabsItem" class="tabButton">
+      <ion-tab-button
+        *ngFor="let tab of tabsItem"
+        class="tabButton"
+        [ngClass]="{ 'tab-order': tab.label === 'Pedidos' }"
+      >
+        @if(tab.label === 'Pedidos' && badgeValue > 0){
+        <ion-badge #ionBadge>{{ badgeValue }}</ion-badge>
+        }
         <ion-icon
           [name]="tab.icon"
           (click)="toggleDesktopMenu(tab.icon)"
