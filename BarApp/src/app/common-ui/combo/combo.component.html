@@ -1,0 +1,17 @@
+<form [formGroup]="form">
+  <ion-select
+    class="form-combo"
+    [formControlName]="title"
+    [formControl]="control"
+    [value]="getSelectedValue()"
+    [placeholder]="title"
+  >
+    <ion-select-option
+      *ngFor="let item of comboItems"
+      [value]="item.id"
+      class="combo-option"
+    >
+      {{ item.description }}
+    </ion-select-option>
+  </ion-select>
+</form>

@@ -20,7 +20,7 @@
       </ion-item>
     </ion-list>
 
-    <ng-container *ngIf="isAdmin()">
+    <ng-container *ngIf="admin">
       <ion-accordion-group>
         <ion-accordion value="first" class="background-menu">
           <ion-item slot="header" color="light" class="menuItem">
@@ -88,10 +88,17 @@
 </div>
 
 <!-- menu mobile-->
-<ion-content class="menu-mobile" *ngIf="!isAdmin()">
+<ion-content class="menu-mobile" *ngIf="!admin">
   <ion-tabs>
     <ion-tab-bar class="tabBar">
-      <ion-tab-button *ngFor="let tab of tabsItem" class="tabButton">
+      <ion-tab-button
+        *ngFor="let tab of tabsItem"
+        class="tabButton"
+        [ngClass]="{ 'tab-order': tab.label === 'Pedidos' }"
+      >
+        @if(tab.label === 'Pedidos' && badgeValue > 0){
+        <ion-badge #ionBadge>{{ badgeValue }}</ion-badge>
+        }
         <ion-icon
           [name]="tab.icon"
           (click)="toggleDesktopMenu(tab.icon)"

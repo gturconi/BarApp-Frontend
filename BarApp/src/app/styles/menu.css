@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 /*para color del logo*/
 .logo__name {
@@ -70,6 +70,16 @@ ion-menu > ion-content {
   --margin-left: 0px;
   --margin-right: 0px;
   max-width: 100px;
+}
+
+.tab-order {
+  position: relative;
+}
+
+.tabButton ion-badge {
+  position: absolute;
+  top: 0;
+  background-color: var(--color-10);
 }
 
 .tabButton:hover {

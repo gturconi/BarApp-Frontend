@@ -1,0 +1,126 @@
+@import "variables.css";
+
+.details-product {
+  --background: var(--color-4);
+  --color: var(--color-8);
+  width: 40vw;
+  font-weight: bold;
+  margin-bottom: 4rem;
+}
+
+.details-price {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: var(--color-2);
+}
+
+.quantity {
+  color: var(--color-8);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity ion-icon {
+  color: var(--color-2);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.quantity-icons.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.details-image {
+  width: 100%;
+}
+
+.details-title {
+  font-weight: bold;
+}
+
+.details-button {
+  --background: var(--color-2);
+  --color: var(--color-7);
+}
+
+.isInCart {
+  --background: var(--color-10) !important;
+}
+
+.details-button > div {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.details-icons {
+  color: white;
+}
+
+.comments > ion-textarea {
+  margin-top: 1rem;
+  --highlight-color-focused: var(--color-2);
+  --highlight-color-valid: var(--color-2);
+  --highlight-color-invalid: var(--color-2);
+  --highlight-color: var(--color-2);
+  --border-color: var(--color-2);
+  --placeholder-color: var(--color-8);
+  --color: var(--color-8);
+  --background: var(--color-4) !important;
+}
+
+.comments p {
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.details-stock {
+  text-align: center;
+  font-size: large;
+  color: var(--color-11);
+}
+
+.details-error {
+  text-align: center;
+  margin-top: 30vh;
+  color: var(--color-10);
+  font-size: 3rem;
+}
+
+.details-error > ion-icon {
+  color: var(--color-10);
+}
+
+.no-stock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-10);
+  color: var(--color-7);
+  font-size: 17px;
+}
+.no-stock > ion-icon {
+  --ionicon-stroke-width: 54px;
+}
+
+@media (max-width: 768px) {
+  .details-product {
+    width: 70vw;
+  }
+}
+
+@media (max-width: 352px) {
+  .details-button > div {
+    justify-content: center;
+  }
+}

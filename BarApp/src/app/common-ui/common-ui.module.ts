@@ -8,7 +8,9 @@ import { FormComponent } from './form/form.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
-import { PaginationComponent } from "./pagination/pagination.component";
+import { PaginationComponent } from './pagination/pagination.component';
+import { ComboComponent } from './combo/combo.component';
+
 import { CommonUiRoutingModule } from './common-ui-routing.module';
 
 @NgModule({
@@ -19,6 +21,7 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     MenuComponent,
     FooterComponent,
     PaginationComponent,
+    ComboComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,7 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     MenuComponent,
     FooterComponent,
     PaginationComponent,
+    ComboComponent,
   ],
 })
 export class CommonUiModule {}

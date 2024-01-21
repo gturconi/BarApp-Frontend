@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: "app-input",
-  templateUrl: "./input.component.html",
-  styleUrls: ["./input.component.scss"],
+  selector: 'app-input',
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss'],
 })
 export class InputComponent implements OnInit {
   @Input() control!: FormControl;
@@ -21,14 +21,18 @@ export class InputComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (this.type == "password") this.isPasswords = true;
+    if (this.type == 'password') this.isPasswords = true;
+
+    if (this.type === 'checkbox') {
+      this.control.setValue(true);
+    }
   }
 
   showOrHidePassword() {
     this.hide = !this.hide;
 
-    if (this.hide) this.type = "password";
-    else this.type = "text";
+    if (this.hide) this.type = 'password';
+    else this.type = 'text';
   }
 
   onFileSelected(event: any) {

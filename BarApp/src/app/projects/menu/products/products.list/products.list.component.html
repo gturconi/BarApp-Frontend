@@ -1,3 +1,85 @@
-<p>
-  products.list works!
-</p>
+<ion-content class="product-content">
+  <div class="container-body">
+    <h2 class="section-title" *ngIf="showData">{{ category }}</h2>
+    @if(productsList.length > 0){
+    <div class="wrapper2 productsList">
+      @for(products of productsList; track products.id; let idx = $index) {
+      @if(admin || !products.baja){
+      <div class="item-p productsItem" (click)="redirectToDetails(products.id)">
+        <div class="image-container-p">
+          <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
+        </div>
+        @if(products.stock == 0){
+        <div class="text-container-p">
+          <span class="title-p strikethrough">{{ products.name }}</span>
+          <span class="out-of-stock">
+            <ion-icon name="warning-outline" class="icon-warning-p"></ion-icon
+            >Agotado
+          </span>
+        </div>
+        } @else{
+        <div class="text-container-p">
+          <span class="title-p">{{ products.name }}</span>
+          <span class="price-p">$ {{ products.price }}</span>
+        </div>
+        }
+
+        <div class="actions products-actions" *ngIf="admin">
+          <span title="Ocultar producto al usuario" class="icon-tooltip">
+            <ion-icon
+              [name]="!products.baja ? 'eye-outline' : 'eye-off-outline'"
+              (click)="$event.stopPropagation(); showOrHideProduct(products)"
+              class="icons-admin icon-eye"
+            ></ion-icon>
+          </span>
+
+          <ion-button
+            (click)="redirectToProductsEdit(products.id)"
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="buttons-admin products-buttons"
+            ><ion-icon name="create-outline" class="icons-accions"></ion-icon
+          ></ion-button>
+          <ion-button
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="buttons-admin products-buttons"
+            (click)="$event.stopPropagation(); delete(products.id)"
+            ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
+          ></ion-button>
+          <span>
+            <ion-icon
+              (click)="redirectToProductsEdit(products.id)"
+              name="create-outline"
+              class="icons-admin icon-eye products-icons"
+            ></ion-icon>
+          </span>
+          <span>
+            <ion-icon
+              (click)="$event.stopPropagation(); delete(products.id)"
+              name="trash-outline"
+              class="icons-admin icon-eye products-icons"
+            ></ion-icon
+          ></span>
+        </div>
+      </div>
+      }}
+    </div>
+    } @else if(admin && showData){
+    <div class="details-error">
+      <h2>Aún no hay productos cargados para esta categoría</h2>
+    </div>
+    }
+    <div class="grid-item">
+      <div class="button-add-container" *ngIf="showData && admin">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
+          <ion-fab-button class="button-add" (click)="redirectToProductsAdd()">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+    </div>
+  </div>
+</ion-content>

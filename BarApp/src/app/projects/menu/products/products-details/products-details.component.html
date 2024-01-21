@@ -1,3 +1,80 @@
-<p>
-  products-details works!
-</p>
+<ion-content class="product-content">
+  <div class="container-body">
+    @if(this.product){
+    <ion-card class="details-product">
+      <img
+        [alt]="this.product.name"
+        [src]="imagesUrl$ | async"
+        class="details-image"
+      />
+      <ion-card-header class="details-header">
+        <ion-card-title class="details-title">{{
+          this.product.name
+        }}</ion-card-title>
+        <ion-card-subtitle class="details-price"
+          ><span>${{ this.product.price! * this.quantity }}</span>
+          <div *ngIf="!admin" class="quantity">
+            <ion-icon
+              (click)="decrement()"
+              name="remove-circle"
+              class="quantity-icons"
+              [class.disabled]="!product.stock"
+            ></ion-icon>
+            <span>{{ this.quantity }}</span>
+            <ion-icon
+              (click)="increment()"
+              name="add-circle"
+              class="quantity-icons"
+              [class.disabled]="!product.stock"
+            ></ion-icon>
+          </div>
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content class="details-content">
+        <div class="description">
+          {{ this.product.description }}
+        </div>
+        <div
+          *ngIf="this.product.stock && !this.product.baja && !admin"
+          class="comments"
+        >
+          <p>Quieres aclarar algo:</p>
+          <ion-textarea
+            labelPlacement="floating"
+            fill="solid"
+            label="Escriba su comentario..."
+            counter="true"
+            maxlength="100"
+          ></ion-textarea>
+        </div>
+        <ion-button
+          *ngIf="this.product.stock && !this.product.baja && !admin"
+          expand="full"
+          class="details-button"
+          [ngClass]="{ isInCart: isInCart }"
+        >
+          <div (click)="isInCart ? removeFromCart() : addToCart()">
+            <ion-icon name="cart" class="details-icons"></ion-icon>
+            <p>
+              {{ this.isInCart ? "QUITAR DEL CARRITO" : "AGREGAR AL CARRITO" }}
+            </p>
+          </div>
+        </ion-button>
+      </ion-card-content>
+      <div *ngIf="!this.product.stock" class="details-stock no-stock">
+        <ion-icon name="warning-outline" class="icon-warning-p"></ion-icon>
+        <p>SIN STOCK</p>
+      </div>
+      <div *ngIf="this.product.baja" class="details-stock">
+        <p>Este producto ya no esta disponible</p>
+      </div>
+    </ion-card>
+    }@else if(!this.isLoading){
+    <div class="details-error">
+      <h2>Producto no encontrado</h2>
+      <ion-icon name="sad-outline"></ion-icon>
+    </div>
+    }
+  </div>
+</ion-content>

@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -92,7 +93,9 @@ export class ProductsTypeListComponent implements OnInit {
     private productsTypeService: ProductsTypeService,
     private imageService: ImageService,
     private loadingService: LoadingService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -103,14 +106,16 @@ export class ProductsTypeListComponent implements OnInit {
   async doSearch() {
     const loading = await this.loadingService.loading();
     await loading.present();
-    this.productsTypeService.getProductsTypes().subscribe(data => {
-      this.productsTypeList = data.results;
-      this.setImages(this.productsTypeList);
-      this.showData = true;
+    try {
+      this.productsTypeService.getProductsTypes().subscribe(data => {
+        this.productsTypeList = data.results;
+        this.setImages(this.productsTypeList);
+        this.showData = true;
+      });
+    } finally {
       loading.dismiss();
-    });
+    }
   }
-
   setImages(productsTypeList: ProductsType[]) {
     this.imagesUrl$ = productsTypeList.map(productsType => {
       return this.getImage(productsType);

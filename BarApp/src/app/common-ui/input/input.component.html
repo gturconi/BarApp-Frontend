@@ -21,6 +21,8 @@
       (change)="onFileSelected($event)"
     />
   </ion-item>
+  }@else if(type === 'checkbox'){
+  <ion-checkbox [formControl]="control">{{ label }}</ion-checkbox>
   }@else{
   <ion-input
     [type]="type"

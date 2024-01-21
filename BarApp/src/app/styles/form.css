@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 /*para cambiar estilos al form */
 .form-container ion-card {
@@ -37,6 +37,19 @@ ion-icon {
 .validators {
   color: var(--color-10);
   margin-top: -10px;
+}
+
+/* para cambiar estilos al checkbox */
+.custom-input ion-checkbox {
+  --size: 32px;
+  --checkbox-background-checked: var(--color-6);
+  --checkbox-background: var(--color-3);
+  font-weight: bold;
+}
+
+.custom-input ion-checkbox::part(container) {
+  border-radius: 6px;
+  border: 2px solid var(--color-6);
 }
 
 /*para cambiar estilos al boton*/
@@ -103,6 +116,58 @@ ion-icon {
   font-style: italic;
   font-weight: bold;
   color: green;
+}
+
+/* Para cambiar estilos al combo */
+.form-combo {
+  --background: var(--color-3);
+  color: var(--color-8);
+  font-weight: bold;
+  font-size: 16px;
+  --highlight-color-valid: var(--color-6);
+}
+
+.form-combo::part(placeholder) {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.form-combo::part(text) {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.form-combo::part(icon) {
+  width: 20px;
+}
+
+/* Estilos de los modals */
+.alert-radio-label.sc-ion-alert-md {
+  font-weight: bold;
+  background: var(--color-4);
+}
+
+.alert-button-inner.sc-ion-alert-md {
+  background: var(--color-4);
+  color: var(--color-8);
+  font-weight: bold;
+}
+
+.alert-button-group.sc-ion-alert-md {
+  background: var(--color-4);
+}
+
+.alert-head.sc-ion-alert-md {
+  background: var(--color-4);
+  border-bottom: 1px solid var(--color-6) !important;
+}
+
+[aria-checked='true'].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {
+  border-color: var(--color-6);
+}
+
+.alert-radio-inner.sc-ion-alert-md {
+  background: var(--color-6);
 }
 
 @media (max-width: 768px) {

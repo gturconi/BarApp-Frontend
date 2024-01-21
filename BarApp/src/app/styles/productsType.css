@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 .container-body {
   display: grid;
@@ -175,6 +175,8 @@
 
 .actions {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
   position: absolute;
   bottom: 10px;
@@ -183,7 +185,6 @@
 }
 
 .icons-show {
-  font-size: 30px;
   cursor: pointer;
   color: var(--color-2);
   margin-right: 10px;

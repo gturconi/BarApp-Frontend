@@ -1,13 +1,13 @@
-import { Avatar, PhotoResult } from "@common/models/avatar";
+import { Avatar, PhotoResult } from '@common/models/avatar';
 
 export class ProductsType {
-  constructor(id = "", description = "", image: Avatar | PhotoResult) {
-    this.idProductType = id;
+  constructor(id = '', description = '', image: Avatar | PhotoResult) {
+    this.id = id;
     this.description = description;
     this.image = image;
   }
 
-  idProductType: string;
+  id: string;
   description?: string;
   image?: Avatar | PhotoResult;
 }
