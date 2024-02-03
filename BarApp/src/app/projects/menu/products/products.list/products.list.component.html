@@ -23,7 +23,13 @@
           <span class="price-p">$ {{ products.price }}</span>
         </div>
         }
-
+        <div class="actions" *ngIf="!admin">
+          <ion-icon
+            [routerLink]="[]"
+            class="icons-show"
+            name="chevron-forward-circle-outline"
+          ></ion-icon>
+        </div>
         <div class="actions products-actions" *ngIf="admin">
           <span title="Ocultar producto al usuario" class="icon-tooltip">
             <ion-icon
