@@ -35,19 +35,21 @@
         <div class="description">
           {{ this.product.description }}
         </div>
-        <div
+        <ion-card
+          class="comments-card"
           *ngIf="this.product.stock && !this.product.baja && !admin"
-          class="comments"
         >
-          <p>Quieres aclarar algo:</p>
-          <ion-textarea
-            labelPlacement="floating"
-            fill="solid"
-            label="Escriba su comentario..."
-            counter="true"
-            maxlength="100"
-          ></ion-textarea>
-        </div>
+          <ion-card-content class="comments">
+            <p>Quieres aclarar algo:</p>
+            <ion-textarea
+              labelPlacement="floating"
+              fill="solid"
+              label="Escriba su comentario..."
+              counter="true"
+              maxlength="100"
+            ></ion-textarea>
+          </ion-card-content>
+        </ion-card>
         <ion-button
           *ngIf="this.product.stock && !this.product.baja && !admin"
           expand="full"
@@ -57,7 +59,7 @@
           <div (click)="isInCart ? removeFromCart() : addToCart()">
             <ion-icon name="cart" class="details-icons"></ion-icon>
             <p>
-              {{ this.isInCart ? "QUITAR DEL CARRITO" : "AGREGAR AL CARRITO" }}
+              {{ this.isInCart ? 'QUITAR DEL CARRITO' : 'AGREGAR AL CARRITO' }}
             </p>
           </div>
         </ion-button>
