@@ -80,7 +80,10 @@ export class ProductsListComponent implements OnInit {
       this.productsService.getProducts(this.category).subscribe(data => {
         this.productsList = data.results;
         this.setImages(this.productsList);
-        if (!this.admin && data.results.length === 0) {
+        const hasVisibleProducts = this.productsList.some(
+          product => product.baja === 0
+        );
+        if (!this.admin && (data.results.length === 0 || !hasVisibleProducts)) {
           Swal.fire({
             icon: 'info',
             title: 'No hay productos',
