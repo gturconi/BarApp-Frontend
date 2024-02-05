@@ -11,6 +11,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'promotions',
+    loadChildren: () =>
+      import('./promotions/promotions.module').then(m => m.PromotionsModule),
+  },
+  {
     path: '',
     component: IntroComponent,
     pathMatch: 'full',
