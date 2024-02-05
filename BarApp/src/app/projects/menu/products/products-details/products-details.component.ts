@@ -81,34 +81,58 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   async addToCart() {
-    this.product.quantity = this.quantity;
-    this.cartService.addToCart(this.product);
-    this.badgeService.incrementBadgeCount();
+    if (!this.loginService.isLoggedIn()) {
+      await this.displayLoginAlert();
+    } else {
+      this.product.quantity = this.quantity;
+      this.cartService.addToCart(this.product);
+      this.badgeService.incrementBadgeCount();
+      const alert = await this.alertController.create({
+        header: 'Producto agregado',
+        buttons: [
+          {
+            text: 'Ir al carrito',
+            handler: () => {
+              //  this.router.navigate(["cart"]);
+            },
+          },
+          {
+            text: 'Seguir comprando',
+            handler: () => {
+              this.router.navigate(['menu/categories']);
+            },
+          },
+        ],
+        cssClass: 'custom-alert',
+      });
+      await alert.present();
+    }
+  }
+
+  async removeFromCart() {
+    if (!this.loginService.isLoggedIn()) {
+      await this.displayLoginAlert();
+    } else {
+      this.cartService.removeFromCart(this.product.id);
+      this.isInCart = false;
+      this.badgeService.decrementBadgeCount();
+      this.toastrService.success('Producto eliminado');
+    }
+  }
+
+  async displayLoginAlert() {
     const alert = await this.alertController.create({
-      header: 'Producto agregado',
+      header: 'Debes iniciar sesión',
       buttons: [
         {
-          text: 'Ir al carrito',
+          text: 'Iniciar sesión',
           handler: () => {
-            //  this.router.navigate(["cart"]);
-          },
-        },
-        {
-          text: 'Seguir comprando',
-          handler: () => {
-            this.router.navigate(['menu/categories']);
+            this.router.navigate(['auth']);
           },
         },
       ],
       cssClass: 'custom-alert',
     });
     await alert.present();
-  }
-
-  async removeFromCart() {
-    this.cartService.removeFromCart(this.product.id);
-    this.isInCart = false;
-    this.badgeService.decrementBadgeCount();
-    this.toastrService.success('Producto eliminado');
   }
 }
