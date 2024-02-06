@@ -10,6 +10,8 @@
       <ion-item
         *ngFor="let menuItem of menuItems"
         class="menuItem background-menu"
+        [routerLink]="menuItem.route"
+        (click)="menuItem.label === 'Cerrar Sesión' && logout()"
       >
         <ion-icon
           aria-hidden="true"
@@ -36,6 +38,7 @@
               <ion-item
                 *ngFor="let items of manageItems"
                 class="background-menu"
+                [routerLink]="items.route"
               >
                 <ion-label>{{ items.label }}</ion-label>
               </ion-item>
@@ -95,6 +98,7 @@
         *ngFor="let tab of tabsItem"
         class="tabButton"
         [ngClass]="{ 'tab-order': tab.label === 'Pedidos' }"
+        [routerLink]="tab.route"
       >
         @if(tab.label === 'Pedidos' && badgeValue > 0){
         <ion-badge #ionBadge>{{ badgeValue }}</ion-badge>
