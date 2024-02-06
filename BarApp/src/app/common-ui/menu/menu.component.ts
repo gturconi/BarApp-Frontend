@@ -25,22 +25,25 @@ export class MenuComponent implements OnInit {
   tabsItem: any[] = [];
 
   commonItems: any[] = [
-    { icon: 'home-outline', label: 'Inicio' },
-    { icon: 'fast-food-outline', label: 'Carta' },
-    { icon: 'mail-outline', label: 'Contacto' },
-    { icon: 'help-outline', label: 'FAQs' },
+    { icon: 'home-outline', label: 'Inicio', route: '/home' },
+    { icon: 'fast-food-outline', label: 'Carta', route: '/menu/categories' },
+    { icon: 'mail-outline', label: 'Contacto', route: '' },
+    { icon: 'help-outline', label: 'FAQs', route: '/faq' },
   ];
 
   manageItems: any[] = [
-    { label: 'Usuarios' },
-    { label: 'Mesas' },
-    { label: 'Categorías de Productos' },
-    { label: 'Productos' },
-    { label: 'Promociones' },
-    { label: 'Cartas' },
+    { label: 'Usuarios', route: '' },
+    { label: 'Mesas', route: '' },
+    { label: 'Categorías de Productos', route: '/menu/categories' },
+    { label: 'Productos', route: '' },
+    { label: 'Promociones', route: '/menu/categories' },
+    { label: 'Cartas', route: '' },
   ];
 
-  settingItems: any[] = [{ label: 'Pantallas' }, { label: 'Temas' }];
+  settingItems: any[] = [
+    { label: 'Pantallas', route: '' },
+    { label: 'Temas', route: '' },
+  ];
 
   constructor(
     private router: Router,
@@ -123,19 +126,26 @@ export class MenuComponent implements OnInit {
     this.checkScreenSize();
 
     if (userLoggedIn && this.loginService.isClient()) {
-      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
+      this.menuItems.push({
+        icon: 'log-out-outline',
+        label: 'Cerrar Sesión',
+      });
       this.menuItems.splice(
         1,
         0,
-        { icon: 'person-circle-outline', label: 'Mi Perfil' },
-        { icon: 'calendar-outline', label: 'Mis Reservas' },
-        { icon: 'cart-outline', label: 'Mis Pedidos' }
+        {
+          icon: 'person-circle-outline',
+          label: 'Mi Perfil',
+          route: 'auth/profile',
+        },
+        { icon: 'calendar-outline', label: 'Mis Reservas', route: '' },
+        { icon: 'cart-outline', label: 'Mis Pedidos', route: '' }
       );
       this.tabsItem.splice(
         2,
         3,
-        { icon: 'calendar-outline', label: 'Reservas' },
-        { icon: 'cart-outline', label: 'Pedidos' },
+        { icon: 'calendar-outline', label: 'Reservas', route: '' },
+        { icon: 'cart-outline', label: 'Pedidos', route: '' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
@@ -143,17 +153,25 @@ export class MenuComponent implements OnInit {
       this.menuItems.splice(
         1,
         0,
-        { icon: 'person-circle-outline', label: 'Mi Perfil' },
-        { icon: 'reader-outline', label: 'Pedidos Actuales' },
-        { icon: 'timer-outline', label: 'Historial de pedidos' },
-        { icon: 'notifications-outline', label: 'Notificación Estado' }
+        {
+          icon: 'person-circle-outline',
+          label: 'Mi Perfil',
+          route: 'auth/profile',
+        },
+        { icon: 'reader-outline', label: 'Pedidos Actuales', route: '' },
+        { icon: 'timer-outline', label: 'Historial de pedidos', route: '' },
+        {
+          icon: 'notifications-outline',
+          label: 'Notificación Estado',
+          route: '',
+        }
       );
       this.tabsItem.splice(
         1,
         3,
-        { icon: 'reader-outline', label: 'Pedidos' },
-        { icon: 'timer-outline', label: 'Historial' },
-        { icon: 'notifications-outline', label: 'Notificación' },
+        { icon: 'reader-outline', label: 'Pedidos', route: '' },
+        { icon: 'timer-outline', label: 'Historial', route: '' },
+        { icon: 'notifications-outline', label: 'Notificación', route: '' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isAdmin()) {
@@ -161,17 +179,23 @@ export class MenuComponent implements OnInit {
       this.menuItems.splice(
         1,
         0,
-        { icon: 'person-circle-outline', label: 'Mi Perfil' },
-        { icon: 'timer-outline', label: 'Dashboard' }
+        {
+          icon: 'person-circle-outline',
+          label: 'Mi Perfil',
+          route: 'auth/profile',
+        },
+        { icon: 'timer-outline', label: 'Dashboard', route: '' }
       );
     } else {
       this.menuItems.splice(1, 0, {
         icon: 'person-circle-outline',
         label: 'Iniciar Sesión',
+        route: 'auth',
       });
       this.tabsItem.splice(this.tabsItem.length - 2, 0, {
         icon: 'cart-outline',
         label: 'Pedido',
+        route: '',
       });
       this.tabsItem.pop();
       this.tabsItem.push({ icon: 'ellipsis-vertical-sharp', label: '' });
@@ -195,5 +219,10 @@ export class MenuComponent implements OnInit {
     const userLoggedIn = this.loginService.isLoggedIn();
     const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
     return userLoggedIn && userRole === UserRoles.Admin;
+  }
+
+  logout() {
+    this.loginService.logout();
+    this.router.navigate(['/auth']);
   }
 }
