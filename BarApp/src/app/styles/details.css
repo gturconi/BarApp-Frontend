@@ -113,6 +113,10 @@
   --ionicon-stroke-width: 54px;
 }
 
+.description {
+  text-transform: capitalize;
+}
+
 .product-content {
   .details-product {
     .comments-card {
