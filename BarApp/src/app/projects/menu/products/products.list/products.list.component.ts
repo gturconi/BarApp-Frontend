@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { ProductsTypeService } from '../../products-type/services/products-type.
 import { Products } from '../models/products';
 
 import Swal from 'sweetalert2';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'app-products.list',
@@ -28,6 +29,11 @@ export class ProductsListComponent implements OnInit {
   showData: boolean = false;
   hide: boolean = true;
   category: string | undefined = '';
+
+  currentPage = 1;
+  count = 0;
+
+  @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
   constructor(
     private loginService: LoginService,
@@ -77,26 +83,45 @@ export class ProductsListComponent implements OnInit {
     const loading = await this.loadingService.loading();
     await loading.present();
     try {
-      this.productsService.getProducts(this.category).subscribe(data => {
-        this.productsList = data.results;
-        this.setImages(this.productsList);
-        const hasVisibleProducts = this.productsList.some(
-          product => product.baja === 0
-        );
-        if (!this.admin && (data.results.length === 0 || !hasVisibleProducts)) {
-          Swal.fire({
-            icon: 'info',
-            title: 'No hay productos',
-            text: 'Aun no hay productos cargados para esta categoría.',
-          }).then(() => {
-            this.router.navigate(['/menu/categories']);
-          });
-        }
-        this.showData = true;
-      });
+      this.productsService
+        .getProducts(this.currentPage, 10, this.category)
+        .subscribe(data => {
+          this.productsList = data.results;
+          this.count = data.count;
+          this.setImages(this.productsList);
+          const hasVisibleProducts = this.productsList.some(
+            product => product.baja === 0
+          );
+          if (
+            !this.admin &&
+            (data.results.length === 0 || !hasVisibleProducts)
+          ) {
+            Swal.fire({
+              icon: 'info',
+              title: 'No hay productos',
+              text: 'Aun no hay productos cargados para esta categoría.',
+            }).then(() => {
+              this.router.navigate(['/menu/categories']);
+            });
+          }
+          this.showData = true;
+        });
     } finally {
       loading.dismiss();
+      this.currentPage++;
+      this.infiniteScroll && this.infiniteScroll.complete();
     }
+  }
+
+  loadMoreData() {
+    this.productsService
+      .getProducts(this.currentPage, 10, this.category)
+      .subscribe(response => {
+        this.productsList.push(...response.results);
+        this.setImages(this.productsList);
+        this.currentPage++;
+        this.infiniteScroll && this.infiniteScroll.complete();
+      });
   }
 
   setImages(productsList: Products[]) {
@@ -131,5 +156,9 @@ export class ProductsListComponent implements OnInit {
     this.hide = !this.hide;
     prod.baja = this.hide ? 0 : 1;
     this.productsService.changeProductView(prod).subscribe();
+  }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 }

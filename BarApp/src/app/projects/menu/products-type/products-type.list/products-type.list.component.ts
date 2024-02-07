@@ -4,27 +4,28 @@ import {
   HostListener,
   OnInit,
   ViewChild,
-} from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
-import { DELETE_OPTS } from "src/app/common/constants/messages.constant";
-import { Avatar } from "@common/models/avatar";
-import { ImageService } from "@common/services/image.service";
-import { LoadingService } from "@common/services/loading.service";
-import { LoginService } from "@common/services/login.service";
-import { ToastrService } from "ngx-toastr";
+import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
+import { Avatar } from '@common/models/avatar';
+import { ImageService } from '@common/services/image.service';
+import { LoadingService } from '@common/services/loading.service';
+import { LoginService } from '@common/services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
-import { ProductsTypeService } from "../services/products-type.service";
-import { ProductsType } from "../models/productsType";
+import { ProductsTypeService } from '../services/products-type.service';
+import { ProductsType } from '../models/productsType';
 
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
-  selector: "app-products-type.list",
-  templateUrl: "./products-type.list.component.html",
-  styleUrls: ["./products-type.list.component.scss"],
+  selector: 'app-products-type.list',
+  templateUrl: './products-type.list.component.html',
+  styleUrls: ['./products-type.list.component.scss'],
 })
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
@@ -32,7 +33,12 @@ export class ProductsTypeListComponent implements OnInit {
   admin: boolean = false;
   showData: boolean = false;
 
-  @ViewChild("wrapper") wrapperRef!: ElementRef<HTMLDivElement>;
+  currentPage = 1;
+  count = 0;
+
+  @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
+
+  @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
   scrollingTimer: any;
 
   onScroll(event: Event) {
@@ -40,50 +46,50 @@ export class ProductsTypeListComponent implements OnInit {
     const wrapper = this.wrapperRef.nativeElement;
 
     if (element.scrollHeight > element.clientHeight) {
-      wrapper.classList.add("show-scrollbar");
+      wrapper.classList.add('show-scrollbar');
       clearTimeout(this.scrollingTimer);
 
       this.scrollingTimer = setTimeout(() => {
-        wrapper.classList.remove("show-scrollbar");
+        wrapper.classList.remove('show-scrollbar');
       }, 1500);
     }
   }
 
   boxes = [
     {
-      title: "Hamburguesas",
-      description: "Todos los jueves a la tarde",
-      image: "assets/img/hamburguesa.jpg",
+      title: 'Hamburguesas',
+      description: 'Todos los jueves a la tarde',
+      image: 'assets/img/hamburguesa.jpg',
       onSale: true,
     },
     {
-      title: "Vinos",
-      description: "válida del 15/7 al 25/7",
-      image: "assets/img/vino.jpg",
+      title: 'Vinos',
+      description: 'válida del 15/7 al 25/7',
+      image: 'assets/img/vino.jpg',
       onSale: true,
     },
     {
-      title: "Tortas",
-      description: "Viernes 10% off",
-      image: "assets/img/torta.jpg",
+      title: 'Tortas',
+      description: 'Viernes 10% off',
+      image: 'assets/img/torta.jpg',
       onSale: false,
     },
     {
-      title: "Title 4",
-      description: "Description 4",
-      image: "ruta_imagen_4",
+      title: 'Title 4',
+      description: 'Description 4',
+      image: 'ruta_imagen_4',
       onSale: true,
     },
     {
-      title: "Title 5",
-      description: "Description 5",
-      image: "ruta_imagen_5",
+      title: 'Title 5',
+      description: 'Description 5',
+      image: 'ruta_imagen_5',
       onSale: false,
     },
     {
-      title: "Title 6",
-      description: "Description 6",
-      image: "ruta_imagen_6",
+      title: 'Title 6',
+      description: 'Description 6',
+      image: 'ruta_imagen_6',
       onSale: false,
     },
   ];
@@ -109,13 +115,28 @@ export class ProductsTypeListComponent implements OnInit {
     try {
       this.productsTypeService.getProductsTypes().subscribe(data => {
         this.productsTypeList = data.results;
+        this.count = data.count;
         this.setImages(this.productsTypeList);
         this.showData = true;
       });
     } finally {
       loading.dismiss();
+      this.currentPage++;
+      this.infiniteScroll && this.infiniteScroll.complete();
     }
   }
+
+  loadMoreData() {
+    this.productsTypeService
+      .getProductsTypes(this.currentPage, 10)
+      .subscribe(response => {
+        this.productsTypeList.push(...response.results);
+        this.setImages(this.productsTypeList);
+        this.currentPage++;
+        this.infiniteScroll && this.infiniteScroll.complete();
+      });
+  }
+
   setImages(productsTypeList: ProductsType[]) {
     this.imagesUrl$ = productsTypeList.map(productsType => {
       return this.getImage(productsType);
@@ -136,11 +157,15 @@ export class ProductsTypeListComponent implements OnInit {
           .deleteProductsTypes(id)
           .pipe(finalize(() => loading.dismiss()))
           .subscribe(() => {
-            this.toastrService.success("Categoria eliminada");
+            this.toastrService.success('Categoria eliminada');
             loading.dismiss();
             this.doSearch();
           });
       }
     });
+  }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 }

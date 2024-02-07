@@ -1,0 +1,7 @@
+@import 'variables.css';
+
+.infinite-scroll-content {
+  --color: var(--color-2);
+  --background-color: var(--color-2);
+  padding-bottom: 30px;
+}

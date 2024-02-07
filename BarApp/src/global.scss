@@ -1,36 +1,37 @@
 /* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
 
-@import "./app/styles/form.css";
-@import "./app/styles/intro.css";
-@import "./app/styles/menu.css";
-@import "./app/styles/footer.css";
-@import "./app/styles/header.css";
-@import "./app/styles/faq.css";
-@import "./app/styles/profile.css";
-@import "./app/styles/productsType.css";
-@import "./app/styles/products.css";
-@import "./app/styles/details.css";
-@import "./app/styles/ionicAlerts.css";
+@import './app/styles/form.css';
+@import './app/styles/intro.css';
+@import './app/styles/menu.css';
+@import './app/styles/footer.css';
+@import './app/styles/header.css';
+@import './app/styles/faq.css';
+@import './app/styles/profile.css';
+@import './app/styles/productsType.css';
+@import './app/styles/products.css';
+@import './app/styles/details.css';
+@import './app/styles/ionicAlerts.css';
+@import './app/styles/infinite-scroll.css';
 
-@import "./app/styles/variables.css";
+@import './app/styles/variables.css';
 
-@import "ngx-toastr/toastr";
+@import 'ngx-toastr/toastr';
 
-@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
