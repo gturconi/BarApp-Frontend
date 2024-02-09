@@ -41,6 +41,17 @@ export class ProductsTypeListComponent implements OnInit {
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
   scrollingTimer: any;
 
+  search: string = '';
+  onSearchChange(event: CustomEvent) {
+    this.search = event.detail.value;
+    this.doSearch(this.search || '');
+  }
+
+  onSearchClear() {
+    this.search = '';
+    this.doSearch('');
+  }
+
   onScroll(event: Event) {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
@@ -106,19 +117,26 @@ export class ProductsTypeListComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
-    this.doSearch();
+    this.doSearch(this.search || '');
   }
 
-  async doSearch() {
+  async doSearch(search: string) {
     const loading = await this.loadingService.loading();
     await loading.present();
     try {
-      this.productsTypeService.getProductsTypes().subscribe(data => {
-        this.productsTypeList = data.results;
-        this.count = data.count;
-        this.setImages(this.productsTypeList);
-        this.showData = true;
-      });
+      this.productsTypeService
+        .getProductsTypes(1, 10, search)
+        .subscribe(data => {
+          this.productsTypeList = data.results;
+          this.count = data.count;
+          this.setImages(this.productsTypeList);
+          this.showData = true;
+          if (this.productsTypeList.length === 0) {
+            this.toastrService.info('No se encontraron categorias de productos.', 'Sin Resultados', {
+              timeOut: 3000, 
+            });
+          }
+        });
     } finally {
       loading.dismiss();
       this.currentPage++;
@@ -159,7 +177,7 @@ export class ProductsTypeListComponent implements OnInit {
           .subscribe(() => {
             this.toastrService.success('Categoria eliminada');
             loading.dismiss();
-            this.doSearch();
+            this.doSearch(this.search || '');
           });
       }
     });

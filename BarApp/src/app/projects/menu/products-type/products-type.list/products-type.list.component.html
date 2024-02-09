@@ -24,6 +24,18 @@
     </div>
     } @if(this.productsTypeList){
     <h2 class="section-title" *ngIf="showData">Categorias de productos</h2>
+    <ion-searchbar
+      [(ngModel)]="search"
+      (ionChange)="onSearchChange($event)"
+      (ionClear)="onSearchClear()"
+      placeholder="Buscar..."
+      search-icon="none"
+    >
+      <ion-button (click)="doSearch(search)" fill="clear" slot="start">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-searchbar>
+
     <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
       @for(productsType of productsTypeList; track productsType.id; let idx =
       $index) {

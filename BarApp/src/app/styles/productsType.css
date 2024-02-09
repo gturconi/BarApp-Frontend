@@ -265,6 +265,11 @@
   border-radius: 8px;
 }
 
+.searchbar-input.sc-ion-searchbar-md {
+  padding-inline-start: 10px;
+  box-shadow: none;
+}
+
 @keyframes reveal {
   from {
     opacity: 0;

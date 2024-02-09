@@ -13,9 +13,9 @@ export class ProductsTypeService {
   apiUrl: string = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  getProductsTypes(page: number = 1, limit: number = 10) {
+  getProductsTypes(page: number = 1, limit: number = 10, search: string = '') {
     return this.http.get<EntityListResponse<ProductsType>>(
-      `${this.apiUrl}/productsType?page=${page}&limit=${limit}`
+      `${this.apiUrl}/productsType?search=${search}&page=${page}&limit=${limit}`
     );
   }
 
