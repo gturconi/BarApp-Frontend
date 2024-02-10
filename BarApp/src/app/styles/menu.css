@@ -91,6 +91,10 @@ ion-menu > ion-content {
   display: none;
 }
 
+.hide {
+  display: none !important;
+}
+
 ion-menu::part(container) {
   --height: 100% !important;
 }
