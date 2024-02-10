@@ -106,19 +106,6 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  handleMenuItemClick(menuItem: MenuItem) {
-    if (menuItem.label === 'Cerrar Sesión') {
-      this.logout();
-    } else {
-      if (this.loginService.isAdmin()) {
-        this.showDesktopMenu = true;
-        this.menuToggled.emit(this.showDesktopMenu);
-      } else {
-        menuItem.icon && this.toggleDesktopMenu(menuItem.icon);
-      }
-    }
-  }
-
   updateMenu() {
     this.badgeService.getBadgeCount().subscribe(count => {
       this.badgeValue = count;
@@ -283,7 +270,6 @@ export class MenuComponent implements OnInit {
   logout() {
     this.router.navigate(['/auth']);
     this.loginService.logout();
-    this.menuToggled.emit(false);
   }
 
   hasManageItems(): boolean {
