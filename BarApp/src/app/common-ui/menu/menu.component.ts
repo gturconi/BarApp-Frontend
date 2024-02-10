@@ -3,6 +3,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { UserRoles } from '@common/constants/user.roles.enum';
 import { Location } from '@angular/common';
+import { MenuController } from '@ionic/angular';
 
 import { Output, EventEmitter } from '@angular/core';
 import { BadgeService } from '@common/services/badge.service';
@@ -14,6 +15,7 @@ import { BadgeService } from '@common/services/badge.service';
 })
 export class MenuComponent implements OnInit {
   @Output() menuToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() menuClosed: EventEmitter<void> = new EventEmitter<void>();
 
   showBackButton: boolean = false;
   showDesktopMenu: boolean = true;
@@ -23,6 +25,9 @@ export class MenuComponent implements OnInit {
 
   menuItems: any[] = [];
   tabsItem: any[] = [];
+  manageItems: any[] = [];
+  settingItems: any[] = [];
+  accordionItems: any[] = [];
 
   commonItems: any[] = [
     { icon: 'home-outline', label: 'Inicio', route: '/home' },
@@ -31,26 +36,13 @@ export class MenuComponent implements OnInit {
     { icon: 'help-outline', label: 'FAQs', route: '/faq' },
   ];
 
-  manageItems: any[] = [
-    { label: 'Usuarios', route: '' },
-    { label: 'Mesas', route: '' },
-    { label: 'Categorías de Productos', route: '/menu/categories' },
-    { label: 'Productos', route: '' },
-    { label: 'Promociones', route: '/menu/categories' },
-    { label: 'Cartas', route: '' },
-  ];
-
-  settingItems: any[] = [
-    { label: 'Pantallas', route: '' },
-    { label: 'Temas', route: '' },
-  ];
-
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
     private loginService: LoginService,
     private location: Location,
-    private badgeService: BadgeService
+    private badgeService: BadgeService,
+    private menuController: MenuController
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
@@ -99,6 +91,8 @@ export class MenuComponent implements OnInit {
         const menuButton = document.getElementById('menuButton');
         if (menuButton) {
           menuButton.click();
+          this.menuController.close();
+          this.menuClosed.emit();
         }
       }, 0);
     } else {
@@ -126,10 +120,6 @@ export class MenuComponent implements OnInit {
     this.checkScreenSize();
 
     if (userLoggedIn && this.loginService.isClient()) {
-      this.menuItems.push({
-        icon: 'log-out-outline',
-        label: 'Cerrar Sesión',
-      });
       this.menuItems.splice(
         1,
         0,
@@ -149,7 +139,6 @@ export class MenuComponent implements OnInit {
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
-      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
       this.menuItems.splice(
         1,
         0,
@@ -175,7 +164,6 @@ export class MenuComponent implements OnInit {
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isAdmin()) {
-      this.menuItems.push({ icon: 'log-out-outline', label: 'Cerrar Sesión' });
       this.menuItems.splice(
         1,
         0,
@@ -186,6 +174,30 @@ export class MenuComponent implements OnInit {
         },
         { icon: 'timer-outline', label: 'Dashboard', route: '' }
       );
+      this.manageItems = [
+        { label: 'Usuarios', route: '' },
+        { label: 'Mesas', route: '' },
+        { label: 'Carta', route: '/menu/categories' },
+      ];
+
+      this.settingItems = [
+        { label: 'Pantallas', route: '' },
+        { label: 'Temas', route: '' },
+      ];
+      this.accordionItems = [
+        {
+          value: 'first',
+          icon: 'create-outline',
+          label: 'Gestionar',
+          items: this.manageItems,
+        },
+        {
+          value: 'second',
+          icon: 'settings-outline',
+          label: 'Configuracion',
+          items: this.settingItems,
+        },
+      ];
     } else {
       this.menuItems.splice(1, 0, {
         icon: 'person-circle-outline',
@@ -199,6 +211,9 @@ export class MenuComponent implements OnInit {
       });
       this.tabsItem.pop();
       this.tabsItem.push({ icon: 'ellipsis-vertical-sharp', label: '' });
+      this.manageItems = [];
+      this.settingItems = [];
+      this.accordionItems = [];
     }
   }
 
@@ -219,10 +234,5 @@ export class MenuComponent implements OnInit {
     const userLoggedIn = this.loginService.isLoggedIn();
     const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
     return userLoggedIn && userRole === UserRoles.Admin;
-  }
-
-  logout() {
-    this.loginService.logout();
-    this.router.navigate(['/auth']);
   }
 }

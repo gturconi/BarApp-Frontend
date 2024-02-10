@@ -28,4 +28,8 @@ export class AppComponent implements OnInit {
   onMenuToggle(showMenu: boolean) {
     this.showMenu = showMenu;
   }
+
+  onMenuClosed() {
+    this.showMenu = false;
+  }
 }

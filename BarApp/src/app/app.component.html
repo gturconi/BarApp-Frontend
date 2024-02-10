@@ -1,7 +1,10 @@
 <div class="main-container-app">
   <ion-app>
     <app-header [showMenu]="showMenu"></app-header>
-    <app-menu (menuToggled)="onMenuToggle($event)"></app-menu>
+    <app-menu
+      (menuToggled)="onMenuToggle($event)"
+      (menuClosed)="onMenuClosed()"
+    ></app-menu>
     <div class="content" [class.add-margin-bottom]="addMarginBottom">
       <router-outlet></router-outlet>
     </div>

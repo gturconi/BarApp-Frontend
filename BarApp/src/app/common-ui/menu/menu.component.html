@@ -11,7 +11,6 @@
         *ngFor="let menuItem of menuItems"
         class="menuItem background-menu"
         [routerLink]="menuItem.route"
-        (click)="menuItem.label === 'Cerrar Sesión' && logout()"
       >
         <ion-icon
           aria-hidden="true"
@@ -22,54 +21,29 @@
       </ion-item>
     </ion-list>
 
-    <ng-container *ngIf="admin">
-      <ion-accordion-group>
-        <ion-accordion value="first" class="background-menu">
-          <ion-item slot="header" color="light" class="menuItem">
-            <ion-icon
-              aria-hidden="true"
-              name="create-outline"
-              slot="start"
-            ></ion-icon>
-            <ion-label>Gestionar</ion-label>
-          </ion-item>
-          <ion-list slot="content" class="background-menu">
-            <div class="item-padding">
-              <ion-item
-                *ngFor="let items of manageItems"
-                class="background-menu"
-                [routerLink]="items.route"
-              >
-                <ion-label>{{ items.label }}</ion-label>
-              </ion-item>
-            </div>
-          </ion-list>
-        </ion-accordion>
-      </ion-accordion-group>
-
-      <ion-accordion-group>
-        <ion-accordion value="second" class="background-menu">
-          <ion-item slot="header" color="light" class="menuItem">
-            <ion-icon
-              aria-hidden="true"
-              name="settings-outline"
-              slot="start"
-            ></ion-icon>
-            <ion-label>Configuracion</ion-label>
-          </ion-item>
-          <ion-list slot="content" class="background-menu">
-            <div class="item-padding">
-              <ion-item
-                *ngFor="let items of settingItems"
-                class="menuItem background-menu"
-              >
-                <ion-label>{{ items.label }}</ion-label>
-              </ion-item>
-            </div>
-          </ion-list>
-        </ion-accordion>
-      </ion-accordion-group>
-    </ng-container>
+    <ion-accordion-group *ngFor="let accordionItem of accordionItems">
+      <ion-accordion [value]="accordionItem.value" class="background-menu">
+        <ion-item slot="header" color="light" class="menuItem">
+          <ion-icon
+            aria-hidden="true"
+            [name]="accordionItem.icon"
+            slot="start"
+          ></ion-icon>
+          <ion-label>{{ accordionItem.label }}</ion-label>
+        </ion-item>
+        <ion-list slot="content" class="background-menu">
+          <div class="item-padding">
+            <ion-item
+              *ngFor="let item of accordionItem.items"
+              class="menuItem background-menu"
+              [routerLink]="item.route"
+            >
+              <ion-label>{{ item.label }}</ion-label>
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
