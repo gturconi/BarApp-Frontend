@@ -12,7 +12,7 @@
           *ngIf="!menuItem.isManage"
           class="menuItem background-menu"
           [routerLink]="menuItem.route"
-          (click)="menuItem.label === 'Cerrar Sesión' && logout()"
+          (click)="handleMenuItemClick(menuItem)"
         >
           <ion-icon
             aria-hidden="true"
