@@ -38,8 +38,8 @@ export class ProfileComponent implements OnInit {
   }
 
   logout() {
-    this.loginService.logout();
     this.router.navigate(['/auth']);
+    this.loginService.logout();
   }
 
   editProfile() {
