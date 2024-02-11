@@ -88,4 +88,16 @@
       </div>
     </div>
   </div>
+
+  <ion-infinite-scroll
+    *ngIf="productsList.length < count"
+    threshold="100px"
+    (ionInfinite)="loadMoreData()"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      class="infinite-scroll-content"
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

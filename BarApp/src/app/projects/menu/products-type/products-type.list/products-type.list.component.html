@@ -60,6 +60,18 @@
         </div>
       </div>
       }
+
+      <ion-infinite-scroll
+        *ngIf="productsTypeList.length < count"
+        threshold="100px"
+        (ionInfinite)="loadMoreData()"
+      >
+        <ion-infinite-scroll-content
+          loadingSpinner="crescent"
+          class="infinite-scroll-content"
+        >
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </div>
     }@else if(showData){
     <div class="details-error">

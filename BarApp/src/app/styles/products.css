@@ -61,6 +61,7 @@ div.description {
   }
   .products-actions {
     bottom: 10px !important;
+    gap: 0;
   }
 }
 
