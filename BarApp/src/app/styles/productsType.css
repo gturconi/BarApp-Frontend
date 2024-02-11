@@ -131,9 +131,7 @@
   max-height: 350px;
   padding-right: 10px;
   border: none;
-  scrollbar-width: none;
   transition: scrollbar-width 0.5s ease;
-  scrollbar-width: none;
 }
 
 .item2 {
