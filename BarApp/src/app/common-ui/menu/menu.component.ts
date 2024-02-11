@@ -281,6 +281,11 @@ export class MenuComponent implements OnInit {
     const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
     return userLoggedIn && userRole === UserRoles.Admin;
   }
+  isClient() {
+    const userLoggedIn = this.loginService.isLoggedIn();
+    const userRole = userLoggedIn ? this.loginService.getUserRole() : null;
+    return userLoggedIn && userRole === UserRoles.Client;
+  }
 
   logout() {
     this.router.navigate(['/auth']);

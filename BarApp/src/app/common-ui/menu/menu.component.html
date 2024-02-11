@@ -107,7 +107,7 @@
         [ngClass]="{ 'tab-order': tab.label === 'Pedidos' }"
         [routerLink]="tab.route"
       >
-        @if(tab.label === 'Pedidos' && badgeValue > 0){
+        @if(tab.label === 'Pedidos' && badgeValue > 0 && isClient()) {
         <ion-badge #ionBadge>{{ badgeValue }}</ion-badge>
         }
         <ion-icon
