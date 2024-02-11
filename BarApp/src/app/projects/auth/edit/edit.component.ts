@@ -1,26 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { finalize } from "rxjs/operators";
-import { ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+import { ChangeDetectionStrategy } from '@angular/core';
 
-import { User } from "@common/models/user";
+import { User } from '@common/models/user';
 
-import { LoadingService } from "@common/services/loading.service";
-import { UserService } from "../../services/user.service";
-import { LoginService } from "@common/services/login.service";
-import { ToastrService } from "ngx-toastr";
+import { LoadingService } from '@common/services/loading.service';
+import { UserService } from '../../services/user.service';
+import { LoginService } from '@common/services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: "app-edit",
-  templateUrl: "./edit.component.html",
-  styleUrls: ["./edit.component.scss"],
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss'],
 })
 export class EditComponent implements OnInit {
   form!: FormGroup;
   form2!: FormGroup;
-  id = "";
+  id = '';
 
   constructor(
     private userService: UserService,
@@ -33,7 +33,7 @@ export class EditComponent implements OnInit {
 
   async ngOnInit() {
     this.route.params.subscribe(params => {
-      this.id = params["id"];
+      this.id = params['id'];
       if (this.id) {
         this.autocompleteForm();
       }
@@ -41,10 +41,13 @@ export class EditComponent implements OnInit {
   }
 
   async autocompleteForm() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
     this.userService.getUser(this.id).subscribe(user => {
-      this.form.get("name")?.setValue(user.name);
-      this.form.get("email")?.setValue(user.email);
-      this.form.get("tel")?.setValue(user.tel);
+      this.form.get('name')?.setValue(user.name);
+      this.form.get('email')?.setValue(user.email);
+      this.form.get('tel')?.setValue(user.tel);
+      loading.dismiss();
     });
   }
 
@@ -66,10 +69,10 @@ export class EditComponent implements OnInit {
       .editUserData(usuaroActualizado)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(user => {
-        this.toastrService.success("Usuario editado con exito");
+        this.toastrService.success('Usuario editado con exito');
         this.loginService.setUser(user);
         loading.dismiss();
-        this.router.navigate(["/auth/profile"]);
+        this.router.navigate(['/auth/profile']);
       });
   }
 
@@ -86,93 +89,93 @@ export class EditComponent implements OnInit {
       .changePassword(usuaroActualizado)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
-        this.toastrService.success("Contraseña cambiada con exito");
+        this.toastrService.success('Contraseña cambiada con exito');
         loading.dismiss();
-        this.router.navigate(["/auth/profile"]);
+        this.router.navigate(['/auth/profile']);
       });
   }
 
   formFields = [
     {
-      type: "input",
-      name: "name",
-      label: "Nombre",
-      autocomplete: "name",
-      inputType: "text",
-      icon: "material-symbols-outlined",
-      iconName: "person",
+      type: 'input',
+      name: 'name',
+      label: 'Nombre',
+      autocomplete: 'name',
+      inputType: 'text',
+      icon: 'material-symbols-outlined',
+      iconName: 'person',
     },
     {
-      type: "input",
-      name: "tel",
-      label: "Telefono",
-      autocomplete: "tel",
-      inputType: "text",
-      icon: "material-symbols-outlined",
-      iconName: "phone",
+      type: 'input',
+      name: 'tel',
+      label: 'Telefono',
+      autocomplete: 'tel',
+      inputType: 'text',
+      icon: 'material-symbols-outlined',
+      iconName: 'phone',
     },
     {
-      type: "input",
-      name: "email",
-      label: "Email",
-      autocomplete: "email",
-      inputType: "email",
-      icon: "material-symbols-outlined",
-      iconName: "mail",
+      type: 'input',
+      name: 'email',
+      label: 'Email',
+      autocomplete: 'email',
+      inputType: 'email',
+      icon: 'material-symbols-outlined',
+      iconName: 'mail',
     },
   ];
 
   myButtons = [
     {
-      label: "Editar",
-      type: "submit",
-      routerLink: "",
-      icon: "person-add-outline",
+      label: 'Editar',
+      type: 'submit',
+      routerLink: '',
+      icon: 'person-add-outline',
     },
   ];
 
   validationConfig = [
-    { controlName: "name", required: true, minLength: 4 },
-    { controlName: "tel", required: true, minLength: 6 },
-    { controlName: "email", required: true, email: true },
+    { controlName: 'name', required: true, minLength: 4 },
+    { controlName: 'tel', required: true, minLength: 6 },
+    { controlName: 'email', required: true, email: true },
   ];
 
   formFields2 = [
     {
-      type: "input",
-      name: "passwordActual",
-      label: "Contraseña actual",
-      inputType: "password",
-      icon: "material-symbols-outlined",
-      iconName: "lock",
+      type: 'input',
+      name: 'passwordActual',
+      label: 'Contraseña actual',
+      inputType: 'password',
+      icon: 'material-symbols-outlined',
+      iconName: 'lock',
     },
     {
-      type: "input",
-      name: "password",
-      label: "Nueva contraseña",
-      inputType: "password",
-      icon: "material-symbols-outlined",
-      iconName: "lock",
+      type: 'input',
+      name: 'password',
+      label: 'Nueva contraseña',
+      inputType: 'password',
+      icon: 'material-symbols-outlined',
+      iconName: 'lock',
     },
     {
-      type: "input",
-      name: "password2",
-      label: "Repetir nueva contraseña",
-      inputType: "password",
-      icon: "material-symbols-outlined",
-      iconName: "lock",
+      type: 'input',
+      name: 'password2',
+      label: 'Repetir nueva contraseña',
+      inputType: 'password',
+      icon: 'material-symbols-outlined',
+      iconName: 'lock',
     },
   ];
 
   validationConfig2 = [
-    { controlName: "passwordActual", required: true },
-    { controlName: "password", required: true },
+    { controlName: 'passwordActual', required: true },
+    { controlName: 'password', required: true },
     {
-      controlName: "password2",
+      controlName: 'password2',
       required: true,
       customValidation: (form: FormGroup) => {
-        const passwordControl = form.get("password");
-        const password2Control = form.get("password2");
+        const passwordControl = form.get('password');
+        const password2Control = form.get('password2');
 
         if (passwordControl && password2Control) {
           const passwordValue = passwordControl.value;

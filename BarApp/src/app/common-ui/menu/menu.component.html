@@ -78,57 +78,6 @@
         </ion-accordion-group>
       </ng-container>
     </ion-list>
-    <<<<<<< HEAD
-
-    <ng-container *ngIf="admin">
-      <ion-accordion-group>
-        <ion-accordion value="first" class="background-menu">
-          <ion-item slot="header" color="light" class="menuItem">
-            <ion-icon
-              aria-hidden="true"
-              name="create-outline"
-              slot="start"
-            ></ion-icon>
-            <ion-label>Gestionar</ion-label>
-          </ion-item>
-          <ion-list slot="content" class="background-menu">
-            <div class="item-padding">
-              <ion-item
-                *ngFor="let items of manageItems"
-                class="background-menu"
-                [routerLink]="items.route"
-              >
-                <ion-label>{{ items.label }}</ion-label>
-              </ion-item>
-            </div>
-          </ion-list>
-        </ion-accordion>
-      </ion-accordion-group>
-
-      <ion-accordion-group>
-        <ion-accordion value="second" class="background-menu">
-          <ion-item slot="header" color="light" class="menuItem">
-            <ion-icon
-              aria-hidden="true"
-              name="settings-outline"
-              slot="start"
-            ></ion-icon>
-            <ion-label>Configuracion</ion-label>
-          </ion-item>
-          <ion-list slot="content" class="background-menu">
-            <div class="item-padding">
-              <ion-item
-                *ngFor="let items of settingItems"
-                class="menuItem background-menu"
-              >
-                <ion-label>{{ items.label }}</ion-label>
-              </ion-item>
-            </div>
-          </ion-list>
-        </ion-accordion>
-      </ion-accordion-group>
-    </ng-container>
-    ======= >>>>>>> crud---products---franco
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
