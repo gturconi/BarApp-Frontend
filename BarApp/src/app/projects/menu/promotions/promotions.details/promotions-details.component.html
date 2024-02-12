@@ -31,9 +31,18 @@
             class="promotion-date"
             *ngIf="this.promotion.valid_from && this.promotion.valid_to"
           >
-            Válida del
-            {{ this.promotion.valid_from | date : 'dd-MM-yyyy HH:mm' }}Hs al
-            {{ this.promotion.valid_to | date : 'dd-MM-yyyy HH:mm' }} Hs
+            Vigente del
+            <span
+              >{{
+                this.promotion.valid_from | date : 'dd-MM-yyyy - HH:mm'
+              }}Hs</span
+            >
+            al
+            <span
+              >{{
+                this.promotion.valid_to | date : 'dd-MM-yyyy - HH:mm'
+              }}Hs</span
+            >
           </div>
           <div
             *ngIf="
@@ -41,12 +50,53 @@
               this.promotion.days_of_week.length > 0
             "
           >
-            Días de la semana:
-            <ul>
-              <li *ngFor="let dia of this.promotion.days_of_week">
-                {{ getNombreDia(dia) }}
-              </li>
-            </ul>
+            <div class="tittle-valid">Válido los días:</div>
+            <div class="flags-container">
+              <div
+                *ngIf="
+                  arraysEqual(this.promotion.days_of_week, [1, 2, 3, 4, 5])
+                "
+                class="flag"
+              >
+                De lunes a viernes
+              </div>
+              <div
+                *ngIf="
+                  arraysEqual(
+                    this.promotion.days_of_week,
+                    [1, 2, 3, 4, 5, 6, 7]
+                  )
+                "
+                class="flag"
+              >
+                Todos los días
+              </div>
+              <div
+                *ngIf="arraysEqual(this.promotion.days_of_week, [6, 7])"
+                class="flag"
+              >
+                Fines de semana
+              </div>
+              <div
+                *ngIf="
+                  !arraysEqual(this.promotion.days_of_week, [1, 2, 3, 4, 5]) &&
+                  !arraysEqual(
+                    this.promotion.days_of_week,
+                    [1, 2, 3, 4, 5, 6, 7]
+                  ) &&
+                  !arraysEqual(this.promotion.days_of_week, [6, 7])
+                "
+              >
+                <div class="flags-container">
+                  <div
+                    *ngFor="let dia of this.promotion.days_of_week"
+                    class="flag"
+                  >
+                    {{ getNombreDia(dia) }}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="this.promotion.price">
             {{ this.promotion.price }}

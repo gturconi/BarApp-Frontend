@@ -6,6 +6,15 @@
   padding: 10px;
   border-radius: 5px;
   text-align: center;
+  margin-bottom: 15px;
+}
+
+.promotion-date span {
+  color: #f9dfbc;
+}
+
+.tittle-valid {
+  margin-bottom: 5px;
 }
 
 .discount-overlay {
@@ -46,4 +55,22 @@
 
 .promotion-image {
   position: relative;
+}
+
+.flags-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.flag {
+  flex: 1;
+  position: relative;
+  padding: 5px;
+  background-color: #da6047;
+  color: #fff;
+  font-size: 0.9em;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 3px;
 }

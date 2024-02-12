@@ -28,13 +28,13 @@ export class PromotionsDetailsComponent implements OnInit {
   quantity: number = 1;
   admin: boolean = false;
   diasDeLaSemana = [
-    'Domingo',
     'Lunes',
     'Martes',
     'Miércoles',
     'Jueves',
     'Viernes',
     'Sábado',
+    'Domingo',
   ];
 
   constructor(
@@ -80,10 +80,14 @@ export class PromotionsDetailsComponent implements OnInit {
   }
 
   getNombreDia(numeroDia: number): string {
-    if (numeroDia >= 0 && numeroDia < this.diasDeLaSemana.length) {
-      return this.diasDeLaSemana[numeroDia];
+    if (numeroDia >= 1 && numeroDia <= this.diasDeLaSemana.length) {
+      return this.diasDeLaSemana[numeroDia - 1];
     } else {
       return 'Día no válido';
     }
+  }
+
+  arraysEqual(arr1: number[], arr2: number[]): boolean {
+    return JSON.stringify(arr1) === JSON.stringify(arr2);
   }
 }
