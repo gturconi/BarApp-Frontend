@@ -1,1 +1,67 @@
-<p>promotions-details works!</p>
+<ion-content class="product-content">
+  <div class="container-body">
+    @if(this.promotion){
+    <ion-card class="details-product">
+      <img
+        [alt]="this.promotion.description"
+        [src]="imagesUrl$ | async"
+        class="details-image promotion-image"
+      />
+      <div class="discount-overlay">
+        <div class="discount-content">
+          <span class="discount-number" *ngIf="promotion.discount">
+            {{ this.promotion.discount * 100 }}</span
+          >
+          <div class="percentage-info">
+            <span class="percentage-symbol">%</span>
+            <span class="off-text">Off</span>
+          </div>
+        </div>
+      </div>
+      <div class="additional-circle"></div>
+      <ion-card-header class="details-header">
+        <ion-card-title class="details-title">{{
+          this.promotion.description
+        }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="details-content">
+        <div class="description">
+          <div
+            class="promotion-date"
+            *ngIf="this.promotion.valid_from && this.promotion.valid_to"
+          >
+            Válida del
+            {{ this.promotion.valid_from | date : 'dd-MM-yyyy HH:mm' }}Hs al
+            {{ this.promotion.valid_to | date : 'dd-MM-yyyy HH:mm' }} Hs
+          </div>
+          <div
+            *ngIf="
+              this.promotion.days_of_week &&
+              this.promotion.days_of_week.length > 0
+            "
+          >
+            Días de la semana:
+            <ul>
+              <li *ngFor="let dia of this.promotion.days_of_week">
+                {{ getNombreDia(dia) }}
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="this.promotion.price">
+            {{ this.promotion.price }}
+          </div>
+        </div>
+      </ion-card-content>
+      <div *ngIf="this.promotion.baja" class="details-stock">
+        <p>Esta promoción ya no esta disponible</p>
+      </div>
+    </ion-card>
+    }@else if(!this.isLoading){
+    <div class="details-error">
+      <h2>Promoción no encontrada</h2>
+      <ion-icon name="sad-outline"></ion-icon>
+    </div>
+    }
+  </div>
+</ion-content>

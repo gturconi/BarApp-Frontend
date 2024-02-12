@@ -4,7 +4,10 @@
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper">
       @for(promotion of promotionsList; track promotion.id; let idx = $index) {
-      <div class="item">
+      <div
+        class="item"
+        (click)="promotion.id !== undefined && redirectToDetails(promotion.id)"
+      >
         <div class="offer-label" *ngIf="promotion.discount">
           {{ promotion.discount * 100 }}% off
           <span class="material-symbols-outlined icon-sale"> verified </span>

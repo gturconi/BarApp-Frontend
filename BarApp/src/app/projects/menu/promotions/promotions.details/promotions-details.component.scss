@@ -1,0 +1,49 @@
+.promotion-date {
+  font-size: 1em;
+  font-weight: bold;
+  color: white;
+  background-color: red;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.discount-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+  box-shadow: 0 0 0 3px #f6cd8f, 0 0 0 10px #ec9819;
+}
+
+.discount-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.discount-number {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.percentage-symbol {
+  font-size: 1em;
+}
+
+.off-text {
+  font-size: 0.7em;
+  margin-left: 5px;
+}
+
+.promotion-image {
+  position: relative;
+}
