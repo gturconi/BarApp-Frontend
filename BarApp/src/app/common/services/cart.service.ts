@@ -1,21 +1,22 @@
-import { Injectable } from "@angular/core";
-import { Products } from "src/app/projects/menu/products/models/products";
+import { Injectable } from '@angular/core';
+import { CartProduct } from '@common/models/cartProduct';
+import { Products } from 'src/app/projects/menu/products/models/products';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CartService {
   constructor() {}
-  private cart: Products[] = [];
+  private cart: CartProduct[] = [];
 
   addToCart(item: Products) {
     this.getCart();
 
-    let index = this.cart.findIndex(x => x.id === item.id);
+    let index = this.cart.findIndex(x => x.product.id === item.id);
     if (index === -1) {
-      this.cart.push(item);
+      this.cart.push({ product: item, visited: false });
     } else {
-      this.cart[index].quantity! += item.quantity!;
+      this.cart[index].product.quantity! += item.quantity!;
     }
     this.updateLocalStorage();
   }
@@ -23,29 +24,30 @@ export class CartService {
   isProductInCart(id: string): boolean {
     this.getCart();
 
-    let index = this.cart.findIndex(x => x.id == id);
+    let index = this.cart.findIndex(x => x.product.id === id);
 
-    if (index === -1) {
-      return false;
-    } else {
-      return true;
-    }
+    return index !== -1;
   }
 
   removeFromCart(id: string) {
     this.getCart();
 
-    this.cart = this.cart.filter(x => x.id != id);
+    this.cart = this.cart.filter(x => x.product.id !== id);
     this.updateLocalStorage();
   }
 
   getCart() {
-    let cartStr = localStorage.getItem("cart");
+    let cartStr = localStorage.getItem('cart');
     this.cart = cartStr ? JSON.parse(cartStr) : [];
   }
 
   updateLocalStorage() {
-    localStorage.setItem("cart", JSON.stringify(this.cart));
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
+
+  setVisited() {
+    this.cart.forEach(item => (item.visited = true));
+    this.updateLocalStorage();
   }
 
   clearCart() {

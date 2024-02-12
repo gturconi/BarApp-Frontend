@@ -5,7 +5,9 @@
   --color: var(--color-8);
   width: 40vw;
   font-weight: bold;
+  margin: 0 auto;
   margin-bottom: 4rem;
+  margin-top: 1rem;
 }
 
 .details-price {

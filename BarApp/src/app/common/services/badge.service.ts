@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { CartProduct } from '@common/models/cartProduct';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BadgeService {
   private badgeCount: BehaviorSubject<number>;
+  private cart: CartProduct[] = [];
 
   constructor() {
-    this.badgeCount = new BehaviorSubject<number>(
-      JSON.parse(localStorage.getItem('cart') || '[]')?.length ?? 0
-    );
+    const cartStr = localStorage.getItem('cart');
+    this.cart = cartStr ? JSON.parse(cartStr) : [];
+    const initialBadgeCount = this.cart.filter(item => !item.visited).length;
+    this.badgeCount = new BehaviorSubject<number>(initialBadgeCount);
   }
 
   getBadgeCount() {

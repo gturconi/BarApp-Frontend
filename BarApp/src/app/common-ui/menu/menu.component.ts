@@ -158,7 +158,7 @@ export class MenuComponent implements OnInit {
         {
           icon: 'cart-outline',
           label: 'Mis Pedidos',
-          route: '',
+          route: 'orders/my-orders',
           isManage: false,
         }
       );
@@ -166,7 +166,7 @@ export class MenuComponent implements OnInit {
         2,
         3,
         { icon: 'calendar-outline', label: 'Reservas', route: '' },
-        { icon: 'cart-outline', label: 'Pedidos', route: '' },
+        { icon: 'cart-outline', label: 'Pedidos', route: 'orders/my-orders' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
