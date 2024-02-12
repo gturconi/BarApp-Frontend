@@ -146,4 +146,10 @@ export class ProductsTypeListComponent implements OnInit {
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
+
+  redirectToDetails(idProm: string) {
+    this.router.navigate(['details/', idProm], {
+      relativeTo: this.route.parent,
+    });
+  }
 }

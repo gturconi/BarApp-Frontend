@@ -11,7 +11,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'promotions',
+    path: 'categories',
     loadChildren: () =>
       import('./promotions/promotions.module').then(m => m.PromotionsModule),
   },
