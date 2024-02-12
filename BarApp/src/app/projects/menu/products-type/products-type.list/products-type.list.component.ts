@@ -17,7 +17,9 @@ import { LoginService } from '@common/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 
 import { ProductsTypeService } from '../services/products-type.service';
+import { PromotionsService } from '../../promotions/services/promotions.service';
 import { ProductsType } from '../models/productsType';
+import { Promotion } from '../../promotions/models/promotion';
 
 import Swal from 'sweetalert2';
 import { IonInfiniteScroll } from '@ionic/angular';
@@ -29,7 +31,9 @@ import { IonInfiniteScroll } from '@ionic/angular';
 })
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
+  promotionsList!: Promotion[];
   imagesUrl$!: Observable<string>[];
+  imagesUrlPromotions$!: Observable<string>[];
   admin: boolean = false;
   showData: boolean = false;
 
@@ -40,6 +44,17 @@ export class ProductsTypeListComponent implements OnInit {
 
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
   scrollingTimer: any;
+
+  constructor(
+    private loginService: LoginService,
+    private productsTypeService: ProductsTypeService,
+    private promotionsService: PromotionsService,
+    private imageService: ImageService,
+    private loadingService: LoadingService,
+    private toastrService: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   onScroll(event: Event) {
     const element = event.target as HTMLElement;
@@ -55,55 +70,6 @@ export class ProductsTypeListComponent implements OnInit {
     }
   }
 
-  boxes = [
-    {
-      title: 'Hamburguesas',
-      description: 'Todos los jueves a la tarde',
-      image: 'assets/img/hamburguesa.jpg',
-      onSale: true,
-    },
-    {
-      title: 'Vinos',
-      description: 'válida del 15/7 al 25/7',
-      image: 'assets/img/vino.jpg',
-      onSale: true,
-    },
-    {
-      title: 'Tortas',
-      description: 'Viernes 10% off',
-      image: 'assets/img/torta.jpg',
-      onSale: false,
-    },
-    {
-      title: 'Title 4',
-      description: 'Description 4',
-      image: 'ruta_imagen_4',
-      onSale: true,
-    },
-    {
-      title: 'Title 5',
-      description: 'Description 5',
-      image: 'ruta_imagen_5',
-      onSale: false,
-    },
-    {
-      title: 'Title 6',
-      description: 'Description 6',
-      image: 'ruta_imagen_6',
-      onSale: false,
-    },
-  ];
-
-  constructor(
-    private loginService: LoginService,
-    private productsTypeService: ProductsTypeService,
-    private imageService: ImageService,
-    private loadingService: LoadingService,
-    private toastrService: ToastrService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
-
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.doSearch();
@@ -117,6 +83,12 @@ export class ProductsTypeListComponent implements OnInit {
         this.productsTypeList = data.results;
         this.count = data.count;
         this.setImages(this.productsTypeList);
+        this.showData = true;
+      });
+      this.promotionsService.getPromotions().subscribe(data => {
+        this.promotionsList = data.results;
+        this.count = data.count;
+        this.setImagesPromotions(this.promotionsList);
         this.showData = true;
       });
     } finally {
@@ -137,14 +109,20 @@ export class ProductsTypeListComponent implements OnInit {
       });
   }
 
+  setImagesPromotions(promotionsList: Promotion[]) {
+    this.imagesUrlPromotions$ = promotionsList.map(promotions => {
+      return this.getImage(promotions);
+    });
+  }
+
   setImages(productsTypeList: ProductsType[]) {
     this.imagesUrl$ = productsTypeList.map(productsType => {
       return this.getImage(productsType);
     });
   }
 
-  getImage(productsType: ProductsType) {
-    const image = productsType.image as Avatar;
+  getImage(object: ProductsType | Promotion) {
+    const image = (object as { image: Avatar }).image;
     return this.imageService.getImage(image.data, image.type);
   }
 
