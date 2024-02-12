@@ -2,6 +2,7 @@
 
 .container-body {
   display: grid;
+  grid-template-columns: minmax(200px, 600px);
   justify-content: center;
   overflow-y: hidden !important;
 }
