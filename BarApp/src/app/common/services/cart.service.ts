@@ -46,6 +46,7 @@ export class CartService {
   }
 
   setVisited() {
+    this.getCart();
     this.cart.forEach(item => (item.visited = true));
     this.updateLocalStorage();
   }
@@ -53,5 +54,10 @@ export class CartService {
   clearCart() {
     this.cart = [];
     this.updateLocalStorage();
+  }
+
+  getProductsFromCart(): CartProduct[] {
+    this.getCart();
+    return this.cart;
   }
 }

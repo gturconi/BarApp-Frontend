@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { OrderComponent } from './order/order.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { authGuard } from '@common/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,7 +15,11 @@ const routes: Routes = [
         redirectTo: 'my-orders',
         pathMatch: 'full',
       },
-      { path: 'my-orders', component: MyOrdersComponent },
+      {
+        path: 'my-orders',
+        component: MyOrdersComponent,
+        canActivate: [authGuard],
+      },
     ],
   },
 ];

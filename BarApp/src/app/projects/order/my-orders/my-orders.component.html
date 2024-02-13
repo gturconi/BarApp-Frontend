@@ -1,3 +1,46 @@
-<p>
-  my-orders works!
-</p>
+<ion-content class="product-content">
+  <div class="container-body">
+    <h2 class="section-title" *ngIf="showData">Mis pedidos</h2>
+    <div class="wrapper2" #wrapper>
+      @for(order of ordersList; track order.product.id; let idx = $index) {
+      <div class="item2 item-order">
+        <ion-icon
+          [routerLink]="[]"
+          class="icons-show order-delete"
+          name="trash-outline"
+        ></ion-icon>
+        <picture>
+          <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
+        </picture>
+        <article>
+          <span class="title" *ngIf="isProduct(order)">
+            {{ castProduct(order.product).name }}
+          </span>
+          <span class="title" *ngIf="!isProduct(order)">
+            {{ order.product.description }}
+          </span>
+          <div class="order-info">
+            <div class="price">
+              ${{ order.product.price! * order.product.quantity! }}
+            </div>
+
+            <div class="quantity">
+              <ion-icon
+                name="remove-circle"
+                class="quantity-icons"
+                (click)="decrement(order.product)"
+              ></ion-icon>
+              <span>{{ order.product.quantity }}</span>
+              <ion-icon
+                name="add-circle"
+                class="quantity-icons"
+                (click)="increment(order.product)"
+              ></ion-icon>
+            </div>
+          </div>
+        </article>
+      </div>
+      }
+    </div>
+  </div>
+</ion-content>

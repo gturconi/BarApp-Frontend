@@ -11,7 +11,8 @@ export class Promotion {
     valid_to: Date,
     discount: number,
     days_of_week: number[],
-    baja = 0
+    baja = 0,
+    quantity = 1
   ) {
     this.id = id;
     this.description = description;
@@ -23,6 +24,7 @@ export class Promotion {
     this.products = products;
     this.days_of_week = days_of_week;
     this.price = price;
+    this.quantity = quantity;
   }
 
   id?: string;
@@ -35,4 +37,5 @@ export class Promotion {
   baja?: number;
   products: number[];
   days_of_week?: number[];
+  quantity?: number;
 }

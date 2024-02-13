@@ -1,0 +1,23 @@
+@import 'variables.css';
+
+.item-order {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.order-delete {
+  background-color: var(--color-2);
+  height: 80%;
+  color: var(--color-7);
+  border-radius: 10%;
+}
+
+.item-order .quantity {
+  font-size: 20px;
+}
