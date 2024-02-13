@@ -20,13 +20,15 @@
       </div>
       <div class="additional-circle"></div>
       <ion-card-header class="details-header">
-        <ion-card-title class="details-title">{{
-          this.promotion.description
-        }}</ion-card-title>
+        <ion-card-title class="details-title-promotion"
+          >{{ this.promotion.description }}
+          <span *ngIf="this.promotion.price" class="price-prom">
+            ${{ this.promotion.price }}
+          </span></ion-card-title
+        >
       </ion-card-header>
-
       <ion-card-content class="details-content">
-        <div class="description">
+        <div class="description-prom">
           <div
             class="promotion-date"
             *ngIf="this.promotion.valid_from && this.promotion.valid_to"
@@ -97,9 +99,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div *ngIf="this.promotion.price">
-            {{ this.promotion.price }}
           </div>
         </div>
       </ion-card-content>
