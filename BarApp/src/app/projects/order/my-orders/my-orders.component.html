@@ -1,13 +1,15 @@
 <ion-content class="product-content">
   <div class="container-body">
-    <h2 class="section-title" *ngIf="showData">Mis pedidos</h2>
-    <div class="wrapper2" #wrapper>
+    <h2 class="section-title">Mis pedidos</h2>
+    <div class="wrapper2" #wrapper *ngIf="showData">
       @for(order of ordersList; track order.product.id; let idx = $index) {
       <div class="item2 item-order">
         <ion-icon
           [routerLink]="[]"
           class="icons-show order-delete"
-          name="trash-outline"
+          name="close-outline"
+          size="medium"
+          (click)="deleteItem(order)"
         ></ion-icon>
         <picture>
           <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
@@ -38,9 +40,25 @@
               ></ion-icon>
             </div>
           </div>
+          <!-- <span class="comments" *ngIf="isProduct(order)">{{
+            castProduct(order.product).comments
+          }}</span>-->
         </article>
       </div>
       }
     </div>
+    <span *ngIf="showData" class="total">Total: ${{ total }}</span>
+    <ion-button
+      *ngIf="showData"
+      expand="full"
+      class="details-button order-button"
+    >
+      <div>
+        <ion-icon name="cart" class="details-icons"></ion-icon>
+        <p>
+          {{ 'CONFIRMAR PEDIDO' }}
+        </p>
+      </div>
+    </ion-button>
   </div>
 </ion-content>

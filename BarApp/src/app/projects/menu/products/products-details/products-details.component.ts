@@ -93,7 +93,7 @@ export class ProductsDetailsComponent implements OnInit {
           {
             text: 'Ir al carrito',
             handler: () => {
-              //  this.router.navigate(["cart"]);
+              this.router.navigate(['orders/my-orders']);
             },
           },
           {
