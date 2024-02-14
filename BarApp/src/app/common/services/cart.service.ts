@@ -9,12 +9,12 @@ export class CartService {
   constructor() {}
   private cart: CartProduct[] = [];
 
-  addToCart(item: Products) {
+  addToCart(item: Products, comments?: string) {
     this.getCart();
 
     let index = this.cart.findIndex(x => x.product.id === item.id);
     if (index === -1) {
-      this.cart.push({ product: item, visited: false });
+      this.cart.push({ product: item, visited: false, comments: comments });
     } else {
       this.cart[index].product.quantity! += item.quantity!;
     }

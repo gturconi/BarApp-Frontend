@@ -4,4 +4,5 @@ import { Promotion } from 'src/app/projects/menu/promotions/models/promotion';
 export interface CartProduct {
   product: Products | Promotion;
   visited: boolean;
+  comments?: string;
 }

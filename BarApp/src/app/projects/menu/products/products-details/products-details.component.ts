@@ -26,6 +26,7 @@ export class ProductsDetailsComponent implements OnInit {
   quantity: number = 1;
   admin: boolean = false;
   isInCart: boolean = false;
+  comments: string = '';
 
   constructor(
     private loginService: LoginService,
@@ -85,7 +86,7 @@ export class ProductsDetailsComponent implements OnInit {
       await this.displayLoginAlert();
     } else {
       this.product.quantity = this.quantity;
-      this.cartService.addToCart(this.product);
+      this.cartService.addToCart(this.product, this.comments);
       this.badgeService.incrementBadgeCount();
       const alert = await this.alertController.create({
         header: 'Producto agregado',

@@ -34,10 +34,19 @@
 .order-button {
   height: 2rem;
   margin: 1rem;
+  margin-bottom: 2rem;
 }
 
 .total {
   margin-top: 5px;
   margin-left: 1rem;
   font-weight: bold;
+}
+.comments {
+  font-size: small;
+}
+@media (max-width: 768px) {
+  .order-wrapper {
+    grid-template-rows: auto minmax(200px, 280px) auto;
+  }
 }

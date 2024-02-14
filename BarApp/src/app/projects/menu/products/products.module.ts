@@ -10,6 +10,7 @@ import { ProductsDetailsComponent } from './products-details/products-details.co
 
 import { ProductsService } from './services/products.service';
 import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,13 @@ import { IonicModule } from '@ionic/angular';
     ProductsComponent,
     ProductsDetailsComponent,
   ],
-  imports: [CommonModule, ProductsRoutingModule, CommonUiModule, IonicModule],
+  imports: [
+    CommonModule,
+    ProductsRoutingModule,
+    CommonUiModule,
+    IonicModule,
+    FormsModule,
+  ],
   providers: [ProductsService],
 })
 export class ProductsModule {}

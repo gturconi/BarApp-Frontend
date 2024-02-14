@@ -1,5 +1,5 @@
 <ion-content class="product-content">
-  <div class="container-body">
+  <div class="container-body order-wrapper">
     <h2 class="section-title">Mis pedidos</h2>
     <div class="wrapper2" #wrapper *ngIf="showData">
       @for(order of ordersList; track order.product.id; let idx = $index) {
@@ -40,9 +40,9 @@
               ></ion-icon>
             </div>
           </div>
-          <!-- <span class="comments" *ngIf="isProduct(order)">{{
-            castProduct(order.product).comments
-          }}</span>-->
+          <span class="comments" *ngIf="order.comments">
+            <b>Aclaración:</b> {{ order?.comments }}</span
+          >
         </article>
       </div>
       }
