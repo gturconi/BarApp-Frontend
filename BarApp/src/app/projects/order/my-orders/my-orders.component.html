@@ -3,15 +3,15 @@
     <h2 class="section-title">Mis pedidos</h2>
     <div class="wrapper2" #wrapper *ngIf="showData">
       @for(order of ordersList; track order.product.id; let idx = $index) {
-      <div class="item2 item-order">
+      <div class="item-p productsItem">
         <ion-icon
           [routerLink]="[]"
           class="icons-show order-delete"
-          name="close-outline"
+          name="trash-outline"
           size="medium"
           (click)="deleteItem(order)"
         ></ion-icon>
-        <picture>
+        <picture class="image-container-p">
           <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         </picture>
         <article>
@@ -40,9 +40,11 @@
               ></ion-icon>
             </div>
           </div>
-          <span class="comments" *ngIf="order.comments">
-            <b>Aclaración:</b> {{ order?.comments }}</span
-          >
+          <div>
+            <span class="comments" *ngIf="order.comments">
+              <b>Aclaración:</b> {{ order?.comments }}</span
+            >
+          </div>
         </article>
       </div>
       }

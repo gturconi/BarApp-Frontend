@@ -9,13 +9,11 @@
 
 .order-delete {
   position: absolute;
-  background-color: var(--color-12);
-  color: var(--color-7);
+  color: var(--color-12);
   top: 0.5rem;
   right: 0;
   font-size: 1.3rem;
   border-radius: 100%;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .order-delete:hover {
@@ -24,6 +22,12 @@
 
 .item-order .quantity {
   font-size: 20px;
+}
+.quantity-icons {
+  font-size: 22px;
+}
+.quantity-icons:hover {
+  scale: 1.2;
 }
 
 .order-info {

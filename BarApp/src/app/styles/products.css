@@ -89,6 +89,9 @@ div.description {
 
 .item-p {
   display: flex;
+  flex-wrap: nowrap;
+  height: min-content;
+  word-break: break-all;
   align-items: center;
   padding: 0.5em;
   background-color: var(--color-4);
@@ -111,6 +114,7 @@ div.description {
 
 .image-container-p {
   margin-right: 1em;
+  min-width: 5em;
 }
 
 .text-container-p {
