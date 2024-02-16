@@ -2,6 +2,8 @@
 
 .productsList {
   width: 40vw;
+  max-height: 85vh;
+  height: 85vh;
 }
 
 .icons-admin {

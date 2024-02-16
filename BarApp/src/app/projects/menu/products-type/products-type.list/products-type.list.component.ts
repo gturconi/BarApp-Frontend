@@ -36,6 +36,7 @@ export class ProductsTypeListComponent implements OnInit {
   imagesUrlPromotions$!: Observable<string>[];
   admin: boolean = false;
   showData: boolean = false;
+  loading = true;
 
   currentPage = 1;
   count = 0;
@@ -84,6 +85,7 @@ export class ProductsTypeListComponent implements OnInit {
         this.count = data.count;
         this.setImages(this.productsTypeList);
         this.showData = true;
+        this.loading = false;
       });
       this.promotionsService.getPromotions().subscribe(data => {
         this.promotionsList = data.results;
