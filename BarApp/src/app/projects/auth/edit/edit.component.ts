@@ -43,12 +43,16 @@ export class EditComponent implements OnInit {
   async autocompleteForm() {
     const loading = await this.loadingService.loading();
     await loading.present();
-    this.userService.getUser(this.id).subscribe(user => {
-      this.form.get('name')?.setValue(user.name);
-      this.form.get('email')?.setValue(user.email);
-      this.form.get('tel')?.setValue(user.tel);
+    try {
+      this.userService.getUser(this.id).subscribe(user => {
+        this.form.get('name')?.setValue(user.name);
+        this.form.get('email')?.setValue(user.email);
+        this.form.get('tel')?.setValue(user.tel);
+        loading.dismiss();
+      });
+    } finally {
       loading.dismiss();
-    });
+    }
   }
 
   setUserForm(form: FormGroup): void {
