@@ -90,4 +90,18 @@ export class PromotionsDetailsComponent implements OnInit {
   arraysEqual(arr1: number[], arr2: number[]): boolean {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
   }
+
+  getCurrentDate(): Date {
+    return new Date();
+  }
+  isPromotionValid(promotion: Promotion): boolean {
+    if (promotion.valid_from === undefined || promotion.valid_to === undefined) {
+      return false;
+    }
+    const currentDate = this.getCurrentDate();
+    const validFrom = new Date(promotion.valid_from);
+    const validTo = new Date(promotion.valid_to);
+    return currentDate >= validFrom && currentDate <= validTo;
+  }
+  
 }

@@ -31,7 +31,7 @@
         <div class="description-prom">
           <div
             class="promotion-date"
-            *ngIf="this.promotion.valid_from && this.promotion.valid_to"
+            *ngIf="this.promotion.valid_from && this.promotion.valid_to && isPromotionValid(promotion)"
           >
             Vigente del
             <span
