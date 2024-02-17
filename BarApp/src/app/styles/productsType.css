@@ -110,7 +110,6 @@
 
 ::-webkit-scrollbar-track {
   background: var(--color-2);
-  border-radius: 8px;
 }
 
 .section-title {
@@ -261,9 +260,24 @@
   width: 8px;
 }
 
+.wrapper2 {
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+
 .wrapper2::-webkit-scrollbar-thumb {
   background: var(--color-4);
   border-radius: 8px;
+}
+
+.wrapper2::-webkit-scrollbar-track {
+  background: var(--color-2);
+  border-radius: 8px;
+}
+
+.wrapper2.show-scrollbar::-webkit-scrollbar {
+  display: block;
 }
 
 @keyframes reveal {
