@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -34,6 +34,8 @@ export class ProductsListComponent implements OnInit {
   count = 0;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
+  @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
+  scrollingTimer: any;
 
   constructor(
     private loginService: LoginService,
@@ -49,6 +51,20 @@ export class ProductsListComponent implements OnInit {
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.getAndSearchByType();
+  }
+
+  onScroll(event: Event) {
+    const element = event.target as HTMLElement;
+    const wrapper = this.wrapperRef.nativeElement;
+
+    if (element.scrollHeight > element.clientHeight) {
+      wrapper.classList.add('show-scrollbar');
+      clearTimeout(this.scrollingTimer);
+
+      this.scrollingTimer = setTimeout(() => {
+        wrapper.classList.remove('show-scrollbar');
+      }, 1500);
+    }
   }
 
   getAndSearchByType(): void {

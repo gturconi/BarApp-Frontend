@@ -2,7 +2,7 @@
   <div class="container-body">
     <h2 class="section-title" *ngIf="showData">{{ category }}</h2>
     @if(productsList.length > 0){
-    <div class="wrapper2 productsList">
+    <div class="wrapper2 productsList" #wrapper (scroll)="onScroll($event)">
       @for(products of productsList; track products.id; let idx = $index) {
       @if(admin || !products.baja){
       <div class="item-p productsItem" (click)="redirectToDetails(products.id)">
