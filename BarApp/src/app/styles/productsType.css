@@ -265,7 +265,6 @@
   border-radius: 8px;
 }
 
-
 .wrapper2::-webkit-scrollbar-thumb {
   background: var(--color-4);
   border-radius: 8px;
@@ -281,12 +280,17 @@
 }
 
 @keyframes reveal {
-  from {
+  0% {
     opacity: 0;
     translate: 0 100px;
     scale: 0.5;
   }
-  to {
+  80% {
+    scale: 1;
+    opacity: 1;
+    translate: 0 0;
+  }
+  100% {
     opacity: 1;
     translate: 0 0;
     scale: 1;
