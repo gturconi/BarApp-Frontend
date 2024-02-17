@@ -7,7 +7,7 @@
         [src]="imagesUrl$ | async"
         class="details-image-p promotion-image"
       />
-      <div class="discount-overlay">
+      <div class="discount-overlay" *ngIf="promotion.discount">
         <div class="discount-content">
           <span class="discount-number" *ngIf="promotion.discount">
             {{ this.promotion.discount * 100 }}</span
@@ -33,13 +33,7 @@
             class="promotion-date"
             *ngIf="this.promotion.valid_from && this.promotion.valid_to && isPromotionValid(promotion)"
           >
-            Vigente del
-            <span
-              >{{
-                this.promotion.valid_from | date : 'dd-MM-yyyy - HH:mm'
-              }}Hs</span
-            >
-            al
+            Vigente hasta el
             <span
               >{{
                 this.promotion.valid_to | date : 'dd-MM-yyyy - HH:mm'
