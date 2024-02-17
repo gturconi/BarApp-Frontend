@@ -44,12 +44,22 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(reqClone).pipe(
       catchError(exception => {
-        exception.status
-          ? (error.message = exception.error.message)
-          : //this.router.navigate(["/auth"]),
-            //this.loginService.logout())
-            (error.message = 'No se pudo completar la solicitud');
-        this.notificationService.presentToast(error);
+        if (
+          exception.error.message ===
+          'Sesion expirada, por favor inicie sesion nuevamente'
+        ) {
+          this.notificationService.presentToast(error);
+          this.loginService.logout();
+          this.router.navigate(['/auth']);
+        } else {
+          exception.status
+            ? (error.message = exception.error.message)
+            : //this.router.navigate(["/auth"]),
+              //this.loginService.logout())
+              (error.message = 'No se pudo completar la solicitud');
+          this.notificationService.presentToast(error);
+        }
+
         return of(exception);
       })
     );
