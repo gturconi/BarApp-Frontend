@@ -23,8 +23,6 @@ export class CartService {
 
   isProductInCart(id: string): boolean {
     this.getCart();
-    console.log(this.cart[0].product.id);
-    console.log(id);
     let index = this.cart.findIndex(x => x.product.id == id);
 
     return index !== -1;
