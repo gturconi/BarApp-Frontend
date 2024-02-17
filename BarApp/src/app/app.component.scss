@@ -10,6 +10,7 @@
     height: 100%;
   }
 }
+
 /*
 ion-app {
   flex: 1;
@@ -19,7 +20,7 @@ ion-app {
 
 ion-app {
   display: grid;
-  grid-template-rows: auto 0fr minmax(50px, 19fr);
+  grid-template-rows: auto 0fr minmax(50px, 13.4fr);
 }
 
 @media (max-width: 768px) {

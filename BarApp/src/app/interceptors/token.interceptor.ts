@@ -44,13 +44,15 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(reqClone).pipe(
       catchError(exception => {
+        console.log(exception);
         if (
           exception.error.message ===
           'Sesion expirada, por favor inicie sesion nuevamente'
         ) {
+          this.router.navigate(['/auth']);
+          error.message = exception.error.message;
           this.notificationService.presentToast(error);
           this.loginService.logout();
-          this.router.navigate(['/auth']);
         } else {
           exception.status
             ? (error.message = exception.error.message)
