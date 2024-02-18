@@ -6,6 +6,7 @@ import { authGuard } from "@common/guards/auth.guard";
 import { ProductsTypeComponent } from "./products-type/products-type.component";
 import { ProductsTypeListComponent } from "./products-type.list/products-type.list.component";
 import { ProductsTypeFormComponent } from "./products-type.form/products-type.form.component";
+import { PromotionsFormComponent } from "../promotions/promotions.form/promotions-form.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
       {
         path: "add",
         component: ProductsTypeFormComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: "addPromotion",
+        component: PromotionsFormComponent,
         canActivate: [authGuard],
       },
       {
