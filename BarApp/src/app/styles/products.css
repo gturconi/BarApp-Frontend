@@ -3,7 +3,7 @@
 .productsList {
   width: 40vw;
   max-height: 85vh;
-  height: 85vh;
+  height: 65vh;
 }
 
 .icons-admin {
@@ -50,7 +50,8 @@ div.description {
 
 @media (max-width: 1080px) {
   .productsList {
-    width: 90vw;
+    width: 97vw;
+    height: 59vh;
   }
 }
 

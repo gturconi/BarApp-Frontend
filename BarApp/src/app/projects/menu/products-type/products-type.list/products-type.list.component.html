@@ -1,7 +1,6 @@
 <ion-content scroll-y="false" class="product-content">
   <div class="container-body">
     @if(promotionsList && promotionsList.length > 0){
-
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper">
       @for(promotion of promotionsList; track promotion.id; let idx = $index) {
@@ -47,7 +46,7 @@
     </div>
     } @if(this.productsTypeList){
     <h2 class="section-title" *ngIf="showData">Categorias de productos</h2>
-    <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
+    <ion-content class="wrapper2" #wrapper (scroll)="onScroll($event)">    
       @for(productsType of productsTypeList; track productsType.id; let idx =
       $index) {
       <div
@@ -95,7 +94,7 @@
         >
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
-    </div>
+    </ion-content>
     }@else if(showData && !loading){
     <div class="details-error">
       <h2>Aún no hay categorías cargadas</h2>

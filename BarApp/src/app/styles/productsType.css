@@ -133,6 +133,8 @@
   padding-right: 10px;
   border: none;
   transition: scrollbar-width 0.5s ease;
+  max-height: 85vh;
+  height: 30vh;
 }
 
 .item2 {
@@ -148,6 +150,7 @@
   height: 100px;
   position: relative;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .item-image {

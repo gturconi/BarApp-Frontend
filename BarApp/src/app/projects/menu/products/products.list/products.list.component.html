@@ -1,8 +1,8 @@
-<ion-content scroll-y="false" class="product-content">
+<ion-content  scroll-y="false" class="product-content">
   <div class="container-body">
     <h2 class="section-title" *ngIf="showData">{{ category }}</h2>
     @if(productsList.length > 0){
-    <div class="wrapper2 productsList" #wrapper (scroll)="onScroll($event)">
+    <ion-content class="wrapper2 productsList" #wrapper (scroll)="onScroll($event)">
       @for(products of productsList; track products.id; let idx = $index) {
       @if(admin || !products.baja){
       <div class="item-p productsItem" (click)="redirectToDetails(products.id)">
@@ -72,7 +72,18 @@
         </div>
       </div>
       }}
-    </div>
+      <ion-infinite-scroll
+      *ngIf="productsList.length < count"
+      threshold="100px"
+      (ionInfinite)="loadMoreData()"
+    >
+      <ion-infinite-scroll-content
+        loadingSpinner="crescent"
+        class="infinite-scroll-content"
+      >
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    </ion-content>
     } @else if(admin && showData){
     <div class="details-error">
       <h2>Aún no hay productos cargados para esta categoría</h2>
@@ -88,16 +99,4 @@
       </div>
     </div>
   </div>
-
-  <ion-infinite-scroll
-    *ngIf="productsList.length < count"
-    threshold="100px"
-    (ionInfinite)="loadMoreData()"
-  >
-    <ion-infinite-scroll-content
-      loadingSpinner="crescent"
-      class="infinite-scroll-content"
-    >
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>
