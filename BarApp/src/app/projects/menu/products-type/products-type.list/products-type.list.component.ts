@@ -154,4 +154,18 @@ export class ProductsTypeListComponent implements OnInit {
       relativeTo: this.route.parent,
     });
   }
+
+  getCurrentDate(): Date {
+    return new Date();
+  }
+  
+  isPromotionValid(promotion: Promotion): boolean {
+    if (promotion.valid_from === undefined || promotion.valid_to === undefined) {
+      return false;
+    }
+    const currentDate = this.getCurrentDate();
+    const validFrom = new Date(promotion.valid_from);
+    const validTo = new Date(promotion.valid_to);
+    return currentDate >= validFrom && currentDate <= validTo;
+  }
 }

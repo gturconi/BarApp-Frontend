@@ -1,9 +1,11 @@
 <ion-content class="product-content">
   <div class="container-body">
     @if(promotionsList && promotionsList.length > 0){
+      
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper">
       @for(promotion of promotionsList; track promotion.id; let idx = $index) {
+        @if((!admin && !promotion.baja) && (!admin && isPromotionValid(promotion)) || admin){
       <div
         class="item"
         (click)="promotion.id !== undefined && redirectToDetails(promotion.id)"
@@ -17,6 +19,7 @@
           alt=""
           class="item1-image"
         />
+        <h3 *ngIf="promotion.baja || !isPromotionValid(promotion)" class="item1-title">No disponible</h3>
         <div
           *ngIf="promotion.description && promotion.description.length > 14"
           class="scrollable"
@@ -31,6 +34,7 @@
         </div>
       </div>
       }
+    }
     </div>
     }@else if(showData && !loading){
     <div class="details-error">
