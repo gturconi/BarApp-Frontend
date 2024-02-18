@@ -20,7 +20,7 @@ ion-app {
 
 ion-app {
   display: grid;
-  grid-template-rows: auto 0fr minmax(50px, 13.4fr);
+  grid-template-rows: auto 0fr minmax(50px, 120vh);
 }
 
 @media (max-width: 768px) {

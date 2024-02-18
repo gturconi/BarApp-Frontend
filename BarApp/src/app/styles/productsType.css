@@ -129,12 +129,11 @@
   gap: 0.5em;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 350px;
   padding-right: 10px;
   border: none;
   transition: scrollbar-width 0.5s ease;
   max-height: 85vh;
-  height: 30vh;
+  height: 40vh;
 }
 
 .item2 {
