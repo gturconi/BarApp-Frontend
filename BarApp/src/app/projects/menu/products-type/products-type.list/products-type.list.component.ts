@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -60,6 +54,10 @@ export class ProductsTypeListComponent implements OnInit {
   onScroll(event: Event) {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
+
+    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
+      this.loadMoreData();
+    }
 
     if (element.scrollHeight > element.clientHeight) {
       wrapper.classList.add('show-scrollbar');
@@ -158,9 +156,12 @@ export class ProductsTypeListComponent implements OnInit {
   getCurrentDate(): Date {
     return new Date();
   }
-  
+
   isPromotionValid(promotion: Promotion): boolean {
-    if (promotion.valid_from === undefined || promotion.valid_to === undefined) {
+    if (
+      promotion.valid_from === undefined ||
+      promotion.valid_to === undefined
+    ) {
       return false;
     }
     const currentDate = this.getCurrentDate();
