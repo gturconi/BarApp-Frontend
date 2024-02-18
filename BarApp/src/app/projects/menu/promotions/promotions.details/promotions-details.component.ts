@@ -27,6 +27,7 @@ export class PromotionsDetailsComponent implements OnInit {
   imagesUrl$!: Observable<string>;
   quantity: number = 1;
   admin: boolean = false;
+  employee: boolean = false;
   diasDeLaSemana = [
     'Lunes',
     'Martes',
@@ -52,6 +53,7 @@ export class PromotionsDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
+    this.employee = this.loginService.isEmployee();
     this.route.params.subscribe(params => {
       const idProm = params['idProm'];
       if (idProm) {
