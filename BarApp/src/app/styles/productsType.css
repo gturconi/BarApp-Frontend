@@ -185,6 +185,16 @@
   max-width: 200px;
 }
 
+.details-error-p {
+  background-color: var(--color-10);
+  color: var(--color-7); 
+  font-size: 15px; 
+  font-weight: bold; 
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .icons-show {
   cursor: pointer;
   color: var(--color-2);

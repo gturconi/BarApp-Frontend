@@ -26,6 +26,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
   promotionsList!: Promotion[];
+  validPromotionsList!: Promotion[];
   imagesUrl$!: Observable<string>[];
   imagesUrlPromotions$!: Observable<string>[];
   admin: boolean = false;
@@ -87,6 +88,7 @@ export class ProductsTypeListComponent implements OnInit {
       });
       this.promotionsService.getPromotions().subscribe(data => {
         this.promotionsList = data.results;
+        this.validPromotionsList = this.getValidPromotions(this.promotionsList);
         this.count = data.count;
         this.setImagesPromotions(this.promotionsList);
         this.showData = true;
@@ -96,6 +98,12 @@ export class ProductsTypeListComponent implements OnInit {
       this.currentPage++;
       this.infiniteScroll && this.infiniteScroll.complete();
     }
+  }
+
+  getValidPromotions(promotions: Promotion[]): Promotion[] {
+    return promotions.filter(promotion => 
+      !promotion.baja && this.isPromotionValid(promotion)
+    );
   }
 
   loadMoreData() {

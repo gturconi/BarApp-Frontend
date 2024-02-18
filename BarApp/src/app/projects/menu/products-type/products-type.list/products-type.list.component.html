@@ -39,6 +39,11 @@
         </div>
       </div>
       } }
+      @if(validPromotionsList.length === 0 && !admin){
+        <div class="details-error-p">
+          <p>Aún no hay promociones cargadas</p>
+        </div>
+      }
     </div>
     }@else if(showData && !loading){
     <div class="details-error">
