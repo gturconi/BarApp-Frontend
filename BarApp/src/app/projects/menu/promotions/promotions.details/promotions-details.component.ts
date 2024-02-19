@@ -29,13 +29,13 @@ export class PromotionsDetailsComponent implements OnInit {
   admin: boolean = false;
   employee: boolean = false;
   diasDeLaSemana = [
+    'Domingo',
     'Lunes',
     'Martes',
     'Miércoles',
     'Jueves',
     'Viernes',
-    'Sábado',
-    'Domingo',
+    'Sábado'
   ];
 
   constructor(
@@ -82,13 +82,15 @@ export class PromotionsDetailsComponent implements OnInit {
   }
 
   getNombreDia(numeroDia: number): string {
-    if (numeroDia >= 1 && numeroDia <= this.diasDeLaSemana.length) {
-      return this.diasDeLaSemana[numeroDia - 1];
+    if (numeroDia >= 0 && numeroDia < this.diasDeLaSemana.length) {
+      console.log(numeroDia);
+      console.log(this.diasDeLaSemana[numeroDia]);
+      return this.diasDeLaSemana[numeroDia];
     } else {
       return 'Día no válido';
     }
   }
-
+  
   arraysEqual(arr1: number[], arr2: number[]): boolean {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
   }
@@ -96,6 +98,7 @@ export class PromotionsDetailsComponent implements OnInit {
   getCurrentDate(): Date {
     return new Date();
   }
+
   isPromotionValid(promotion: Promotion): boolean {
     if (promotion.valid_from === undefined || promotion.valid_to === undefined) {
       return false;
@@ -105,5 +108,4 @@ export class PromotionsDetailsComponent implements OnInit {
     const validTo = new Date(promotion.valid_to);
     return currentDate >= validFrom && currentDate <= validTo;
   }
-  
 }

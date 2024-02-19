@@ -67,7 +67,7 @@
                 *ngIf="
                   arraysEqual(
                     this.promotion.days_of_week,
-                    [1, 2, 3, 4, 5, 6, 7]
+                    [0, 1, 2, 3, 4, 5, 6]
                   )
                 "
                 class="flag"
@@ -75,7 +75,7 @@
                 Todos los días
               </div>
               <div
-                *ngIf="arraysEqual(this.promotion.days_of_week, [6, 7])"
+                *ngIf="arraysEqual(this.promotion.days_of_week, [0, 6])"
                 class="flag"
               >
                 Fines de semana
@@ -85,9 +85,9 @@
                   !arraysEqual(this.promotion.days_of_week, [1, 2, 3, 4, 5]) &&
                   !arraysEqual(
                     this.promotion.days_of_week,
-                    [1, 2, 3, 4, 5, 6, 7]
+                    [0, 1, 2, 3, 4, 5, 6]
                   ) &&
-                  !arraysEqual(this.promotion.days_of_week, [6, 7])
+                  !arraysEqual(this.promotion.days_of_week, [0, 6])
                 "
               >
                 <div class="flags-container">

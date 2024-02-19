@@ -180,6 +180,13 @@ export class ProductsTypeListComponent implements OnInit {
     const currentDate = this.getCurrentDate();
     const validFrom = new Date(promotion.valid_from);
     const validTo = new Date(promotion.valid_to);
-    return currentDate >= validFrom && currentDate <= validTo;
+    return currentDate >= validFrom && currentDate <= validTo && this.isCurrentDayOfWeekValid(promotion)
+    ;
   }
+
+  isCurrentDayOfWeekValid(promotion: Promotion): boolean {
+    const currentDayOfWeek = new Date().getDay();
+    console.log(currentDayOfWeek)
+    return promotion.days_of_week?.includes(currentDayOfWeek) || false;
+}
 }
