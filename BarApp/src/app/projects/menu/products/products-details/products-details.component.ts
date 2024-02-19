@@ -27,6 +27,7 @@ export class ProductsDetailsComponent implements OnInit {
   admin: boolean = false;
   isInCart: boolean = false;
   comments: string = '';
+  mobileScreen = false;
 
   constructor(
     private loginService: LoginService,
@@ -49,6 +50,8 @@ export class ProductsDetailsComponent implements OnInit {
         this.doSearch(typeId);
       }
     });
+
+    this.mobileScreen = window.innerWidth < 768;
   }
 
   async doSearch(id: string) {

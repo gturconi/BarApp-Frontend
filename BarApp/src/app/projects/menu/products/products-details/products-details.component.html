@@ -1,4 +1,7 @@
-<ion-content class="product-content">
+<ion-content
+  class="product-content"
+  [scrollY]="mobileScreen ? 'true' : 'false'"
+>
   <div class="container-body">
     @if(this.product){
     <ion-card class="details-product">
@@ -32,7 +35,12 @@
       </ion-card-header>
 
       <ion-card-content class="details-content">
-        <div class="description-p">
+        <div
+          class="description-p"
+          [ngClass]="{
+            scroll: product.description && product.description.length > 10
+          }"
+        >
           {{ this.product.description }}
         </div>
         <ion-card

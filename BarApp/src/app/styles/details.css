@@ -11,6 +11,11 @@
   margin-top: 1rem;
 }
 
+.description-p.scroll {
+  max-height: 70px;
+  overflow-y: auto;
+}
+
 .product-image {
   position: relative;
   width: 100%;
@@ -137,7 +142,7 @@
 .description {
   text-transform: capitalize;
 }
-.description-p{
+.description-p {
   text-transform: capitalize;
   margin-bottom: 15px;
 }
@@ -168,7 +173,18 @@
   }
 }
 
+@media (max-width: 1000px) {
+  .details-product {
+    width: 60vw;
+    height: auto;
+  }
+}
 @media (max-width: 768px) {
+  .details-product {
+    width: 70vw;
+  }
+}
+@media (max-width: 550px) {
   .details-product {
     width: 90vw;
   }
