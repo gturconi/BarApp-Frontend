@@ -123,10 +123,11 @@
 }
 
 .wrapper2 {
+  position: relative;
   max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  /*display: flex;
+    flex-direction: column;
+  gap: 0.5em;*/
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 10px;

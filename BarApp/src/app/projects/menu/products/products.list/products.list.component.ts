@@ -32,6 +32,7 @@ export class ProductsListComponent implements OnInit {
 
   currentPage = 1;
   count = 0;
+  infiniteScrollLoading = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
@@ -56,6 +57,15 @@ export class ProductsListComponent implements OnInit {
   onScroll(event: Event) {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
+
+    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
+      if (
+        this.productsList.length < this.count &&
+        !this.infiniteScrollLoading
+      ) {
+        this.loadMoreData();
+      }
+    }
 
     if (element.scrollHeight > element.clientHeight) {
       wrapper.classList.add('show-scrollbar');
@@ -130,6 +140,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   loadMoreData() {
+    this.infiniteScrollLoading = true;
     this.productsService
       .getProducts(this.currentPage, 10, this.category)
       .subscribe(response => {
@@ -137,6 +148,7 @@ export class ProductsListComponent implements OnInit {
         this.setImages(this.productsList);
         this.currentPage++;
         this.infiniteScroll && this.infiniteScroll.complete();
+        this.infiniteScrollLoading = false;
       });
   }
 

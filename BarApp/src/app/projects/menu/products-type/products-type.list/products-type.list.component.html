@@ -86,8 +86,8 @@
         </div>
       </div>
       }
+      <span class="loader" *ngIf="infiniteScrollLoading"></span>
     </div>
-    <span class="loader" *ngIf="infiniteScrollLoading"></span>
 
     }@else if(showData && !loading){
     <div class="details-error">
