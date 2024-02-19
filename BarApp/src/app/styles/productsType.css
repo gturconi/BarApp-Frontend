@@ -133,7 +133,7 @@
   border: none;
   transition: scrollbar-width 0.5s ease;
   max-height: 85vh;
-  height: 40vh;
+  height: 45vh;
 }
 
 .item2 {
@@ -324,7 +324,7 @@
     margin-left: 7px;
     margin-right: 5px;
     padding-right: 5px;
-    height: 25vh;
+    height: 33vh;
   }
 
   .section-title,
