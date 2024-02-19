@@ -6,5 +6,6 @@ export interface ValidationConfig {
   email?: boolean;
   minLength?: number;
   min?: number;
+  max?: number;
   customValidation?: (control: FormGroup) => ValidationErrors | null;
 }

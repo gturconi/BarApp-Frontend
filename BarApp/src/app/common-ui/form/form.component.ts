@@ -60,6 +60,8 @@ export class FormComponent implements OnInit {
         return 'Las contraseñas no coinciden';
       } else if (control.errors['min']) {
         return 'El valor debe ser mayor o igual a ' + control.errors['min'].min;
+      } else if (control.errors['max']) {
+        return 'El valor debe ser menor o igual a ' + control.errors['max'].max;
       }
       return 'Error en el campo ' + controlName;
     }
@@ -88,6 +90,10 @@ export class FormComponent implements OnInit {
 
       if (config.min != undefined) {
         validators.push(Validators.min(config.min));
+      }
+
+      if (config.max != undefined) {
+        validators.push(Validators.max(config.max));
       }
 
       if (config.customValidation) {
