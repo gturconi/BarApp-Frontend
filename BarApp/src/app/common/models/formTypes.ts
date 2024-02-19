@@ -2,7 +2,7 @@ interface InputField {
   type: 'input';
   name: string;
   label: string;
-  inputType: 'text' | 'number' | 'file'; // Tipos de entrada permitidos
+  inputType: 'text' | 'number' | 'file' | 'date'; // Tipos de entrada permitidos
   icon?: string;
   iconName?: string;
 }

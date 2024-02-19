@@ -111,6 +111,8 @@ export class PromotionsFormComponent implements OnInit {
     formData.append('description', form.controls['description'].value);
     formData.append('price', form.controls['price'].value);
     formData.append('discount', form.controls['discount'].value);
+    formData.append('valid_from', form.controls['valid_from'].value);
+    formData.append('valid_to', form.controls['valid_to'].value);
     formData.append('stock', stockValue.toString());
     formData.append('idCat', category);
 
@@ -167,6 +169,18 @@ export class PromotionsFormComponent implements OnInit {
         inputType: 'checkbox',
         icon: 'material-symbols-outlined',
         iconName: 'inventory',
+      },
+      {
+        type: 'input',
+        name: 'valid_from',
+        label: 'Fecha Desde',
+        inputType: 'date',
+      },
+      {
+        type: 'input',
+        name: 'valid_to',
+        label: 'Fecha Hasta',
+        inputType: 'date',
       },
     ];
 

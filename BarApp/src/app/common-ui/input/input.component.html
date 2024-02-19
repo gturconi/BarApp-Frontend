@@ -23,6 +23,14 @@
   </ion-item>
   }@else if(type === 'checkbox'){
   <ion-checkbox [formControl]="control">{{ label }}</ion-checkbox>
+  }@else if(type === 'date'){
+  <ion-input
+    type="date"
+    autocomplete="off"
+    [label]="label"
+    [formControl]="control"
+  >
+  </ion-input>
   }@else{
   <ion-input
     [type]="type"

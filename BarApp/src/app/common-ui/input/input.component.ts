@@ -26,6 +26,8 @@ export class InputComponent implements OnInit {
     if (this.type === 'checkbox') {
       this.control.setValue(true);
     }
+    if (this.type === 'date') {
+    }
   }
 
   showOrHidePassword() {
