@@ -38,11 +38,10 @@
           {{ promotion.description }}
         </div>
       </div>
-      } }
-      @if(validPromotionsList.length === 0 && !admin){
-        <div class="details-error-p">
-          <p>Aún no hay promociones cargadas</p>
-        </div>
+      } } @if(validPromotionsList.length === 0 && !admin){
+      <div class="details-error-p">
+        <p>Aún no hay promociones cargadas</p>
+      </div>
       }
     </div>
     }@else if(showData && !loading){
@@ -88,6 +87,8 @@
       </div>
       }
     </div>
+    <span class="loader" *ngIf="infiniteScrollLoading"></span>
+
     }@else if(showData && !loading){
     <div class="details-error">
       <h2>Aún no hay categorías cargadas</h2>

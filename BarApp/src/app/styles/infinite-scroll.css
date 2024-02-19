@@ -1,7 +1,22 @@
 @import 'variables.css';
 
-.infinite-scroll-content {
-  --color: var(--color-2);
-  --background-color: var(--color-2);
-  padding-bottom: 30px;
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--color-2);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

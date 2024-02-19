@@ -35,6 +35,7 @@ export class ProductsTypeListComponent implements OnInit {
 
   currentPage = 1;
   count = 0;
+  infiniteScrollLoading = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
@@ -57,7 +58,9 @@ export class ProductsTypeListComponent implements OnInit {
     const wrapper = this.wrapperRef.nativeElement;
 
     if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
-      this.loadMoreData();
+      if (this.productsTypeList.length < this.count) {
+        this.loadMoreData();
+      }
     }
 
     if (element.scrollHeight > element.clientHeight) {
@@ -101,12 +104,13 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   getValidPromotions(promotions: Promotion[]): Promotion[] {
-    return promotions.filter(promotion => 
-      !promotion.baja && this.isPromotionValid(promotion)
+    return promotions.filter(
+      promotion => !promotion.baja && this.isPromotionValid(promotion)
     );
   }
 
   loadMoreData() {
+    this.infiniteScrollLoading = true;
     this.productsTypeService
       .getProductsTypes(this.currentPage, 10)
       .subscribe(response => {
@@ -114,6 +118,7 @@ export class ProductsTypeListComponent implements OnInit {
         this.setImages(this.productsTypeList);
         this.currentPage++;
         this.infiniteScroll && this.infiniteScroll.complete();
+        this.infiniteScrollLoading = false;
       });
   }
 
