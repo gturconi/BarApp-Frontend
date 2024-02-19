@@ -343,13 +343,13 @@
   }
   .wrapper .item {
     width: 30vw;
-    height: 35vh;
+    height: auto;
   }
 }
 
 @media (max-width: 440px) {
   .wrapper .item {
     width: 30vw;
-    height: 30vh;
+    height: auto;
   }
 }
