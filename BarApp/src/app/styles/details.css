@@ -3,9 +3,8 @@
 .details-product {
   --background: var(--color-4);
   --color: var(--color-8);
-  width: 25vw;
   height: auto;
-  width: 40vw;
+  width: 30vw;
   font-weight: bold;
   margin: 0 auto;
   margin-bottom: 4rem;
@@ -138,6 +137,10 @@
 .description {
   text-transform: capitalize;
 }
+.description-p{
+  text-transform: capitalize;
+  margin-bottom: 15px;
+}
 
 .product-content {
   .details-product {
@@ -167,7 +170,7 @@
 
 @media (max-width: 768px) {
   .details-product {
-    width: 70vw;
+    width: 90vw;
   }
 }
 
