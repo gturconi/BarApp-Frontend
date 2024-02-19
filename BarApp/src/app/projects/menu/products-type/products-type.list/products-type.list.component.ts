@@ -58,7 +58,10 @@ export class ProductsTypeListComponent implements OnInit {
     const wrapper = this.wrapperRef.nativeElement;
 
     if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
-      if (this.productsTypeList.length < this.count) {
+      if (
+        this.productsTypeList.length < this.count &&
+        !this.infiniteScrollLoading
+      ) {
         this.loadMoreData();
       }
     }
@@ -180,13 +183,16 @@ export class ProductsTypeListComponent implements OnInit {
     const currentDate = this.getCurrentDate();
     const validFrom = new Date(promotion.valid_from);
     const validTo = new Date(promotion.valid_to);
-    return currentDate >= validFrom && currentDate <= validTo && this.isCurrentDayOfWeekValid(promotion)
-    ;
+    return (
+      currentDate >= validFrom &&
+      currentDate <= validTo &&
+      this.isCurrentDayOfWeekValid(promotion)
+    );
   }
 
   isCurrentDayOfWeekValid(promotion: Promotion): boolean {
     const currentDayOfWeek = new Date().getDay();
-    console.log(currentDayOfWeek)
+    console.log(currentDayOfWeek);
     return promotion.days_of_week?.includes(currentDayOfWeek) || false;
-}
+  }
 }
