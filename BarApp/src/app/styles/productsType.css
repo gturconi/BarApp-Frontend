@@ -24,7 +24,7 @@
 
 .wrapper .item {
   border-radius: 20px;
-  min-width: 110px;
+  min-width: 150px;
   height: 100%;
   background-color: var(--color-4);
   margin-right: 2px;
@@ -36,6 +36,31 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+}
+
+.item .button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px;
+  margin-top: 18px;
+}
+
+.item .button-on-image {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: var(--color-3);
+  border: 1px solid var(--color-2);
+  border-radius: 5px;
+  color: var(--color-2);
+  cursor: pointer;
+}
+
+.item .button-on-image:hover {
+  background-color: var(--color-2);
 }
 
 .icon-sale {
@@ -64,7 +89,7 @@
   background: var(--color-12);
   border-radius: 5px;
   padding: 5px 10px;
-
+  margin-top: 10px;
   text-transform: capitalize;
 }
 
@@ -207,6 +232,10 @@
   font-size: 20px;
 }
 
+.button-on-image .icons-accions {
+  font-size: 17px;
+}
+
 .actions .buttons-admin {
   background-color: var(--color-3);
   padding: 0px;
@@ -345,6 +374,14 @@
   .wrapper .item {
     width: 30vw;
     height: auto;
+  }
+
+  .item .button-container {
+    margin-top: 17px;
+  }
+
+  .button-on-image .icons-accions {
+    font-size: 15px;
   }
 }
 

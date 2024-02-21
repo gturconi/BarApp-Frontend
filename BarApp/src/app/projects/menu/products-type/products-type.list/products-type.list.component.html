@@ -19,6 +19,14 @@
           alt=""
           class="item1-image"
         />
+        <div class="button-container" *ngIf="admin">
+          <button class="button-on-image">
+            <ion-icon name="create-outline" class="icons-accions"></ion-icon>
+          </button>
+          <button class="button-on-image">
+            <ion-icon name="trash-outline" class="icons-accions"></ion-icon>
+          </button>
+        </div>
         <h3
           *ngIf="promotion.baja || !isPromotionValid(promotion)"
           class="item1-title"
