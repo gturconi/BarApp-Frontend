@@ -10,8 +10,9 @@ export class NotificationService {
 
   async presentToast(opts?: ToastOptions) {
     let errorMessage = "";
+    const toastType = opts?.header === 'success' ? 'success' : 'error';
     if (typeof opts?.message === "string") {
-      this.toastrService.error(opts?.message);
+      this.toastrService[toastType](opts?.message);
     } else if (typeof opts?.message === "object") {
       const keys = Object.keys(opts?.message) as Array<
         keyof typeof opts.message
@@ -23,7 +24,7 @@ export class NotificationService {
           errorMessage += "<br><br>";
         }
       }
-      this.toastrService.error(errorMessage);
+      this.toastrService[toastType](errorMessage);
     }
   }
 }

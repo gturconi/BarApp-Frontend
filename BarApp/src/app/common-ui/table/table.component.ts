@@ -8,6 +8,7 @@ export interface TableColumn {
   action?: (data: any) => void;
   hideAction?: (data: any) => boolean;
   formatter?: (data: any) => any;
+  actionClass?: string;
 };
 
 @Component({
@@ -24,6 +25,14 @@ export class TableComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  getButtonColumnClass(column: TableColumn) {
+    const defaultClass = "buttonTable";
+    if (!!column?.actionClass) {
+      return `${defaultClass} ${column.actionClass}`;
+    }
+    return defaultClass;
+  }
 
   columnIsAction(column: TableColumn) {
     return typeof column.action === 'function';

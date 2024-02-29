@@ -19,9 +19,11 @@ export class UsersPage {
 
   totalPages: number = 1;
 
-  pageSize: number = 10;
+  pageSize: number = 3;
 
   pageIndex: number = 1;
+
+  filtro: string = '';
 
   constructor(private usersService: UserService, private router: Router) {}
 
@@ -43,22 +45,24 @@ export class UsersPage {
       label: 'Telefono',
     },
     {
+      key: 'role',
+      label: 'Rol',
+    },
+    {
       key: '',
       label: 'Eliminar',
       action: (params) => this.eliminarUsuario(params),
       hideAction: this.ocultarAccion,
+      actionClass: "table-red-button"
     },
     { key: '',
       label: 'Editar',
       action: (params) => this.editarUsuario(params),
+      actionClass: "table-blue-button"
     }] as TableColumn[];
 
     this.isLoading = true;
     this.doSearch();
-  }
-
-  getContainerClasses(): string {
-    return this.isLoading || !this.data.length ? "usersListContainer fullHeight" : "usersListContainer";
   }
 
   doSearch(): void {
@@ -82,7 +86,7 @@ export class UsersPage {
     this.usersService.deleteUsers(user['id'] as string).subscribe(() => {
       const idx = this.data.findIndex(u=> u['id'] === user['id']);
       if(idx!==-1){
-        this.data.splice(idx,1,{...user, status: 'Eliminado'})
+        this.data.splice(idx,1,{...user, baja: 1});
       }
     })
   }
@@ -96,8 +100,16 @@ export class UsersPage {
   }
 
   filtrarUsuarios(value: string) {
+    if (!value) {
+      this.doSearch();
+    } else {
+      this.filtro = value;
+    }
+  }
+
+  busquedaFiltrada() {
     this.isLoading = true;
-    this.usersService.getUsers(undefined, undefined, value).subscribe((response) => {
+    this.usersService.getUsers(undefined, undefined, this.filtro).subscribe((response) => {
       this.data = response.results as unknown as TableData[];
       this.isLoading = false;
     })

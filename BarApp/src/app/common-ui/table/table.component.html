@@ -33,7 +33,10 @@
               </ng-template>
               <ng-template #showLabelBlock>
                 <td class="cell">
-                  <button class="buttonTable" (click)="column?.action(d)">
+                  <button
+                    class="{{ getButtonColumnClass(column) }}"
+                    (click)="column?.action(d)"
+                  >
                     {{ column.label }}
                   </button>
                 </td>
@@ -41,6 +44,7 @@
             </ng-template>
             <ng-template #elseBlock>
               <td class="cell">
+                <span class="mobile-tr font-bold">{{ column.label }}</span>
                 {{ formatData(column.key, d, column.formatter) }}
               </td>
             </ng-template>

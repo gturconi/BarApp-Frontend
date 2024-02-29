@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { isPlatform } from "@ionic/angular";
 
 interface DropdownOption {
   label: string;

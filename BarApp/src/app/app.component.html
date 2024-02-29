@@ -3,7 +3,7 @@
     <app-header [showMenu]="showMenu"></app-header>
     <app-menu (menuToggled)="onMenuToggle($event)"></app-menu>
     <div class="content" [class.add-margin-bottom]="addMarginBottom">
-      <router-outlet></router-outlet>
+      <router-outlet class="router-flex"></router-outlet>
       <app-footer class="footer"></app-footer>
     </div>
   </ion-app>
