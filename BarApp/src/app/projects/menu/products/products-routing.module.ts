@@ -7,6 +7,7 @@ import { ProductsFormComponent } from './products.form/products.form.component';
 import { ProductsDetailsComponent } from './products-details/products-details.component';
 
 import { authGuard } from '@common/guards/auth.guard';
+import { adminGuard } from '@common/guards';
 
 const routes: Routes = [
   {
@@ -17,12 +18,12 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: ProductsFormComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, adminGuard],
       },
       {
         path: 'add',
         component: ProductsFormComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, adminGuard],
       },
       { path: 'details/:idProd', component: ProductsDetailsComponent },
     ],

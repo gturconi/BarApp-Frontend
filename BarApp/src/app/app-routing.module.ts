@@ -33,6 +33,11 @@ const routes: Routes = [
       import('./projects/order/order.module').then(m => m.OrderModule),
   },
   {
+    path: 'tables',
+    loadChildren: () =>
+      import('./projects/tables/tables.module').then(m => m.TablesModule),
+  },
+  {
     path: '',
     redirectTo: 'intro',
     pathMatch: 'full',

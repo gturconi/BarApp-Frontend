@@ -1,0 +1,37 @@
+<ion-content scroll-y="false" class="product-content">
+  <div class="container-body">
+    <h2 class="section-title" *ngIf="showData">Mesas</h2>
+    <div
+      class="wrapper2 productsList tableList"
+      #wrapper
+      (scroll)="onScroll($event)"
+    >
+      @for(table of tableList; track table.id; let idx = $index) {
+      <ion-card class="table-card details-product item2">
+        <img
+          loading="lazy"
+          src="assets/table.webp"
+          alt="Table Image"
+          class="table-image"
+        />
+        <ion-card-header class="details-header">
+          <ion-card-title class="details-title"
+            >Mesa: {{ table.number }}</ion-card-title
+          >
+        </ion-card-header>
+        <ion-card-content
+          class="state"
+          [ngClass]="{
+            free: table.state == 'Free',
+            occupied: table.state == 'Occupied'
+          }"
+        >
+          <div>
+            <p>{{ table.state == 'Free' ? 'Libre' : 'Ocupada' }}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      }
+    </div>
+  </div>
+</ion-content>

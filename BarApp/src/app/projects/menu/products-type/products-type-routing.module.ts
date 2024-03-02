@@ -1,38 +1,39 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { authGuard } from "@common/guards/auth.guard";
+import { authGuard } from '@common/guards/auth.guard';
 
-import { ProductsTypeComponent } from "./products-type/products-type.component";
-import { ProductsTypeListComponent } from "./products-type.list/products-type.list.component";
-import { ProductsTypeFormComponent } from "./products-type.form/products-type.form.component";
-import { PromotionsFormComponent } from "../promotions/promotions.form/promotions-form.component";
+import { ProductsTypeComponent } from './products-type/products-type.component';
+import { ProductsTypeListComponent } from './products-type.list/products-type.list.component';
+import { ProductsTypeFormComponent } from './products-type.form/products-type.form.component';
+import { PromotionsFormComponent } from '../promotions/promotions.form/promotions-form.component';
+import { adminGuard } from '@common/guards';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: ProductsTypeComponent,
     children: [
-      { path: "", component: ProductsTypeListComponent },
+      { path: '', component: ProductsTypeListComponent },
       {
-        path: "edit/:id",
+        path: 'edit/:id',
         component: ProductsTypeFormComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, adminGuard],
       },
       {
-        path: "add",
+        path: 'add',
         component: ProductsTypeFormComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, adminGuard],
       },
       {
-        path: "addPromotion",
+        path: 'addPromotion',
         component: PromotionsFormComponent,
         canActivate: [authGuard],
       },
       {
-        path: ":idCat/products",
+        path: ':idCat/products',
         loadChildren: () =>
-          import("../products/products.module").then(m => m.ProductsModule),
+          import('../products/products.module').then(m => m.ProductsModule),
       },
     ],
   },

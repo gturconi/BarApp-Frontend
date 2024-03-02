@@ -6,6 +6,7 @@ import { PromotionsComponent } from './promotions/promotions.component';
 import { PromotionsFormComponent } from './promotions.form/promotions-form.component';
 
 import { authGuard } from '@common/guards/auth.guard';
+import { adminGuard } from '@common/guards';
 
 const routes: Routes = [
   {
@@ -20,12 +21,12 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: PromotionsFormComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, adminGuard],
       },
       {
         path: 'add',
         component: PromotionsFormComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, adminGuard],
       },
       { path: 'details/:idProm', component: PromotionsDetailsComponent },
     ],

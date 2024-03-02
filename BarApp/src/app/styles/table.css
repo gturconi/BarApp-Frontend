@@ -1,0 +1,47 @@
+@import 'variables.css';
+
+.table-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 15rem;
+  height: fit-content;
+  transition-duration: 3ms;
+  transition-property: scale;
+  transition-timing-function: ease-in-out;
+  padding: 0;
+}
+
+.table-card:hover {
+  scale: 1.02;
+}
+
+.table-image {
+  margin-top: 1em;
+  max-width: 250px;
+  aspect-ratio: 16/9;
+  object-fit: contain;
+}
+
+.tableList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.state {
+  width: 100%;
+  color: var(--color-7);
+  font-size: 20px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 2px;
+}
+
+.occupied {
+  background-color: var(--color-10);
+}
+
+.free {
+  background-color: var(--color-9);
+}
