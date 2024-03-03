@@ -1,15 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
 import Swal from 'sweetalert2';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { finalize } from 'rxjs';
 
 import { TablesService } from '../services/tables.service';
 import { LoadingService } from '@common/services/loading.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService } from '@common/services/login.service';
 
 import { Table } from '../models/table';
-
-import { IonInfiniteScroll } from '@ionic/angular';
-import { finalize } from 'rxjs';
+import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
 
 @Component({
   selector: 'app-tables.list',
@@ -22,6 +22,7 @@ export class TablesListComponent implements OnInit {
   count = 0;
   showData: boolean = false;
   infiniteScrollLoading = false;
+  admin = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
@@ -30,10 +31,12 @@ export class TablesListComponent implements OnInit {
   constructor(
     private tableService: TablesService,
     private loadingService: LoadingService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit() {
+    this.admin = this.loginService.isAdmin();
     this.doSearch();
   }
 

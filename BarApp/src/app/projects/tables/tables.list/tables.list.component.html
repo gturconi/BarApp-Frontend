@@ -1,13 +1,26 @@
 <ion-content scroll-y="false" class="product-content">
   <div class="container-body">
     <h2 class="section-title" *ngIf="showData">Mesas</h2>
+    @if(tableList.length > 0){
     <div
       class="wrapper2 productsList tableList"
       #wrapper
       (scroll)="onScroll($event)"
     >
       @for(table of tableList; track table.id; let idx = $index) {
-      <ion-card class="table-card details-product item2">
+      <ion-card class="table-card details-product">
+        <div class="table-actions" *ngIf="admin">
+          <ion-icon
+            name="create-outline"
+            class="icons-admin icon-eye"
+            [class.disabled]="table.state == 'Occupied'"
+          ></ion-icon>
+          <ion-icon
+            name="trash-outline"
+            class="icons-admin icon-eye"
+            [class.disabled]="table.state == 'Occupied'"
+          ></ion-icon>
+        </div>
         <img
           loading="lazy"
           src="assets/table.webp"
@@ -31,7 +44,23 @@
           </div>
         </ion-card-content>
       </ion-card>
+
       }
+    </div>
+    }@else{
+    <div class="details-error" *ngIf="showData">
+      <h2>Aún no hay mesas cargadas</h2>
+    </div>
+    }
+
+    <div class="grid-item">
+      <div class="button-add-container" *ngIf="showData && admin">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
+          <ion-fab-button class="button-add">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
     </div>
   </div>
 </ion-content>
