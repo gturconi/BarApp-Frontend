@@ -174,6 +174,7 @@ export class ProductsListComponent implements OnInit {
           .subscribe(() => {
             this.toastrService.success('Producto eliminado');
             loading.dismiss();
+            this.currentPage = 1;
             this.getAndSearchByType();
           });
       }

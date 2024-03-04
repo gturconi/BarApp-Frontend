@@ -7,5 +7,6 @@ export interface ValidationConfig {
   minLength?: number;
   min?: number;
   max?: number;
+  IntegerPattern?: string;
   customValidation?: (control: FormGroup) => ValidationErrors | null;
 }

@@ -8,43 +8,46 @@
       (scroll)="onScroll($event)"
     >
       @for(table of tableList; track table.id; let idx = $index) {
-      <ion-card class="table-card details-product">
+      <article>
+        <ion-card class="table-card details-product">
+          <img
+            loading="lazy"
+            src="assets/table.webp"
+            alt="Table Image"
+            class="table-image"
+          />
+          <ion-card-header class="details-header">
+            <ion-card-title class="details-title"
+              >Mesa: {{ table.number }}</ion-card-title
+            >
+          </ion-card-header>
+          <ion-card-content
+            class="state"
+            [ngClass]="{
+              free: table.state == 'Free',
+              occupied: table.state == 'Occupied'
+            }"
+          >
+            <div>
+              <p>{{ table.state == 'Free' ? 'Libre' : 'Ocupada' }}</p>
+            </div>
+          </ion-card-content>
+        </ion-card>
         <div class="table-actions" *ngIf="admin">
           <ion-icon
             name="create-outline"
             class="icons-admin icon-eye"
             [class.disabled]="table.state == 'Occupied'"
+            [routerLink]="['/tables/edit', table.id]"
           ></ion-icon>
           <ion-icon
             name="trash-outline"
             class="icons-admin icon-eye"
             [class.disabled]="table.state == 'Occupied'"
+            (click)="delete(table.id)"
           ></ion-icon>
         </div>
-        <img
-          loading="lazy"
-          src="assets/table.webp"
-          alt="Table Image"
-          class="table-image"
-        />
-        <ion-card-header class="details-header">
-          <ion-card-title class="details-title"
-            >Mesa: {{ table.number }}</ion-card-title
-          >
-        </ion-card-header>
-        <ion-card-content
-          class="state"
-          [ngClass]="{
-            free: table.state == 'Free',
-            occupied: table.state == 'Occupied'
-          }"
-        >
-          <div>
-            <p>{{ table.state == 'Free' ? 'Libre' : 'Ocupada' }}</p>
-          </div>
-        </ion-card-content>
-      </ion-card>
-
+      </article>
       }
     </div>
     }@else{
@@ -56,7 +59,7 @@
     <div class="grid-item">
       <div class="button-add-container" *ngIf="showData && admin">
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-          <ion-fab-button class="button-add">
+          <ion-fab-button class="button-add" [routerLink]="['/tables/add']">
             <ion-icon name="add"></ion-icon>
           </ion-fab-button>
         </ion-fab>

@@ -62,6 +62,8 @@ export class FormComponent implements OnInit {
         return 'El valor debe ser mayor o igual a ' + control.errors['min'].min;
       } else if (control.errors['max']) {
         return 'El valor debe ser menor o igual a ' + control.errors['max'].max;
+      } else if (control.errors['pattern']) {
+        return 'El valor ingresado no es válido';
       }
       return 'Error en el campo ' + controlName;
     }
@@ -94,6 +96,10 @@ export class FormComponent implements OnInit {
 
       if (config.max != undefined) {
         validators.push(Validators.max(config.max));
+      }
+
+      if (config.IntegerPattern) {
+        validators.push(Validators.pattern(config.IntegerPattern));
       }
 
       if (config.customValidation) {

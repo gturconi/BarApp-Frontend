@@ -97,6 +97,7 @@ export class TablesListComponent implements OnInit {
           .subscribe(() => {
             this.toastrService.success('Mesa eliminada');
             loading.dismiss();
+            this.currentPage = 1;
             this.doSearch();
           });
       }
