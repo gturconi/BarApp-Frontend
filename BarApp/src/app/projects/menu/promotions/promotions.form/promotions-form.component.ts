@@ -202,6 +202,52 @@ export class PromotionsFormComponent implements OnInit {
       { controlName: 'image', required: !this.editMode },
       { controlName: 'stock' },
       { controlName: 'Categoria' },
+      {
+        controlName: 'valid_from',
+        required: false,
+        customValidation: (form: FormGroup) => {
+          const validFrom = form.get('valid_from');
+          const validTo = form.get('valid_to');
+
+          if (validFrom && validTo) {
+            const fromDate = validFrom.value;
+            const toDate = validTo.value;
+
+            if ((fromDate && !toDate) || (!fromDate && toDate)) {
+              validFrom.setErrors({ Datevalid: true });
+              validTo.setErrors({ Datevalid: true });
+            } else {
+              validFrom.setErrors(null);
+              validTo.setErrors(null);
+            }
+          }
+
+          return null;
+        },
+      },
+      {
+        controlName: 'valid_to',
+        required: false,
+        customValidation: (form: FormGroup) => {
+          const validFrom = form.get('valid_from');
+          const validTo = form.get('valid_to');
+
+          if (validFrom && validTo) {
+            const fromDate = validFrom.value;
+            const toDate = validTo.value;
+
+            if ((fromDate && !toDate) || (!fromDate && toDate)) {
+              validFrom.setErrors({ Datevalid: true });
+              validTo.setErrors({ Datevalid: true });
+            } else {
+              validFrom.setErrors(null);
+              validTo.setErrors(null);
+            }
+          }
+
+          return null;
+        },
+      },
     ];
   }
 }
