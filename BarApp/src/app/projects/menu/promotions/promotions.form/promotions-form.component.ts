@@ -40,6 +40,7 @@ export class PromotionsFormComponent implements OnInit {
       title: 'Categoria',
       fields: new Subject<EntityListResponse<any>>(),
       defaultValue: new Subject<string>(),
+      isMultiple: true,
     },
   ];
 

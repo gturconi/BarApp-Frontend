@@ -12,6 +12,7 @@ export class ComboComponent implements OnInit {
   @Input() title: string = '';
   @Input() comboItems: { id: string; description: string }[] = [];
   @Input() defaultValue?: string;
+  @Input() isMultiple: boolean = false;
 
   constructor() {}
 

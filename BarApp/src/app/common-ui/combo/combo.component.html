@@ -5,6 +5,7 @@
     [formControl]="control"
     [value]="getSelectedValue()"
     [placeholder]="title"
+    [multiple]="isMultiple"
   >
     <ion-select-option
       *ngFor="let item of comboItems"
