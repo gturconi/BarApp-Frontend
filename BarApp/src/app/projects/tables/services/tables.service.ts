@@ -11,7 +11,6 @@ import { Table } from '../models/table';
 })
 export class TablesService {
   apiUrl: string = environment.apiUrl;
-
   constructor(private http: HttpClient) {}
 
   getTables(page: number = 1, limit: number = 10, search: string = '') {
@@ -34,5 +33,12 @@ export class TablesService {
 
   deleteTable(id: string) {
     return this.http.delete<Table>(`${this.apiUrl}/tables/` + id);
+  }
+
+  updateState(table: Table) {
+    return this.http.put<Table>(
+      `${this.apiUrl}/tables/state/` + table.id,
+      table
+    );
   }
 }
