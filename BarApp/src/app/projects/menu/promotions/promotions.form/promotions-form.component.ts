@@ -216,6 +216,9 @@ export class PromotionsFormComponent implements OnInit {
             if ((fromDate && !toDate) || (!fromDate && toDate)) {
               validFrom.setErrors({ Datevalid: true });
               validTo.setErrors({ Datevalid: true });
+            } else if (fromDate > toDate) {
+              validFrom.setErrors({ DateInvalidRange: true });
+              validTo.setErrors(null);
             } else {
               validFrom.setErrors(null);
               validTo.setErrors(null);
@@ -238,7 +241,10 @@ export class PromotionsFormComponent implements OnInit {
 
             if ((fromDate && !toDate) || (!fromDate && toDate)) {
               validFrom.setErrors({ Datevalid: true });
-              validTo.setErrors({ Datevalid: true });
+              validTo.setErrors(null);
+            } else if (fromDate > toDate) {
+              validFrom.setErrors({ DateInvalidRange: true });
+              validTo.setErrors(null);
             } else {
               validFrom.setErrors(null);
               validTo.setErrors(null);

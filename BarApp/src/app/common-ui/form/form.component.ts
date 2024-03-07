@@ -64,6 +64,8 @@ export class FormComponent implements OnInit {
         return 'El valor debe ser menor o igual a ' + control.errors['max'].max;
       } else if (control.errors['Datevalid']) {
         return 'Debes proporcionar ambas fechas o ninguna';
+      } else if (control.errors['DateInvalidRange']) {
+        return 'La fecha desde debe ser menor a la fecha hasta';
       }
       return 'Error en el campo ' + controlName;
     }
