@@ -159,6 +159,23 @@ export class ProductsTypeListComponent implements OnInit {
     });
   }
 
+  async deleteProm(id: string) {
+    Swal.fire(DELETE_OPTS).then(async result => {
+      if (result.isConfirmed) {
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.promotionsService
+          .deletePromotions(id)
+          .pipe(finalize(() => loading.dismiss()))
+          .subscribe(() => {
+            this.toastrService.success('Promocion eliminada');
+            loading.dismiss();
+            this.doSearch();
+          });
+      }
+    });
+  }
+
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }

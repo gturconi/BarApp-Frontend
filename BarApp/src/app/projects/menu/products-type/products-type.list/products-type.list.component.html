@@ -23,7 +23,11 @@
           <button class="button-on-image">
             <ion-icon name="create-outline" class="icons-accions"></ion-icon>
           </button>
-          <button class="button-on-image">
+          <button
+            class="button-on-image"
+            *ngIf="promotion.id !== undefined"
+            (click)="$event.stopPropagation(); deleteProm(promotion.id)"
+          >
             <ion-icon name="trash-outline" class="icons-accions"></ion-icon>
           </button>
         </div>
