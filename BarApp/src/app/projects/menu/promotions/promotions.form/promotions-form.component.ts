@@ -105,12 +105,14 @@ export class PromotionsFormComponent implements OnInit {
     const imageFile: File = fileControl.value;
     const stockValue = form.controls['stock'].value ? 1 : 0;
     const category = form.controls['Categoria'].value;
+    //ver si esta ok el descuento respecto al backend
+    const discountValue = form.controls['discount'].value / 100;
 
     const formData = new FormData();
     formData.append('image', imageFile);
     formData.append('description', form.controls['description'].value);
     formData.append('price', form.controls['price'].value);
-    formData.append('discount', form.controls['discount'].value);
+    formData.append('discount', discountValue.toString());
     formData.append('valid_from', form.controls['valid_from'].value);
     formData.append('valid_to', form.controls['valid_to'].value);
     formData.append('stock', stockValue.toString());
