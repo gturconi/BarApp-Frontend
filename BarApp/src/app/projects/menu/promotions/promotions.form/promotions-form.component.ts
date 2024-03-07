@@ -25,7 +25,7 @@ import { Button, FormField } from '@common/models/formTypes';
 export class PromotionsFormComponent implements OnInit {
   id = '';
   idCat = '';
-  formTitle = 'Añadir Promocion';
+  formTitle = 'Añadir Promoción';
   editMode = false;
 
   form!: FormGroup;
@@ -60,7 +60,7 @@ export class PromotionsFormComponent implements OnInit {
       this.loadCombos();
       if (this.id) {
         this.editMode = true;
-        this.formTitle = 'Editar Promocion';
+        this.formTitle = 'Editar Promoción';
       }
       this.route.parent!.params.subscribe(parentParams => {
         this.idCat = parentParams['idCat'];
@@ -74,7 +74,7 @@ export class PromotionsFormComponent implements OnInit {
     this.productsService.getProduct(this.id).subscribe(data => {
       this.form.get('description')?.setValue(data.description);
       this.form.get('price')?.setValue(data.price);
-      this.form.get('stock')?.setValue(data.stock);
+      this.form.get('baja')?.setValue(data.baja);
       this.comboParam[0].defaultValue!.next(data.category!);
       this.form.controls['Categoria']?.setValue(this.idCat);
     });
@@ -104,7 +104,7 @@ export class PromotionsFormComponent implements OnInit {
   async add(form: FormGroup) {
     const fileControl = form.controls['image'];
     const imageFile: File = fileControl.value;
-    const stockValue = form.controls['stock'].value ? 1 : 0;
+    const baja = form.controls['baja'].value ? 0 : 1;
     const category = form.controls['Categoria'].value;
     //ver si esta ok el descuento respecto al backend
     const discountValue = form.controls['discount'].value / 100;
@@ -116,7 +116,7 @@ export class PromotionsFormComponent implements OnInit {
     formData.append('discount', discountValue.toString());
     formData.append('valid_from', form.controls['valid_from'].value);
     formData.append('valid_to', form.controls['valid_to'].value);
-    formData.append('stock', stockValue.toString());
+    formData.append('baja', baja.toString());
     formData.append('idCat', category);
 
     const loading = await this.loadingService.loading();
@@ -167,8 +167,8 @@ export class PromotionsFormComponent implements OnInit {
       },
       {
         type: 'checkbox',
-        name: 'stock',
-        label: 'Tiene stock',
+        name: 'baja',
+        label: 'Ocultar promoción',
         inputType: 'checkbox',
         icon: 'material-symbols-outlined',
         iconName: 'inventory',
@@ -203,7 +203,7 @@ export class PromotionsFormComponent implements OnInit {
       { controlName: 'price', required: false, min: 0 },
       { controlName: 'discount', required: false, min: 0, max: 100 },
       { controlName: 'image', required: !this.editMode },
-      { controlName: 'stock' },
+      { controlName: 'baja' },
       { controlName: 'Categoria' },
       {
         controlName: 'valid_from',
