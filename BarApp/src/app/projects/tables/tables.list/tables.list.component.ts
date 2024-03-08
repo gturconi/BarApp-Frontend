@@ -11,6 +11,7 @@ import { LoginService } from '@common/services/login.service';
 import { Table } from '../models/table';
 import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
 import { SocketService } from '@common/services/socket.service';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tables.list',
@@ -24,6 +25,7 @@ export class TablesListComponent implements OnInit {
   showData: boolean = false;
   infiniteScrollLoading = false;
   admin = false;
+  public qrCodeDownloadLink: SafeUrl = '';
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
@@ -108,5 +110,9 @@ export class TablesListComponent implements OnInit {
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+  }
+
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
   }
 }

@@ -21,6 +21,17 @@
               >Mesa: {{ table.number }}</ion-card-title
             >
           </ion-card-header>
+          <ion-button class="qrBtn" *ngIf="admin">
+            <qrcode
+              [qrdata]="'Mesa ' + table.number.toString()"
+              [width]="400"
+              cssClass="qrcode"
+              (qrCodeURL)="onChangeURL($event)"
+            ></qrcode>
+            <a [href]="qrCodeDownloadLink" download="qrcode"
+              ><ion-icon name="qr-code-outline"></ion-icon
+            ></a>
+          </ion-button>
           <ion-card-content
             class="state"
             [ngClass]="{

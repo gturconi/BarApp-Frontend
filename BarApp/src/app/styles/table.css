@@ -67,6 +67,19 @@
   }
 }
 
+.qrcode {
+  display: none;
+}
+
+.qrBtn {
+  --background: var(--color-5);
+  --background-hover: var(--color-2);
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
 @keyframes reveal {
   0% {
     translate: 0 100px;
