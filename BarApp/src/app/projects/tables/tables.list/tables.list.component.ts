@@ -10,6 +10,7 @@ import { LoginService } from '@common/services/login.service';
 
 import { Table } from '../models/table';
 import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
+import { SocketService } from '@common/services/socket.service';
 
 @Component({
   selector: 'app-tables.list',
@@ -32,7 +33,8 @@ export class TablesListComponent implements OnInit {
     private tableService: TablesService,
     private loadingService: LoadingService,
     private toastrService: ToastrService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit() {
