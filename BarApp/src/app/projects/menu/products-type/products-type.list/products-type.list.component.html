@@ -20,7 +20,10 @@
           class="item1-image"
         />
         <div class="button-container" *ngIf="admin">
-          <button class="button-on-image">
+          <button
+            class="button-on-image"
+            [routerLink]="['/menu/categories/editPromotion', promotion.id]"
+          >
             <ion-icon name="create-outline" class="icons-accions"></ion-icon>
           </button>
           <button
