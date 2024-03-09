@@ -13,6 +13,7 @@ import { PromotionsService } from '../services/promotions.service';
 
 import { EntityListResponse } from '@common/models/entity.list.response';
 import { ProductsType } from '../../products-type/models/productsType';
+import { Products } from '../../products/models/products';
 import { DropdownParam } from '@common/models/dropdown';
 import { ValidationConfig } from '@common/models/validationConfig';
 import { Button, FormField } from '@common/models/formTypes';
@@ -33,11 +34,20 @@ export class PromotionsFormComponent implements OnInit {
   formFields: FormField[] = [];
   myButtons: Button[] = [];
 
-  productTypeList = new Subject<EntityListResponse<ProductsType>>();
+  productsList!: Products[];
+
+  selectedCategories: string[] = [];
+  productOptions: any[] = [];
 
   comboParam: DropdownParam[] = [
     {
       title: 'Categoria',
+      fields: new Subject<EntityListResponse<any>>(),
+      defaultValue: new Subject<string>(),
+      isMultiple: true,
+    },
+    {
+      title: 'Productos',
       fields: new Subject<EntityListResponse<any>>(),
       defaultValue: new Subject<string>(),
       isMultiple: true,
@@ -56,7 +66,7 @@ export class PromotionsFormComponent implements OnInit {
 
   async ngOnInit() {
     this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = params['idPromotion'];
       this.loadCombos();
       if (this.id) {
         this.editMode = true;
@@ -71,12 +81,41 @@ export class PromotionsFormComponent implements OnInit {
   }
 
   async autocompleteForm() {
-    this.productsService.getProduct(this.id).subscribe(data => {
+    this.promotionService.getPromotion(this.id).subscribe(data => {
       this.form.get('description')?.setValue(data.description);
       this.form.get('price')?.setValue(data.price);
+      if (data.discount !== undefined) {
+        this.form.get('discount')?.setValue(data.discount * 100);
+      }
+      if (data.valid_from !== undefined) {
+        const validFromDate = new Date(data.valid_from);
+        this.form
+          .get('valid_from')
+          ?.setValue(validFromDate.toISOString().split('T')[0]);
+      }
+      if (data.valid_to !== undefined) {
+        const validFromDate = new Date(data.valid_to);
+        this.form
+          .get('valid_to')
+          ?.setValue(validFromDate.toISOString().split('T')[0]);
+      }
       this.form.get('baja')?.setValue(data.baja);
-      this.comboParam[0].defaultValue!.next(data.category!);
-      this.form.controls['Categoria']?.setValue(this.idCat);
+      //this.comboParam[0].defaultValue!.next(data.category!);
+      //this.form.controls['Categoria']?.setValue(this.idCat);
+    });
+  }
+
+  loadProducts(selectedCategories: string[]) {
+    this.productsService.getProducts().subscribe(data => {
+      this.productsList = data.results;
+      this.productOptions = this.productsList.filter(
+        product =>
+          product.category && selectedCategories.includes(product.category)
+      );
+
+      console.log(this.productOptions);
+
+      this.form.controls['Productos'].setValue(this.productOptions);
     });
   }
 
@@ -93,6 +132,17 @@ export class PromotionsFormComponent implements OnInit {
         this.comboParam[0].defaultValue!.next(cat?.description!);
         this.form.controls['Categoria']?.setValue(this.idCat);
       }
+      this.form
+        .get('Categoria')
+        ?.valueChanges.subscribe((selectedCategories: string[]) => {
+          this.selectedCategories = selectedCategories;
+
+          console.log('Categorías seleccionadas:', this.selectedCategories);
+
+          this.comboParam[1].fields!.next(this.selectedCategories);
+          this.loadProducts(this.selectedCategories);
+        });
+
       loading.dismiss();
     });
   }
@@ -244,7 +294,7 @@ export class PromotionsFormComponent implements OnInit {
 
             if ((fromDate && !toDate) || (!fromDate && toDate)) {
               validFrom.setErrors({ Datevalid: true });
-              validTo.setErrors(null);
+              validTo.setErrors({ Datevalid: true });
             } else if (fromDate > toDate) {
               validFrom.setErrors({ DateInvalidRange: true });
               validTo.setErrors(null);
