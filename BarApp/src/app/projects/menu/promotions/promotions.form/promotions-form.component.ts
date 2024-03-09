@@ -18,6 +18,8 @@ import { DropdownParam } from '@common/models/dropdown';
 import { ValidationConfig } from '@common/models/validationConfig';
 import { Button, FormField } from '@common/models/formTypes';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-promotions-form',
   templateUrl: './promotions-form.component.html',
@@ -63,6 +65,12 @@ export class PromotionsFormComponent implements OnInit {
     private loadingService: LoadingService,
     private location: Location
   ) {}
+  showNotification() {
+    Swal.fire({
+      icon: 'info',
+      html: 'Las promociones pueden ser válidas mediante un rango de fechas y/o mediante días de la semana.<br>El descuento de la misma es opcional.',
+    });
+  }
 
   async ngOnInit() {
     this.route.params.subscribe(params => {

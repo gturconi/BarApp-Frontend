@@ -7,6 +7,11 @@
         >
       </ion-card-header>
       <ion-card-content>
+        <ion-buttons slot="end">
+          <ion-button class="info-button" (click)="showNotification()">
+            <ion-icon name="information-circle-outline"></ion-icon> Más info
+          </ion-button>
+        </ion-buttons>
         <app-form
           [form]="form"
           [fields]="formFields"
