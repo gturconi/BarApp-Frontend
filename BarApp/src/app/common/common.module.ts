@@ -5,6 +5,7 @@ import { ImageService } from './services/image.service';
 import { NotificationService } from './services/notification.service';
 import { CartService } from './services/cart.service';
 import { BadgeService } from './services/badge.service';
+import { SocketService } from './services/socket.service';
 @NgModule({
   declarations: [],
   imports: [CommonModule],
@@ -15,6 +16,7 @@ import { BadgeService } from './services/badge.service';
     NotificationService,
     CartService,
     BadgeService,
+    SocketService,
   ],
 })
 export class CommonModule {}
