@@ -19,6 +19,8 @@ export class SocketService {
     });
   }
 
+  ngOnInit() {}
+
   getMessage() {
     return this.message.asObservable();
   }

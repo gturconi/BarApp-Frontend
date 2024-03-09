@@ -13,6 +13,7 @@ import { Products } from '../models/products';
 import { Avatar } from '@common/models/avatar';
 import { ToastrService } from 'ngx-toastr';
 import { BadgeService } from '@common/services/badge.service';
+import { SocketService } from '@common/services/socket.service';
 
 @Component({
   selector: 'app-products-details',
@@ -39,7 +40,8 @@ export class ProductsDetailsComponent implements OnInit {
     private cartService: CartService,
     private alertController: AlertController,
     private router: Router,
-    private badgeService: BadgeService
+    private badgeService: BadgeService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit() {
@@ -85,6 +87,7 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   async addToCart() {
+    //this.socketService.sendMessage('order', '');
     if (!this.loginService.isLoggedIn()) {
       await this.displayLoginAlert();
     } else {
@@ -93,6 +96,7 @@ export class ProductsDetailsComponent implements OnInit {
       this.badgeService.incrementBadgeCount();
       const alert = await this.alertController.create({
         header: 'Producto agregado',
+        backdropDismiss: false,
         buttons: [
           {
             text: 'Ir al carrito',

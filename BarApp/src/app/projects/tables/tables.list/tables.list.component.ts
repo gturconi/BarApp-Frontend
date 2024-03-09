@@ -37,16 +37,15 @@ export class TablesListComponent implements OnInit {
     private toastrService: ToastrService,
     private loginService: LoginService,
     private socketService: SocketService
-  ) {}
+  ) {
+    this.socketService.getMessage().subscribe(data => {
+      this.currentPage = 1;
+      this.doSearch();
+    });
+  }
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
-    this.doSearch();
-
-    this.socketService.getMessage().subscribe(data => {
-      alert(data);
-      //  this.doSearch();
-    });
   }
 
   ngOnDestroy() {
