@@ -6,6 +6,7 @@
     [value]="getSelectedValue()"
     [placeholder]="title"
     [multiple]="isMultiple"
+    (ionChange)="onSelectionChange()"
   >
     <ion-select-option
       *ngFor="let item of comboItems"

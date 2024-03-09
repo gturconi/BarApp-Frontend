@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-combo',
@@ -14,6 +15,8 @@ export class ComboComponent implements OnInit {
   @Input() defaultValue?: string;
   @Input() isMultiple: boolean = false;
 
+  @Output() selectionChange = new Subject<string[]>();
+
   constructor() {}
 
   ngOnInit() {}
@@ -26,5 +29,9 @@ export class ComboComponent implements OnInit {
       return selectedItem ? selectedItem.id : undefined;
     }
     return undefined;
+  }
+
+  onSelectionChange() {
+    this.selectionChange.next(this.control.value);
   }
 }
