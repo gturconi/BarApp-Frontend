@@ -50,10 +50,26 @@ export class FormComponent implements OnInit {
         return 'Este campo es requerido';
       } else if (control.errors['email']) {
         return 'Ingrese un correo válido';
+      } else if (
+        control.errors['pattern'] &&
+        control.errors['pattern'].requiredPattern === '^[0-9]*$'
+      ) {
+        return 'El campo solo admite números';
+      } else if (
+        control.errors['pattern'] &&
+        control.errors['pattern'].requiredPattern === '^[a-zA-Z]*$'
+      ) {
+        return 'El campo solo admite letras';
       } else if (control.errors['minlength']) {
         return (
           'El campo debe tener al menos ' +
           control.errors['minlength'].requiredLength +
+          ' caracteres'
+        );
+      } else if (control.errors['maxlength']) {
+        return (
+          'El campo debe tener como máximo ' +
+          control.errors['maxlength'].requiredLength +
           ' caracteres'
         );
       } else if (control.errors['notSame']) {
@@ -90,6 +106,12 @@ export class FormComponent implements OnInit {
       }
       if (config.minLength) {
         validators.push(Validators.minLength(config.minLength));
+      }
+      if (config.maxLength) {
+        validators.push(Validators.maxLength(config.maxLength));
+      }
+      if (config.pattern) {
+        validators.push(Validators.pattern(config.pattern));
       }
 
       if (config.min != undefined) {
