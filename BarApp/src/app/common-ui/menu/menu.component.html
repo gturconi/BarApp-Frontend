@@ -7,66 +7,77 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list class="background-menu">
-      <ion-item
-        *ngFor="let menuItem of menuItems"
-        class="menuItem background-menu"
+      <ng-container *ngFor="let menuItem of menuItems">
+        <ion-item
+          *ngIf="!menuItem.isManage"
+          class="menuItem background-menu"
+          [routerLink]="menuItem.route"
+          (click)="handleMenuItemClick(menuItem)"
+        >
+          <ion-icon
+            aria-hidden="true"
+            [name]="menuItem.icon"
+            slot="start"
+          ></ion-icon>
+          <ion-label>{{ menuItem.label }}</ion-label>
+        </ion-item>
+      </ng-container>
+      <ng-container
+        *ngIf="menuItems && menuItems.length > 0 && hasManageItems()"
       >
-        <ion-icon
-          aria-hidden="true"
-          [name]="menuItem.icon"
-          slot="start"
-        ></ion-icon>
-        <ion-label>{{ menuItem.label }}</ion-label>
-      </ion-item>
+        <ion-accordion-group>
+          <ion-accordion value="first" class="background-menu">
+            <ion-item slot="header" color="light" class="menuItem">
+              <ion-icon
+                aria-hidden="true"
+                name="create-outline"
+                slot="start"
+              ></ion-icon>
+              <ion-label>Gestionar</ion-label>
+            </ion-item>
+            <ion-list slot="content" class="background-menu">
+              <ng-container *ngFor="let menuItem of menuItems">
+                <div class="item-padding">
+                  <ion-item
+                    *ngIf="menuItem?.isManage && !menuItem?.isSetting"
+                    class="menuItem background-menu"
+                    [routerLink]="menuItem.route"
+                  >
+                    <ion-label>{{ menuItem.label }}</ion-label>
+                  </ion-item>
+                </div>
+              </ng-container>
+            </ion-list>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-accordion-group>
+          <ion-accordion value="first" class="background-menu">
+            <ion-item slot="header" color="light" class="menuItem">
+              <ion-icon
+                aria-hidden="true"
+                name="settings-outline"
+                slot="start"
+              ></ion-icon>
+              <ion-label>Configuracion</ion-label>
+            </ion-item>
+            <ion-list slot="content" class="background-menu">
+              <ng-container *ngFor="let menuItem of menuItems">
+                <div class="item-padding">
+                  <ion-item
+                    *ngIf="menuItem?.isManage && menuItem?.isSetting"
+                    class="menuItem background-menu"
+                    [routerLink]="menuItem.route"
+                  >
+                    <ion-label>{{ menuItem.label }}</ion-label>
+                  </ion-item>
+                </div>
+              </ng-container>
+            </ion-list>
+          </ion-accordion>
+        </ion-accordion-group>
+      </ng-container>
     </ion-list>
-
-    <ng-container *ngIf="isAdmin()">
-      <ion-accordion-group>
-        <ion-accordion value="first" class="background-menu">
-          <ion-item slot="header" color="light" class="menuItem">
-            <ion-icon
-              aria-hidden="true"
-              name="create-outline"
-              slot="start"
-            ></ion-icon>
-            <ion-label>Gestionar</ion-label>
-          </ion-item>
-          <ion-list slot="content" class="background-menu">
-            <div class="item-padding">
-              <ion-item
-                *ngFor="let items of manageItems"
-                class="background-menu"
-              >
-                <ion-label>{{ items.label }}</ion-label>
-              </ion-item>
-            </div>
-          </ion-list>
-        </ion-accordion>
-      </ion-accordion-group>
-
-      <ion-accordion-group>
-        <ion-accordion value="second" class="background-menu">
-          <ion-item slot="header" color="light" class="menuItem">
-            <ion-icon
-              aria-hidden="true"
-              name="settings-outline"
-              slot="start"
-            ></ion-icon>
-            <ion-label>Configuracion</ion-label>
-          </ion-item>
-          <ion-list slot="content" class="background-menu">
-            <div class="item-padding">
-              <ion-item
-                *ngFor="let items of settingItems"
-                class="menuItem background-menu"
-              >
-                <ion-label>{{ items.label }}</ion-label>
-              </ion-item>
-            </div>
-          </ion-list>
-        </ion-accordion>
-      </ion-accordion-group>
-    </ng-container>
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
@@ -87,11 +98,18 @@
   </ion-header>
 </div>
 
-<!-- menu mobile-->
-<ion-content class="menu-mobile" *ngIf="!isAdmin()">
+<ion-content class="menu-mobile" [class.hide]="admin">
   <ion-tabs>
     <ion-tab-bar class="tabBar">
-      <ion-tab-button *ngFor="let tab of tabsItem" class="tabButton">
+      <ion-tab-button
+        *ngFor="let tab of tabsItem"
+        class="tabButton"
+        [ngClass]="{ 'tab-order': tab.label === 'Pedidos' }"
+        [routerLink]="tab.route"
+      >
+        @if(tab.label === 'Pedidos' && badgeValue > 0 && isClient()) {
+        <ion-badge #ionBadge>{{ badgeValue }}</ion-badge>
+        }
         <ion-icon
           [name]="tab.icon"
           (click)="toggleDesktopMenu(tab.icon)"

@@ -1,3 +1,7 @@
 <div class="searchFilter">
-  <input [(ngModel)]="searchText" (keyup)="onSearchChange()" />
+  <input
+    [(ngModel)]="searchText"
+    [placeholder]="placeholder"
+    (keyup)="onSearchChange()"
+  />
 </div>

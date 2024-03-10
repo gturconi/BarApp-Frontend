@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 /*para color del logo*/
 .logo__name {
@@ -72,6 +72,16 @@ ion-menu > ion-content {
   max-width: 100px;
 }
 
+.tab-order {
+  position: relative;
+}
+
+.tabButton ion-badge {
+  position: absolute;
+  top: 0;
+  background-color: var(--color-10);
+}
+
 .tabButton:hover {
   scale: 1.1;
   font-weight: bold;
@@ -79,6 +89,10 @@ ion-menu > ion-content {
 
 .menu-mobile {
   display: none;
+}
+
+.hide {
+  display: none !important;
 }
 
 ion-menu::part(container) {

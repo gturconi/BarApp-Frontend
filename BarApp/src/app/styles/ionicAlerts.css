@@ -1,0 +1,26 @@
+.custom-alert {
+  --background: var(--color-6);
+  .alert-wrapper {
+    .alert-head {
+      h2 {
+        color: var(--color-8);
+        font-weight: bold;
+        font-size: medium;
+      }
+      text-align: center;
+      border-bottom: 2px solid var(--color-4);
+    }
+
+    .alert-button-group {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      button {
+        color: var(--color-8);
+        font-size: medium;
+        text-transform: capitalize;
+        cursor: pointer;
+      }
+    }
+  }
+}

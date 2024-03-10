@@ -1,22 +1,24 @@
-<div [class]="getContainerClasses()">
-  @if(!loading && !!data.length) {
+<div class="usersListContainer">
   <div class="actionsContainer">
     <app-search
       id="search-filter"
       (searchChanged)="filtrarUsuarios($event)"
+      placeholder="Buscar usuario..."
     ></app-search>
+    <button class="buttonSearch" (click)="busquedaFiltrada()">
+      <ion-icon class="actionIcon" name="search-outline"></ion-icon>
+    </button>
     <button class="buttonAdd" (click)="agregarUsuario()">
-      Agregar Usuario
+      <ion-icon class="actionIcon" name="person-add-outline"></ion-icon>
     </button>
   </div>
-  }
   <app-table
     class="table"
     [columns]="columns"
     [data]="data"
-    [loading]="loading"
+    [loading]="isLoading"
   />
-  @if(!loading && !!data.length) {
+  @if(!isLoading && !!data.length) {
   <div class="pagination">
     <app-pagination
       [currentPage]="pageIndex"

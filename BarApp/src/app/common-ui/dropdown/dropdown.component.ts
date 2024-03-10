@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { isPlatform } from "@ionic/angular";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 interface DropdownOption {
   label: string;
@@ -8,11 +7,10 @@ interface DropdownOption {
 }
 
 @Component({
-  selector: "app-dropdown",
-  templateUrl: "./dropdown.component.html",
-  styleUrls: ["./dropdown.component.scss"],
+  selector: 'app-dropdown',
+  templateUrl: './dropdown.component.html',
+  styleUrls: ['./dropdown.component.scss'],
 })
-
 export class DropdownComponent implements OnInit {
   @Input() control!: FormControl;
   @Input() label!: string;
@@ -22,6 +20,5 @@ export class DropdownComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

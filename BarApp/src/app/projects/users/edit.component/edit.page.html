@@ -1,20 +1,16 @@
-<ion-content>
-  <div>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title><h1>{{formTitle}}</h1></ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <app-form
-          [form]="form"
-          [fields]="formFields"
-          [editMode]="editMode"
-          [validationConfig]="validationConfig"
-          [buttons]="myButtons"
-          (formSubmit)="onSubmit($event)"
-          (formEdit)="setUserForm($event)"
-        ></app-form>
-      </ion-card-content>
-    </ion-card>
-  </div>
-</ion-content>
+<ion-card class="edit-form-container">
+  <ion-card-header>
+    <ion-card-title><h1>{{formTitle}}</h1></ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <app-form
+      [form]="form"
+      [fields]="formFields"
+      [editMode]="editMode"
+      [validationConfig]="validationConfig"
+      [buttons]="myButtons"
+      (formSubmit)="onSubmit($event)"
+      (formEdit)="setUserForm($event)"
+    ></app-form>
+  </ion-card-content>
+</ion-card>

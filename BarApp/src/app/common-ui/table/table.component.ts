@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 
 export type TableData = Record<string, string | number>;
 
@@ -8,12 +8,13 @@ export interface TableColumn {
   action?: (data: any) => void;
   hideAction?: (data: any) => boolean;
   formatter?: (data: any) => any;
+  actionClass?: string;
 }
 
 @Component({
-  selector: "app-table",
-  templateUrl: "./table.component.html",
-  styleUrls: ["./table.component.scss"],
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
   @Input({ required: true }) columns!: TableColumn[];
@@ -24,12 +25,20 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {}
 
+  getButtonColumnClass(column: TableColumn) {
+    const defaultClass = 'buttonTable';
+    if (!!column?.actionClass) {
+      return `${defaultClass} ${column.actionClass}`;
+    }
+    return defaultClass;
+  }
+
   columnIsAction(column: TableColumn) {
-    return typeof column.action === "function";
+    return typeof column.action === 'function';
   }
 
   shouldHideAction(data: TableData, comparisonFn?: (data: TableData) => void) {
-    if (!!comparisonFn && typeof comparisonFn === "function") {
+    if (!!comparisonFn && typeof comparisonFn === 'function') {
       return comparisonFn(data);
     }
     return false;
@@ -40,9 +49,9 @@ export class TableComponent implements OnInit {
     data: TableData,
     formatter?: (data: TableData) => void
   ) {
-    if (!!formatter && typeof formatter === "function") {
+    if (!!formatter && typeof formatter === 'function') {
       return formatter(data);
     }
-    return data?.[key] || "";
+    return data?.[key] || '';
   }
 }

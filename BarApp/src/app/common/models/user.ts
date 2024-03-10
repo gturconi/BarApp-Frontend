@@ -10,6 +10,7 @@ export class User {
     password = "",
     newPassword = "",
     role = "",
+    roleId = undefined,
     baja = 0,
     avatar: Avatar | PhotoResult
   ) {
@@ -20,6 +21,7 @@ export class User {
     this.password = password;
     this.newPassword = newPassword;
     this.role = role;
+    this.roleId = roleId;
     this.baja = baja;
     this.avatar = avatar;
   }
@@ -30,6 +32,7 @@ export class User {
   password?: string;
   newPassword?: string;
   role?: string;
+  roleId?: number;
   baja?: number;
   avatar?: Avatar | PhotoResult;
 }

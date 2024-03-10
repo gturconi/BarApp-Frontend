@@ -1,21 +1,21 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { environment } from "src/environments/environment";
-import { ProductsType } from "src/app/projects/menu/products-type/models/productsType";
-import { EntityListResponse } from "@common/models/entity.list.response";
-import { Observable } from "rxjs";
+import { environment } from 'src/environments/environment';
+import { ProductsType } from 'src/app/projects/menu/products-type/models/productsType';
+import { EntityListResponse } from '@common/models/entity.list.response';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ProductsTypeService {
   apiUrl: string = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  getProductsTypes() {
+  getProductsTypes(page: number = 1, limit: number = 10) {
     return this.http.get<EntityListResponse<ProductsType>>(
-      `${this.apiUrl}/productsType`
+      `${this.apiUrl}/productsType?page=${page}&limit=${limit}`
     );
   }
 
@@ -38,9 +38,7 @@ export class ProductsTypeService {
   }
 
   deleteProductsTypes(id: string) {
-    return this.http.delete<ProductsType>(
-      `${this.apiUrl}/productsType/` + id
-    );
+    return this.http.delete<ProductsType>(`${this.apiUrl}/productsType/` + id);
   }
 
   updateImage(id: string, formData: FormData): Observable<ProductsType> {

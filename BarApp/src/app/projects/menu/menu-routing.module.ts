@@ -1,21 +1,26 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { IntroComponent } from "../intro/intro-component/intro.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { IntroComponent } from '../intro/intro-component/intro.component';
 
 const routes: Routes = [
   {
-    path: "categories",
+    path: 'categories',
     loadChildren: () =>
-      import("./products-type/products-type.module").then(
+      import('./products-type/products-type.module').then(
         m => m.ProductsTypeModule
       ),
   },
   {
-    path: "",
-    component: IntroComponent,
-    pathMatch: "full",
+    path: 'promotions',
+    loadChildren: () =>
+      import('./promotions/promotions.module').then(m => m.PromotionsModule),
   },
-  { path: "**", component: IntroComponent },
+  {
+    path: '',
+    component: IntroComponent,
+    pathMatch: 'full',
+  },
+  { path: '**', component: IntroComponent },
 ];
 
 @NgModule({

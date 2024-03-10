@@ -1,12 +1,19 @@
+::ng-deep router-outlet.router-flex + * {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
 .main-container-app {
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow-y: auto;
   position: relative;
+  overflow-y: auto;
 
   .content {
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -22,6 +29,12 @@ ion-app {
     flex-direction: column;
     height: 100vh;
     position: relative;
+  }
+
+  .content {
+    &.add-margin-bottom {
+      margin-bottom: 45px;
+    }
   }
 
   ion-app {

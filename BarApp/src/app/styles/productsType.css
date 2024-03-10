@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 .container-body {
   display: grid;
@@ -131,9 +131,7 @@
   max-height: 350px;
   padding-right: 10px;
   border: none;
-  scrollbar-width: none;
   transition: scrollbar-width 0.5s ease;
-  scrollbar-width: none;
 }
 
 .item2 {
@@ -175,6 +173,8 @@
 
 .actions {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
   position: absolute;
   bottom: 10px;
@@ -183,7 +183,6 @@
 }
 
 .icons-show {
-  font-size: 30px;
   cursor: pointer;
   color: var(--color-2);
   margin-right: 10px;

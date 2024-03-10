@@ -51,14 +51,14 @@ export class LoginService {
   getUserRole() {
     let userStr = localStorage.getItem("user") ?? "";
     if (userStr) {
-      return JSON.parse(userStr).roleName;
+      return JSON.parse(userStr).role;
     }
   }
 
   isAdmin(): boolean {
     const userStr = localStorage.getItem("user");
     if (userStr) {
-      const userRole = JSON.parse(userStr).roleName;
+      const userRole = JSON.parse(userStr).role;
       return userRole === "admin";
     }
     return false;
@@ -67,7 +67,7 @@ export class LoginService {
   isEmployee(): boolean {
     const userStr = localStorage.getItem("user");
     if (userStr) {
-      const userRole = JSON.parse(userStr).roleName;
+      const userRole = JSON.parse(userStr).role;
       return userRole === "employee";
     }
     return false;
@@ -76,7 +76,7 @@ export class LoginService {
   isClient(): boolean {
     const userStr = localStorage.getItem("user");
     if (userStr) {
-      const userRole = JSON.parse(userStr).roleName;
+      const userRole = JSON.parse(userStr).role;
       return userRole === "customer";
     }
     return false;

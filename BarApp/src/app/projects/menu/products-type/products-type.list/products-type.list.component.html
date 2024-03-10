@@ -1,5 +1,6 @@
 <ion-content class="product-content">
   <div class="container-body">
+    @if(boxes.length > 0){
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper">
       <div class="item" *ngFor="let box of boxes">
@@ -17,11 +18,19 @@
         </div>
       </div>
     </div>
+    }@else if(showData){
+    <div class="details-error">
+      <h2>Aún no hay promociones cargadas</h2>
+    </div>
+    } @if(this.productsTypeList){
     <h2 class="section-title" *ngIf="showData">Categorias de productos</h2>
     <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
-      @for(productsType of productsTypeList; track productsType.idProductType;
-      let idx = $index) {
-      <div class="item2">
+      @for(productsType of productsTypeList; track productsType.id; let idx =
+      $index) {
+      <div
+        class="item2"
+        [routerLink]="['/menu/categories/', productsType.id, 'products']"
+      >
         <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         <span class="title">{{ productsType.description }}</span>
         <div class="actions" *ngIf="!admin">
@@ -33,7 +42,7 @@
         </div>
         <div class="actions" *ngIf="admin">
           <ion-button
-            [routerLink]="['/menu/categories/edit', productsType.idProductType]"
+            [routerLink]="['/menu/categories/edit', productsType.id]"
             expand="block"
             fill="clear"
             shape="round"
@@ -45,13 +54,30 @@
             fill="clear"
             shape="round"
             class="buttons-admin"
-            (click)="delete(productsType.idProductType)"
+            (click)="$event.stopPropagation(); delete(productsType.id)"
             ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
           ></ion-button>
         </div>
       </div>
       }
+
+      <ion-infinite-scroll
+        *ngIf="productsTypeList.length < count"
+        threshold="100px"
+        (ionInfinite)="loadMoreData()"
+      >
+        <ion-infinite-scroll-content
+          loadingSpinner="crescent"
+          class="infinite-scroll-content"
+        >
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </div>
+    }@else if(showData){
+    <div class="details-error">
+      <h2>Aún no hay categorías cargadas</h2>
+    </div>
+    }
     <div class="grid-item">
       <div class="button-add-container" *ngIf="showData && admin">
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
