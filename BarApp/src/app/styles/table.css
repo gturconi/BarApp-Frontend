@@ -67,6 +67,12 @@
   }
 }
 
+.tables-buttons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .qrcode {
   display: none;
 }
