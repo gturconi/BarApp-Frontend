@@ -6,4 +6,15 @@ export class UserRole {
     this.id = id;
     this.name = name;
   }
+
+  static roleTranslations: { [key: string]: string } = {
+    admin: 'Administrador',
+    employee: 'Empleado',
+    customer: 'Cliente',
+  };
+
+  getTranslatedName(): string {
+    const translatedName = UserRole.roleTranslations[this.name];
+    return translatedName || this.name;
+  }
 }

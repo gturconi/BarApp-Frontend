@@ -1,4 +1,5 @@
 <div class="usersListContainer">
+  @if(!loading && !!data.length){
   <div class="actionsContainer">
     <app-search
       id="search-filter"
@@ -16,9 +17,8 @@
     class="table"
     [columns]="columns"
     [data]="data"
-    [loading]="isLoading"
+    [loading]="loading"
   />
-  @if(!isLoading && !!data.length) {
   <div class="pagination">
     <app-pagination
       [currentPage]="pageIndex"

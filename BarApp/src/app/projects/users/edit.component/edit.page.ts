@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -8,8 +8,13 @@ import { User } from '@common/models/user';
 import * as CryptoJS from 'crypto-js';
 import { RoleService } from '../../services/role.service';
 import { UserRole } from '@common/models/userRole';
+import { DropdownParam } from '@common/models/dropdown';
+import { EntityListResponse } from '@common/models/entity.list.response';
+import { Subject } from 'rxjs';
+import { LoadingService } from '@common/services/loading.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-edit-user',
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss'],
@@ -17,7 +22,8 @@ import { UserRole } from '@common/models/userRole';
 })
 export class UserEditPage {
   id = '';
-  form = new FormGroup({});
+  form!: FormGroup;
+
   editMode = false;
   formTitle = '';
 
@@ -26,12 +32,21 @@ export class UserEditPage {
   validationConfig!: any[];
   roleList: UserRole[] = [];
 
+  comboParam: DropdownParam[] = [
+    {
+      title: 'Rol',
+      fields: new Subject<EntityListResponse<any>>(),
+      defaultValue: new Subject<string>(),
+    },
+  ];
+
   constructor(
     private userService: UserService,
     public router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private loadingSerrvice: LoadingService
   ) {}
 
   ngOnInit() {
@@ -63,40 +78,18 @@ export class UserEditPage {
         icon: 'material-symbols-outlined',
         iconName: 'phone',
       },
-      {
-        type: 'select',
-        name: 'role',
-        label: 'Rol',
-        autocomplete: 'role',
-        placeholder: 'Selecciona un rol',
-        icon: 'material-symbols-outlined',
-        options: [],
-      },
     ];
-
-    this.roleService.getRoles().subscribe(roleResponse => {
-      const roleList = roleResponse.results;
-      this.roleList = roleList;
-      const roleIndex = this.formFields.findIndex(
-        field => field.name === 'role'
-      );
-      if (roleIndex !== -1) {
-        this.formFields[roleIndex].options = roleList.map(({ id, name }) => {
-          const label = name[0].toUpperCase() + name.slice(1);
-          return { label, value: id };
-        });
-      }
-    });
 
     this.validationConfig = [
       { controlName: 'email', email: true, required: true },
       { controlName: 'name', required: true },
       { controlName: 'tel', required: true },
-      { controlName: 'role', required: true },
+      { controlName: 'Rol' },
     ];
 
     this.route.params.subscribe(params => {
       this.id = params['id'];
+      this.loadCombo();
       if (this.id) {
         this.myButtons = [
           {
@@ -124,7 +117,30 @@ export class UserEditPage {
       this.form.get('name')?.setValue(user.name as never);
       this.form.get('email')?.setValue(user.email as never);
       this.form.get('tel')?.setValue(user.tel as never);
-      this.form.get('role')?.setValue(user.roleId as never);
+      this.comboParam[0].defaultValue!.next(user.roleId);
+      // this.form.get('role')?.setValue(user.roleId as never);
+    });
+  }
+
+  async loadCombo() {
+    const loading = await this.loadingSerrvice.loading();
+    await loading.present();
+    this.roleService.getRoles().subscribe(roleResponse => {
+      roleResponse.results = roleResponse.results.map(role => {
+        return {
+          ...role,
+          name: UserRole.roleTranslations[role.name],
+        } as UserRole;
+      });
+
+      this.comboParam[0].fields!.next(roleResponse);
+      if (this.id) this.autocompleteForm();
+      else {
+        const role = roleResponse.results as UserRole[];
+        this.comboParam[0].defaultValue!.next(role[0]?.name!);
+        this.form.controls['Rol']?.setValue(role[0]?.id);
+      }
+      loading.dismiss();
     });
   }
 

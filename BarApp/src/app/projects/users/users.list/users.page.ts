@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableColumn, TableData } from '@common-ui/table/table.component';
 import { UserService } from 'src/app/projects/services/user.service';
+import { LoadingService } from '@common/services/loading.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -14,7 +15,8 @@ export class UsersPage {
 
   data: TableData[] = [];
 
-  isLoading = false;
+  isLoading!: any;
+  loading = false;
 
   totalPages: number = 1;
 
@@ -24,9 +26,13 @@ export class UsersPage {
 
   filtro: string = '';
 
-  constructor(private usersService: UserService, private router: Router) {}
+  constructor(
+    private usersService: UserService,
+    private router: Router,
+    private loadingService: LoadingService
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.columns = [
       {
         key: 'id',
@@ -64,7 +70,9 @@ export class UsersPage {
       },
     ] as TableColumn[];
 
-    this.isLoading = true;
+    this.loading = true;
+    this.isLoading = await this.loadingService.loading();
+    await this.isLoading.present();
     this.doSearch();
   }
 
@@ -73,7 +81,8 @@ export class UsersPage {
       .getUsers(this.pageIndex, this.pageSize)
       .subscribe(response => {
         this.data = response.results as unknown as TableData[];
-        this.isLoading = false;
+        this.isLoading.dismiss();
+        this.loading = false;
         this.totalPages = response.totalPages;
       });
   }
@@ -95,13 +104,12 @@ export class UsersPage {
       }
     });
   }
-
-  agregarUsuario() {
-    this.router.navigate(['/add']);
+  editarUsuario(user: TableData) {
+    this.router.navigate(['/users/edit/', user['id']]);
   }
 
-  editarUsuario(user: TableData) {
-    this.router.navigate(['/edit/', user['id']]);
+  agregarUsuario() {
+    this.router.navigateByUrl('/users/add');
   }
 
   filtrarUsuarios(value: string) {
@@ -112,13 +120,14 @@ export class UsersPage {
     }
   }
 
-  busquedaFiltrada() {
-    this.isLoading = true;
+  async busquedaFiltrada() {
+    this.isLoading = await this.loadingService.loading();
+    this.isLoading.present();
     this.usersService
       .getUsers(undefined, undefined, this.filtro)
       .subscribe(response => {
         this.data = response.results as unknown as TableData[];
-        this.isLoading = false;
+        this.isLoading.dismiss();
       });
   }
 }

@@ -1,43 +1,43 @@
-import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "home",
+    path: 'home',
     loadChildren: () =>
-      import("./projects/home/home.module").then(m => m.HomePageModule),
+      import('./projects/home/home.module').then(m => m.HomePageModule),
   },
   {
-    path: "auth",
+    path: 'auth',
     loadChildren: () =>
-      import("../app/projects/auth/auth.module").then(x => x.AuthModule),
+      import('../app/projects/auth/auth.module').then(x => x.AuthModule),
   },
   {
-    path: "intro",
+    path: 'intro',
     loadChildren: () =>
-      import("./projects/intro/intro.module").then(m => m.IntroModule),
+      import('./projects/intro/intro.module').then(m => m.IntroModule),
   },
   {
-    path: "menu",
+    path: 'menu',
     loadChildren: () =>
-      import("./projects/menu/menu.module").then(m => m.MenuModule),
+      import('./projects/menu/menu.module').then(m => m.MenuModule),
   },
   {
-    path: "faq",
+    path: 'faq',
     loadChildren: () =>
-      import("./projects/faq/faq.module").then(m => m.FaqModule),
+      import('./projects/faq/faq.module').then(m => m.FaqModule),
   },
   {
-    path: "users",
+    path: 'users',
     loadChildren: () =>
-      import("./projects/users/users.module").then((x) => x.UsersPageModule),
+      import('./projects/users/users.module').then(m => m.UsersPageModule),
   },
   {
-    path: "",
-    redirectTo: "intro",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'intro',
+    pathMatch: 'full',
   },
-  { path: "**", redirectTo: "intro" },
+  { path: '**', redirectTo: 'intro' },
 ];
 
 @NgModule({
