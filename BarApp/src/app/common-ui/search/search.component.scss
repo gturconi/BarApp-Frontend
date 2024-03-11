@@ -1,6 +1,15 @@
+@import '../.././styles/variables.css';
+
 .searchFilter input {
-    height: 40px;
-    border-radius: 12px;
-    padding: 8px 5px 8px 10px;
-    border-style: none;
+  height: 40px;
+  border-radius: 12px;
+  padding: 8px 5px 8px 10px;
+  border-style: none;
+  background-color: var(--color-3);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.searchFilter input:focus {
+  outline: none;
+  border: 2px solid var(--color-4);
 }

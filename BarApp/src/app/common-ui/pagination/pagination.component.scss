@@ -1,3 +1,5 @@
+@import '../.././styles/variables.css';
+
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -45,14 +47,14 @@
   margin-left: -1px;
   color: var(--color-2);
   text-decoration: none;
-  background-color: var(--color-7);
+  background-color: var(--color-3);
   border: 1px solid var(--color-2);
   cursor: pointer;
 }
 .page-link:focus,
 .page-link:hover {
-  color: black;
-  background-color: var(--color-3);
+  color: var(--color-2);
+  background-color: var(--color-4);
   border-color: var(--color-2);
 }
 
@@ -69,8 +71,8 @@
   }
 }
 
-@media (max-width: 768px ){
-  .pagination{
+@media (max-width: 768px) {
+  .pagination {
     margin-left: 10px;
   }
 }
