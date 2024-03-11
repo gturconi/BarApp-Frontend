@@ -20,7 +20,7 @@ export class UsersPage {
 
   totalPages: number = 1;
 
-  pageSize: number = 3;
+  pageSize: number = 10;
 
   pageIndex: number = 1;
 
