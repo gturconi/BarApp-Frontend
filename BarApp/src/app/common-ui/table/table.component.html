@@ -42,7 +42,9 @@
             <ng-template #elseBlock>
               <td class="cell">
                 <span class="mobile-tr font-bold">{{ column.label }}</span>
-                {{ formatData(column.key, d, column.formatter) }}
+                <span class="prueba-right">{{
+                  formatData(column.key, d, column.formatter)
+                }}</span>
               </td>
             </ng-template>
           </ng-container>
