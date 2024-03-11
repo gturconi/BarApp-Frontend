@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-
 export type TableData = Record<string, string | number>;
 
 export interface TableColumn {
@@ -20,9 +19,12 @@ export class TableComponent implements OnInit {
   @Input({ required: true }) data!: TableData[];
   @Input() loading: boolean = false;
 
+  actionsColumns: TableColumn[] = [];
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.actionsColumns = this.getColumsActions();
+  }
 
   getButtonColumnClass(column: TableColumn) {
     const defaultClass = 'buttonTable';
@@ -34,6 +36,10 @@ export class TableComponent implements OnInit {
 
   columnIsAction(column: TableColumn) {
     return typeof column.action === 'function';
+  }
+
+  getColumsActions() {
+    return this.columns.filter(column => this.columnIsAction(column));
   }
 
   shouldHideAction(data: TableData, comparisonFn?: (data: TableData) => void) {

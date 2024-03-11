@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { NotificationService } from '@common/services/notification.service';
 import { UserService } from '../services/user.service';
 import { User } from '@common/models/user';
 import * as CryptoJS from 'crypto-js';
@@ -12,8 +11,10 @@ import { DropdownParam } from '@common/models/dropdown';
 import { EntityListResponse } from '@common/models/entity.list.response';
 import { Subject } from 'rxjs';
 import { LoadingService } from '@common/services/loading.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user.form',
   templateUrl: './user.form.component.html',
   styleUrls: ['./user.form.component.scss'],
@@ -42,7 +43,7 @@ export class UserFormComponent implements OnInit {
     private userService: UserService,
     public router: Router,
     private route: ActivatedRoute,
-    private notificationService: NotificationService,
+    private toastrService: ToastrService,
     private roleService: RoleService,
     private loadingSerrvice: LoadingService
   ) {}
@@ -170,10 +171,7 @@ export class UserFormComponent implements OnInit {
     };
 
     this.userService.postUsers(nuevoUsuario).subscribe(() => {
-      this.notificationService.presentToast({
-        header: 'success',
-        message: 'Se dio de alta el usuario',
-      });
+      this.toastrService.success('Usuario anadido');
       this.router.navigate(['/users']);
     });
   }
@@ -189,10 +187,7 @@ export class UserFormComponent implements OnInit {
 
     this.userService.putUsers(nuevoUsuario).subscribe(() => {
       this.router.navigate(['/users']);
-      this.notificationService.presentToast({
-        header: 'success',
-        message: 'Se actualizo el usuario',
-      });
+      this.toastrService.success('Usuario editado');
     });
   }
 

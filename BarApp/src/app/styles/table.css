@@ -94,6 +94,10 @@
   padding: 6px;
 }
 
+.actions-table {
+  display: none;
+}
+
 @media (max-width: 768px) {
   table {
     border: 0;
@@ -131,6 +135,16 @@
 
   .prueba-right {
     text-align: right;
+  }
+
+  .actions-table {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .table-actions-desktop {
+    display: none;
   }
 
   table td {

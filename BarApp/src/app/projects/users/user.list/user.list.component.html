@@ -1,5 +1,5 @@
 <div class="usersListContainer">
-  @if(!loading && !!data.length){
+  @if(!loading){
   <div class="actionsContainer">
     <app-search
       class="search-input"
@@ -7,9 +7,7 @@
       (searchChanged)="filtrarUsuarios($event)"
       placeholder="Buscar usuario..."
     ></app-search>
-    <button class="buttonSearch" (click)="busquedaFiltrada()">
-      <ion-icon class="actionIcon" name="search-outline"></ion-icon>
-    </button>
+
     <button class="buttonAdd" [routerLink]="['/users/add']">
       <ion-icon class="actionIcon" name="person-add-outline"></ion-icon>
     </button>

@@ -5,6 +5,7 @@ import { UserService } from '../services/user.service';
 import { LoadingService } from '@common/services/loading.service';
 import { DELETE_OPTS } from '@common/constants/messages.constant';
 import Swal from 'sweetalert2';
+import { UserRole } from '@common/models/userRole';
 
 @Component({
   selector: 'app-admin-users',
@@ -54,6 +55,7 @@ export class UserListComponent {
       {
         key: 'role',
         label: 'Rol',
+        formatter: data => UserRole.roleTranslations[data.role],
       },
       {
         key: '',
@@ -89,7 +91,11 @@ export class UserListComponent {
 
   onPageChanged(e: number): void {
     this.pageIndex = e;
-    this.doSearch();
+    if (this.filtro != '') {
+      this.busquedaFiltrada();
+    } else {
+      this.doSearch();
+    }
   }
 
   ocultarAccion(user: TableData) {
@@ -122,10 +128,13 @@ export class UserListComponent {
   }
 
   filtrarUsuarios(value: string) {
-    if (!value) {
+    if (value === '') {
+      this.filtro = '';
+      this.pageIndex = 1;
       this.doSearch();
     } else {
       this.filtro = value;
+      this.busquedaFiltrada();
     }
   }
 
@@ -133,9 +142,10 @@ export class UserListComponent {
     this.isLoading = await this.loadingService.loading();
     this.isLoading.present();
     this.usersService
-      .getUsers(undefined, undefined, this.filtro)
+      .getUsers(this.pageIndex, this.pageSize, this.filtro)
       .subscribe(response => {
         this.data = response.results as unknown as TableData[];
+        this.totalPages = response.totalPages;
         this.isLoading.dismiss();
       });
   }

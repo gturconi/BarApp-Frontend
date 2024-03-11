@@ -1,6 +1,8 @@
 <div class="tableContainer">
   <div class="overlay" *ngIf="!data.length && !loading">
-    <p style="text-align: center">No hay registros para mostrar</p>
+    <div class="details-error">
+      <h2>No hay registros para mostrar</h2>
+    </div>
   </div>
   <table *ngIf="data.length > 0 && !loading" class="table">
     <thead>
@@ -29,7 +31,7 @@
                 <td class="cell"></td>
               </ng-template>
               <ng-template #showLabelBlock>
-                <td class="cell">
+                <td class="cell table-actions-desktop">
                   <button
                     class="{{ getButtonColumnClass(column) }}"
                     (click)="column?.action(d)"
@@ -48,6 +50,33 @@
               </td>
             </ng-template>
           </ng-container>
+          <div class="actions-table">
+            <ng-container *ngFor="let column of actionsColumns">
+              <div *ngIf="columnIsAction(column); then thenBlock"></div>
+              <ng-template #thenBlock>
+                <ng-container
+                  *ngIf="
+                    shouldHideAction(d, column?.hideAction);
+                    then hideLabelBlock;
+                    else showLabelBlock
+                  "
+                ></ng-container>
+                <ng-template #hideLabelBlock>
+                  <td class="cell"></td>
+                </ng-template>
+                <ng-template #showLabelBlock>
+                  <td class="cell">
+                    <button
+                      class="{{ getButtonColumnClass(column) }}"
+                      (click)="column?.action(d)"
+                    >
+                      {{ column.label }}
+                    </button>
+                  </td>
+                </ng-template>
+              </ng-template>
+            </ng-container>
+          </div>
         </tr>
       </ng-container>
     </tbody>
