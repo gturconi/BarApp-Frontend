@@ -87,6 +87,20 @@ export class UserEditPage {
       { controlName: 'Rol' },
     ];
 
+    this.roleService.getRoles().subscribe(roleResponse => {
+      const roleList = roleResponse.results;
+      this.roleList = roleList;
+      const roleIndex = this.formFields.findIndex(
+        field => field.name === 'role'
+      );
+      if (roleIndex !== -1) {
+        this.formFields[roleIndex].options = roleList.map(({ id, name }) => {
+          const label = name[0].toUpperCase() + name.slice(1);
+          return { label, value: id };
+        });
+      }
+    });
+
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.loadCombo();
@@ -117,8 +131,10 @@ export class UserEditPage {
       this.form.get('name')?.setValue(user.name as never);
       this.form.get('email')?.setValue(user.email as never);
       this.form.get('tel')?.setValue(user.tel as never);
-      this.comboParam[0].defaultValue!.next(user.roleId);
-      // this.form.get('role')?.setValue(user.roleId as never);
+      this.comboParam[0].defaultValue!.next(
+        UserRole.roleTranslations[user.role!].toUpperCase()
+      );
+      this.form.controls['Rol']?.setValue(user.roleId);
     });
   }
 
@@ -145,13 +161,13 @@ export class UserEditPage {
   }
 
   postUser(form: FormGroup): void {
-    console.log({ form });
     const nuevoUsuario: User = {
       id: '',
       name: form.value.name,
       email: form.value.email,
       password: CryptoJS.SHA256(form.value.password).toString(),
-      role: this.roleList.find(role => role.id === form.value.role)?.name,
+      role: this.roleList.find(role => role.id === form.controls['Rol'].value)
+        ?.name,
       tel: form.value.tel,
     };
 
@@ -170,7 +186,7 @@ export class UserEditPage {
       name: form.value.name,
       email: form.value.email,
       tel: form.value.tel,
-      roleId: form.value.role,
+      roleId: form.controls['Rol'].value,
     };
 
     this.userService.putUsers(nuevoUsuario).subscribe(() => {
