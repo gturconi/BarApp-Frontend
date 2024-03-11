@@ -68,7 +68,8 @@
 
   .pagination {
     margin: 0;
-    padding-left: 5px;
+    padding-left: 8px;
+    padding-bottom: 10px;
   }
 
   .actionsContainer {
