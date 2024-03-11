@@ -1,0 +1,155 @@
+@import 'variables.css';
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: auto;
+}
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  border-radius: 5px;
+}
+
+.overlay {
+  flex: 1;
+}
+
+.headerTable,
+.tableRow {
+  cursor: pointer;
+  padding: 10px;
+  text-align: left;
+  min-width: min-content;
+}
+
+.headerTable {
+  background-color: var(--color-2);
+  color: var(--color-7);
+}
+
+.cell {
+  padding: 9px;
+  text-align: left;
+
+  .mobile-tr {
+    display: none;
+  }
+}
+
+.tableRow {
+  background-color: var(--color-3);
+}
+
+.tableRow:nth-child(even) {
+  background-color: var(--color-3);
+}
+
+.tableRow {
+  border-bottom: 2px solid var(--color-4);
+}
+
+.tableRow:hover {
+  background-color: var(--color-4);
+}
+
+.buttonTable {
+  padding: 7px;
+  border-radius: 3px;
+  font-size: 14px;
+  width: 75px;
+}
+.buttonTable:hover {
+  background-color: var(--color-7);
+  font-weight: bold;
+}
+
+/* para soportar el cambio de estilo en la tabla, se deben agregar las clases en este modulo css*/
+
+.table-red-button {
+  background-color: var(--color-10);
+  color: var(--color-7);
+  font-weight: bold;
+}
+
+.table-red-button:hover {
+  color: var(--color-10);
+  background-color: var(--color-7);
+  border: 1px solid var(--color-10);
+  padding: 6px;
+}
+
+.table-blue-button {
+  background-color: var(--color-5);
+  color: var(--color-7);
+  font-weight: bold;
+}
+
+.table-blue-button:hover {
+  color: var(--color-5);
+  background-color: var(--color-7);
+  border: 1px solid var(--color-5);
+  padding: 6px;
+}
+
+@media (max-width: 768px) {
+  table {
+    border: 0;
+    margin-bottom: 40px;
+  }
+
+  table tr {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: block;
+    flex-direction: column;
+    border-radius: 15px;
+  }
+
+  table tr:last-child {
+    padding-bottom: 30px;
+    margin-bottom: 0px;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  .cell span.mobile-tr {
+    display: inline;
+  }
+
+  .cell span.font-bold {
+    font-weight: bold;
+  }
+
+  .prueba-right {
+    text-align: right;
+  }
+
+  table td {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    font-size: 16px;
+    border-bottom: 1px solid var(--color-4);
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  .prueba-right {
+    text-align: right;
+  }
+
+  .tableRow:hover {
+    background-color: var(--color-3);
+  }
+}

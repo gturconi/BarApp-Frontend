@@ -1,0 +1,55 @@
+<div class="tableContainer">
+  <div class="overlay" *ngIf="!data.length && !loading">
+    <p style="text-align: center">No hay registros para mostrar</p>
+  </div>
+  <table *ngIf="data.length > 0 && !loading" class="table">
+    <thead>
+      <tr class="tableRow">
+        <ng-container *ngFor="let column of columns">
+          <th class="headerTable">{{ column.label }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let d of data">
+        <tr class="tableRow">
+          <ng-container *ngFor="let column of columns">
+            <div
+              *ngIf="columnIsAction(column); then thenBlock; else elseBlock"
+            ></div>
+            <ng-template #thenBlock>
+              <ng-container
+                *ngIf="
+                  shouldHideAction(d, column?.hideAction);
+                  then hideLabelBlock;
+                  else showLabelBlock
+                "
+              ></ng-container>
+              <ng-template #hideLabelBlock>
+                <td class="cell"></td>
+              </ng-template>
+              <ng-template #showLabelBlock>
+                <td class="cell">
+                  <button
+                    class="{{ getButtonColumnClass(column) }}"
+                    (click)="column?.action(d)"
+                  >
+                    {{ column.label }}
+                  </button>
+                </td>
+              </ng-template>
+            </ng-template>
+            <ng-template #elseBlock>
+              <td class="cell">
+                <span class="mobile-tr font-bold">{{ column.label }}</span>
+                <span class="prueba-right">{{
+                  formatData(column.key, d, column.formatter)
+                }}</span>
+              </td>
+            </ng-template>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
