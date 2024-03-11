@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { TableColumn, TableData } from '@common-ui/table/table.component';
 import { UserService } from 'src/app/projects/services/user.service';
 import { LoadingService } from '@common/services/loading.service';
+import { DELETE_OPTS } from '@common/constants/messages.constant';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-users',
@@ -96,14 +98,23 @@ export class UsersPage {
     return !!user['baja'];
   }
 
-  eliminarUsuario(user: TableData) {
-    this.usersService.deleteUsers(user['id'] as string).subscribe(() => {
-      const idx = this.data.findIndex(u => u['id'] === user['id']);
-      if (idx !== -1) {
-        this.data.splice(idx, 1, { ...user, baja: 1 });
+  async eliminarUsuario(user: TableData) {
+    Swal.fire(DELETE_OPTS).then(async result => {
+      if (result.isConfirmed) {
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.usersService.deleteUsers(user['id'] as string).subscribe(() => {
+          const idx = this.data.findIndex(u => u['id'] === user['id']);
+          if (idx !== -1) {
+            this.data.splice(idx, 1, { ...user, baja: 1 });
+          }
+          loading.dismiss();
+          this.doSearch();
+        });
       }
     });
   }
+
   editarUsuario(user: TableData) {
     this.router.navigate(['/users/edit/', user['id']]);
   }
