@@ -1,9 +1,12 @@
-/*.pagination {
+@import 'variables.css';
+
+.pagination {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  margin-left: 8px;
   border-radius: 0.25rem;
 }
 .page-item {
@@ -22,10 +25,10 @@
 .page-item.active .page-link:focus,
 .page-item.active .page-link:hover {
   z-index: 2;
-  color: #fff;
+  color: var(--color-7);
   cursor: default;
-  background-color: #ec9819;
-  border-color: rgb(78, 75, 75);
+  background-color: var(--color-2);
+  border-color: var(--color-2);
 }
 .page-item.disabled .page-link,
 .page-item.disabled .page-link:focus,
@@ -36,25 +39,23 @@
   background-color: #fff;
   border-color: rgb(78, 75, 75);
 }
+
 .page-link {
   position: relative;
   float: left;
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
-  color: white;
+  color: var(--color-2);
   text-decoration: none;
-  background-color: #f6cd8f;
-  border: 1px solid rgb(78, 75, 75);
+  background-color: var(--color-3);
+  border: 1px solid var(--color-2);
   cursor: pointer;
 }
 .page-link:focus,
 .page-link:hover {
-  color: white;
-  background-color: #f0ad48;
-  border-color: rgb(78, 75, 75);
-  animation-name: pulse;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
+  color: var(--color-2);
+  background-color: var(--color-4);
+  border-color: var(--color-2);
 }
 
 @keyframes pulse {
@@ -69,4 +70,9 @@
     opacity: 1;
   }
 }
-*/
+
+@media (max-width: 768px) {
+  .pagination {
+    margin-left: 10px;
+  }
+}

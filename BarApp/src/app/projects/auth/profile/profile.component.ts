@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { LoginService } from '@common/services/login.service';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../users/services/user.service';
 import { ImageService } from '@common/services/image.service';
 import { ToastrService } from 'ngx-toastr';
 

@@ -1,15 +1,16 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { User } from "@common/models/user";
-import { environment } from "src/environments/environment";
+import { User } from '@common/models/user';
+import { environment } from 'src/environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class LoginService {
   apiUrl: string = environment.apiUrl;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   authenticateUser(email: string, password: string) {
     const credentials = { email, password };
@@ -21,12 +22,12 @@ export class LoginService {
   }
 
   isLoggedIn() {
-    const tokenStr = localStorage.getItem("token");
+    const tokenStr = localStorage.getItem('token');
     if (tokenStr !== null) {
       const jwtRegex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$/;
       try {
         jwtRegex.test(tokenStr);
-        return true;
+        return !this.jwtHelper.isTokenExpired(tokenStr);
       } catch (err) {
         return false;
       }
@@ -35,49 +36,49 @@ export class LoginService {
   }
 
   setUser(user: User) {
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   setToken(token: string) {
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
   }
 
   logout() {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     return true;
   }
 
   getUserRole() {
-    let userStr = localStorage.getItem("user") ?? "";
+    let userStr = localStorage.getItem('user') ?? '';
     if (userStr) {
-      return JSON.parse(userStr).roleName;
+      return JSON.parse(userStr).role;
     }
   }
 
   isAdmin(): boolean {
-    const userStr = localStorage.getItem("user");
+    const userStr = localStorage.getItem('user');
     if (userStr) {
-      const userRole = JSON.parse(userStr).roleName;
-      return userRole === "admin";
+      const userRole = JSON.parse(userStr).role;
+      return userRole === 'admin';
     }
     return false;
   }
 
   isEmployee(): boolean {
-    const userStr = localStorage.getItem("user");
+    const userStr = localStorage.getItem('user');
     if (userStr) {
-      const userRole = JSON.parse(userStr).roleName;
-      return userRole === "employee";
+      const userRole = JSON.parse(userStr).role;
+      return userRole === 'employee';
     }
     return false;
   }
 
   isClient(): boolean {
-    const userStr = localStorage.getItem("user");
+    const userStr = localStorage.getItem('user');
     if (userStr) {
-      const userRole = JSON.parse(userStr).roleName;
-      return userRole === "customer";
+      const userRole = JSON.parse(userStr).role;
+      return userRole === 'customer';
     }
     return false;
   }

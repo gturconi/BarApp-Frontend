@@ -1,0 +1,30 @@
+<div class="usersListContainer">
+  @if(!loading){
+  <div class="actionsContainer">
+    <app-search
+      class="search-input"
+      id="search-filter"
+      (searchChanged)="filtrarUsuarios($event)"
+      placeholder="Buscar usuario..."
+    ></app-search>
+
+    <button class="buttonAdd" [routerLink]="['/users/add']">
+      <ion-icon class="actionIcon" name="person-add-outline"></ion-icon>
+    </button>
+  </div>
+  <app-table
+    class="table"
+    [columns]="columns"
+    [data]="data"
+    [loading]="loading"
+  />
+  <div class="pagination">
+    <app-pagination
+      [currentPage]="pageIndex"
+      [totalPages]="totalPages"
+      [limit]="pageSize"
+      (changePage)="onPageChanged($event)"
+    />
+  </div>
+  }
+</div>

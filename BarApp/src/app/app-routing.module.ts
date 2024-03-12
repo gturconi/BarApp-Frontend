@@ -38,6 +38,11 @@ const routes: Routes = [
       import('./projects/tables/tables.module').then(m => m.TablesModule),
   },
   {
+    path: 'users',
+    loadChildren: () =>
+      import('./projects/users/users.module').then(m => m.UsersModule),
+  },
+  {
     path: '',
     redirectTo: 'intro',
     pathMatch: 'full',

@@ -1,0 +1,8 @@
+<div class="searchFilter">
+  <ion-icon class="searchIcon" name="search-circle-outline"></ion-icon>
+  <input
+    [(ngModel)]="searchText"
+    [placeholder]="placeholder"
+    (keyup)="onSearchChange()"
+  />
+</div>

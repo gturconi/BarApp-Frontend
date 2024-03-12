@@ -19,7 +19,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "allowedCommonJsDependencies": ["sweetalert2", "qrcode"],
+            "allowedCommonJsDependencies": ["sweetalert2", "crypto-js","qrcode"],
             "assets": [
               {
                 "glob": "**/*",

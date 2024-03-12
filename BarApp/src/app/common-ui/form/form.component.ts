@@ -126,7 +126,10 @@ export class FormComponent implements OnInit {
         field.results.map(result => {
           const option = {
             id: result.id,
-            description: result.description,
+            description:
+              result.description != null
+                ? result.description
+                : result.name.toUpperCase(),
           };
           this.combosFields[index].push(option);
         });
