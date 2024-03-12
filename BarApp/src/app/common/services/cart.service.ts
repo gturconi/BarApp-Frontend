@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CartProduct } from '@common/models/cartProduct';
 import { Products } from 'src/app/projects/menu/products/models/products';
+import { Promotion } from 'src/app/projects/menu/promotions/models/promotion';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ export class CartService {
   constructor() {}
   private cart: CartProduct[] = [];
 
-  addToCart(item: Products, comments?: string) {
+  addToCart(item: Products | Promotion, comments?: string) {
     this.getCart();
 
     let index = this.cart.findIndex(x => x.product.id === item.id);

@@ -14,6 +14,7 @@ import { Avatar } from '@common/models/avatar';
 import { ToastrService } from 'ngx-toastr';
 import { BadgeService } from '@common/services/badge.service';
 import { ProductsService } from '../../products/services/products.service';
+import { CartService } from '@common/services/cart.service';
 
 @Component({
   selector: 'app-promotions-details',
@@ -28,6 +29,7 @@ export class PromotionsDetailsComponent implements OnInit {
   quantity: number = 1;
   admin: boolean = false;
   employee: boolean = false;
+  isInCart: boolean = false;
   diasDeLaSemana = [
     'Domingo',
     'Lunes',
@@ -35,7 +37,7 @@ export class PromotionsDetailsComponent implements OnInit {
     'Miércoles',
     'Jueves',
     'Viernes',
-    'Sábado'
+    'Sábado',
   ];
 
   constructor(
@@ -48,7 +50,8 @@ export class PromotionsDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private alertController: AlertController,
     private router: Router,
-    private badgeService: BadgeService
+    private badgeService: BadgeService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -73,6 +76,7 @@ export class PromotionsDetailsComponent implements OnInit {
       });
     } finally {
       loading.dismiss();
+      this.isInCart = this.cartService.isProductInCart(id);
     }
   }
 
@@ -90,7 +94,7 @@ export class PromotionsDetailsComponent implements OnInit {
       return 'Día no válido';
     }
   }
-  
+
   arraysEqual(arr1: number[], arr2: number[]): boolean {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
   }
@@ -100,12 +104,73 @@ export class PromotionsDetailsComponent implements OnInit {
   }
 
   isPromotionValid(promotion: Promotion): boolean {
-    if (promotion.valid_from === undefined || promotion.valid_to === undefined) {
+    if (
+      promotion.valid_from === undefined ||
+      promotion.valid_to === undefined
+    ) {
       return false;
     }
     const currentDate = this.getCurrentDate();
     const validFrom = new Date(promotion.valid_from);
     const validTo = new Date(promotion.valid_to);
     return currentDate >= validFrom && currentDate <= validTo;
+  }
+
+  async displayLoginAlert() {
+    const alert = await this.alertController.create({
+      header: 'Debes iniciar sesión',
+      buttons: [
+        {
+          text: 'Iniciar sesión',
+          handler: () => {
+            this.router.navigate(['auth']);
+          },
+        },
+      ],
+      cssClass: 'custom-alert',
+    });
+    await alert.present();
+  }
+
+  async addToCart() {
+    if (!this.loginService.isLoggedIn()) {
+      await this.displayLoginAlert();
+    } else {
+      this.promotion.quantity = this.quantity;
+      this.cartService.addToCart(this.promotion, undefined);
+      this.badgeService.incrementBadgeCount();
+      const alert = await this.alertController.create({
+        header: 'Promoción agregada',
+        buttons: [
+          {
+            text: 'Ir al carrito',
+            handler: () => {
+              this.router.navigate(['orders/my-orders']);
+            },
+          },
+          {
+            text: 'Seguir comprando',
+            handler: () => {
+              this.router.navigate(['menu/categories']);
+            },
+          },
+        ],
+        cssClass: 'custom-alert',
+      });
+      await alert.present();
+    }
+  }
+
+  async removeFromCart() {
+    if (!this.loginService.isLoggedIn()) {
+      await this.displayLoginAlert();
+    } else {
+      if (this.promotion && this.promotion.id) {
+        this.cartService.removeFromCart(this.promotion.id);
+        this.isInCart = false;
+        this.badgeService.decrementBadgeCount();
+        this.toastrService.success('Promoción eliminada del carrito');
+      }
+    }
   }
 }
