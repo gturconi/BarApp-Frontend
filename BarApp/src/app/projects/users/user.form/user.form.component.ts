@@ -164,7 +164,7 @@ export class UserFormComponent implements OnInit {
       id: '',
       name: form.value.name,
       email: form.value.email,
-      password: CryptoJS.SHA256(form.value.password).toString(),
+      password: CryptoJS.SHA256(form.value.name).toString(),
       role: this.roleList.find(role => role.id === form.controls['Rol'].value)
         ?.name,
       tel: form.value.tel,
