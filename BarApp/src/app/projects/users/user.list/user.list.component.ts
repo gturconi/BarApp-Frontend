@@ -46,7 +46,7 @@ export class UserListComponent {
       {
         key: 'baja',
         label: 'Estado',
-        formatter: data => (!data.baja ? 'Activo' : 'Eliminado'),
+        formatter: data => (!data.baja ? 'Activo' : 'Inhabilitado'),
       },
       {
         key: 'tel',

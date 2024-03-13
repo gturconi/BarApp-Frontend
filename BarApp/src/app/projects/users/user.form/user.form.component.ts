@@ -77,12 +77,21 @@ export class UserFormComponent implements OnInit {
         icon: 'material-symbols-outlined',
         iconName: 'phone',
       },
+      {
+        type: 'checkbox',
+        name: 'off',
+        label: 'Baja',
+        inputType: 'checkbox',
+        icon: 'material-symbols-outlined',
+        iconName: 'person_off',
+      },
     ];
 
     this.validationConfig = [
       { controlName: 'email', email: true, required: true },
       { controlName: 'name', required: true },
       { controlName: 'tel', required: true },
+      { controlName: 'off' },
       { controlName: 'Rol' },
     ];
 
@@ -130,6 +139,7 @@ export class UserFormComponent implements OnInit {
       this.form.get('name')?.setValue(user.name as never);
       this.form.get('email')?.setValue(user.email as never);
       this.form.get('tel')?.setValue(user.tel as never);
+      this.form.get('off')?.setValue(user.baja);
       this.comboParam[0].defaultValue!.next(
         UserRole.roleTranslations[user.role!].toUpperCase()
       );
@@ -168,6 +178,7 @@ export class UserFormComponent implements OnInit {
       role: this.roleList.find(role => role.id === form.controls['Rol'].value)
         ?.name,
       tel: form.value.tel,
+      baja: form.controls['off'].value ? 1 : 0,
     };
 
     this.userService.postUsers(nuevoUsuario).subscribe(() => {
@@ -183,6 +194,7 @@ export class UserFormComponent implements OnInit {
       email: form.value.email,
       tel: form.value.tel,
       roleId: form.controls['Rol'].value,
+      baja: form.controls['off'].value ? 1 : 0,
     };
 
     this.userService.putUsers(nuevoUsuario).subscribe(() => {
