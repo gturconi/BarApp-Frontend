@@ -30,6 +30,7 @@ export class PromotionsDetailsComponent implements OnInit {
   admin: boolean = false;
   employee: boolean = false;
   isInCart: boolean = false;
+  logged = false;
   diasDeLaSemana = [
     'Domingo',
     'Lunes',
@@ -63,6 +64,7 @@ export class PromotionsDetailsComponent implements OnInit {
         this.doSearch(idProm);
       }
     });
+    this.logged = this.loginService.isLoggedIn();
   }
 
   async doSearch(id: string) {

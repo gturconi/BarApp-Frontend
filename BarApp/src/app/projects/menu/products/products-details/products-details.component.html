@@ -60,7 +60,7 @@
           </ion-card-content>
         </ion-card>
         <ion-button
-          *ngIf="this.product.stock && !this.product.baja && !admin"
+          *ngIf="this.product.stock && !this.product.baja && !admin && logged"
           expand="full"
           class="details-button"
           [ngClass]="{ isInCart: isInCart }"
