@@ -1,4 +1,4 @@
-.details-promotion{
+.details-promotion {
   background: #f6cd8f;
   color: #1a1b1f;
   width: 25vw;
@@ -26,11 +26,15 @@
 }
 
 .promotion-date .sp {
-color: white;
+  color: white;
 }
 
 .tittle-valid {
   margin-bottom: 5px;
+}
+
+.tittle-valid-p {
+  margin-top: 5px;
 }
 
 .details-title-promotion {
@@ -76,15 +80,15 @@ color: white;
 
 .promotion-image {
   position: relative;
-  width: 100%; 
-  height: 300px; 
-  overflow: hidden; 
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
 }
 
 .promotion-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 .details-image-p {
@@ -126,21 +130,37 @@ color: white;
   border-radius: 5px;
 }
 
+.descriptions-container {
+  max-height: 95px;
+  overflow-y: auto;
+  border: 1px solid #da6047;
+  border-radius: 5px;
+  background: #f6cd8f;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.description {
+  padding: 5px;
+  border-bottom: 1px solid #da6047;
+  border-right: 1px solid #da6047;
+  background-color: #f9dfbc;
+}
+
 @media (max-width: 768px) {
-  .details-promotion{
+  .details-promotion {
     width: 85vw;
   }
 
   .promotion-image {
     position: relative;
-    width: 100%; 
-    height: 300px; 
+    width: 100%;
+    height: 300px;
   }
-  
+
   .promotion-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
   }
-
 }

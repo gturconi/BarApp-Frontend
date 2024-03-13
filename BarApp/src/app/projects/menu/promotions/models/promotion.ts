@@ -1,11 +1,12 @@
 import { Avatar, PhotoResult } from '@common/models/avatar';
+import { Products } from '../../products/models/products';
 
 export class Promotion {
   constructor(
     id = '',
     description = '',
     image: Avatar | PhotoResult,
-    products: number[],
+    products: Products[],
     price: number,
     valid_from: Date,
     valid_to: Date,
@@ -35,7 +36,7 @@ export class Promotion {
   image?: Avatar | PhotoResult;
   price?: number;
   baja?: number;
-  products: number[];
+  products?: Products[];
   days_of_week?: number[];
   quantity?: number;
 }

@@ -113,7 +113,15 @@
               </div>
             </div>
           </div>
-
+          <div class="tittle-valid-p">Productos en promoción:</div>
+          <div class="descriptions-container">
+            <div
+              class="description"
+              *ngFor="let product of this.promotion.products"
+            >
+              {{ product.description }} <br />
+            </div>
+          </div>
           <ion-button
             *ngIf="
               !this.promotion.baja && !admin && !employee && promotion.price
