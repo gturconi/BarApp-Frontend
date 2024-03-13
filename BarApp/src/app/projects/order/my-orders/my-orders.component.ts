@@ -11,7 +11,7 @@ import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
 import { Avatar } from '@common/models/avatar';
 import Swal from 'sweetalert2';
-import { DELETE_OPTS } from '@common/constants/messages.constant';
+import { DELETE_OPTS_CART } from '@common/constants/messages.constant';
 import { Router } from '@angular/router';
 
 @Component({
@@ -97,7 +97,7 @@ export class MyOrdersComponent implements OnInit {
   }
 
   deleteItem(order: CartProduct) {
-    Swal.fire(DELETE_OPTS).then(async result => {
+    Swal.fire(DELETE_OPTS_CART).then(async result => {
       if (result.isConfirmed) {
         const loading = await this.loadingService.loading();
         await loading.present();
