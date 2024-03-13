@@ -234,7 +234,7 @@ export class MenuComponent implements OnInit {
           isManage: false,
         },
         { label: 'Usuarios', route: '/users', isManage: true },
-        { label: 'Mesas', route: '', isManage: true },
+        { label: 'Mesas', route: '/tables', isManage: true },
         {
           label: 'Categorías de Productos',
           route: '/menu/categories',
