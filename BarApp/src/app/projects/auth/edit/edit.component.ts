@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { User } from '@common/models/user';
 
 import { LoadingService } from '@common/services/loading.service';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../users/services/user.service';
 import { LoginService } from '@common/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 

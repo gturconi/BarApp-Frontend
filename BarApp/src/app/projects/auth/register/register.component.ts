@@ -3,12 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import * as CryptoJS from 'crypto-js';
 
 import { UserRoles } from '@common/constants/user.roles.enum';
 import { User } from '@common/models/user';
 
 import { LoadingService } from '@common/services/loading.service';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../users/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -37,7 +38,7 @@ export class RegisterComponent implements OnInit {
       name: form.value.name!,
       email: form.value.email!,
       tel: form.value.tel!,
-      password: form.value.password!,
+      password: CryptoJS.SHA256(form.value.password).toString(),
       role:
         form.value['rol'] === undefined
           ? UserRoles.Client

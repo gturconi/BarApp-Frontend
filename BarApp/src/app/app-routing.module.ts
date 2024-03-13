@@ -33,6 +33,11 @@ const routes: Routes = [
       import('./projects/order/order.module').then(m => m.OrderModule),
   },
   {
+    path: 'users',
+    loadChildren: () =>
+      import('./projects/users/users.module').then(m => m.UsersModule),
+  },
+  {
     path: '',
     redirectTo: 'intro',
     pathMatch: 'full',

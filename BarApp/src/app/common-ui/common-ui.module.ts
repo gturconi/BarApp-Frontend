@@ -12,6 +12,8 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { ComboComponent } from './combo/combo.component';
 
 import { CommonUiRoutingModule } from './common-ui-routing.module';
+import { SearchComponent } from './search/search.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     FooterComponent,
     PaginationComponent,
     ComboComponent,
+    SearchComponent,
+    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +43,8 @@ import { CommonUiRoutingModule } from './common-ui-routing.module';
     FooterComponent,
     PaginationComponent,
     ComboComponent,
+    SearchComponent,
+    TableComponent,
   ],
 })
 export class CommonUiModule {}
