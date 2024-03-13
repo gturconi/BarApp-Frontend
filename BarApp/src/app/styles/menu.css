@@ -131,4 +131,8 @@ ion-menu {
     height: 90vh;
     outline-style: none !important;
   }
+
+  .adminHeight {
+    height: 100vh;
+  }
 }

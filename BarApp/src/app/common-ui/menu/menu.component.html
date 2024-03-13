@@ -1,5 +1,10 @@
 <!-- menu desktop-->
-<ion-menu contentId="main-content" class="menu-desktop" *ngIf="showDesktopMenu">
+<ion-menu
+  contentId="main-content"
+  class="menu-desktop"
+  [ngClass]="{ adminHeight: admin }"
+  *ngIf="showDesktopMenu"
+>
   <ion-header>
     <ion-toolbar>
       <ion-title class="logo__name">Explorar</ion-title>
