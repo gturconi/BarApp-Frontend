@@ -115,7 +115,13 @@
           </div>
 
           <ion-button
-            *ngIf="!this.promotion.baja && !admin && !employee && logged"
+            *ngIf="
+              !this.promotion.baja &&
+              !admin &&
+              !employee &&
+              logged &&
+              promotion.price
+            "
             expand="full"
             class="details-button"
             [ngClass]="{ isInCart: isInCart }"
