@@ -32,6 +32,7 @@ ion-toolbar {
 ion-menu {
   top: 0;
   left: 0;
+  height: 130vh;
 }
 
 ion-menu::part(container) {
@@ -127,5 +128,7 @@ ion-menu {
   ion-menu {
     top: 0;
     left: 0;
+    height: 90vh;
+    outline-style: none !important;
   }
 }
