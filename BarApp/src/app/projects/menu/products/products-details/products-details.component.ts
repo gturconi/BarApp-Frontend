@@ -93,6 +93,7 @@ export class ProductsDetailsComponent implements OnInit {
       this.badgeService.incrementBadgeCount();
       const alert = await this.alertController.create({
         header: 'Producto agregado',
+        backdropDismiss: false,
         buttons: [
           {
             text: 'Ir al carrito',
