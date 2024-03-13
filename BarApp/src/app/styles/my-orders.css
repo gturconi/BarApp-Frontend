@@ -49,6 +49,25 @@
 .comments {
   font-size: small;
 }
+
+.item-p {
+  position: relative;
+}
+
+.promotion-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-10);
+  color: var(--color-7);
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 5px;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 5px;
+  font-size: 12px;
+}
+
 @media (max-width: 768px) {
   .order-wrapper {
     grid-template-rows: auto minmax(200px, 280px) auto;

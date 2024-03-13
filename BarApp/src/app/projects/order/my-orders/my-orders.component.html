@@ -15,6 +15,9 @@
           <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         </picture>
         <article>
+          <span class="promotion-label" *ngIf="!isProduct(order)">
+            Promoción
+          </span>
           <span class="title" *ngIf="isProduct(order)">
             {{ castProduct(order.product).name }}
           </span>
