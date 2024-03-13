@@ -1,0 +1,168 @@
+@import 'variables.css';
+
+.details-promotion {
+  background: var(--color-4);
+  color: var(--color-8);
+  width: 25vw;
+  height: auto;
+  overflow-y: hidden !important;
+  font-weight: bold;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+  margin-top: 1rem;
+}
+
+.promotion-date {
+  font-size: 1em;
+  font-weight: bold;
+  color: var(--color-7);
+  background-color: var(--color-11);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.promotion-date span {
+  color: var(--color-3);
+}
+
+.promotion-date .sp {
+  color: var(--color-7);
+}
+
+.tittle-valid {
+  margin-bottom: 5px;
+}
+
+.tittle-valid-p {
+  margin-top: 5px;
+}
+
+.details-title-promotion {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.discount-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 10px;
+  background-color: var(--color-11);
+  color: var(--color-7);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+  box-shadow: 0 0 0 3px var(--color-4), 0 0 0 10px var(--color-5);
+}
+
+.discount-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.discount-number {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.percentage-symbol {
+  font-size: 1em;
+}
+
+.off-text {
+  font-size: 0.7em;
+  margin-left: 5px;
+}
+
+.promotion-image {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.promotion-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.details-image-p {
+  width: 100%;
+  max-height: 260px;
+}
+
+.flags-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.flag {
+  flex: 1;
+  position: relative;
+  padding: 5px;
+  background-color: var(--color-2);
+  color: var(--color-7);
+  font-size: 0.9em;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 3px;
+}
+
+.details-title-promotion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-prom {
+  margin-left: 10px;
+  padding: 10px;
+  background-color: var(--color-2);
+  color: var(--color-7);
+  font-size: 1em;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.descriptions-container {
+  max-height: 97px;
+  overflow-y: auto;
+  border: 1px solid var(--color-2);
+  border-radius: 5px;
+  background: var(--color-4);
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.description-pro {
+  padding: 5px;
+  border-bottom: 1px solid var(--color-2);
+  border-right: 1px solid var(--color-2);
+  background-color: var(--color-3);
+}
+
+@media (max-width: 768px) {
+  .details-promotion {
+    width: 85vw;
+  }
+
+  .promotion-image {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .promotion-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
