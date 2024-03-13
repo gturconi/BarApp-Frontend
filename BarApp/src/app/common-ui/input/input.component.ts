@@ -20,8 +20,6 @@ export class InputComponent implements OnInit {
 
   constructor() {}
 
-  minDate: string = new Date().toISOString().split('T')[0];
-
   ngOnInit() {
     if (this.type == 'password') this.isPasswords = true;
 
@@ -31,8 +29,6 @@ export class InputComponent implements OnInit {
       } else {
         this.control.setValue(true);
       }
-    }
-    if (this.type === 'date') {
     }
   }
 
