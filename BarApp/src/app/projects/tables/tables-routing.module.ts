@@ -4,6 +4,7 @@ import { TablesComponent } from './tables/tables.component';
 import { TablesListComponent } from './tables.list/tables.list.component';
 import { TablesFormComponent } from './tables.form/tables.form.component';
 import { adminGuard, authGuard } from '@common/guards';
+import { adminEmployeeGuard } from '@common/guards/admin.employee.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
       {
         path: '',
         component: TablesListComponent,
-        canActivate: [authGuard, adminGuard],
+        canActivate: [authGuard, adminEmployeeGuard],
       },
       {
         path: 'edit/:id',
