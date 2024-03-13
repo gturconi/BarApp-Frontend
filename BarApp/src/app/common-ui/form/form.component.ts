@@ -89,7 +89,17 @@ export class FormComponent implements OnInit {
   }
 
   submit(): void {
+    this.trimTextInputs(this.form);
     this.formSubmit.emit(this.form);
+  }
+
+  trimTextInputs(form: FormGroup<any>) {
+    Object.keys(form.controls).forEach(key => {
+      const control = form.get(key);
+      if (typeof control?.value === 'string') {
+        control?.setValue(control.value.trim());
+      }
+    });
   }
 
   SetvalidationConfig() {
