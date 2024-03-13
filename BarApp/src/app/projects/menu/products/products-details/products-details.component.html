@@ -60,15 +60,19 @@
           </ion-card-content>
         </ion-card>
         <ion-button
-          *ngIf="this.product.stock && !this.product.baja && !admin && logged"
+          *ngIf="this.product.stock && !this.product.baja && !admin"
           expand="full"
           class="details-button"
-          [ngClass]="{ isInCart: isInCart }"
+          [ngClass]="{ isInCart: isInCart && logged }"
         >
           <div (click)="isInCart ? removeFromCart() : addToCart()">
             <ion-icon name="cart" class="details-icons"></ion-icon>
             <p>
-              {{ this.isInCart ? 'QUITAR DEL CARRITO' : 'AGREGAR AL CARRITO' }}
+              {{
+                this.isInCart && logged
+                  ? 'QUITAR DEL CARRITO'
+                  : 'AGREGAR AL CARRITO'
+              }}
             </p>
           </div>
         </ion-button>
