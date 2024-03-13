@@ -7,10 +7,7 @@
         [src]="imagesUrl$ | async"
         class="details-image-p promotion-image"
       />
-      <div
-        class="discount-overlay"
-        *ngIf="promotion.discount && !promotion.price"
-      >
+      <div class="discount-overlay" *ngIf="promotion.discount">
         <div class="discount-content">
           <span class="discount-number" *ngIf="promotion.discount">
             {{ this.promotion.discount * 100 }}</span
@@ -25,10 +22,7 @@
       <ion-card-header class="details-header">
         <ion-card-title class="details-title-promotion"
           >{{ this.promotion.description }}
-          <span
-            *ngIf="!promotion.discount && promotion.price"
-            class="price-prom"
-          >
+          <span *ngIf="promotion.price" class="price-prom">
             ${{ this.promotion.price }}
           </span></ion-card-title
         >
