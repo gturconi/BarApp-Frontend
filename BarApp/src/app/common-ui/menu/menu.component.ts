@@ -187,7 +187,7 @@ export class MenuComponent implements OnInit {
         {
           icon: 'reader-outline',
           label: 'Pedidos Actuales',
-          route: '',
+          route: '/tables',
           isManage: false,
         },
         {
@@ -206,7 +206,7 @@ export class MenuComponent implements OnInit {
       this.tabsItem.splice(
         1,
         3,
-        { icon: 'reader-outline', label: 'Pedidos', route: '' },
+        { icon: 'reader-outline', label: 'Pedidos', route: '/tables' },
         { icon: 'timer-outline', label: 'Historial', route: '' },
         { icon: 'notifications-outline', label: 'Notificación', route: '' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
