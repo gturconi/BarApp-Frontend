@@ -1,7 +1,7 @@
 <ion-content class="product-content">
   <div class="container-body order-wrapper">
     <h2 class="section-title">Mis pedidos</h2>
-    <div class="wrapper2" #wrapper *ngIf="showData">
+    <div class="wrapper2 orders-wrapper" #wrapper *ngIf="showData">
       @for(order of ordersList; track order.product.id; let idx = $index) {
       <div class="item-p productsItem">
         <ion-icon
