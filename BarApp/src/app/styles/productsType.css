@@ -391,3 +391,21 @@
     height: auto;
   }
 }
+
+@media screen and (min-height: 700px) {
+  .wrapper2 {
+    height: 45vh;
+  }
+}
+
+@media screen and (min-height: 750px) {
+  .wrapper2 {
+    height: 52vh;
+  }
+}
+
+@media screen and (min-height: 900px) {
+  .wrapper2 {
+    height: 53vh;
+  }
+}
