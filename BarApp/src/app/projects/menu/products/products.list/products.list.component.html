@@ -21,6 +21,12 @@
         <div class="text-container-p">
           <span class="title-p">{{ products.name }}</span>
           <span class="price-p">$ {{ products.price }}</span>
+          <span
+            class="promotion-label-p"
+            *ngIf="products.promotions && products.promotions.length > 0"
+          >
+            ¡En promoción!
+          </span>
         </div>
         }
         <div class="actions" *ngIf="!admin">
