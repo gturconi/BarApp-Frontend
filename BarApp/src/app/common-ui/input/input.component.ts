@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { INFO_DISCOUNT_PROM } from '@common/constants/messages.constant';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-input',
@@ -47,5 +49,9 @@ export class InputComponent implements OnInit {
     const file: File = event.target.files[0];
     this.imageUploaded = true;
     this.control.setValue(file);
+  }
+
+  showNotification() {
+    Swal.fire(INFO_DISCOUNT_PROM);
   }
 }

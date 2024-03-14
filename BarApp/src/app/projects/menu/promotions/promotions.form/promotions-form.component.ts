@@ -19,6 +19,7 @@ import { ValidationConfig } from '@common/models/validationConfig';
 import { Button, FormField } from '@common/models/formTypes';
 
 import Swal from 'sweetalert2';
+import { INFO_PROM } from '@common/constants/messages.constant';
 
 @Component({
   selector: 'app-promotions-form',
@@ -66,10 +67,7 @@ export class PromotionsFormComponent implements OnInit {
     private location: Location
   ) {}
   showNotification() {
-    Swal.fire({
-      icon: 'info',
-      html: 'Las promociones pueden ser válidas mediante un rango de fechas y/o mediante días de la semana.<br>El descuento de la misma es opcional.',
-    });
+    Swal.fire(INFO_PROM);
   }
 
   async ngOnInit() {
@@ -218,7 +216,7 @@ export class PromotionsFormComponent implements OnInit {
       {
         type: 'input',
         name: 'discount',
-        label: 'Porcentaje Descuento',
+        label: 'Descuento',
         inputType: 'number',
         icon: 'material-symbols-outlined',
         iconName: 'percent',

@@ -170,6 +170,13 @@ ion-icon {
   background: var(--color-6);
 }
 
+.info-button {
+  color: black;
+  text-transform: none;
+  font-size: smaller;
+  border-radius: 10px;
+}
+
 @media (max-width: 768px) {
   .form-container ion-card {
     min-width: 320px;
