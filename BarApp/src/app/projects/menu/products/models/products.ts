@@ -1,5 +1,4 @@
 import { Avatar, PhotoResult } from '@common/models/avatar';
-import { Promotion } from '../../promotions/models/promotion';
 
 export class Products {
   constructor(
@@ -9,7 +8,7 @@ export class Products {
     image: Avatar | PhotoResult,
     price: number,
     stock: number,
-    promotions: Promotion[],
+    promotions: number[],
     baja = 0,
     quantity = 1,
     category: string
@@ -32,7 +31,7 @@ export class Products {
   image?: Avatar | PhotoResult;
   price?: number;
   stock?: number;
-  promotions?: Promotion[];
+  promotions: number[];
   baja?: number;
   quantity?: number;
   category?: string;

@@ -209,6 +209,7 @@ export class ProductsTypeListComponent implements OnInit {
 
   isCurrentDayOfWeekValid(promotion: Promotion): boolean {
     const currentDayOfWeek = new Date().getDay();
+    console.log(currentDayOfWeek);
     return promotion.days_of_week?.includes(currentDayOfWeek) || false;
   }
 }
