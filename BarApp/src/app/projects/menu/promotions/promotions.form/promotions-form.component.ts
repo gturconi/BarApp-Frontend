@@ -36,10 +36,10 @@ export class PromotionsFormComponent implements OnInit {
   formFields: FormField[] = [];
   myButtons: Button[] = [];
 
-  productsList!: Products[];
-
   selectedCategories: string[] = [];
   productOptions: any[] = [];
+
+  productsList: Products[] = [];
 
   comboParam: DropdownParam[] = [
     {
@@ -114,16 +114,26 @@ export class PromotionsFormComponent implements OnInit {
   }
 
   loadProducts(selectedCategories: string[]) {
-    this.productsService.getProducts().subscribe(data => {
-      this.productsList = data.results;
-      this.productOptions = this.productsList.filter(
-        product =>
-          product.category && selectedCategories.includes(product.category)
-      );
-
-      console.log(this.productOptions);
-
-      this.form.controls['Productos'].setValue(this.productOptions);
+    selectedCategories.forEach(categoryId => {
+      this.productsTypeService.getProductsType(categoryId).subscribe(data => {
+        this.productsService
+          .getProducts(undefined, undefined, data.description)
+          .subscribe(productsResponse => {
+            productsResponse.results = productsResponse.results.map(prod => {
+              return {
+                ...prod,
+                name: prod.name,
+              };
+            });
+            this.comboParam[1].fields!.next(productsResponse);
+            if (this.id) this.autocompleteForm();
+            else {
+              const prod = productsResponse.results;
+              this.comboParam[1].defaultValue!.next(prod[1]?.name!);
+              this.form.controls['Productos']?.setValue(prod[1]?.id);
+            }
+          });
+      });
     });
   }
 
@@ -144,10 +154,6 @@ export class PromotionsFormComponent implements OnInit {
         .get('Categoria')
         ?.valueChanges.subscribe((selectedCategories: string[]) => {
           this.selectedCategories = selectedCategories;
-
-          console.log('Categorías seleccionadas:', this.selectedCategories);
-
-          this.comboParam[1].fields!.next(this.selectedCategories);
           this.loadProducts(this.selectedCategories);
         });
 
