@@ -51,7 +51,7 @@ div.description {
 @media (max-width: 1080px) {
   .productsList {
     width: 97vw;
-    height: 59vh;
+    height: 65vh;
   }
 }
 
@@ -87,6 +87,18 @@ div.description {
 
   .icon-tooltip {
     height: 28px;
+  }
+}
+
+@media screen and (min-height: 700px) {
+  .productsList {
+    height: 75vh;
+  }
+}
+
+@media screen and (min-height: 900px) {
+  .productsList {
+    height: 80vh;
   }
 }
 
