@@ -149,6 +149,7 @@ export class FormComponent implements OnInit {
   setCombos() {
     this.combos?.forEach((combo, index) => {
       combo.fields.subscribe(field => {
+        this.combosFields[index] = [];
         this.combosFields.push([]);
         combo.defaultValue?.subscribe(defaultValue => {
           this.defaultValues[index] = defaultValue;
@@ -156,12 +157,14 @@ export class FormComponent implements OnInit {
         field.results.map(result => {
           const option = {
             id: result.id,
-            description:
-              result.description != null
-                ? result.description
-                : result.name.toUpperCase(),
+            description: result.name != null ? result.name : result.description,
           };
-          this.combosFields[index].push(option);
+          const elementFound = this.combosFields[index].find(
+            r => r.id == option.id
+          );
+          if (elementFound == undefined) {
+            this.combosFields[index].push(option);
+          }
         });
       });
     });

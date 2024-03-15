@@ -32,6 +32,8 @@ export class PromotionsFormComponent implements OnInit {
   formTitle = 'Añadir Promoción';
   editMode = false;
 
+  loading!: HTMLIonLoadingElement;
+
   form!: FormGroup;
   validationConfig: ValidationConfig[] = [];
   formFields: FormField[] = [];
@@ -39,8 +41,6 @@ export class PromotionsFormComponent implements OnInit {
 
   selectedCategories: string[] = [];
   productOptions: any[] = [];
-
-  productsList: Products[] = [];
 
   comboParam: DropdownParam[] = [
     {
@@ -111,18 +111,16 @@ export class PromotionsFormComponent implements OnInit {
     });
   }
 
-  loadProducts(selectedCategories: string[]) {
+  async loadProducts(selectedCategories: string[]) {
+    if (selectedCategories.length > 0) {
+      this.loading = await this.loadingService.loading();
+      await this.loading.present();
+    }
     selectedCategories.forEach(categoryId => {
       this.productsTypeService.getProductsType(categoryId).subscribe(data => {
         this.productsService
           .getProducts(undefined, undefined, data.description)
           .subscribe(productsResponse => {
-            productsResponse.results = productsResponse.results.map(prod => {
-              return {
-                ...prod,
-                name: prod.name,
-              };
-            });
             this.comboParam[1].fields!.next(productsResponse);
             if (this.id) this.autocompleteForm();
             else {
@@ -130,14 +128,15 @@ export class PromotionsFormComponent implements OnInit {
               this.comboParam[1].defaultValue!.next(prod[1]?.name!);
               this.form.controls['Productos']?.setValue(prod[1]?.id);
             }
+            this.loading.dismiss();
           });
       });
     });
   }
 
   async loadCombos() {
-    const loading = await this.loadingService.loading();
-    await loading.present();
+    this.loading = await this.loadingService.loading();
+    await this.loading.present();
     this.productsTypeService.getProductsTypes().subscribe(response => {
       this.comboParam[0].fields!.next(response);
       if (this.id) this.autocompleteForm();
@@ -152,10 +151,11 @@ export class PromotionsFormComponent implements OnInit {
         .get('Categoria')
         ?.valueChanges.subscribe((selectedCategories: string[]) => {
           this.selectedCategories = selectedCategories;
+
           this.loadProducts(this.selectedCategories);
         });
 
-      loading.dismiss();
+      this.loading.dismiss();
     });
   }
 
