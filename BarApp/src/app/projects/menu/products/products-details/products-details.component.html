@@ -26,7 +26,10 @@
             "
             class="dis-price"
           >
-            <span>{{ this.product.promotions[0].discount * 100 }}% off</span>
+            <span
+              >{{ roundDiscount(this.product.promotions[0].discount * 100) }}%
+              off</span
+            >
           </div>
         </div>
         <ion-card-subtitle class="details-price">
@@ -63,12 +66,15 @@
                 !isCurrentDayOfWeekValid(this.product.promotions[0])
               "
             >
-              ${{
-                (this.product.price! / this.product.promotions[0].discount) *
-                  this.quantity
-              }}
+              ${{ this.product.price! * this.quantity }}
             </span>
-            ${{ this.product.price! * this.quantity }}
+            ${{
+              roundDiscount(
+                this.product.price! *
+                  this.quantity *
+                  (1 - this.product.promotions[0].discount)
+              )
+            }}
           </div>
 
           <div *ngIf="!admin" class="quantity">

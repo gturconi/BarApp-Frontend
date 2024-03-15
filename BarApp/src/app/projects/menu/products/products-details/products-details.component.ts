@@ -145,6 +145,10 @@ export class ProductsDetailsComponent implements OnInit {
     await alert.present();
   }
 
+  roundDiscount(price: number): number {
+    return Math.round(price);
+  }
+
   isCurrentDayOfWeekValid(promotion: Promotion): boolean {
     const currentDayOfWeek = new Date().getDay();
     console.log(currentDayOfWeek);
