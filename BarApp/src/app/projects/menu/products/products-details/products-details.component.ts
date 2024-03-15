@@ -13,6 +13,7 @@ import { Products } from '../models/products';
 import { Avatar } from '@common/models/avatar';
 import { ToastrService } from 'ngx-toastr';
 import { BadgeService } from '@common/services/badge.service';
+import { Promotion } from '../../promotions/models/promotion';
 
 @Component({
   selector: 'app-products-details',
@@ -62,6 +63,7 @@ export class ProductsDetailsComponent implements OnInit {
     try {
       this.productsService.getProduct(id).subscribe(data => {
         this.product = data;
+        console.log(this.product);
         this.imagesUrl$ = this.getImage(this.product);
         this.isLoading = false;
       });
@@ -141,5 +143,11 @@ export class ProductsDetailsComponent implements OnInit {
       cssClass: 'custom-alert',
     });
     await alert.present();
+  }
+
+  isCurrentDayOfWeekValid(promotion: Promotion): boolean {
+    const currentDayOfWeek = new Date().getDay();
+    console.log(currentDayOfWeek);
+    return promotion.days_of_week?.includes(currentDayOfWeek) || false;
   }
 }

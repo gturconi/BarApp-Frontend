@@ -173,6 +173,29 @@
   }
 }
 
+.title-discount {
+  display: flex;
+  align-items: center;
+}
+
+.title-discount .details-title {
+  flex: 1;
+}
+
+.dis-price {
+  font-size: 16px;
+  background-color: var(--color-10);
+  border-radius: 5px;
+  padding: 5px;
+  color: var(--color-7);
+}
+
+.crossed-out-price {
+  font-size: 19px;
+  color: var(--color-13);
+  text-decoration: line-through;
+}
+
 @media (max-width: 1000px) {
   .details-product {
     width: 60vw;
