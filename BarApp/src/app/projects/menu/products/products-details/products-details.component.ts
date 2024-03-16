@@ -15,6 +15,11 @@ import { ToastrService } from 'ngx-toastr';
 import { BadgeService } from '@common/services/badge.service';
 import { Promotion } from '../../promotions/models/promotion';
 
+import {
+  isCurrentDayOfWeekValid,
+  hasDays,
+} from '../../common/validation-functions';
+
 @Component({
   selector: 'app-products-details',
   templateUrl: './products-details.component.html',
@@ -150,14 +155,10 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   isCurrentDayOfWeekValid(promotion: Promotion): boolean {
-    const currentDayOfWeek = new Date().getDay();
-    //console.log(currentDayOfWeek);
-    return promotion.days_of_week?.includes(currentDayOfWeek) || false;
+    return isCurrentDayOfWeekValid(promotion);
   }
 
-  hasDays(promotion: any) {
-    return (
-      promotion && promotion.days_of_week && promotion.days_of_week.length > 0
-    );
+  hasDays(promotion: Promotion) {
+    return hasDays(promotion);
   }
 }

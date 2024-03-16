@@ -1,22 +1,24 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
-import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
 import { Avatar } from '@common/models/avatar';
 import { ImageService } from '@common/services/image.service';
 import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
-import { ToastrService } from 'ngx-toastr';
 
-import { ProductsTypeService } from '../services/products-type.service';
-import { PromotionsService } from '../../promotions/services/promotions.service';
 import { ProductsType } from '../models/productsType';
 import { Promotion } from '../../promotions/models/promotion';
 
-import Swal from 'sweetalert2';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { ProductsTypeService } from '../services/products-type.service';
+import { PromotionsService } from '../../promotions/services/promotions.service';
+
+import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
+import { isPromotionValid } from '../../common/validation-functions';
 
 @Component({
   selector: 'app-products-type.list',
@@ -191,41 +193,6 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   isPromotionValid(promotion: Promotion): boolean {
-    const currentDate = this.getCurrentDate();
-
-    if (
-      (!promotion.valid_from || !promotion.valid_to) &&
-      this.isCurrentDayOfWeekValid(promotion)
-    ) {
-      return true;
-    }
-
-    if (promotion.valid_from && promotion.valid_to) {
-      const validFrom = new Date(promotion.valid_from);
-      const validTo = new Date(promotion.valid_to);
-      if (
-        currentDate >= validFrom &&
-        currentDate <= validTo &&
-        !this.hasDays(promotion)
-      ) {
-        return true;
-      }
-      return (
-        currentDate >= validFrom &&
-        currentDate <= validTo &&
-        this.isCurrentDayOfWeekValid(promotion)
-      );
-    }
-
-    return false;
-  }
-
-  isCurrentDayOfWeekValid(promotion: Promotion): boolean {
-    const currentDayOfWeek = new Date().getDay();
-    return promotion.days_of_week?.includes(currentDayOfWeek) || false;
-  }
-
-  hasDays(promotion: Promotion) {
-    return promotion.days_of_week && promotion.days_of_week.length > 0;
+    return isPromotionValid(promotion);
   }
 }
