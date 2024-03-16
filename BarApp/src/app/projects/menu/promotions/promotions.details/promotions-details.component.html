@@ -33,13 +33,34 @@
             class="promotion-date"
             *ngIf="this.promotion.valid_from && this.promotion.valid_to"
           >
-            <p *ngIf="!isPromotionValid(promotion) && admin">
+            <p
+              *ngIf="
+                !isCurrentDateInRange(
+                  promotion.valid_from,
+                  promotion.valid_to
+                ) && admin
+              "
+            >
               La promoción expiró:
             </p>
-            <span *ngIf="isPromotionValid(promotion) && admin" class="sp"
+            <span
+              *ngIf="
+                isCurrentDateInRange(
+                  promotion.valid_from,
+                  promotion.valid_to
+                ) && admin
+              "
+              class="sp"
               >Vigente desde
             </span>
-            <span *ngIf="isPromotionValid(promotion) && !admin" class="sp"
+            <span
+              *ngIf="
+                isCurrentDateInRange(
+                  promotion.valid_from,
+                  promotion.valid_to
+                ) && !admin
+              "
+              class="sp"
               >Vigente
             </span>
             <span *ngIf="admin">
@@ -141,7 +162,7 @@
         *ngIf="this.promotion.baja || !isPromotionValid(promotion)"
         class="details-stock"
       >
-        <p>Esta promoción ya no esta disponible</p>
+        <p>Esta promoción no esta disponible</p>
       </div>
     </ion-card>
     }@else if(!this.isLoading){
