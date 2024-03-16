@@ -63,7 +63,6 @@ export class ProductsDetailsComponent implements OnInit {
     try {
       this.productsService.getProduct(id).subscribe(data => {
         this.product = data;
-        console.log(this.product);
         this.imagesUrl$ = this.getImage(this.product);
         this.isLoading = false;
       });
@@ -96,7 +95,7 @@ export class ProductsDetailsComponent implements OnInit {
       this.cartService.addToCart(this.product, this.comments);
       this.badgeService.incrementBadgeCount();
       const alert = await this.alertController.create({
-        header: 'Producto agregado',
+        header: 'Producto agregado al carrito',
         backdropDismiss: false,
         buttons: [
           {
@@ -125,7 +124,7 @@ export class ProductsDetailsComponent implements OnInit {
       this.cartService.removeFromCart(this.product.id);
       this.isInCart = false;
       this.badgeService.decrementBadgeCount();
-      this.toastrService.success('Producto eliminado');
+      this.toastrService.success('Producto eliminado del carrito');
     }
   }
 

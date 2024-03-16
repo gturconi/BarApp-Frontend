@@ -142,7 +142,7 @@ export class PromotionsDetailsComponent implements OnInit {
       this.cartService.addToCart(this.promotion, undefined);
       this.badgeService.incrementBadgeCount();
       const alert = await this.alertController.create({
-        header: 'Promoción agregada',
+        header: 'Promoción agregada al carrito',
         backdropDismiss: false,
         buttons: [
           {
