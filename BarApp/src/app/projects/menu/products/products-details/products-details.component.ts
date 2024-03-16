@@ -63,6 +63,7 @@ export class ProductsDetailsComponent implements OnInit {
     try {
       this.productsService.getProduct(id).subscribe(data => {
         this.product = data;
+        console.log(this.product);
         this.imagesUrl$ = this.getImage(this.product);
         this.isLoading = false;
       });
@@ -150,7 +151,13 @@ export class ProductsDetailsComponent implements OnInit {
 
   isCurrentDayOfWeekValid(promotion: Promotion): boolean {
     const currentDayOfWeek = new Date().getDay();
-    console.log(currentDayOfWeek);
+    //console.log(currentDayOfWeek);
     return promotion.days_of_week?.includes(currentDayOfWeek) || false;
+  }
+
+  hasDays(promotion: any) {
+    return (
+      promotion && promotion.days_of_week && promotion.days_of_week.length > 0
+    );
   }
 }
