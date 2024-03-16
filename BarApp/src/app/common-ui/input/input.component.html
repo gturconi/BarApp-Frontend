@@ -32,6 +32,16 @@
     [min]="minDate"
   >
   </ion-input>
+  }@else if(type === 'textarea'){
+  <ion-textarea
+    labelPlacement="floating"
+    fill="solid"
+    [label]="label"
+    counter="true"
+    maxlength="100"
+    [formControl]="control"
+    class="i-text-area"
+  ></ion-textarea>
   }@else if(label === 'Descuento'){
   <ion-input
     type="number"

@@ -198,10 +198,10 @@ export class PromotionsFormComponent implements OnInit {
   setFormInputs() {
     this.formFields = [
       {
-        type: 'input',
+        type: 'textarea',
         name: 'description',
         label: 'Descripción',
-        inputType: 'text',
+        inputType: 'textarea',
         icon: 'material-symbols-outlined',
         iconName: 'restaurant',
       },

@@ -193,6 +193,27 @@ ion-icon {
   border-radius: 10px;
 }
 
+/* para text area */
+.i-text-area {
+  margin-top: 1rem;
+  --highlight-color-focused: var(--color-2);
+  --highlight-color-valid: var(--color-2);
+  --highlight-color-invalid: var(--color-2);
+  --highlight-color: var(--color-2);
+  --border-color: var(--color-2);
+  --placeholder-color: var(--color-8);
+  --color: var(--color-8);
+  --background: var(--color-3) !important;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+ion-item.sc-ion-textarea-md-h:not(.item-label),
+ion-item:not(.item-label) .sc-ion-textarea-md-h {
+  --padding-start: 0;
+  margin: auto;
+}
+
 @media (max-width: 768px) {
   .form-container ion-card {
     min-width: 320px;
