@@ -191,25 +191,41 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   isPromotionValid(promotion: Promotion): boolean {
-    if (
-      promotion.valid_from === undefined ||
-      promotion.valid_to === undefined
-    ) {
-      return false;
-    }
     const currentDate = this.getCurrentDate();
-    const validFrom = new Date(promotion.valid_from);
-    const validTo = new Date(promotion.valid_to);
-    return (
-      currentDate >= validFrom &&
-      currentDate <= validTo &&
+
+    if (
+      (!promotion.valid_from || !promotion.valid_to) &&
       this.isCurrentDayOfWeekValid(promotion)
-    );
+    ) {
+      return true;
+    }
+
+    if (promotion.valid_from && promotion.valid_to) {
+      const validFrom = new Date(promotion.valid_from);
+      const validTo = new Date(promotion.valid_to);
+      if (
+        currentDate >= validFrom &&
+        currentDate <= validTo &&
+        !this.hasDays(promotion)
+      ) {
+        return true;
+      }
+      return (
+        currentDate >= validFrom &&
+        currentDate <= validTo &&
+        this.isCurrentDayOfWeekValid(promotion)
+      );
+    }
+
+    return false;
   }
 
   isCurrentDayOfWeekValid(promotion: Promotion): boolean {
     const currentDayOfWeek = new Date().getDay();
-    console.log(currentDayOfWeek);
     return promotion.days_of_week?.includes(currentDayOfWeek) || false;
+  }
+
+  hasDays(promotion: Promotion) {
+    return promotion.days_of_week && promotion.days_of_week.length > 0;
   }
 }
