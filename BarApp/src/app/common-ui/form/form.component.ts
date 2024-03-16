@@ -159,12 +159,13 @@ export class FormComponent implements OnInit {
             id: result.id,
             description: result.name != null ? result.name : result.description,
           };
-          const elementFound = this.combosFields[index].find(
+          this.combosFields[index].push(option);
+          /*const elementFound = this.combosFields[index].find(
             r => r.id == option.id
           );
           if (elementFound == undefined) {
             this.combosFields[index].push(option);
-          }
+          }*/
         });
       });
     });
