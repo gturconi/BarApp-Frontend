@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { finalize, switchMap } from 'rxjs/operators';
+import { Subject, forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
 
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 import { INFO_PROM } from '@common/constants/messages.constant';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-promotions-form',
   templateUrl: './promotions-form.component.html',
   styleUrls: ['./promotions-form.component.scss'],
@@ -40,6 +41,7 @@ export class PromotionsFormComponent implements OnInit {
   myButtons: Button[] = [];
 
   selectedCategories: string[] = [];
+  productsList: EntityListResponse<Products>[] = [];
   productOptions: any[] = [];
 
   comboParam: DropdownParam[] = [
@@ -106,32 +108,71 @@ export class PromotionsFormComponent implements OnInit {
           ?.setValue(validFromDate.toISOString().split('T')[0]);
       }
       this.form.get('baja')?.setValue(data.baja);
-      //this.comboParam[0].defaultValue!.next(data.category!);
-      //this.form.controls['Categoria']?.setValue(this.idCat);
     });
   }
 
-  async loadProducts(selectedCategories: string[]) {
-    if (selectedCategories.length > 0) {
+  async loadProducts() {
+    let res: EntityListResponse<Products>;
+    this.productsList = [];
+
+    this.selectedCategories = this.form.controls['Categoria'].value;
+    if (this.selectedCategories.length > 0) {
       this.loading = await this.loadingService.loading();
       await this.loading.present();
     }
-    selectedCategories.forEach(categoryId => {
-      this.productsTypeService.getProductsType(categoryId).subscribe(data => {
-        this.productsService
-          .getProducts(undefined, undefined, data.description)
-          .subscribe(productsResponse => {
-            this.comboParam[1].fields!.next(productsResponse);
-            if (this.id) this.autocompleteForm();
-            else {
-              const prod = productsResponse.results;
-              this.comboParam[1].defaultValue!.next(prod[1]?.name!);
-              this.form.controls['Productos']?.setValue(prod[1]?.id);
-            }
-            this.loading.dismiss();
+
+    const requests = this.selectedCategories.map(categoryId =>
+      this.productsTypeService
+        .getProductsType(categoryId)
+        .pipe(
+          switchMap(data =>
+            this.productsService.getProducts(
+              undefined,
+              undefined,
+              data.description
+            )
+          )
+        )
+    );
+
+    forkJoin(requests)
+      .pipe(
+        finalize(() => {
+          const combinedResults: Products[] = [];
+          const resultSet = new Set<Products>();
+          this.productsList.map(productsResponse => {
+            productsResponse.results.forEach(result => resultSet.add(result));
           });
-      });
-    });
+
+          resultSet.forEach(result => combinedResults.push(result));
+
+          res = new EntityListResponse(
+            combinedResults.length,
+            combinedResults,
+            1,
+            1
+          );
+          this.comboParam[1].fields!.next(res);
+          if (this.id) this.autocompleteForm();
+          else {
+            const prod = this.productsList[0].results;
+            this.comboParam[1].defaultValue!.next(prod[0]?.name!);
+            this.form.controls['Productos']?.setValue(prod[0]?.id);
+          }
+          this.loading.dismiss();
+        })
+      )
+      .subscribe(
+        productsResponses => {
+          productsResponses.forEach(productsResponse => {
+            this.productsList.push(productsResponse);
+          });
+          this.loading.dismiss();
+        },
+        (error: any) => {
+          this.loading.dismiss();
+        }
+      );
   }
 
   async loadCombos() {
@@ -152,7 +193,7 @@ export class PromotionsFormComponent implements OnInit {
         ?.valueChanges.subscribe((selectedCategories: string[]) => {
           this.selectedCategories = selectedCategories;
 
-          this.loadProducts(this.selectedCategories);
+          this.loadProducts();
         });
 
       this.loading.dismiss();

@@ -89,8 +89,6 @@ export class PromotionsDetailsComponent implements OnInit {
 
   getNombreDia(numeroDia: number): string {
     if (numeroDia >= 0 && numeroDia < this.diasDeLaSemana.length) {
-      console.log(numeroDia);
-      console.log(this.diasDeLaSemana[numeroDia]);
       return this.diasDeLaSemana[numeroDia];
     } else {
       return 'Día no válido';
