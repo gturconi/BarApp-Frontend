@@ -84,6 +84,14 @@
   margin: 10px 0;
 }
 
+.available {
+  color: var(--color-9);
+}
+
+.not-available {
+  color: var(--color-11);
+}
+
 .wrapper .item .item1-description {
   font-size: 13px;
   color: var(--color-7);

@@ -35,8 +35,14 @@
           </button>
         </div>
         <h3
+          *ngIf="!promotion.baja && isPromotionValid(promotion) && admin"
+          class="item1-title available"
+        >
+          Disponible
+        </h3>
+        <h3
           *ngIf="promotion.baja || !isPromotionValid(promotion)"
-          class="item1-title"
+          class="item1-title not-available"
         >
           No disponible
         </h3>
