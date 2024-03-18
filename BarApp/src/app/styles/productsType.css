@@ -107,7 +107,7 @@
 .scrollable {
   white-space: nowrap;
   overflow: hidden;
-  animation: scrollText 6s linear infinite;
+  animation: scrollText 12s linear infinite;
 }
 
 .offer-label {
