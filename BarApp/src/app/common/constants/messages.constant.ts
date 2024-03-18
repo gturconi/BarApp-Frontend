@@ -33,7 +33,7 @@ export const DELETE_OPTS_CART: SweetAlertOptions = {
 //info prom
 export const INFO_PROM: SweetAlertOptions = {
   icon: 'info',
-  html: 'Las promociones pueden ser válidas mediante un rango de fechas y/o mediante días de la semana.',
+  html: 'Las promociones son válidas dentro de un periodo de tiempo específico y/o en días de la semana determinados. <br> Además, se <u>restringirá</u> la posibilidad de agregar productos que no pertenezcan a una <u>categoría específica</u>. <br> Únicamente será posible añadir una promoción a aquellos productos que actualmente tengan <u>stock disponible</u>.',
 };
 
 //info discount
