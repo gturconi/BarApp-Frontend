@@ -136,7 +136,7 @@
 }
 
 .descriptions-container {
-  max-height: 97px;
+  max-height: 110px;
   overflow-y: auto;
   border: 1px solid var(--color-2);
   border-radius: 5px;
