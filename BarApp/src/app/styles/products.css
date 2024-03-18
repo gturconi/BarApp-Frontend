@@ -102,6 +102,12 @@ div.description {
   }
 }
 
+@media (min-width: 1500px) and (min-height: 700px) {
+  .productsList {
+    height: 89vh;
+  }
+}
+
 .item-p {
   display: flex;
   flex-wrap: nowrap;
