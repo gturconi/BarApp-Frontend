@@ -10,6 +10,7 @@
   margin: 0 auto;
   margin-bottom: 4rem;
   margin-top: 1rem;
+  word-break: break-all;
 }
 
 .promotion-date {
@@ -130,6 +131,7 @@
   font-size: 1em;
   text-align: center;
   border-radius: 5px;
+  min-width: 60px;
 }
 
 .descriptions-container {
@@ -164,5 +166,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+}
+
+@media (min-width: 768px) {
+  .desktop {
+    height: 122vh;
   }
 }
