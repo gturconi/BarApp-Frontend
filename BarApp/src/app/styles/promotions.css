@@ -53,7 +53,7 @@
   background-color: var(--color-11);
   color: var(--color-7);
   border-radius: 50%;
-  width: 70px;
+  width: fit-content;
   height: 70px;
   text-align: center;
   line-height: 70px;
