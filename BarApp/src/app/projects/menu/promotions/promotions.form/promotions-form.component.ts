@@ -141,9 +141,10 @@ export class PromotionsFormComponent implements OnInit {
           const combinedResults: Products[] = [];
           const resultSet = new Set<Products>();
           this.productsList.map(productsResponse => {
-            productsResponse.results.forEach(result => resultSet.add(result));
+            productsResponse.results.forEach(result => {
+              result.stock && resultSet.add(result);
+            });
           });
-
           resultSet.forEach(result => combinedResults.push(result));
 
           res = new EntityListResponse(
@@ -152,6 +153,8 @@ export class PromotionsFormComponent implements OnInit {
             1,
             1
           );
+          if (res.count > 0) this.form.controls['Productos']?.enable();
+          else this.form.controls['Productos']?.disable();
           this.comboParam[1].fields!.next(res);
           if (this.id) this.autocompleteForm();
           else {
@@ -195,7 +198,7 @@ export class PromotionsFormComponent implements OnInit {
 
           this.loadProducts();
         });
-
+      this.form.controls['Productos']?.disable();
       this.loading.dismiss();
     });
   }
@@ -308,6 +311,7 @@ export class PromotionsFormComponent implements OnInit {
       { controlName: 'image', required: !this.editMode },
       { controlName: 'baja' },
       { controlName: 'Categoria' },
+      { controlName: 'Productos' },
       {
         controlName: 'valid_from',
         required: false,

@@ -33,6 +33,7 @@ export class PromotionsDetailsComponent implements OnInit {
   admin: boolean = false;
   employee: boolean = false;
   isInCart: boolean = false;
+  mobileScreen = false;
   logged = false;
   diasDeLaSemana = [
     'Domingo',
@@ -59,6 +60,8 @@ export class PromotionsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.mobileScreen = window.innerWidth < 768;
+
     this.admin = this.loginService.isAdmin();
     this.employee = this.loginService.isEmployee();
     this.route.params.subscribe(params => {

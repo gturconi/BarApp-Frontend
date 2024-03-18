@@ -125,6 +125,7 @@ ion-icon {
   font-weight: bold;
   font-size: 16px;
   --highlight-color-valid: var(--color-6);
+  margin-bottom: 5px;
 }
 
 .form-combo::part(placeholder) {

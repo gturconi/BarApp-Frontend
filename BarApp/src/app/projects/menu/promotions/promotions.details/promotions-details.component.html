@@ -1,4 +1,7 @@
-<ion-content class="product-content">
+<ion-content
+  class="product-content"
+  [scrollY]="mobileScreen ? 'true' : 'false'"
+>
   <div class="container-body">
     @if(this.promotion){
     <ion-card class="details-promotion">
