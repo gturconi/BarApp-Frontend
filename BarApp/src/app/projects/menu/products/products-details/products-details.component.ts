@@ -18,7 +18,7 @@ import { Promotion } from '../../promotions/models/promotion';
 import {
   isCurrentDayOfWeekValid,
   hasDays,
-} from '../../common/validation-functions';
+} from '../../../../common/validations/validation-functions';
 
 @Component({
   selector: 'app-products-details',

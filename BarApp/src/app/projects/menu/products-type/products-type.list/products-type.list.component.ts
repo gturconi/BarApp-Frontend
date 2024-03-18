@@ -18,7 +18,7 @@ import { ProductsTypeService } from '../services/products-type.service';
 import { PromotionsService } from '../../promotions/services/promotions.service';
 
 import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
-import { isPromotionValid } from '../../common/validation-functions';
+import { isPromotionValid } from '../../../../common/validations/validation-functions';
 
 @Component({
   selector: 'app-products-type.list',

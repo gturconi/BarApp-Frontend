@@ -17,17 +17,12 @@
           }}</ion-card-title>
           <div
             *ngIf="
-              (this.product.promotions &&
-                this.product.promotions.length > 0 &&
-                this.product.promotions[0].discount &&
-                !this.product.promotions[0].price &&
-                !this.product.promotions[0].baja &&
-                isCurrentDayOfWeekValid(this.product.promotions[0])) ||
-              (this.product.promotions &&
-                this.product.promotions.length > 0 &&
-                this.product.promotions[0].discount &&
-                !this.product.promotions[0].price &&
-                !this.product.promotions[0].baja &&
+              this.product.promotions &&
+              this.product.promotions.length > 0 &&
+              this.product.promotions[0].discount &&
+              !this.product.promotions[0].price &&
+              !this.product.promotions[0].baja &&
+              (isCurrentDayOfWeekValid(this.product.promotions[0]) ||
                 !hasDays(this.product.promotions[0]))
             "
             class="dis-price"
@@ -47,16 +42,6 @@
             "
             >${{ this.product.price! * this.quantity }}</span
           >
-          <span
-            *ngIf="
-              this.product.promotions &&
-              this.product.promotions.length > 0 &&
-              this.product.promotions[0].discount &&
-              this.product.promotions[0].price
-            "
-            >${{ this.product.price! * this.quantity }}</span
-          >
-
           <div
             *ngIf="
               this.product.promotions &&
@@ -68,9 +53,8 @@
             <span
               class="crossed-out-price"
               *ngIf="
-                (!this.product.promotions[0].baja &&
-                  isCurrentDayOfWeekValid(this.product.promotions[0])) ||
-                (!this.product.promotions[0].baja &&
+                !this.product.promotions[0].baja &&
+                (isCurrentDayOfWeekValid(this.product.promotions[0]) ||
                   !hasDays(this.product.promotions[0]))
               "
             >

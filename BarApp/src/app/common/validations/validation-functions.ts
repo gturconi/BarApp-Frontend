@@ -1,4 +1,4 @@
-import { Promotion } from '../promotions/models/promotion';
+import { Promotion } from '../../projects/menu/promotions/models/promotion';
 
 export function isPromotionValid(promotion: Promotion) {
   const currentDate = getCurrentDate();
@@ -14,17 +14,13 @@ export function isPromotionValid(promotion: Promotion) {
     const validFrom = new Date(promotion.valid_from);
     const validTo = new Date(promotion.valid_to);
     if (
-      currentDate >= validFrom &&
-      currentDate <= validTo &&
-      !hasDays(promotion)
+      (currentDate >= validFrom &&
+        currentDate <= validTo &&
+        !hasDays(promotion)) ||
+      isCurrentDayOfWeekValid(promotion)
     ) {
       return true;
     }
-    return (
-      currentDate >= validFrom &&
-      currentDate <= validTo &&
-      isCurrentDayOfWeekValid(promotion)
-    );
   }
 
   return false;

@@ -10,7 +10,7 @@ import { LoginService } from '@common/services/login.service';
 import { BadgeService } from '@common/services/badge.service';
 import { CartService } from '@common/services/cart.service';
 
-import { isPromotionValid } from '../../common/validation-functions';
+import { isPromotionValid } from '../../../../common/validations/validation-functions';
 
 import { Avatar } from '@common/models/avatar';
 import { Promotion } from '../models/promotion';
