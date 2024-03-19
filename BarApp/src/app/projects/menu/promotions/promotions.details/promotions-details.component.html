@@ -10,6 +10,14 @@
         [src]="imagesUrl$ | async"
         class="details-image-p promotion-image"
       />
+
+      <div *ngIf="promotion.price" class="price-prom">
+        Precio de la promoción:
+        <span class="price-prom-span"
+          >$ {{ this.promotion.price | number : '1.2-2' }}</span
+        >
+      </div>
+
       <div class="discount-overlay" *ngIf="promotion.discount">
         <div class="discount-content">
           <span class="discount-number" *ngIf="promotion.discount">
@@ -25,10 +33,7 @@
       <ion-card-header class="details-header">
         <ion-card-title class="details-title-promotion"
           >{{ this.promotion.description }}
-          <span *ngIf="promotion.price" class="price-prom">
-            ${{ this.promotion.price }}
-          </span></ion-card-title
-        >
+        </ion-card-title>
       </ion-card-header>
       <ion-card-content class="details-content">
         <div class="description-prom">
@@ -44,7 +49,7 @@
                 ) && admin
               "
             >
-              La promoción expiró:
+              Promoción no disponible:
             </p>
             <span
               *ngIf="
@@ -68,14 +73,12 @@
             </span>
             <span *ngIf="admin">
               {{
-                this.promotion.valid_from | date : 'dd-MM-yyyy - HH:mm' : 'UTC'
-              }}Hs </span
+                this.promotion.valid_from | date : 'dd-MM-yyyy' : 'UTC'
+              }} </span
             >hasta el
-            <span
-              >{{
-                this.promotion.valid_to | date : 'dd-MM-yyyy - HH:mm' : 'UTC'
-              }}Hs</span
-            >
+            <span>{{
+              this.promotion.valid_to | date : 'dd-MM-yyyy' : 'UTC'
+            }}</span>
           </div>
           <div
             *ngIf="

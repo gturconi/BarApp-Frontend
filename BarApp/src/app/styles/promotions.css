@@ -125,14 +125,19 @@
 }
 
 .price-prom {
-  margin-left: 10px;
+  margin-top: -5px;
   padding: 10px;
   background-color: var(--color-2);
   color: var(--color-7);
   font-size: 1em;
   text-align: center;
+}
+
+.price-prom-span {
+  background-color: var(--color-3);
+  color: var(--color-8);
+  padding: 5px;
   border-radius: 5px;
-  min-width: 60px;
 }
 
 .descriptions-container {
