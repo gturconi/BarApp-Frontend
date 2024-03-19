@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 import { InputComponent } from './input/input.component';
 import { FormComponent } from './form/form.component';
@@ -32,6 +33,7 @@ import { TableComponent } from './table/table.component';
     CommonUiRoutingModule,
     IonicModule,
     ReactiveFormsModule,
+    NgxCaptchaModule,
     FormsModule,
   ],
   exports: [

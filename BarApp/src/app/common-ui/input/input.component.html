@@ -55,7 +55,12 @@
       <ion-icon name="information-circle-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
-  }@else{
+  }@else if(type === 'captcha'){
+  <div class="recaptcha-input">
+    <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" [formControl]="control">
+    </ngx-recaptcha2>
+  </div>
+  } @else{
   <ion-input
     [type]="type"
     autocomplete="off"

@@ -79,6 +79,12 @@ export class LoginComponent implements OnInit {
       icon: 'material-symbols-outlined',
       iconName: 'lock',
     },
+    {
+      type: 'captcha',
+      name: 'recaptcha',
+      label: 'Captcha',
+      inputType: 'captcha',
+    },
   ];
 
   myButtons = [
@@ -98,5 +104,6 @@ export class LoginComponent implements OnInit {
   validationConfig = [
     { controlName: 'email', required: true, email: true },
     { controlName: 'password', required: true },
+    { controlName: 'recaptcha', required: true },
   ];
 }

@@ -19,6 +19,7 @@ export class InputComponent implements OnInit {
   isPasswords!: boolean;
   hide: boolean = true;
   imageUploaded = false;
+  siteKey = '6LejTp4pAAAAAKKuiGpghX2V6MJfniHKdqZdcUSk';
 
   constructor() {}
 

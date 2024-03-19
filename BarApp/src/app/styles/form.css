@@ -26,6 +26,15 @@
   margin-bottom: 15px;
 }
 
+.recaptcha-input {
+  margin: 0 auto;
+}
+
+.custom-input:has(.recaptcha-input) {
+  --background: transparent !important;
+  --border-color: transparent;
+}
+
 .material-symbols-outlined {
   margin-right: 10px;
 }
