@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-input',
@@ -17,7 +19,7 @@ export class InputComponent implements OnInit {
   isPasswords!: boolean;
   hide: boolean = true;
   imageUploaded = false;
-  siteKey = '6LejTp4pAAAAAKKuiGpghX2V6MJfniHKdqZdcUSk';
+  siteKey = environment.siteKey;
 
   constructor() {}
 
