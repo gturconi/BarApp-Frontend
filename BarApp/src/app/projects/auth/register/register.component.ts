@@ -93,6 +93,12 @@ export class RegisterComponent implements OnInit {
       icon: 'material-symbols-outlined',
       iconName: 'lock',
     },
+    {
+      type: 'captcha',
+      name: 'recaptcha',
+      label: 'Captcha',
+      inputType: 'captcha',
+    },
   ];
 
   myButtons = [
@@ -120,5 +126,6 @@ export class RegisterComponent implements OnInit {
     },
     { controlName: 'email', required: true, email: true },
     { controlName: 'password', required: true },
+    { controlName: 'recaptcha', required: true },
   ];
 }
