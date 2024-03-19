@@ -36,6 +36,7 @@
     "angularx-qrcode": "^17.0.0",
     "crypto-js": "^4.2.0",
     "ionicons": "^7.0.0",
+    "ngx-captcha": "^13.0.0",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.7.4",

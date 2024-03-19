@@ -5,7 +5,14 @@
   (keypress.enter)="submit()"
 >
   <ng-container *ngFor="let field of fields">
-    <ng-container *ngIf="field.type === 'input' || field.type === 'checkbox'">
+    <ng-container
+      *ngIf="
+        field.type === 'input' ||
+        field.type === 'checkbox' ||
+        field.type === 'textarea' ||
+        field.type === 'captcha'
+      "
+    >
       <app-input
         [icon]="field.icon"
         [iconName]="field.iconName"

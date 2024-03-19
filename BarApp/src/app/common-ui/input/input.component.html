@@ -32,7 +32,35 @@
     [min]="minDate"
   >
   </ion-input>
-  }@else{
+  }@else if(type === 'textarea'){
+  <ion-textarea
+    labelPlacement="floating"
+    fill="solid"
+    [label]="label"
+    counter="true"
+    maxlength="200"
+    [formControl]="control"
+    class="i-text-area"
+  ></ion-textarea>
+  }@else if(label === 'Descuento'){
+  <ion-input
+    type="number"
+    autocomplete="off"
+    [label]="label"
+    [formControl]="control"
+    label-placement="floating"
+  ></ion-input>
+  <ion-buttons slot="end">
+    <ion-button class="info-button" (click)="showNotification()">
+      <ion-icon name="information-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  }@else if(type === 'captcha'){
+  <div class="recaptcha-input">
+    <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" [formControl]="control">
+    </ngx-recaptcha2>
+  </div>
+  } @else{
   <ion-input
     [type]="type"
     autocomplete="off"
