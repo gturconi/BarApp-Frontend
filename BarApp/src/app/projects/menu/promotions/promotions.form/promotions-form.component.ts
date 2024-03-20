@@ -156,7 +156,7 @@ export class PromotionsFormComponent implements OnInit {
           const resultSet = new Set<Products>();
           this.productsList.map(productsResponse => {
             productsResponse.results.forEach(result => {
-              result.stock && resultSet.add(result);
+              !result.baja && result.stock && resultSet.add(result);
             });
           });
           resultSet.forEach(result => combinedResults.push(result));
@@ -205,7 +205,7 @@ export class PromotionsFormComponent implements OnInit {
     else {
       const days = res.results;
       this.comboParam[2].defaultValue!.next(days[0]?.description!);
-      this.form.controls['Dias']?.setValue(days[0]?.id);
+      //this.form.controls['Dias']?.setValue(days[0]?.id);
     }
   }
 
@@ -258,6 +258,19 @@ export class PromotionsFormComponent implements OnInit {
     if (!price && !discountValue) {
       this.toastrService.error(
         'Debe completar al menos uno de los campos: Precio o Descuento.'
+      );
+      return;
+    }
+
+    if (
+      !(
+        form.controls['valid_from'].value ||
+        form.controls['valid_to'].value ||
+        days.length > 0
+      )
+    ) {
+      this.toastrService.error(
+        'Debe seleccionar al menos una rango de fecha o días de la semana.'
       );
       return;
     }
@@ -358,8 +371,8 @@ export class PromotionsFormComponent implements OnInit {
       { controlName: 'discount', required: false, min: 0, max: 100 },
       { controlName: 'image', required: !this.editMode },
       { controlName: 'baja' },
-      { controlName: 'Categoria' },
-      { controlName: 'Productos' },
+      { controlName: 'Categoria', required: true },
+      { controlName: 'Productos', required: true },
       { controlName: 'Dias' },
       {
         controlName: 'valid_from',
