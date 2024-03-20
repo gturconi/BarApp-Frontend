@@ -2,7 +2,7 @@
   <div class="container-body">
     @if(promotionsList && promotionsList.length > 0){
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
-    <div class="wrapper">
+    <div class="wrapper" #PromWrapper (scroll)="onPromScroll($event)">
       @for(promotion of promotionsList; track promotion.id; let idx = $index) {
       @if((!admin && !promotion.baja) && (!admin && isPromotionValid(promotion))
       || admin){

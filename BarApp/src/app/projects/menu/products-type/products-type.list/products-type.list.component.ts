@@ -36,12 +36,16 @@ export class ProductsTypeListComponent implements OnInit {
   loading = true;
 
   currentPage = 1;
+  currentPromPage = 1;
   count = 0;
+  promCount = 0;
   infiniteScrollLoading = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('PromWrapper') promWrapperRef!: ElementRef<HTMLDivElement>;
+
   scrollingTimer: any;
 
   constructor(
@@ -78,6 +82,19 @@ export class ProductsTypeListComponent implements OnInit {
     }
   }
 
+  onPromScroll(event: Event) {
+    const element = event.target as HTMLElement;
+    const wrapper2 = this.promWrapperRef.nativeElement;
+    if (wrapper2.scrollHeight - wrapper2.scrollTop <= element.clientHeight) {
+      if (
+        this.promotionsList.length < this.promCount &&
+        !this.infiniteScrollLoading
+      ) {
+        this.loadMorePromData();
+      }
+    }
+  }
+
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.doSearch();
@@ -94,16 +111,21 @@ export class ProductsTypeListComponent implements OnInit {
         this.showData = true;
         this.loading = false;
       });
-      this.promotionsService.getPromotions().subscribe(data => {
-        this.promotionsList = data.results;
-        this.validPromotionsList = this.getValidPromotions(this.promotionsList);
-        this.count = data.count;
-        this.setImagesPromotions(this.promotionsList);
-        this.showData = true;
-      });
+      this.promotionsService
+        .getPromotions(this.currentPromPage, 2)
+        .subscribe(data => {
+          this.promotionsList = data.results;
+          this.validPromotionsList = this.getValidPromotions(
+            this.promotionsList
+          );
+          this.promCount = data.count;
+          this.setImagesPromotions(this.promotionsList);
+          this.showData = true;
+        });
     } finally {
       loading.dismiss();
       this.currentPage++;
+      this.currentPromPage++;
       this.infiniteScroll && this.infiniteScroll.complete();
     }
   }
@@ -122,6 +144,20 @@ export class ProductsTypeListComponent implements OnInit {
         this.productsTypeList.push(...response.results);
         this.setImages(this.productsTypeList);
         this.currentPage++;
+        this.infiniteScroll && this.infiniteScroll.complete();
+        this.infiniteScrollLoading = false;
+      });
+  }
+
+  loadMorePromData() {
+    this.infiniteScrollLoading = true;
+    this.promotionsService
+      .getPromotions(this.currentPromPage, 10)
+      .subscribe(data => {
+        this.promotionsList.push(...data.results);
+        this.validPromotionsList = this.getValidPromotions(this.promotionsList);
+        this.setImagesPromotions(this.promotionsList);
+        this.currentPromPage++;
         this.infiniteScroll && this.infiniteScroll.complete();
         this.infiniteScrollLoading = false;
       });
