@@ -20,6 +20,7 @@ import { Button, FormField } from '@common/models/formTypes';
 
 import Swal from 'sweetalert2';
 import { INFO_PROM } from '@common/constants/messages.constant';
+import { DaysOfWeek } from '@common/constants/days.of.week.enum';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +33,7 @@ export class PromotionsFormComponent implements OnInit {
   idCat = '';
   formTitle = 'Añadir Promoción';
   editMode = false;
+  days: number[] = [];
 
   loading!: HTMLIonLoadingElement;
 
@@ -44,6 +46,9 @@ export class PromotionsFormComponent implements OnInit {
   productsList: EntityListResponse<Products>[] = [];
   productOptions: any[] = [];
 
+  products: string[] = [];
+  product!: Products;
+
   comboParam: DropdownParam[] = [
     {
       title: 'Categoria',
@@ -54,6 +59,12 @@ export class PromotionsFormComponent implements OnInit {
     {
       title: 'Productos',
       fields: new Subject<EntityListResponse<any>>(),
+      defaultValue: new Subject<string>(),
+      isMultiple: true,
+    },
+    {
+      title: 'Dias',
+      fields: new Subject<any>(),
       defaultValue: new Subject<string>(),
       isMultiple: true,
     },
@@ -178,9 +189,27 @@ export class PromotionsFormComponent implements OnInit {
       );
   }
 
+  loadDays() {
+    const daysOfWeek = Object.keys(DaysOfWeek).map(key => ({
+      id: key,
+      description: key,
+    }));
+
+    const res = new EntityListResponse(daysOfWeek.length, daysOfWeek, 1, 1);
+
+    this.comboParam[2].fields!.next(res);
+    if (this.id) this.autocompleteForm();
+    else {
+      const days = res.results;
+      this.comboParam[2].defaultValue!.next(days[0]?.description!);
+      this.form.controls['Dias']?.setValue(days[0]?.id);
+    }
+  }
+
   async loadCombos() {
     this.loading = await this.loadingService.loading();
     await this.loading.present();
+    this.loadDays();
     this.productsTypeService.getProductsTypes().subscribe(response => {
       this.comboParam[0].fields!.next(response);
       if (this.id) this.autocompleteForm();
@@ -210,10 +239,25 @@ export class PromotionsFormComponent implements OnInit {
   async add(form: FormGroup) {
     const fileControl = form.controls['image'];
     const imageFile: File = fileControl.value;
-    const baja = form.controls['baja'].value ? 0 : 1;
-    const category = form.controls['Categoria'].value;
-    //ver si esta ok el descuento respecto al backend
+    const baja = form.controls['baja'].value ? 1 : 0;
     const discountValue = form.controls['discount'].value / 100;
+    const price = form.controls['price'].value;
+    const products: string[] = form.controls['Productos'].value;
+
+    this.products = products;
+
+    const daysArray = Object.values(DaysOfWeek);
+
+    const days = (form.controls['Dias'].value as String[]).map(day =>
+      daysArray.findIndex(dayOfWeek => dayOfWeek === day)
+    );
+
+    if (!price && !discountValue) {
+      this.toastrService.error(
+        'Debe completar al menos uno de los campos: Precio o Descuento.'
+      );
+      return;
+    }
 
     const formData = new FormData();
     formData.append('image', imageFile);
@@ -223,7 +267,8 @@ export class PromotionsFormComponent implements OnInit {
     formData.append('valid_from', form.controls['valid_from'].value);
     formData.append('valid_to', form.controls['valid_to'].value);
     formData.append('baja', baja.toString());
-    formData.append('idCat', category);
+    formData.append('products', JSON.stringify(products));
+    formData.append('days_of_week', JSON.stringify(days));
 
     const loading = await this.loadingService.loading();
     await loading.present();
@@ -231,7 +276,7 @@ export class PromotionsFormComponent implements OnInit {
       .postPromotions(formData)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
-        this.toastrService.success('Producto añadido');
+        this.toastrService.success('Promoción añadida');
         loading.dismiss();
         this.location.back();
       });
@@ -312,6 +357,7 @@ export class PromotionsFormComponent implements OnInit {
       { controlName: 'baja' },
       { controlName: 'Categoria' },
       { controlName: 'Productos' },
+      { controlName: 'Dias' },
       {
         controlName: 'valid_from',
         required: false,

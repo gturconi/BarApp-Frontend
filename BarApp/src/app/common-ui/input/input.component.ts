@@ -28,7 +28,7 @@ export class InputComponent implements OnInit {
     if (this.type == 'password') this.isPasswords = true;
 
     if (this.type === 'checkbox') {
-      if (this.label === 'Baja') {
+      if (this.label === 'Baja' || this.label === 'Ocultar promoción') {
         this.control.setValue(false);
       } else {
         this.control.setValue(true);
