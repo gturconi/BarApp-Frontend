@@ -41,36 +41,8 @@
             class="promotion-date"
             *ngIf="this.promotion.valid_from && this.promotion.valid_to"
           >
-            <p
-              *ngIf="
-                !isCurrentDateInRange(
-                  promotion.valid_from,
-                  promotion.valid_to
-                ) && admin
-              "
-            >
-              Promoción no disponible:
-            </p>
-            <span
-              *ngIf="
-                isCurrentDateInRange(
-                  promotion.valid_from,
-                  promotion.valid_to
-                ) && admin
-              "
-              class="sp"
-              >Vigente desde
-            </span>
-            <span
-              *ngIf="
-                isCurrentDateInRange(
-                  promotion.valid_from,
-                  promotion.valid_to
-                ) && !admin
-              "
-              class="sp"
-              >Vigente
-            </span>
+            <span *ngIf="admin" class="sp">Vigente desde </span>
+            <span *ngIf="!admin" class="sp">Vigente </span>
             <span *ngIf="admin">
               {{
                 this.promotion.valid_from | date : 'dd-MM-yyyy' : 'UTC'
