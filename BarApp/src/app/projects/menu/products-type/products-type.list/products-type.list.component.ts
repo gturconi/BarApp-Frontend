@@ -112,7 +112,7 @@ export class ProductsTypeListComponent implements OnInit {
         this.loading = false;
       });
       this.promotionsService
-        .getPromotions(this.currentPromPage, 2)
+        .getPromotions(this.currentPromPage, 10)
         .subscribe(data => {
           this.promotionsList = data.results;
           this.validPromotionsList = this.getValidPromotions(
