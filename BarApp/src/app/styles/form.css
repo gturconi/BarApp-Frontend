@@ -239,3 +239,13 @@ ion-item:not(.item-label) .sc-ion-textarea-md-h {
     margin-bottom: 4rem;
   }
 }
+
+@media (min-width: 1360px) and (min-height: 599px) {
+  .general-info {
+    margin-top: -30px !important;
+    color: black;
+    text-transform: none;
+    font-size: smaller;
+    border-radius: 10px;
+  }
+}

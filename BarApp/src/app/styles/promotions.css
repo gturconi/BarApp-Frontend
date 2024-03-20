@@ -180,3 +180,11 @@
     height: 122vh;
   }
 }
+
+@media (min-width: 1360px) and (min-height: 599px) {
+  .prom-form {
+    height: 123.2vh;
+    margin-bottom: 10rem;
+    padding-bottom: 10rem;
+  }
+}

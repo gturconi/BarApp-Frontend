@@ -49,6 +49,8 @@ export class PromotionsFormComponent implements OnInit {
   products: string[] = [];
   product!: Products;
 
+  mobileScreen = false;
+
   comboParam: DropdownParam[] = [
     {
       title: 'Categoria',
@@ -96,6 +98,7 @@ export class PromotionsFormComponent implements OnInit {
       });
       this.setFormInputs();
       this.setupValidationConfig();
+      this.mobileScreen = window.innerWidth < 768;
     });
   }
 
