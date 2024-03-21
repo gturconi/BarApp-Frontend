@@ -368,7 +368,7 @@ export class PromotionsFormComponent implements OnInit {
     this.validationConfig = [
       { controlName: 'description', required: true },
       { controlName: 'price', required: false, min: 0 },
-      { controlName: 'discount', required: false, min: 0, max: 100 },
+      { controlName: 'discount', required: false, min: 1, max: 100 },
       { controlName: 'image', required: !this.editMode },
       { controlName: 'baja' },
       { controlName: 'Categoria', required: true },
