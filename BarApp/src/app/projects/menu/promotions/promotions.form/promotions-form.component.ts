@@ -122,7 +122,46 @@ export class PromotionsFormComponent implements OnInit {
           ?.setValue(validFromDate.toISOString().split('T')[0]);
       }
       this.form.get('baja')?.setValue(data.baja);
+      /*
+      const prods = data.products;
+      const categories: string[] = [];
+      if (prods) {
+        prods.forEach(prod => {
+          this.productsService.getProduct(prod.id).subscribe(data => {
+            if (data.category) {
+              const productCategory: string = data.category;
+              if (categories.indexOf(productCategory) === -1) {
+                categories.push(productCategory);
+              }
+            }
+          });
+        });
+      }
+
+      
+      this.comboParam[0].defaultValue!.next(categories);
+      this.form.controls['Categoria']?.setValue(this.selectedCategories);
+      */
+      let nameDays: string[] | undefined;
+      const days = data.days_of_week;
+      if (days) {
+        nameDays = this.numbersToDaysOfWeek(days);
+      }
+
+      this.comboParam[2].defaultValue!.next(nameDays);
+      this.form.controls['Dias']?.setValue(nameDays);
     });
+  }
+
+  numbersToDaysOfWeek(numberDays: number[]): string[] {
+    const nameDaysOfWeek: string[] = [];
+    numberDays.forEach(numDay => {
+      const day = Object.values(DaysOfWeek)[numDay];
+      if (day) {
+        nameDaysOfWeek.push(day);
+      }
+    });
+    return nameDaysOfWeek;
   }
 
   async loadProducts() {
@@ -298,7 +337,63 @@ export class PromotionsFormComponent implements OnInit {
       });
   }
 
-  async edit(form: FormGroup) {}
+  async edit(form: FormGroup) {
+    let imageFile = null;
+    const baja = form.controls['baja'].value ? 1 : 0;
+    const discountValue = form.controls['discount'].value / 100;
+    const price = form.controls['price'].value;
+    const products: string[] = form.controls['Productos'].value;
+    const daysArray = Object.values(DaysOfWeek);
+    const days = (form.controls['Dias'].value as String[]).map(day =>
+      daysArray.findIndex(dayOfWeek => dayOfWeek === day)
+    );
+
+    if (!price && !discountValue) {
+      this.toastrService.error(
+        'Debe completar al menos uno de los campos: Precio o Descuento.'
+      );
+      return;
+    }
+
+    if (
+      !(
+        form.controls['valid_from'].value ||
+        form.controls['valid_to'].value ||
+        days.length > 0
+      )
+    ) {
+      this.toastrService.error(
+        'Debe seleccionar al menos una rango de fecha o días de la semana.'
+      );
+      return;
+    }
+
+    const formData = new FormData();
+    const fileControl = form.controls['image'];
+    if (fileControl.value) {
+      imageFile = fileControl.value;
+      formData.append('image', imageFile);
+    }
+    formData.append('description', form.controls['description'].value);
+    formData.append('price', form.controls['price'].value);
+    formData.append('discount', discountValue.toString());
+    formData.append('valid_from', form.controls['valid_from'].value);
+    formData.append('valid_to', form.controls['valid_to'].value);
+    formData.append('baja', baja.toString());
+    formData.append('products', JSON.stringify(products));
+    formData.append('days_of_week', JSON.stringify(days));
+
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.promotionService
+      .putPromotions(this.id, formData)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(() => {
+        this.toastrService.success('Promoción editada');
+        loading.dismiss();
+        this.location.back();
+      });
+  }
 
   setFormInputs() {
     this.formFields = [
@@ -368,7 +463,7 @@ export class PromotionsFormComponent implements OnInit {
     this.validationConfig = [
       { controlName: 'description', required: true },
       { controlName: 'price', required: false, min: 0 },
-      { controlName: 'discount', required: false, min: 1, max: 100 },
+      { controlName: 'discount', required: false, min: 0, max: 100 },
       { controlName: 'image', required: !this.editMode },
       { controlName: 'baja' },
       { controlName: 'Categoria', required: true },
