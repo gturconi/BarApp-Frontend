@@ -14,7 +14,7 @@
         <picture class="image-container-p">
           <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         </picture>
-        <article>
+        <article class="details-order">
           <span class="promotion-label" *ngIf="!isProduct(order)">
             Promoción
           </span>

@@ -104,12 +104,8 @@
   }
 }
 
-@media (max-width: 530px) {
-  .productsItem {
-    word-break: break-all;
-  }
-  .promotion-label ~ .title {
-    padding: 900px;
-    word-break: break-all;
+@media (max-width: 678px) {
+  .details-order {
+    margin-top: 10px;
   }
 }
