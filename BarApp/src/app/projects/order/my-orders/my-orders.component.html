@@ -19,10 +19,16 @@
             Promoción
           </span>
           <span class="title" *ngIf="isProduct(order)">
-            {{ castProduct(order.product).name }}
+            {{
+              (castProduct(order.product).name | slice : 0 : maxCharacters) +
+                (isLongName(order) ? '...' : '')
+            }}
           </span>
           <span class="title" *ngIf="!isProduct(order)">
-            {{ order.product.description }}
+            {{
+              (order.product.description | slice : 0 : maxCharacters) +
+                (isLongName(order) ? '...' : '')
+            }}
           </span>
           <div class="order-info">
             <div class="price">

@@ -24,6 +24,7 @@ export class MyOrdersComponent implements OnInit {
   imagesUrl$!: Observable<string>[];
   showData: boolean = false;
   total = 0;
+  maxCharacters = 50;
 
   constructor(
     private badgeService: BadgeService,
@@ -75,6 +76,12 @@ export class MyOrdersComponent implements OnInit {
 
   castProduct(order: Products | Promotion): Products {
     return order as Products;
+  }
+
+  isLongName(order: CartProduct): boolean {
+    if (!this.isProduct(order))
+      return order.product.description!.length > this.maxCharacters;
+    else return (order.product as Products).name!.length > this.maxCharacters;
   }
 
   decrement(order: Products | Promotion) {
