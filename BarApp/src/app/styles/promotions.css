@@ -22,6 +22,7 @@
   border-radius: 5px;
   text-align: center;
   margin-bottom: 15px;
+  word-break: normal;
 }
 
 .promotion-date span {
@@ -43,6 +44,7 @@
 .details-title-promotion {
   font-size: 1em;
   font-weight: bold;
+  word-break: normal;
 }
 
 .discount-overlay {
