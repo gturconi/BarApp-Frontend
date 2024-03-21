@@ -72,6 +72,24 @@
   font-size: 12px;
 }
 
+@media (min-height: 932px) {
+  .order-button {
+    padding-top: 5rem;
+  }
+}
+
+@media (min-height: 900px) {
+  .order-button {
+    margin-top: 15rem;
+  }
+}
+
+@media (min-height: 740px) {
+  .order-button {
+    margin-top: 10rem;
+  }
+}
+
 @media (max-width: 768px) {
   .order-wrapper {
     grid-template-rows: auto minmax(200px, 280px) auto;
@@ -79,5 +97,19 @@
 
   .orders-wrapper {
     height: 50vh !important;
+  }
+
+  .order-button {
+    margin-bottom: 5rem;
+  }
+}
+
+@media (max-width: 530px) {
+  .productsItem {
+    word-break: break-all;
+  }
+  .promotion-label ~ .title {
+    padding: 900px;
+    word-break: break-all;
   }
 }
