@@ -107,7 +107,7 @@ export class PromotionsFormComponent implements OnInit {
       this.form.get('description')?.setValue(data.description);
       if (!data.price) {
         this.form.get('price')?.setValue(undefined);
-      }
+      } else this.form.get('price')?.setValue(data.price);
       if (data.discount !== undefined) {
         this.form.get('discount')?.setValue(data.discount * 100);
       }
