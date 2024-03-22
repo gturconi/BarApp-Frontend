@@ -12,7 +12,8 @@ export class Products {
     promotions: Promotion[],
     baja = 0,
     quantity = 1,
-    category: string
+    category: string,
+    idCat: string
   ) {
     this.id = id;
     this.name = name;
@@ -24,6 +25,7 @@ export class Products {
     this.baja = baja;
     this.quantity = quantity;
     this.category = category;
+    this.idCat = idCat;
   }
 
   id: string;
@@ -36,4 +38,5 @@ export class Products {
   baja?: number;
   quantity?: number;
   category?: string;
+  idCat?: string;
 }
