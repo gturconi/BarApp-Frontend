@@ -105,7 +105,9 @@ export class PromotionsFormComponent implements OnInit {
   async autocompleteForm() {
     this.promotionService.getPromotion(this.id).subscribe(data => {
       this.form.get('description')?.setValue(data.description);
-      this.form.get('price')?.setValue(data.price);
+      if (!data.price) {
+        this.form.get('price')?.setValue(undefined);
+      }
       if (data.discount !== undefined) {
         this.form.get('discount')?.setValue(data.discount * 100);
       }
@@ -122,26 +124,38 @@ export class PromotionsFormComponent implements OnInit {
           ?.setValue(validFromDate.toISOString().split('T')[0]);
       }
       this.form.get('baja')?.setValue(data.baja);
-      /*
+
       const prods = data.products;
       const categories: string[] = [];
+      const IDcategories: string[] = [];
       if (prods) {
         prods.forEach(prod => {
-          this.productsService.getProduct(prod.id).subscribe(data => {
-            if (data.category) {
-              const productCategory: string = data.category;
-              if (categories.indexOf(productCategory) === -1) {
+          this.productsService.getProduct(prod.id).subscribe(productData => {
+            if (productData.category && productData.idCat) {
+              const productCategory: string = productData.category;
+              const categoryID: string = productData.idCat;
+              if (
+                categories.indexOf(productCategory) === -1 &&
+                IDcategories.indexOf(categoryID) === -1
+              ) {
                 categories.push(productCategory);
+                IDcategories.push(categoryID);
               }
             }
           });
         });
       }
 
-      
+      this.selectedCategories = IDcategories;
+
+      this.loadProducts();
+
       this.comboParam[0].defaultValue!.next(categories);
-      this.form.controls['Categoria']?.setValue(this.selectedCategories);
-      */
+      this.form.controls['Categoria']?.setValue(IDcategories);
+
+      this.comboParam[1].defaultValue!.next(prods!.map(p => p.name));
+      this.form.controls['Productos']?.setValue(prods!.map(p => p.id));
+
       let nameDays: string[] | undefined;
       const days = data.days_of_week;
       if (days) {
@@ -207,14 +221,15 @@ export class PromotionsFormComponent implements OnInit {
             1
           );
           if (res.count > 0) this.form.controls['Productos']?.enable();
-          else this.form.controls['Productos']?.disable();
+          else if (!this.id) this.form.controls['Productos']?.disable();
           this.comboParam[1].fields!.next(res);
-          if (this.id) this.autocompleteForm();
-          else {
-            const prod = this.productsList[0].results;
+
+          const prod = this.productsList[0].results;
+          if (!this.id) {
             this.comboParam[1].defaultValue!.next(prod[0]?.name!);
             this.form.controls['Productos']?.setValue(prod[0]?.id);
           }
+
           this.loading.dismiss();
         })
       )
@@ -240,12 +255,10 @@ export class PromotionsFormComponent implements OnInit {
     const res = new EntityListResponse(daysOfWeek.length, daysOfWeek, 1, 1);
 
     this.comboParam[2].fields!.next(res);
-    if (this.id) this.autocompleteForm();
-    else {
-      const days = res.results;
-      this.comboParam[2].defaultValue!.next(days[0]?.description!);
-      //this.form.controls['Dias']?.setValue(days[0]?.id);
-    }
+
+    const days = res.results;
+    this.comboParam[2].defaultValue!.next(days[0]?.description!);
+    //this.form.controls['Dias']?.setValue(days[0]?.id);
   }
 
   async loadCombos() {
@@ -269,7 +282,7 @@ export class PromotionsFormComponent implements OnInit {
 
           this.loadProducts();
         });
-      this.form.controls['Productos']?.disable();
+      if (!this.id) this.form.controls['Productos']?.disable();
       this.loading.dismiss();
     });
   }
@@ -341,7 +354,7 @@ export class PromotionsFormComponent implements OnInit {
     let imageFile = null;
     const baja = form.controls['baja'].value ? 1 : 0;
     const discountValue = form.controls['discount'].value / 100;
-    const price = form.controls['price'].value;
+    let price = form.controls['price'].value;
     const products: string[] = form.controls['Productos'].value;
     const daysArray = Object.values(DaysOfWeek);
     const days = (form.controls['Dias'].value as String[]).map(day =>
@@ -375,7 +388,7 @@ export class PromotionsFormComponent implements OnInit {
       formData.append('image', imageFile);
     }
     formData.append('description', form.controls['description'].value);
-    formData.append('price', form.controls['price'].value);
+    formData.append('price', price);
     formData.append('discount', discountValue.toString());
     formData.append('valid_from', form.controls['valid_from'].value);
     formData.append('valid_to', form.controls['valid_to'].value);
