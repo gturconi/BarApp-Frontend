@@ -168,10 +168,10 @@ export class ProductsFormComponent implements OnInit {
         iconName: 'restaurant',
       },
       {
-        type: 'input',
+        type: 'textarea',
         name: 'description',
         label: 'Descripción',
-        inputType: 'text',
+        inputType: 'textarea',
         icon: 'material-symbols-outlined',
         iconName: 'restaurant',
       },
