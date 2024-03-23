@@ -4,6 +4,7 @@
 .form-container ion-card {
   background-color: var(--color-4);
   min-width: 400px;
+  max-width: 400px;
 }
 
 .form-container {
