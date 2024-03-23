@@ -68,7 +68,6 @@ export class ProductsDetailsComponent implements OnInit {
     try {
       this.productsService.getProduct(id).subscribe(data => {
         this.product = data;
-        console.log(this.product);
         this.imagesUrl$ = this.getImage(this.product);
         this.isLoading = false;
       });

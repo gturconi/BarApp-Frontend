@@ -127,8 +127,6 @@ export class ProductsFormComponent implements OnInit {
   }
 
   async edit(form: FormGroup) {
-    console.log(form);
-
     let imageFile = null;
     const stockValue = form.controls['stock'].value ? 1 : 0;
     const category = form.controls['Categoria'].value;
