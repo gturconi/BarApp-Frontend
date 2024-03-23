@@ -1,5 +1,10 @@
 @import 'variables.css';
 
+.form-container-p {
+  background-color: var(--color-4);
+  min-width: 400px;
+}
+
 .avatar {
   width: 140px;
   height: 140px;
