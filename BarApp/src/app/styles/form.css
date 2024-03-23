@@ -250,3 +250,23 @@ ion-item:not(.item-label) .sc-ion-textarea-md-h {
     border-radius: 10px;
   }
 }
+
+/*para modificar la altura del fondo de los pop-up por ej: combobox*/
+ion-alert {
+  height: 125vh;
+  mask-image: linear-gradient(rgba(0, 0, 0, 1) 80%, transparent);
+}
+@media (max-width: 768px) {
+  ion-alert {
+    height: 100vh;
+    mask-image: none;
+  }
+
+  .alert-wrapper.sc-ion-alert-md {
+    margin-top: none;
+  }
+}
+.alert-wrapper.sc-ion-alert-md {
+  margin-top: -200px;
+  background: var(--ion-backdrop-color);
+}
