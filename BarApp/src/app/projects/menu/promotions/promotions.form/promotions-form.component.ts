@@ -33,7 +33,6 @@ export class PromotionsFormComponent implements OnInit {
   idCat = '';
   formTitle = 'Añadir Promoción';
   editMode = false;
-  days: number[] = [];
 
   loading!: HTMLIonLoadingElement;
 
@@ -111,18 +110,18 @@ export class PromotionsFormComponent implements OnInit {
       if (data.discount !== undefined) {
         this.form.get('discount')?.setValue(data.discount * 100);
       }
-      if (data.valid_from !== undefined) {
+      if (data.valid_from) {
         const validFromDate = new Date(data.valid_from);
         this.form
           .get('valid_from')
           ?.setValue(validFromDate.toISOString().split('T')[0]);
-      }
-      if (data.valid_to !== undefined) {
+      } else this.form.get('valid_from')?.setValue(undefined);
+      if (data.valid_to) {
         const validFromDate = new Date(data.valid_to);
         this.form
           .get('valid_to')
           ?.setValue(validFromDate.toISOString().split('T')[0]);
-      }
+      } else this.form.get('valid_to')?.setValue(undefined);
       this.form.get('baja')?.setValue(data.baja);
 
       const prods = data.products;
@@ -361,6 +360,13 @@ export class PromotionsFormComponent implements OnInit {
       daysArray.findIndex(dayOfWeek => dayOfWeek === day)
     );
 
+    const valid_from = form.controls['valid_from'].value
+      ? new Date(form.controls['valid_from'].value).toISOString()
+      : null;
+    const valid_to = form.controls['valid_to'].value
+      ? new Date(form.controls['valid_to'].value).toISOString()
+      : null;
+
     if (!price && !discountValue) {
       this.toastrService.error(
         'Debe completar al menos uno de los campos: Precio o Descuento.'
@@ -390,8 +396,8 @@ export class PromotionsFormComponent implements OnInit {
     formData.append('description', form.controls['description'].value);
     formData.append('price', price);
     formData.append('discount', discountValue.toString());
-    formData.append('valid_from', form.controls['valid_from'].value);
-    formData.append('valid_to', form.controls['valid_to'].value);
+    formData.append('valid_from', valid_from ? valid_from : '');
+    formData.append('valid_to', valid_to ? valid_to : '');
     formData.append('baja', baja.toString());
     formData.append('products', JSON.stringify(products));
     formData.append('days_of_week', JSON.stringify(days));
