@@ -97,6 +97,7 @@ ion-accordion.answer ion-item[slot='header'] {
   .main-container {
     max-width: 90%;
     margin: 40px auto 30px;
+    overflow: hidden;
   }
   .titulo {
     font-size: 22px;
@@ -140,10 +141,13 @@ ion-accordion.answer ion-item[slot='header'] {
   .accordion {
     max-height: 300px;
     overflow-y: auto;
+    margin-bottom: 20%;
   }
 
   .accordion-container {
     max-height: 250px;
+    overflow-y: auto;
+    max-height: calc(100vh - 280px);
     overflow-y: auto;
   }
 }
