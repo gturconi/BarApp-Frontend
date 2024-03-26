@@ -42,6 +42,7 @@ export class PromotionsFormComponent implements OnInit {
   myButtons: Button[] = [];
 
   selectedCategories: string[] = [];
+  productsCategories: Products[] | undefined = [];
   productsList: EntityListResponse<Products>[] = [];
   productOptions: any[] = [];
 
@@ -128,8 +129,9 @@ export class PromotionsFormComponent implements OnInit {
       const categories: string[] = [];
       const IDcategories: string[] = [];
       if (prods) {
-        prods.forEach(prod => {
+        prods.forEach((prod, index) => {
           this.productsService.getProduct(prod.id).subscribe(productData => {
+            this.productsCategories!.push(productData);
             if (productData.category && productData.idCat) {
               const productCategory: string = productData.category;
               const categoryID: string = productData.idCat;
@@ -141,19 +143,24 @@ export class PromotionsFormComponent implements OnInit {
                 IDcategories.push(categoryID);
               }
             }
+
+            if (index === prods.length - 1) {
+              this.loadProducts();
+            }
           });
         });
       }
 
       this.selectedCategories = IDcategories;
 
-      this.loadProducts();
-
       this.comboParam[0].defaultValue!.next(categories);
       this.form.controls['Categoria']?.setValue(IDcategories);
 
+      this.setProductsCombo();
+      /*
       this.comboParam[1].defaultValue!.next(prods!.map(p => p.name));
       this.form.controls['Productos']?.setValue(prods!.map(p => p.id));
+      */
 
       let nameDays: string[] | undefined;
       const days = data.days_of_week;
@@ -163,6 +170,27 @@ export class PromotionsFormComponent implements OnInit {
 
       this.comboParam[2].defaultValue!.next(nameDays);
       this.form.controls['Dias']?.setValue(nameDays);
+    });
+  }
+
+  //los productos de la promocion (de la DB)
+  //las categorias seleccionadas
+  //limpiamos el combo
+  //si el producto pertenece a una categoria seleccionada lo seteamos
+
+  cleanProductsCombo() {
+    this.form.controls['Productos']?.reset();
+  }
+
+  setProductsCombo() {
+    this.cleanProductsCombo();
+    this.productsCategories?.map(prod => {
+      console.log('for each', prod);
+      if (this.selectedCategories.indexOf(prod.idCat!) !== -1) {
+        console.log('hola');
+        this.comboParam[1].defaultValue!.next(prod.name);
+        this.form.controls['Productos']?.setValue(prod.id);
+      }
     });
   }
 
@@ -278,7 +306,6 @@ export class PromotionsFormComponent implements OnInit {
         .get('Categoria')
         ?.valueChanges.subscribe((selectedCategories: string[]) => {
           this.selectedCategories = selectedCategories;
-
           this.loadProducts();
         });
       if (!this.id) this.form.controls['Productos']?.disable();
@@ -350,15 +377,22 @@ export class PromotionsFormComponent implements OnInit {
   }
 
   async edit(form: FormGroup) {
-    let imageFile = null;
+    console.log(form.controls);
+    /*let imageFile = null;
     const baja = form.controls['baja'].value ? 1 : 0;
     const discountValue = form.controls['discount'].value / 100;
     let price = form.controls['price'].value;
+
+    const categories = form.controls['Categoria'].value;
     const products: string[] = form.controls['Productos'].value;
     const daysArray = Object.values(DaysOfWeek);
-    const days = (form.controls['Dias'].value as String[]).map(day =>
-      daysArray.findIndex(dayOfWeek => dayOfWeek === day)
-    );
+    const days = form.controls['Dias'].value;
+
+    if (days != undefined && days.length > 0) {
+      days.map((day: string) =>
+        daysArray.findIndex(dayOfWeek => dayOfWeek === day)
+      );
+    }
 
     const valid_from = form.controls['valid_from'].value
       ? new Date(form.controls['valid_from'].value).toISOString()
@@ -370,6 +404,13 @@ export class PromotionsFormComponent implements OnInit {
     if (!price && !discountValue) {
       this.toastrService.error(
         'Debe completar al menos uno de los campos: Precio o Descuento.'
+      );
+      return;
+    }
+
+    if (products.length == 0 || categories.length == 0) {
+      this.toastrService.error(
+        'Debe seleccionar al menos una categoría y al menos producto'
       );
       return;
     }
@@ -400,7 +441,10 @@ export class PromotionsFormComponent implements OnInit {
     formData.append('valid_to', valid_to ? valid_to : '');
     formData.append('baja', baja.toString());
     formData.append('products', JSON.stringify(products));
-    formData.append('days_of_week', JSON.stringify(days));
+
+    if (days != undefined && days.length > 0) {
+      formData.append('days_of_week', JSON.stringify(days));
+    }
 
     const loading = await this.loadingService.loading();
     await loading.present();
@@ -411,7 +455,7 @@ export class PromotionsFormComponent implements OnInit {
         this.toastrService.success('Promoción editada');
         loading.dismiss();
         this.location.back();
-      });
+      });*/
   }
 
   setFormInputs() {
@@ -485,8 +529,8 @@ export class PromotionsFormComponent implements OnInit {
       { controlName: 'discount', required: false, min: 0, max: 100 },
       { controlName: 'image', required: !this.editMode },
       { controlName: 'baja' },
-      { controlName: 'Categoria', required: true },
-      { controlName: 'Productos', required: true },
+      { controlName: 'Categoria' },
+      { controlName: 'Productos' },
       { controlName: 'Dias' },
       {
         controlName: 'valid_from',
