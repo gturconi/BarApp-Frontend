@@ -208,6 +208,7 @@ export class ProductsTypeListComponent implements OnInit {
           .subscribe(() => {
             this.toastrService.success('Promocion eliminada');
             loading.dismiss();
+            this.currentPromPage = 1;
             this.doSearch();
           });
       }
