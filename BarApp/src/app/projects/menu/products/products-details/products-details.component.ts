@@ -31,6 +31,7 @@ export class ProductsDetailsComponent implements OnInit {
   imagesUrl$!: Observable<string>;
   quantity: number = 1;
   admin: boolean = false;
+  employee: boolean = false;
   isInCart: boolean = false;
   comments: string = '';
   mobileScreen = false;
@@ -51,6 +52,7 @@ export class ProductsDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
+    this.employee = this.loginService.isEmployee();
     this.route.params.subscribe(params => {
       const typeId = params['idProd'];
       if (typeId) {

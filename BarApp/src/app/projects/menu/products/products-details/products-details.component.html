@@ -69,7 +69,7 @@
             }}
           </div>
 
-          <div *ngIf="!admin" class="quantity">
+          <div *ngIf="!admin && !employee" class="quantity">
             <ion-icon
               (click)="decrement()"
               name="remove-circle"
@@ -98,7 +98,9 @@
         </div>
         <ion-card
           class="comments-card"
-          *ngIf="this.product.stock && !this.product.baja && !admin"
+          *ngIf="
+            this.product.stock && !this.product.baja && !admin && !employee
+          "
         >
           <ion-card-content class="comments">
             <p>Quieres aclarar algo:</p>
@@ -113,7 +115,9 @@
           </ion-card-content>
         </ion-card>
         <ion-button
-          *ngIf="this.product.stock && !this.product.baja && !admin"
+          *ngIf="
+            this.product.stock && !this.product.baja && !admin && !employee
+          "
           expand="full"
           class="details-button"
           [ngClass]="{ isInCart: isInCart && logged }"
