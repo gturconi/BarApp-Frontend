@@ -161,7 +161,7 @@ div.description {
 .strikethrough {
   text-decoration: line-through;
   text-decoration-thickness: 1px;
-  color: grey;
+  color: var(--color-13);
   font-weight: lighter;
 }
 
