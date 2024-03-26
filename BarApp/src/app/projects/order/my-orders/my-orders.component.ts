@@ -59,6 +59,14 @@ export class MyOrdersComponent implements OnInit {
     this.totalCost();
   }
 
+  roundDiscount(price: number): number {
+    return Math.round(price);
+  }
+
+  castOrderToProduct(order: Products | Promotion): Products {
+    return order as Products;
+  }
+
   setImages(list: CartProduct[]) {
     this.imagesUrl$ = list.map(order => {
       return this.getImage(order.product);
@@ -99,8 +107,20 @@ export class MyOrdersComponent implements OnInit {
   totalCost() {
     this.total = 0;
     this.ordersList.forEach(order => {
-      this.total += order.product.quantity! * order.product.price!;
+      this.total += this.isProduct(order)
+        ? this.calculateProductCost(order.product as Products)
+        : order.product.quantity! * order.product.price!;
     });
+  }
+
+  calculateProductCost(prod: Products) {
+    if (prod.promotions) {
+      return this.roundDiscount(
+        prod.price! * prod.quantity! * (1 - prod.promotions[0].discount!)
+      );
+    } else {
+      return prod.price! * prod.quantity!;
+    }
   }
 
   deleteItem(order: CartProduct) {

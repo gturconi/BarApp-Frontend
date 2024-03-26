@@ -31,10 +31,25 @@
             }}
           </span>
           <div class="order-info">
+            @if(isProduct(order)){
+            <div class="price">
+              ${{
+                castOrderToProduct(order.product).promotions
+                  ? roundDiscount(
+                      order.product.price! *
+                        order.product.quantity! *
+                        (1 -
+                          castOrderToProduct(order.product).promotions[0]
+                            .discount!)
+                    )
+                  : order.product.price! * order.product.quantity!
+              }}
+            </div>
+            }@else{
             <div class="price">
               ${{ order.product.price! * order.product.quantity! }}
             </div>
-
+            }
             <div class="quantity">
               <ion-icon
                 name="remove-circle"
