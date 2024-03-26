@@ -146,6 +146,7 @@ export class PromotionsFormComponent implements OnInit {
 
             if (index === prods.length - 1) {
               this.loadProducts();
+              this.setProductsCombo();
             }
           });
         });
@@ -155,12 +156,6 @@ export class PromotionsFormComponent implements OnInit {
 
       this.comboParam[0].defaultValue!.next(categories);
       this.form.controls['Categoria']?.setValue(IDcategories);
-
-      this.setProductsCombo();
-      /*
-      this.comboParam[1].defaultValue!.next(prods!.map(p => p.name));
-      this.form.controls['Productos']?.setValue(prods!.map(p => p.id));
-      */
 
       let nameDays: string[] | undefined;
       const days = data.days_of_week;
@@ -173,25 +168,23 @@ export class PromotionsFormComponent implements OnInit {
     });
   }
 
-  //los productos de la promocion (de la DB)
-  //las categorias seleccionadas
-  //limpiamos el combo
-  //si el producto pertenece a una categoria seleccionada lo seteamos
-
   cleanProductsCombo() {
     this.form.controls['Productos']?.reset();
   }
 
   setProductsCombo() {
     this.cleanProductsCombo();
+    let names: string[] = [];
+    let ids: string[] = [];
     this.productsCategories?.map(prod => {
-      console.log('for each', prod);
       if (this.selectedCategories.indexOf(prod.idCat!) !== -1) {
-        console.log('hola');
-        this.comboParam[1].defaultValue!.next(prod.name);
-        this.form.controls['Productos']?.setValue(prod.id);
+        names.push(prod.name!);
+        ids.push(prod.id!);
       }
     });
+
+    this.comboParam[1].defaultValue!.next(names);
+    this.form.controls['Productos']?.setValue(ids);
   }
 
   numbersToDaysOfWeek(numberDays: number[]): string[] {
@@ -307,6 +300,7 @@ export class PromotionsFormComponent implements OnInit {
         ?.valueChanges.subscribe((selectedCategories: string[]) => {
           this.selectedCategories = selectedCategories;
           this.loadProducts();
+          this.setProductsCombo();
         });
       if (!this.id) this.form.controls['Productos']?.disable();
       this.loading.dismiss();
@@ -377,8 +371,7 @@ export class PromotionsFormComponent implements OnInit {
   }
 
   async edit(form: FormGroup) {
-    console.log(form.controls);
-    /*let imageFile = null;
+    let imageFile = null;
     const baja = form.controls['baja'].value ? 1 : 0;
     const discountValue = form.controls['discount'].value / 100;
     let price = form.controls['price'].value;
@@ -386,10 +379,10 @@ export class PromotionsFormComponent implements OnInit {
     const categories = form.controls['Categoria'].value;
     const products: string[] = form.controls['Productos'].value;
     const daysArray = Object.values(DaysOfWeek);
-    const days = form.controls['Dias'].value;
+    let days = form.controls['Dias'].value;
 
     if (days != undefined && days.length > 0) {
-      days.map((day: string) =>
+      days = days.map((day: string) =>
         daysArray.findIndex(dayOfWeek => dayOfWeek === day)
       );
     }
@@ -455,7 +448,7 @@ export class PromotionsFormComponent implements OnInit {
         this.toastrService.success('Promoción editada');
         loading.dismiss();
         this.location.back();
-      });*/
+      });
   }
 
   setFormInputs() {
