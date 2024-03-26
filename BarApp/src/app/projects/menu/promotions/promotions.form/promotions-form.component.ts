@@ -316,7 +316,10 @@ export class PromotionsFormComponent implements OnInit {
     const imageFile: File = fileControl.value;
     const baja = form.controls['baja'].value ? 1 : 0;
     const discountValue = form.controls['discount'].value / 100;
-    const price = form.controls['price'].value;
+    const price =
+      form.controls['price'].value == ''
+        ? undefined
+        : form.controls['price'].value;
     const products: string[] = form.controls['Productos'].value;
 
     this.products = products;
@@ -350,7 +353,7 @@ export class PromotionsFormComponent implements OnInit {
     const formData = new FormData();
     formData.append('image', imageFile);
     formData.append('description', form.controls['description'].value);
-    formData.append('price', form.controls['price'].value);
+    formData.append('price', price);
     formData.append('discount', discountValue.toString());
     formData.append('valid_from', form.controls['valid_from'].value);
     formData.append('valid_to', form.controls['valid_to'].value);
