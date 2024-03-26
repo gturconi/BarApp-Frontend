@@ -437,6 +437,8 @@ export class PromotionsFormComponent implements OnInit {
 
     if (days != undefined && days.length > 0) {
       formData.append('days_of_week', JSON.stringify(days));
+    } else {
+      formData.append('days_of_week', JSON.stringify([]));
     }
 
     const loading = await this.loadingService.loading();
