@@ -377,7 +377,10 @@ export class PromotionsFormComponent implements OnInit {
     let imageFile = null;
     const baja = form.controls['baja'].value ? 1 : 0;
     const discountValue = form.controls['discount'].value / 100;
-    let price = form.controls['price'].value;
+    const price =
+      form.controls['price'].value == ''
+        ? undefined
+        : form.controls['price'].value;
 
     const categories = form.controls['Categoria'].value;
     const products: string[] = form.controls['Productos'].value;
