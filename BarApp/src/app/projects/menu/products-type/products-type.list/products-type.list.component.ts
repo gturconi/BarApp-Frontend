@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -19,6 +19,7 @@ import { PromotionsService } from '../../promotions/services/promotions.service'
 
 import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
 import { isPromotionValid } from '../../../../common/validations/validation-functions';
+import { EntityListResponse } from '@common/models/entity.list.response';
 
 @Component({
   selector: 'app-products-type.list',
@@ -101,29 +102,40 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   async doSearch() {
-    const loading = await this.loadingService.loading();
-    await loading.present();
     try {
-      this.productsTypeService.getProductsTypes().subscribe(data => {
-        this.productsTypeList = data.results;
-        this.count = data.count;
-        this.setImages(this.productsTypeList);
-        this.showData = true;
-        this.loading = false;
-      });
-      this.promotionsService
-        .getPromotions(this.currentPromPage, 10)
-        .subscribe(data => {
-          this.promotionsList = data.results;
+      let loading = await this.loadingService.loading();
+      await loading.present();
+
+      const productsTypes$ = this.productsTypeService.getProductsTypes();
+      const promotions$ = this.promotionsService.getPromotions(
+        this.currentPromPage,
+        10
+      );
+
+      forkJoin({
+        productsTypes: productsTypes$,
+        promotions: promotions$,
+      }).subscribe({
+        next: ({ productsTypes, promotions }) => {
+          this.productsTypeList = productsTypes.results;
+          this.count = productsTypes.count;
+          this.setImages(this.productsTypeList);
+
+          this.promotionsList = promotions.results;
           this.validPromotionsList = this.getValidPromotions(
             this.promotionsList
           );
-          this.promCount = data.count;
+          this.promCount = promotions.count;
           this.setImagesPromotions(this.promotionsList);
+
+          loading.dismiss();
           this.showData = true;
-        });
+        },
+        error: error => {
+          loading.dismiss();
+        },
+      });
     } finally {
-      loading.dismiss();
       this.currentPage++;
       this.currentPromPage++;
       this.infiniteScroll && this.infiniteScroll.complete();
