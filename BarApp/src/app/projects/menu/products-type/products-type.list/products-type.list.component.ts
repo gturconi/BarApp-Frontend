@@ -130,6 +130,7 @@ export class ProductsTypeListComponent implements OnInit {
 
           loading.dismiss();
           this.showData = true;
+          this.loading = false;
         },
         error: error => {
           loading.dismiss();
