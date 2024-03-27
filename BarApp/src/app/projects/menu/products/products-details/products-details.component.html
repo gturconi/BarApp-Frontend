@@ -11,12 +11,65 @@
         class="details-image product-image"
       />
       <ion-card-header class="details-header">
-        <ion-card-title class="details-title">{{
-          this.product.name
-        }}</ion-card-title>
-        <ion-card-subtitle class="details-price"
-          ><span>${{ this.product.price! * this.quantity }}</span>
-          <div *ngIf="!admin" class="quantity">
+        <div class="title-discount">
+          <ion-card-title class="details-title">{{
+            this.product.name
+          }}</ion-card-title>
+          <div
+            *ngIf="
+              this.product.promotions &&
+              this.product.promotions.length > 0 &&
+              this.product.promotions[0].discount &&
+              !this.product.promotions[0].price &&
+              !this.product.promotions[0].baja &&
+              (isCurrentDayOfWeekValid(this.product.promotions[0]) ||
+                !hasDays(this.product.promotions[0]))
+            "
+            class="dis-price"
+          >
+            <span
+              >{{ roundDiscount(this.product.promotions[0].discount * 100) }}%
+              off</span
+            >
+          </div>
+        </div>
+        <ion-card-subtitle class="details-price">
+          <span
+            *ngIf="
+              !this.product.promotions ||
+              !this.product.promotions.length ||
+              !this.product.promotions[0].discount
+            "
+            >${{ this.product.price! * this.quantity }}</span
+          >
+          <div
+            *ngIf="
+              this.product.promotions &&
+              this.product.promotions.length > 0 &&
+              this.product.promotions[0].discount &&
+              !this.product.promotions[0].price
+            "
+          >
+            <span
+              class="crossed-out-price"
+              *ngIf="
+                !this.product.promotions[0].baja &&
+                (isCurrentDayOfWeekValid(this.product.promotions[0]) ||
+                  !hasDays(this.product.promotions[0]))
+              "
+            >
+              ${{ this.product.price! * this.quantity }}
+            </span>
+            ${{
+              roundDiscount(
+                this.product.price! *
+                  this.quantity *
+                  (1 - this.product.promotions[0].discount)
+              )
+            }}
+          </div>
+
+          <div *ngIf="!admin && !employee" class="quantity">
             <ion-icon
               (click)="decrement()"
               name="remove-circle"
@@ -45,7 +98,9 @@
         </div>
         <ion-card
           class="comments-card"
-          *ngIf="this.product.stock && !this.product.baja && !admin"
+          *ngIf="
+            this.product.stock && !this.product.baja && !admin && !employee
+          "
         >
           <ion-card-content class="comments">
             <p>Quieres aclarar algo:</p>
@@ -60,15 +115,21 @@
           </ion-card-content>
         </ion-card>
         <ion-button
-          *ngIf="this.product.stock && !this.product.baja && !admin"
+          *ngIf="
+            this.product.stock && !this.product.baja && !admin && !employee
+          "
           expand="full"
           class="details-button"
-          [ngClass]="{ isInCart: isInCart }"
+          [ngClass]="{ isInCart: isInCart && logged }"
         >
           <div (click)="isInCart ? removeFromCart() : addToCart()">
             <ion-icon name="cart" class="details-icons"></ion-icon>
             <p>
-              {{ this.isInCart ? 'QUITAR DEL CARRITO' : 'AGREGAR AL CARRITO' }}
+              {{
+                this.isInCart && logged
+                  ? 'QUITAR DEL CARRITO'
+                  : 'AGREGAR AL CARRITO'
+              }}
             </p>
           </div>
         </ion-button>
@@ -78,7 +139,7 @@
         <p>SIN STOCK</p>
       </div>
       <div *ngIf="this.product.baja" class="details-stock">
-        <p>Este producto ya no esta disponible</p>
+        <p>Este producto ya no está disponible</p>
       </div>
     </ion-card>
     }@else if(!this.isLoading){

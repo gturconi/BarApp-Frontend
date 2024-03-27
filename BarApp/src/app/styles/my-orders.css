@@ -1,5 +1,9 @@
 @import 'variables.css';
 
+.orders-wrapper {
+  height: 80vh !important;
+}
+
 .item-order {
   display: flex;
   justify-content: flex-start;
@@ -49,8 +53,59 @@
 .comments {
   font-size: small;
 }
+
+.item-p {
+  position: relative;
+}
+
+.promotion-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-10);
+  color: var(--color-7);
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 5px;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 5px;
+  font-size: 12px;
+}
+
+@media (min-height: 932px) {
+  .order-button {
+    padding-top: 5rem;
+  }
+}
+
+@media (min-height: 900px) {
+  .order-button {
+    margin-top: 15rem;
+  }
+}
+
+@media (min-height: 740px) {
+  .order-button {
+    margin-top: 10rem;
+  }
+}
+
 @media (max-width: 768px) {
   .order-wrapper {
     grid-template-rows: auto minmax(200px, 280px) auto;
+  }
+
+  .orders-wrapper {
+    height: 50vh !important;
+  }
+
+  .order-button {
+    margin-bottom: 5rem;
+  }
+}
+
+@media (max-width: 678px) {
+  .details-order {
+    margin-top: 10px;
   }
 }

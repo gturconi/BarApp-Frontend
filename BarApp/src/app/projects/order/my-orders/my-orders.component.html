@@ -1,7 +1,7 @@
 <ion-content class="product-content">
   <div class="container-body order-wrapper">
     <h2 class="section-title">Mis pedidos</h2>
-    <div class="wrapper2" #wrapper *ngIf="showData">
+    <div class="wrapper2 orders-wrapper" #wrapper *ngIf="showData">
       @for(order of ordersList; track order.product.id; let idx = $index) {
       <div class="item-p productsItem">
         <ion-icon
@@ -14,18 +14,42 @@
         <picture class="image-container-p">
           <img [src]="imagesUrl$[idx] | async" alt="" class="item-image" />
         </picture>
-        <article>
+        <article class="details-order">
+          <span class="promotion-label" *ngIf="!isProduct(order)">
+            Promoción
+          </span>
           <span class="title" *ngIf="isProduct(order)">
-            {{ castProduct(order.product).name }}
+            {{
+              (castProduct(order.product).name | slice : 0 : maxCharacters) +
+                (isLongName(order) ? '...' : '')
+            }}
           </span>
           <span class="title" *ngIf="!isProduct(order)">
-            {{ order.product.description }}
+            {{
+              (order.product.description | slice : 0 : maxCharacters) +
+                (isLongName(order) ? '...' : '')
+            }}
           </span>
           <div class="order-info">
+            @if(isProduct(order)){
+            <div class="price">
+              ${{
+                castOrderToProduct(order.product).promotions
+                  ? roundDiscount(
+                      order.product.price! *
+                        order.product.quantity! *
+                        (1 -
+                          castOrderToProduct(order.product).promotions[0]
+                            .discount!)
+                    )
+                  : order.product.price! * order.product.quantity!
+              }}
+            </div>
+            }@else{
             <div class="price">
               ${{ order.product.price! * order.product.quantity! }}
             </div>
-
+            }
             <div class="quantity">
               <ion-icon
                 name="remove-circle"

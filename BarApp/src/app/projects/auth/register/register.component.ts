@@ -111,8 +111,19 @@ export class RegisterComponent implements OnInit {
   ];
 
   validationConfig = [
-    { controlName: 'name', required: true, minLength: 4 },
-    { controlName: 'tel', required: true, minLength: 6 },
+    {
+      controlName: 'name',
+      required: true,
+      minLength: 4,
+      pattern: '^[a-zA-Z]*$',
+    },
+    {
+      controlName: 'tel',
+      required: true,
+      minLength: 10,
+      maxLength: 15,
+      pattern: '^[0-9]*$',
+    },
     { controlName: 'email', required: true, email: true },
     { controlName: 'password', required: true },
     { controlName: 'recaptcha', required: true },

@@ -11,7 +11,7 @@ import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
 import { Avatar } from '@common/models/avatar';
 import Swal from 'sweetalert2';
-import { DELETE_OPTS } from '@common/constants/messages.constant';
+import { DELETE_OPTS_CART } from '@common/constants/messages.constant';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,6 +24,7 @@ export class MyOrdersComponent implements OnInit {
   imagesUrl$!: Observable<string>[];
   showData: boolean = false;
   total = 0;
+  maxCharacters = 50;
 
   constructor(
     private badgeService: BadgeService,
@@ -58,6 +59,14 @@ export class MyOrdersComponent implements OnInit {
     this.totalCost();
   }
 
+  roundDiscount(price: number): number {
+    return Math.round(price);
+  }
+
+  castOrderToProduct(order: Products | Promotion): Products {
+    return order as Products;
+  }
+
   setImages(list: CartProduct[]) {
     this.imagesUrl$ = list.map(order => {
       return this.getImage(order.product);
@@ -77,6 +86,12 @@ export class MyOrdersComponent implements OnInit {
     return order as Products;
   }
 
+  isLongName(order: CartProduct): boolean {
+    if (!this.isProduct(order))
+      return order.product.description!.length > this.maxCharacters;
+    else return (order.product as Products).name!.length > this.maxCharacters;
+  }
+
   decrement(order: Products | Promotion) {
     if (order.quantity! > 1) {
       order.quantity = order.quantity! - 1;
@@ -92,12 +107,24 @@ export class MyOrdersComponent implements OnInit {
   totalCost() {
     this.total = 0;
     this.ordersList.forEach(order => {
-      this.total += order.product.quantity! * order.product.price!;
+      this.total += this.isProduct(order)
+        ? this.calculateProductCost(order.product as Products)
+        : order.product.quantity! * order.product.price!;
     });
   }
 
+  calculateProductCost(prod: Products) {
+    if (prod.promotions) {
+      return this.roundDiscount(
+        prod.price! * prod.quantity! * (1 - prod.promotions[0].discount!)
+      );
+    } else {
+      return prod.price! * prod.quantity!;
+    }
+  }
+
   deleteItem(order: CartProduct) {
-    Swal.fire(DELETE_OPTS).then(async result => {
+    Swal.fire(DELETE_OPTS_CART).then(async result => {
       if (result.isConfirmed) {
         const loading = await this.loadingService.loading();
         await loading.present();

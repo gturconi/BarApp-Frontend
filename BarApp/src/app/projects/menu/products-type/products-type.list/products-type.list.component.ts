@@ -1,22 +1,25 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { Observable, forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
-import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
 import { Avatar } from '@common/models/avatar';
 import { ImageService } from '@common/services/image.service';
 import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
-import { ToastrService } from 'ngx-toastr';
 
-import { ProductsTypeService } from '../services/products-type.service';
-import { PromotionsService } from '../../promotions/services/promotions.service';
 import { ProductsType } from '../models/productsType';
 import { Promotion } from '../../promotions/models/promotion';
 
-import Swal from 'sweetalert2';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { ProductsTypeService } from '../services/products-type.service';
+import { PromotionsService } from '../../promotions/services/promotions.service';
+
+import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
+import { isPromotionValid } from '../../../../common/validations/validation-functions';
+import { EntityListResponse } from '@common/models/entity.list.response';
 
 @Component({
   selector: 'app-products-type.list',
@@ -34,12 +37,16 @@ export class ProductsTypeListComponent implements OnInit {
   loading = true;
 
   currentPage = 1;
+  currentPromPage = 1;
   count = 0;
+  promCount = 0;
   infiniteScrollLoading = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('PromWrapper') promWrapperRef!: ElementRef<HTMLDivElement>;
+
   scrollingTimer: any;
 
   constructor(
@@ -76,32 +83,62 @@ export class ProductsTypeListComponent implements OnInit {
     }
   }
 
+  onPromScroll(event: Event) {
+    const element = event.target as HTMLElement;
+    const wrapper2 = this.promWrapperRef.nativeElement;
+    if (wrapper2.scrollHeight - wrapper2.scrollTop <= element.clientHeight) {
+      if (
+        this.promotionsList.length < this.promCount &&
+        !this.infiniteScrollLoading
+      ) {
+        this.loadMorePromData();
+      }
+    }
+  }
+
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.doSearch();
   }
 
   async doSearch() {
-    const loading = await this.loadingService.loading();
-    await loading.present();
     try {
-      this.productsTypeService.getProductsTypes().subscribe(data => {
-        this.productsTypeList = data.results;
-        this.count = data.count;
-        this.setImages(this.productsTypeList);
-        this.showData = true;
-        this.loading = false;
-      });
-      this.promotionsService.getPromotions().subscribe(data => {
-        this.promotionsList = data.results;
-        this.validPromotionsList = this.getValidPromotions(this.promotionsList);
-        this.count = data.count;
-        this.setImagesPromotions(this.promotionsList);
-        this.showData = true;
+      let loading = await this.loadingService.loading();
+      await loading.present();
+
+      const productsTypes$ = this.productsTypeService.getProductsTypes();
+      const promotions$ = this.promotionsService.getPromotions(
+        this.currentPromPage,
+        10
+      );
+
+      forkJoin({
+        productsTypes: productsTypes$,
+        promotions: promotions$,
+      }).subscribe({
+        next: ({ productsTypes, promotions }) => {
+          this.productsTypeList = productsTypes.results;
+          this.count = productsTypes.count;
+          this.setImages(this.productsTypeList);
+
+          this.promotionsList = promotions.results;
+          this.validPromotionsList = this.getValidPromotions(
+            this.promotionsList
+          );
+          this.promCount = promotions.count;
+          this.setImagesPromotions(this.promotionsList);
+
+          loading.dismiss();
+          this.showData = true;
+          this.loading = false;
+        },
+        error: error => {
+          loading.dismiss();
+        },
       });
     } finally {
-      loading.dismiss();
       this.currentPage++;
+      this.currentPromPage++;
       this.infiniteScroll && this.infiniteScroll.complete();
     }
   }
@@ -120,6 +157,20 @@ export class ProductsTypeListComponent implements OnInit {
         this.productsTypeList.push(...response.results);
         this.setImages(this.productsTypeList);
         this.currentPage++;
+        this.infiniteScroll && this.infiniteScroll.complete();
+        this.infiniteScrollLoading = false;
+      });
+  }
+
+  loadMorePromData() {
+    this.infiniteScrollLoading = true;
+    this.promotionsService
+      .getPromotions(this.currentPromPage, 10)
+      .subscribe(data => {
+        this.promotionsList.push(...data.results);
+        this.validPromotionsList = this.getValidPromotions(this.promotionsList);
+        this.setImagesPromotions(this.promotionsList);
+        this.currentPromPage++;
         this.infiniteScroll && this.infiniteScroll.complete();
         this.infiniteScrollLoading = false;
       });
@@ -159,6 +210,24 @@ export class ProductsTypeListComponent implements OnInit {
     });
   }
 
+  async deleteProm(id: string) {
+    Swal.fire(DELETE_OPTS).then(async result => {
+      if (result.isConfirmed) {
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.promotionsService
+          .deletePromotions(id)
+          .pipe(finalize(() => loading.dismiss()))
+          .subscribe(() => {
+            this.toastrService.success('Promocion eliminada');
+            loading.dismiss();
+            this.currentPromPage = 1;
+            this.doSearch();
+          });
+      }
+    });
+  }
+
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
@@ -174,25 +243,6 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   isPromotionValid(promotion: Promotion): boolean {
-    if (
-      promotion.valid_from === undefined ||
-      promotion.valid_to === undefined
-    ) {
-      return false;
-    }
-    const currentDate = this.getCurrentDate();
-    const validFrom = new Date(promotion.valid_from);
-    const validTo = new Date(promotion.valid_to);
-    return (
-      currentDate >= validFrom &&
-      currentDate <= validTo &&
-      this.isCurrentDayOfWeekValid(promotion)
-    );
-  }
-
-  isCurrentDayOfWeekValid(promotion: Promotion): boolean {
-    const currentDayOfWeek = new Date().getDay();
-    console.log(currentDayOfWeek);
-    return promotion.days_of_week?.includes(currentDayOfWeek) || false;
+    return isPromotionValid(promotion);
   }
 }

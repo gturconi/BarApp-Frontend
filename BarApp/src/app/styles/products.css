@@ -51,7 +51,7 @@ div.description {
 @media (max-width: 1080px) {
   .productsList {
     width: 97vw;
-    height: 59vh;
+    height: 65vh;
   }
 }
 
@@ -90,6 +90,24 @@ div.description {
   }
 }
 
+@media screen and (min-height: 700px) {
+  .productsList {
+    height: 75vh;
+  }
+}
+
+@media screen and (min-height: 900px) {
+  .productsList {
+    height: 80vh;
+  }
+}
+
+@media (min-width: 1500px) and (min-height: 700px) {
+  .productsList {
+    height: 89vh;
+  }
+}
+
 .item-p {
   display: flex;
   flex-wrap: nowrap;
@@ -101,7 +119,7 @@ div.description {
   margin-bottom: 2px;
   animation: reveal linear both;
   animation-timeline: view();
-  animation-range: entry 10% cover 20%;
+  animation-range: entry 10% cover 15%;
   border-radius: 15px;
   position: relative;
   cursor: pointer;
@@ -143,7 +161,7 @@ div.description {
 .strikethrough {
   text-decoration: line-through;
   text-decoration-thickness: 1px;
-  color: grey;
+  color: var(--color-13);
   font-weight: lighter;
 }
 

@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 .main-container {
   max-width: 1000px;
@@ -6,19 +6,21 @@
   margin: 40px auto;
 }
 
-.titulo {
-  color: var(--color-8);
-  font-weight: 500;
-  font-size: 25px;
-  text-align: center;
-  margin-top: 60px;
-  margin-bottom: 40px;
+.section-title-p {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
 }
 
 .subtitulo {
   color: var(--color-8);
-  font-size: 17px;
-  margin: 20px 0;
+  font-size: 15px;
+  margin-top: 40px;
 }
 
 /*categorias*/
@@ -86,7 +88,7 @@
 }
 
 /*cambia el color de los accordeon*/
-ion-accordion.answer ion-item[slot="header"] {
+ion-accordion.answer ion-item[slot='header'] {
   --background: var(--color-3);
   font-size: 13px;
 }
@@ -95,6 +97,7 @@ ion-accordion.answer ion-item[slot="header"] {
   .main-container {
     max-width: 90%;
     margin: 40px auto 30px;
+    overflow: hidden;
   }
   .titulo {
     font-size: 22px;
@@ -138,10 +141,13 @@ ion-accordion.answer ion-item[slot="header"] {
   .accordion {
     max-height: 300px;
     overflow-y: auto;
+    margin-bottom: 20%;
   }
 
   .accordion-container {
     max-height: 250px;
+    overflow-y: auto;
+    max-height: calc(100vh - 280px);
     overflow-y: auto;
   }
 }

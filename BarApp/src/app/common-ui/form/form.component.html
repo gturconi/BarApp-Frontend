@@ -37,6 +37,7 @@
       [control]="getFormControl(combo.title)"
       [comboItems]="combosFields[i]"
       [defaultValue]="defaultValues[i]"
+      [isMultiple]="combo.isMultiple || false"
     ></app-combo>
   </ng-container>
 

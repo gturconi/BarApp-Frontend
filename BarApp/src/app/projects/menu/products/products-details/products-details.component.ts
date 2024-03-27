@@ -14,6 +14,12 @@ import { Avatar } from '@common/models/avatar';
 import { ToastrService } from 'ngx-toastr';
 import { BadgeService } from '@common/services/badge.service';
 import { SocketService } from '@common/services/socket.service';
+import { Promotion } from '../../promotions/models/promotion';
+
+import {
+  isCurrentDayOfWeekValid,
+  hasDays,
+} from '../../../../common/validations/validation-functions';
 
 @Component({
   selector: 'app-products-details',
@@ -26,9 +32,11 @@ export class ProductsDetailsComponent implements OnInit {
   imagesUrl$!: Observable<string>;
   quantity: number = 1;
   admin: boolean = false;
+  employee: boolean = false;
   isInCart: boolean = false;
   comments: string = '';
   mobileScreen = false;
+  logged = false;
 
   constructor(
     private loginService: LoginService,
@@ -46,6 +54,7 @@ export class ProductsDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
+    this.employee = this.loginService.isEmployee();
     this.route.params.subscribe(params => {
       const typeId = params['idProd'];
       if (typeId) {
@@ -54,6 +63,7 @@ export class ProductsDetailsComponent implements OnInit {
     });
 
     this.mobileScreen = window.innerWidth < 768;
+    this.logged = this.loginService.isLoggedIn();
   }
 
   async doSearch(id: string) {
@@ -95,7 +105,7 @@ export class ProductsDetailsComponent implements OnInit {
       this.cartService.addToCart(this.product, this.comments);
       this.badgeService.incrementBadgeCount();
       const alert = await this.alertController.create({
-        header: 'Producto agregado',
+        header: 'Producto agregado al carrito',
         backdropDismiss: false,
         buttons: [
           {
@@ -124,7 +134,7 @@ export class ProductsDetailsComponent implements OnInit {
       this.cartService.removeFromCart(this.product.id);
       this.isInCart = false;
       this.badgeService.decrementBadgeCount();
-      this.toastrService.success('Producto eliminado');
+      this.toastrService.success('Producto eliminado del carrito');
     }
   }
 
@@ -142,5 +152,17 @@ export class ProductsDetailsComponent implements OnInit {
       cssClass: 'custom-alert',
     });
     await alert.present();
+  }
+
+  roundDiscount(price: number): number {
+    return Math.round(price);
+  }
+
+  isCurrentDayOfWeekValid(promotion: Promotion): boolean {
+    return isCurrentDayOfWeekValid(promotion);
+  }
+
+  hasDays(promotion: Promotion) {
+    return hasDays(promotion);
   }
 }

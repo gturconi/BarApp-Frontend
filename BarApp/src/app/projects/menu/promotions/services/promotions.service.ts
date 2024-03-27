@@ -13,7 +13,7 @@ export class PromotionsService {
   apiUrl: string = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  getPromotions(page: number = 1, limit: number = 10) {
+  getPromotions(page: number = 1, limit: number | undefined = undefined) {
     return this.http.get<EntityListResponse<Promotion>>(
       `${this.apiUrl}/promotions?page=${page}&limit=${limit}`
     );

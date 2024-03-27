@@ -50,10 +50,26 @@ export class FormComponent implements OnInit {
         return 'Este campo es requerido';
       } else if (control.errors['email']) {
         return 'Ingrese un correo válido';
+      } else if (
+        control.errors['pattern'] &&
+        control.errors['pattern'].requiredPattern === '^[0-9]*$'
+      ) {
+        return 'El campo solo admite números';
+      } else if (
+        control.errors['pattern'] &&
+        control.errors['pattern'].requiredPattern === '^[a-zA-Z]*$'
+      ) {
+        return 'El campo solo admite letras';
       } else if (control.errors['minlength']) {
         return (
           'El campo debe tener al menos ' +
           control.errors['minlength'].requiredLength +
+          ' caracteres'
+        );
+      } else if (control.errors['maxlength']) {
+        return (
+          'El campo debe tener como máximo ' +
+          control.errors['maxlength'].requiredLength +
           ' caracteres'
         );
       } else if (control.errors['notSame']) {
@@ -64,6 +80,10 @@ export class FormComponent implements OnInit {
         return 'El valor debe ser menor o igual a ' + control.errors['max'].max;
       } else if (control.errors['pattern']) {
         return 'El valor ingresado no es válido';
+      } else if (control.errors['Datevalid']) {
+        return 'Debes proporcionar ambas fechas o ninguna';
+      } else if (control.errors['DateInvalidRange']) {
+        return 'La fecha desde debe ser menor a la fecha hasta';
       }
       return 'Error en el campo ' + controlName;
     }
@@ -71,7 +91,17 @@ export class FormComponent implements OnInit {
   }
 
   submit(): void {
+    this.trimTextInputs(this.form);
     this.formSubmit.emit(this.form);
+  }
+
+  trimTextInputs(form: FormGroup<any>) {
+    Object.keys(form.controls).forEach(key => {
+      const control = form.get(key);
+      if (typeof control?.value === 'string') {
+        control?.setValue(control.value.trim());
+      }
+    });
   }
 
   SetvalidationConfig() {
@@ -88,6 +118,12 @@ export class FormComponent implements OnInit {
       }
       if (config.minLength) {
         validators.push(Validators.minLength(config.minLength));
+      }
+      if (config.maxLength) {
+        validators.push(Validators.maxLength(config.maxLength));
+      }
+      if (config.pattern) {
+        validators.push(Validators.pattern(config.pattern));
       }
 
       if (config.min != undefined) {
@@ -119,6 +155,7 @@ export class FormComponent implements OnInit {
   setCombos() {
     this.combos?.forEach((combo, index) => {
       combo.fields.subscribe(field => {
+        this.combosFields[index] = [];
         this.combosFields.push([]);
         combo.defaultValue?.subscribe(defaultValue => {
           this.defaultValues[index] = defaultValue;
@@ -126,10 +163,7 @@ export class FormComponent implements OnInit {
         field.results.map(result => {
           const option = {
             id: result.id,
-            description:
-              result.description != null
-                ? result.description
-                : result.name.toUpperCase(),
+            description: result.name != null ? result.name : result.description,
           };
           this.combosFields[index].push(option);
         });

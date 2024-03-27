@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { INFO_DISCOUNT_PROM } from '@common/constants/messages.constant';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -29,7 +30,7 @@ export class InputComponent implements OnInit {
     if (this.type == 'password') this.isPasswords = true;
 
     if (this.type === 'checkbox') {
-      if (this.label === 'Baja') {
+      if (this.label === 'Baja' || this.label === 'Ocultar promoción') {
         this.control.setValue(false);
       } else {
         this.control.setValue(true);
@@ -50,5 +51,9 @@ export class InputComponent implements OnInit {
     const file: File = event.target.files[0];
     this.imageUploaded = true;
     this.control.setValue(file);
+  }
+
+  showNotification() {
+    Swal.fire(INFO_DISCOUNT_PROM);
   }
 }

@@ -5,13 +5,15 @@
     [formControl]="control"
     [value]="getSelectedValue()"
     [placeholder]="title"
+    [multiple]="isMultiple"
+    (ionChange)="onSelectionChange()"
   >
     <ion-select-option
       *ngFor="let item of comboItems"
       [value]="item.id"
       class="combo-option"
     >
-      {{ item.description }}
+      {{ item.description | titlecase }}
     </ion-select-option>
   </ion-select>
 </form>

@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class="prom-form" [scrollY]="mobileScreen ? 'true' : 'false'">
   <div class="form-container">
     <ion-card>
       <ion-card-header>
@@ -6,7 +6,15 @@
           ><h1>{{ formTitle }}</h1></ion-card-title
         >
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content class="prom-content">
+        <ion-buttons slot="end">
+          <ion-button
+            class="info-button general-info"
+            (click)="showNotification()"
+          >
+            <ion-icon name="information-circle-outline"></ion-icon> Más info
+          </ion-button>
+        </ion-buttons>
         <app-form
           [form]="form"
           [fields]="formFields"

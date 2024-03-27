@@ -127,8 +127,6 @@ export class ProductsFormComponent implements OnInit {
   }
 
   async edit(form: FormGroup) {
-    console.log(form);
-
     let imageFile = null;
     const stockValue = form.controls['stock'].value ? 1 : 0;
     const category = form.controls['Categoria'].value;
@@ -168,10 +166,10 @@ export class ProductsFormComponent implements OnInit {
         iconName: 'restaurant',
       },
       {
-        type: 'input',
+        type: 'textarea',
         name: 'description',
         label: 'Descripción',
-        inputType: 'text',
+        inputType: 'textarea',
         icon: 'material-symbols-outlined',
         iconName: 'restaurant',
       },

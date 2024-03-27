@@ -13,7 +13,7 @@ export class ProductsTypeService {
   apiUrl: string = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  getProductsTypes(page: number = 1, limit: number = 10) {
+  getProductsTypes(page?: number, limit?: number) {
     return this.http.get<EntityListResponse<ProductsType>>(
       `${this.apiUrl}/productsType?page=${page}&limit=${limit}`
     );

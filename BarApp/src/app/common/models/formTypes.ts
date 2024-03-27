@@ -16,7 +16,16 @@ interface CheckboxField {
   iconName?: string;
 }
 
-export type FormField = InputField | CheckboxField;
+interface TextAreaField {
+  type: 'textarea';
+  name: string;
+  label: string;
+  inputType: 'textarea';
+  icon?: string;
+  iconName?: string;
+}
+
+export type FormField = InputField | CheckboxField | TextAreaField;
 
 export interface Button {
   label: string;

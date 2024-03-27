@@ -1,4 +1,7 @@
-<ion-content class="product-content">
+<ion-content
+  class="product-content"
+  [scrollY]="mobileScreen ? 'true' : 'false'"
+>
   <div class="container-body">
     @if(this.promotion){
     <ion-card class="details-promotion">
@@ -7,7 +10,15 @@
         [src]="imagesUrl$ | async"
         class="details-image-p promotion-image"
       />
-      <div class="discount-overlay" *ngIf="promotion.discount && !promotion.price">
+
+      <div *ngIf="promotion.price" class="price-prom">
+        Precio de la promoción:
+        <span class="price-prom-span"
+          >$ {{ this.promotion.price | number : '1.2-2' }}</span
+        >
+      </div>
+
+      <div class="discount-overlay" *ngIf="promotion.discount">
         <div class="discount-content">
           <span class="discount-number" *ngIf="promotion.discount">
             {{ this.promotion.discount * 100 }}</span
@@ -22,10 +33,7 @@
       <ion-card-header class="details-header">
         <ion-card-title class="details-title-promotion"
           >{{ this.promotion.description }}
-          <span *ngIf="(!promotion.discount && promotion.price)" class="price-prom">
-            ${{ this.promotion.price }}
-          </span></ion-card-title
-        >
+        </ion-card-title>
       </ion-card-header>
       <ion-card-content class="details-content">
         <div class="description-prom">
@@ -33,19 +41,16 @@
             class="promotion-date"
             *ngIf="this.promotion.valid_from && this.promotion.valid_to"
           >
-          <p *ngIf="!isPromotionValid(promotion)&& admin">La promoción expiró: </p>
-          <span *ngIf="isPromotionValid(promotion) && admin" class="sp">Vigente desde </span>
-          <span *ngIf="isPromotionValid(promotion) && !admin" class="sp">Vigente </span>
-            <span *ngIf="admin" 
-            > {{
-              this.promotion.valid_from | date : 'dd-MM-yyyy - HH:mm':'UTC'
-            }}Hs </span
-          >hasta el
-            <span
-              >{{
-                this.promotion.valid_to | date : 'dd-MM-yyyy - HH:mm':'UTC'
-              }}Hs</span
-            >
+            <span *ngIf="admin" class="sp">Vigente desde </span>
+            <span *ngIf="!admin" class="sp">Vigente </span>
+            <span *ngIf="admin">
+              {{
+                this.promotion.valid_from | date : 'dd-MM-yyyy' : 'UTC'
+              }} </span
+            >hasta el
+            <span>{{
+              this.promotion.valid_to | date : 'dd-MM-yyyy' : 'UTC'
+            }}</span>
           </div>
           <div
             *ngIf="
@@ -101,17 +106,41 @@
               </div>
             </div>
           </div>
+          <div class="tittle-valid-p">Productos en promoción:</div>
+          <div class="descriptions-container">
+            <div
+              class="description-pro"
+              *ngFor="let product of this.promotion.products"
+            >
+              {{ product.description }} <br />
+            </div>
+          </div>
           <ion-button
-          *ngIf="this.promotion.price && !this.promotion.baja  && !admin && !employee"
-          expand="full"
-          class="details-button"
-        >
-
-        </ion-button>
+            *ngIf="
+              !this.promotion.baja && !admin && !employee && promotion.price
+            "
+            expand="full"
+            class="details-button"
+            [ngClass]="{ isInCart: isInCart && logged }"
+          >
+            <div (click)="isInCart ? removeFromCart() : addToCart()">
+              <ion-icon name="cart" class="details-icons"></ion-icon>
+              <p>
+                {{
+                  this.isInCart && logged
+                    ? 'QUITAR DEL CARRITO'
+                    : 'AGREGAR AL CARRITO'
+                }}
+              </p>
+            </div>
+          </ion-button>
         </div>
       </ion-card-content>
-      <div *ngIf="this.promotion.baja || !isPromotionValid(promotion)" class="details-stock">
-        <p>Esta promoción ya no esta disponible</p>
+      <div
+        *ngIf="this.promotion.baja || !isPromotionValid(promotion)"
+        class="details-stock"
+      >
+        <p>Esta promoción no esta disponible</p>
       </div>
     </ion-card>
     }@else if(!this.isLoading){

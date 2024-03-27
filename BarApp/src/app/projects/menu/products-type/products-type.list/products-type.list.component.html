@@ -2,7 +2,7 @@
   <div class="container-body">
     @if(promotionsList && promotionsList.length > 0){
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
-    <div class="wrapper">
+    <div class="wrapper" #PromWrapper (scroll)="onPromScroll($event)">
       @for(promotion of promotionsList; track promotion.id; let idx = $index) {
       @if((!admin && !promotion.baja) && (!admin && isPromotionValid(promotion))
       || admin){
@@ -20,16 +20,29 @@
           class="item1-image"
         />
         <div class="button-container" *ngIf="admin">
-          <button class="button-on-image">
+          <button
+            class="button-on-image"
+            [routerLink]="['/menu/categories/editPromotion', promotion.id]"
+          >
             <ion-icon name="create-outline" class="icons-accions"></ion-icon>
           </button>
-          <button class="button-on-image">
+          <button
+            class="button-on-image"
+            *ngIf="promotion.id !== undefined"
+            (click)="$event.stopPropagation(); deleteProm(promotion.id)"
+          >
             <ion-icon name="trash-outline" class="icons-accions"></ion-icon>
           </button>
         </div>
         <h3
+          *ngIf="!promotion.baja && isPromotionValid(promotion) && admin"
+          class="item1-title available"
+        >
+          Disponible
+        </h3>
+        <h3
           *ngIf="promotion.baja || !isPromotionValid(promotion)"
-          class="item1-title"
+          class="item1-title not-available"
         >
           No disponible
         </h3>
@@ -103,7 +116,7 @@
     </div>
     }
     <div class="grid-item">
-      <div class="button-add-container" *ngIf="showData && admin">
+      <div class="button-add-container" *ngIf="showData && admin && !loading">
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
           <ion-fab-button class="button-add">
             <ion-icon name="add"></ion-icon>

@@ -31,6 +31,11 @@ const routes: Routes = [
         canActivate: [authGuard],
       },
       {
+        path: 'editPromotion/:idPromotion',
+        component: PromotionsFormComponent,
+        canActivate: [authGuard],
+      },
+      {
         path: ':idCat/products',
         loadChildren: () =>
           import('../products/products.module').then(m => m.ProductsModule),
