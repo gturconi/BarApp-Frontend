@@ -42,6 +42,8 @@ export class ProductsTypeListComponent implements OnInit {
   promCount = 0;
   infiniteScrollLoading = false;
 
+  showPromotions: boolean = false;
+
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
@@ -99,6 +101,37 @@ export class ProductsTypeListComponent implements OnInit {
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.doSearch();
+  }
+
+  togglePromotionsVisibility(event: any) {
+    this.showPromotions = event.detail.checked;
+    if (this.showPromotions) {
+      this.mostrar();
+    } else {
+      this.promotionsService
+        .getPromotions(undefined, undefined)
+        .subscribe(data => {
+          this.promotionsList = data.results;
+          this.setImagesPromotions(this.promotionsList);
+        });
+    }
+  }
+
+  async mostrar() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    try {
+      this.promotionsService
+        .getPromotions(undefined, undefined)
+        .subscribe(data => {
+          this.promotionsList = data.results.filter(promotion => {
+            return !promotion.baja && this.isPromotionValid(promotion);
+          });
+          this.setImagesPromotions(this.promotionsList);
+        });
+    } finally {
+      loading.dismiss();
+    }
   }
 
   async doSearch() {

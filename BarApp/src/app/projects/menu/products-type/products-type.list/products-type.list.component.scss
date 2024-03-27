@@ -1,0 +1,15 @@
+.p-checkbox {
+  --size: 18px;
+  --checkbox-background-checked: var(--color-6);
+  --checkbox-background: var(--color-3);
+  --border-color: var(--color-3);
+  --border-color-checked: var(--color-3);
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .p-checkbox {
+    margin-left: 9px;
+    margin-right: 9px;
+  }
+}

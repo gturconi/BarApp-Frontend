@@ -65,6 +65,13 @@
       </div>
       }
     </div>
+    <ion-checkbox
+      [(ngModel)]="showPromotions"
+      (ionChange)="togglePromotionsVisibility($event)"
+      class="p-checkbox"
+    >
+      Mostrar Promociones Disponibles
+    </ion-checkbox>
     }@else if(showData && !loading){
     <div class="details-error">
       <h2>Aún no hay promociones cargadas</h2>
