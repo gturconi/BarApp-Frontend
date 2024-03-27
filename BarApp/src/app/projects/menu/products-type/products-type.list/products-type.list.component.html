@@ -66,6 +66,7 @@
       }
     </div>
     <ion-checkbox
+      *ngIf="admin"
       [(ngModel)]="showPromotions"
       (ionChange)="togglePromotionsVisibility($event)"
       class="p-checkbox"

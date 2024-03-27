@@ -128,6 +128,16 @@ export class ProductsTypeListComponent implements OnInit {
             return !promotion.baja && this.isPromotionValid(promotion);
           });
           this.setImagesPromotions(this.promotionsList);
+          if (this.promotionsList.length === 0) {
+            Swal.fire({
+              icon: 'info',
+              title: 'Actualmente no hay promociones disponibles',
+              text: 'Por favor, revisa nuevamente más tarde.',
+            });
+            this.currentPromPage = 1;
+            this.doSearch();
+            this.showPromotions = false;
+          }
         });
     } finally {
       loading.dismiss();
