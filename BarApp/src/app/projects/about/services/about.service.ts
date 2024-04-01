@@ -14,9 +14,7 @@ export class AboutService {
 
   constructor(private http: HttpClient) {}
 
-  getContact() {
-    console.log(this.apiUrl);
-    
+  getContact() {    
     return this.http.get<EntityListResponse<Contact>>(this.apiUrl + "/about/");
   }
 
