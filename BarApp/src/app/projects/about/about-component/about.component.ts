@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Contact } from "@common/models/about";
-import { AboutService } from "../../services/about.service";
+import { AboutService } from "../services/about.service";
 
 @Component({
   selector: "app-about",
@@ -16,9 +16,7 @@ export class AboutComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    console.log("acacacaca")
     this.aboutService.getContact().subscribe((response) => {
-      console.log(response);
       this.data = response.results;
       this.isLoading = false;
     })
