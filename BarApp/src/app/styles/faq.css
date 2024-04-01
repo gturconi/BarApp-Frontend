@@ -139,15 +139,22 @@ ion-accordion.answer ion-item[slot='header'] {
   }
 
   .accordion {
-    max-height: 300px;
+    max-height: 250px;
     overflow-y: auto;
     margin-bottom: 20%;
   }
 
   .accordion-container {
     max-height: 250px;
+<<<<<<< Updated upstream
     overflow-y: auto;
     max-height: calc(100vh - 280px);
     overflow-y: auto;
+=======
+    overflow-y: inherit;
+  }
+  .ion-accordion {
+    margin-bottom: 10px;
+>>>>>>> Stashed changes
   }
 }
