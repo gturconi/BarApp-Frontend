@@ -1,0 +1,37 @@
+<ion-content>
+  <div class="main-container">
+    <h1 class="titulo">Sobre nosotros</h1>
+    <div *ngFor="let contact of data; let i = index" class="contact-container">
+      <h2 class="contact-name">{{ contact.name }}</h2>
+      <p class="contact-description">{{ contact.description }}</p>
+      <div class="contact-description">
+        <div class="icon-title">
+          <ion-icon name="location-outline"></ion-icon>
+          <span class="bold">Ubicación: </span>
+        </div>
+        <span>{{ contact.address }}</span>
+      </div>
+      <div class="contact-description">
+        <div class="icon-title">
+          <ion-icon name="time-outline"></ion-icon>
+          <span class="bold">Dias y Horarios de apertura: </span>
+        </div>
+        <span>{{ contact.open_dayhr }}</span>
+      </div>
+      <div class="contact-description">
+        <div class="icon-title">
+          <ion-icon name="call-outline"></ion-icon>
+          <span class="bold">Tel/Cel: </span>
+        </div>
+        <span>{{ contact.tel }}</span>
+      </div>
+      <div class="contact-description">
+        <div class="icon-title">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span class="bold">Correo: </span>
+        </div>
+        <span>{{ contact.contact_email }}</span>
+      </div>
+    </div>
+  </div>
+</ion-content>
