@@ -29,6 +29,9 @@ import { EntityListResponse } from '@common/models/entity.list.response';
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
   promotionsList!: Promotion[];
+  oldpromotionsList!: Promotion[];
+  oldProductsTypeList!: ProductsType[];
+
   validPromotionsList!: Promotion[];
   imagesUrl$!: Observable<string>[];
   imagesUrlPromotions$!: Observable<string>[];
@@ -108,27 +111,42 @@ export class ProductsTypeListComponent implements OnInit {
     if (this.showPromotions) {
       this.mostrar();
     } else {
-      this.promotionsService
+      /*this.promotionsService
         .getPromotions(undefined, undefined)
         .subscribe(data => {
           this.promotionsList = data.results;
           this.setImagesPromotions(this.promotionsList);
-        });
+        });*/
+      this.currentPromPage = 1;
+      this.promotionsList = this.oldpromotionsList;
+      this.currentPage = 1;
+      this.productsTypeList = this.oldProductsTypeList;
     }
   }
 
   async mostrar() {
     const loading = await this.loadingService.loading();
     await loading.present();
-    try {
+
+    this.oldpromotionsList = this.promotionsList;
+    this.oldProductsTypeList = this.productsTypeList;
+
+    this.promotionsList = this.promotionsList.filter(promotion => {
+      return !promotion.baja && this.isPromotionValid(promotion);
+    });
+
+    //Filtrar categorias cuando se implemente la baja
+
+    loading.dismiss();
+    /* try {
       this.promotionsService
         .getPromotions(undefined, undefined)
         .subscribe(data => {
-          this.promotionsList = data.results.filter(promotion => {
+          this.promotionsList = this.promotionsList.filter(promotion => {
             return !promotion.baja && this.isPromotionValid(promotion);
           });
           this.setImagesPromotions(this.promotionsList);
-          if (this.promotionsList.length === 0) {
+           if (this.promotionsList.length === 0) {
             Swal.fire({
               icon: 'info',
               title: 'Actualmente no hay promociones disponibles',
@@ -141,7 +159,7 @@ export class ProductsTypeListComponent implements OnInit {
         });
     } finally {
       loading.dismiss();
-    }
+    }*/
   }
 
   async doSearch() {

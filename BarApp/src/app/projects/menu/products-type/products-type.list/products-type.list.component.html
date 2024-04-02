@@ -1,5 +1,13 @@
 <ion-content scroll-y="false" class="product-content">
   <div class="container-body">
+    <ion-checkbox
+      *ngIf="admin"
+      [(ngModel)]="showPromotions"
+      (ionChange)="togglePromotionsVisibility($event)"
+      class="p-checkbox"
+    >
+      Mostrar carta actual
+    </ion-checkbox>
     @if(promotionsList && promotionsList.length > 0){
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper" #PromWrapper (scroll)="onPromScroll($event)">
@@ -65,14 +73,7 @@
       </div>
       }
     </div>
-    <ion-checkbox
-      *ngIf="admin"
-      [(ngModel)]="showPromotions"
-      (ionChange)="togglePromotionsVisibility($event)"
-      class="p-checkbox"
-    >
-      Mostrar Promociones Disponibles
-    </ion-checkbox>
+
     }@else if(showData && !loading){
     <div class="details-error">
       <h2>Aún no hay promociones cargadas</h2>
