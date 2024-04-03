@@ -1,3 +1,5 @@
+/*TEMA 1 - Terroso*/
+
 :root {
   /*variables para colores de estructura en general*/
   --color-1: rgb(235, 139, 101);
@@ -26,6 +28,8 @@
 }
 
 /*
+TEMA 2 - AZUL
+
 :root {
     --color-1: #3a80b8;
     --color-2: #2b5797;
@@ -44,5 +48,61 @@
   
     --color-11: #a7c8e8;
     --color-12: #d53032;
+
+    --color-13: #717d7e;
   }
+*/
+
+/*
+TEMA 3 - MORADO
+
+:root {
+    --color-1: #5d3fd3; 
+    --color-2: #7c4dff; 
+  
+    --color-3: #b39ddb; 
+    --color-4: #d1c4e9; 
+  
+    --color-5: #673ab7; 
+    --color-6: #9c27b0; 
+  
+    --color-7: #ffffff; 
+    --color-8: #1a1b1f; 
+  
+    --color-9: #7b1fa2; 
+    --color-10: #ff4081; 
+  
+    --color-11: #b39ddb; 
+    --color-12: #d32f2f; 
+
+    --color-13: #757575; 
+}
+*/
+
+/*
+
+TEMA 4 - GRISACEO
+
+:root {
+  --color-1: #555;
+  --color-2: #777;
+
+  --color-3: #999;
+  --color-4: #bbb;
+
+  --color-5: #888;
+  --color-6: #f2f2f2;
+
+  --color-7: #fff;
+  --color-8: #333;
+
+  --color-9: #008f39;
+  --color-10: #cc0000;
+
+  --color-11: #999;
+  --color-12: #d53032;
+
+  --color-13: #717d7e;
+}
+
 */
