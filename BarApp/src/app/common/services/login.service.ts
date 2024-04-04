@@ -56,6 +56,13 @@ export class LoginService {
     }
   }
 
+  getUserInfo() {
+    let userStr = localStorage.getItem('user') ?? '';
+    if (userStr) {
+      return JSON.parse(userStr);
+    }
+  }
+
   isAdmin(): boolean {
     const userStr = localStorage.getItem('user');
     if (userStr) {

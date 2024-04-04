@@ -1,0 +1,30 @@
+<ion-content class="product-content">
+  <div class="container-body order-wrapper">
+    <h2 class="section-title">Estado de mis pedidos</h2>
+    <div class="wrapper2 orders-wrapper" #wrapper (scroll)="onScroll($event)">
+      @for(order of orderList; track order.id; let idx = $index) {
+      <div class="item-p card-order">
+        <div class="card-order-info">
+          <span><b>Pedido Nro:</b> 251513</span>
+          <span class="order-price">$6564</span>
+          <div class="order-date">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span> 10/20/1995 15:00 hs</span>
+          </div>
+        </div>
+        <div class="card-order-state">
+          <div class="order-state">
+            <ion-icon name="checkmark-outline"></ion-icon>
+            <a href="">A confirmar</a>
+          </div>
+          <ion-icon
+            [routerLink]="[]"
+            class="icons-show order-details-icon"
+            name="chevron-forward-circle-outline"
+          ></ion-icon>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</ion-content>

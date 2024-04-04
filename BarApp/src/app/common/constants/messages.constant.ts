@@ -41,3 +41,23 @@ export const INFO_DISCOUNT_PROM: SweetAlertOptions = {
   icon: 'info',
   html: 'Cuando la promoción <u>incluye un precio</u>, el <u>descuento</u> actúa como una muestra del potencial de ahorro, y en este caso, su inclusión es opcional. <br> Sin embargo, si la promoción <u>no tiene un precio</u> definido, el <u>descuento</u> se aplicará directamente a los precios de los productos seleccionados.',
 };
+
+//order
+export const ORDER_CONFIRMATION_OPTS: SweetAlertOptions = {
+  title: '¿Estás seguro de que quieres realizar el pedido?',
+  text: 'Luego podrás cancelarlo siempre y cuando no haya sido confirmado por el bar!',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Confirmar',
+  cancelButtonText: 'Volver',
+  reverseButtons: true,
+};
+
+export const ORDER_CONFIRMED_OPTS: SweetAlertOptions = {
+  title: 'Pedido realizado',
+  text: 'Te informaremos sobre el estado de tu pedido',
+  icon: 'success',
+  confirmButtonText: 'Ir al pedido',
+};

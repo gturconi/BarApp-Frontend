@@ -11,7 +11,11 @@ import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
 import { Avatar } from '@common/models/avatar';
 import Swal from 'sweetalert2';
-import { DELETE_OPTS_CART } from '@common/constants/messages.constant';
+import {
+  DELETE_OPTS_CART,
+  ORDER_CONFIRMATION_OPTS,
+  ORDER_CONFIRMED_OPTS,
+} from '@common/constants/messages.constant';
 import { Router } from '@angular/router';
 
 @Component({
@@ -130,6 +134,18 @@ export class MyOrdersComponent implements OnInit {
         await loading.present();
         this.cartService.removeFromCart(order.product.id!);
         this.prepareItems();
+        loading.dismiss();
+      }
+    });
+  }
+
+  confirmOrder() {
+    Swal.fire(ORDER_CONFIRMATION_OPTS).then(async result => {
+      if (result.isConfirmed) {
+        Swal.fire(ORDER_CONFIRMED_OPTS);
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        //this.cartService.clearCart();
         loading.dismiss();
       }
     });
