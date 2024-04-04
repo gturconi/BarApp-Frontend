@@ -1,7 +1,5 @@
-/*TEMA 1 - Terroso*/
-
+/*TEMA 1 - Terroso
 :root {
-  /*variables para colores de estructura en general*/
   --color-1: rgb(235, 139, 101);
   --color-2: #da6047;
 
@@ -11,21 +9,18 @@
   --color-5: #ec9819;
   --color-6: #f0ad48;
 
-  /*variables para letras*/
   --color-7: #ffff;
   --color-8: #1a1b1f;
 
-  /*variables para notificaciones de inputs*/
   --color-9: #008f39;
   --color-10: #cc0000;
 
-  /*variables para las promociones*/
   --color-11: #dc2d22;
   --color-12: #d53032;
 
-  /*variable para tachar*/
   --color-13: #717d7e;
 }
+*/
 
 /*
 TEMA 2 - AZUL

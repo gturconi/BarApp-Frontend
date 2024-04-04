@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ThemeService } from '../themes/services/theme.service';
 
 @Component({
   selector: 'app-themes-details',
@@ -7,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./themes.details.component.scss'],
 })
 export class ThemesDetailsComponent implements OnInit {
+  id = 0;
   tituloTarjeta: string = '';
   imagenes: string[] = [];
   imagenesPorId: { [id: string]: string[] } = {
@@ -40,7 +42,10 @@ export class ThemesDetailsComponent implements OnInit {
     ],
   };
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -58,8 +63,40 @@ export class ThemesDetailsComponent implements OnInit {
   }
 
   handleChangeTheme() {
-    const id = this.route.snapshot.params['id'];
-    this.changeCSSVariables(id);
+    this.id = this.route.snapshot.params['id'];
+    let cssProperties;
+    switch (this.id.toString()) {
+      case '1':
+        cssProperties =
+          '--color-1:rgb(235,139,101);--color-2:#da6047;--color-3:#f9dfbc;--color-4:#f6cd8f;--color-5:#ec9819;--color-6:#f0ad48;--color-7:#ffff;--color-8:#1a1b1f;--color-9:#008f39;--color-10:#cc0000;--color-11:#dc2d22;--color-12:#d53032;--color-13:#717d7e;';
+        break;
+      case '2':
+        cssProperties =
+          '--color-1:#3a80b8;--color-2:#2b5797;--color-3:#a7c8e8;--color-4:#68a4d1;--color-5:#1e4f7f;--color-6:#3d88c7;--color-7:#ffff;--color-8:#1a1b1f;--color-9:#008f39;--color-10:#cc0000;--color-11:#a7c8e8;--color-12:#d53032';
+        break;
+      case '3':
+        cssProperties =
+          '--color-1: #5d3fd3; --color-2: #7c4dff; --color-3: #b39ddb; --color-4: #d1c4e9; --color-5: #673ab7; --color-6: #9c27b0; --color-7: #ffffff; --color-8: #1a1b1f; --color-9: #7b1fa2; --color-10: #ff4081; --color-11: #b39ddb; --color-12: #d32f2f; --color-13: #757575;';
+        break;
+      case '4':
+        cssProperties =
+          '--color-1:#555;--color-2:#777;--color-3:#999;--color-4:#bbb;--color-5:#888;--color-6:#f2f2f2;--color-7:#fff;--color-8:#333;--color-9:#008f39;--color-10:#cc0000;--color-11:#999;--color-12:#d53032;--color-13:#717d7e;';
+        break;
+      default:
+        cssProperties = '';
+    }
+    this.themeService.putTheme(1, cssProperties).subscribe(theme => {
+      this.applyStyles(theme.cssProperties);
+    });
+  }
+
+  applyStyles(cssProperties: string) {
+    const root = document.documentElement;
+    const properties = cssProperties.split(';').filter(Boolean);
+    properties.forEach(property => {
+      const [name, value] = property.split(':');
+      root.style.setProperty(name.trim(), value.trim());
+    });
   }
 
   setupSlider() {
@@ -111,42 +148,6 @@ export class ThemesDetailsComponent implements OnInit {
       window.onresize = function (event) {
         reloadSlider();
       };
-    }
-  }
-
-  changeCSSVariables(themeId: string) {
-    const root = document.documentElement;
-    const themeVariables = this.getThemeVariables(themeId);
-
-    themeVariables.forEach(variable => {
-      root.style.setProperty(variable.name, variable.value);
-    });
-  }
-
-  getThemeVariables(themeId: string): { name: string; value: string }[] {
-    switch (themeId) {
-      case '1':
-        return [
-          { name: '--color-1', value: '#3a80b8' },
-          { name: '--color-2', value: '#2b5797' },
-        ];
-      case '2':
-        return [
-          { name: '--color-1', value: '#3a80b8' },
-          { name: '--color-2', value: '#2b5797' },
-          { name: '--color-3', value: '#a7c8e8' },
-          { name: '--color-4', value: '#68a4d1' },
-          { name: '--color-5', value: '#1e4f7f' },
-          { name: '--color-6', value: '#3d88c7' },
-          { name: '--color-7', value: '#ffff' },
-          { name: '--color-8', value: '#1a1b1f' },
-          { name: '--color-9', value: '#008f39' },
-          { name: '--color-10', value: '#cc0000' },
-          { name: '--color-11', value: '#a7c8e8' },
-          { name: '--color-12', value: '#d53032' },
-        ];
-      default:
-        return [];
     }
   }
 }
