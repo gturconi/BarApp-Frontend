@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
 
     this.themeService.getTheme(1).subscribe(theme => {
       this.applyStyles(theme.cssProperties);
-      console.log(theme.cssProperties);
     });
   }
 
