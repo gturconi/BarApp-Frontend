@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ThemeService } from '../themes/services/theme.service';
+import { LoadingService } from '@common/services/loading.service';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-themes-details',
@@ -44,7 +47,10 @@ export class ThemesDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private loadingService: LoadingService,
+    private router: Router,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit() {
@@ -62,7 +68,7 @@ export class ThemesDetailsComponent implements OnInit {
     });
   }
 
-  handleChangeTheme() {
+  async handleChangeTheme() {
     this.id = this.route.snapshot.params['id'];
     let cssProperties;
     switch (this.id.toString()) {
@@ -85,9 +91,17 @@ export class ThemesDetailsComponent implements OnInit {
       default:
         cssProperties = '';
     }
-    this.themeService.putTheme(1, cssProperties).subscribe(theme => {
-      this.applyStyles(theme.cssProperties);
-    });
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.themeService
+      .putTheme(1, cssProperties)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(theme => {
+        this.applyStyles(theme.cssProperties);
+        this.toastrService.success('Tema cambiando exitosamente');
+        loading.dismiss();
+        this.router.navigate(['/themes']);
+      });
   }
 
   applyStyles(cssProperties: string) {
