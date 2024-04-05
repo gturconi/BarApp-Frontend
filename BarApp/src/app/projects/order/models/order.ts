@@ -1,25 +1,28 @@
 import { Table } from '../../tables/models/table';
 import { State } from 'ionicons/dist/types/stencil-public-runtime';
 
-export type OrderState =
-  | 'A confirmar'
-  | 'En preparacion'
-  | 'Entregado'
-  | 'Pagado';
+type OrderState = Record<number, string>;
+
+export const ORDER_STATES: OrderState = {
+  1: 'A confirmar',
+  2: 'En preparacion',
+  3: 'Entregado',
+  4: 'Pagado',
+};
 
 export type State = {
   id: string;
-  description: OrderState;
+  description: string;
 };
 
 export class OrderDetail {
   constructor(
-    orderId = '',
-    productId = '',
-    promotionId = '',
-    quantity = 0,
+    orderId: string | null = null,
+    productId: string | null = null,
+    promotionId: string | null = null,
+    quantity: number | null = null,
     unitPrice = 0,
-    comments = ''
+    comments: string | null = null
   ) {
     this.orderId = orderId;
     this.productId = productId;
@@ -29,12 +32,12 @@ export class OrderDetail {
     this.comments = comments;
   }
 
-  orderId?: string;
-  productId?: string;
-  promotionId?: string;
-  quantity: number;
+  orderId?: string | null;
+  productId: string | null;
+  promotionId: string | null;
+  quantity: number | null;
   unitPrice: number;
-  comments?: string;
+  comments?: string | null;
 }
 
 export class OrderResponse {
@@ -78,12 +81,12 @@ export class OrderRequest {
   constructor(
     tableId = '',
     userId = '',
-    employeeId = '',
+    employeeId = null,
     idState = '',
     total = 0,
-    orderDetails = [],
-    feedback = '',
-    score = 0
+    orderDetails: OrderDetail[] = [],
+    feedback = undefined,
+    score = null
   ) {
     this.tableId = tableId;
     this.userId = userId;
@@ -96,10 +99,10 @@ export class OrderRequest {
   }
   tableId: string;
   userId: string;
-  employeeId?: string;
+  employeeId?: string | null;
   idState?: string;
   total: number;
   orderDetails: OrderDetail[];
-  feedback?: string;
-  score: number;
+  feedback?: string | undefined;
+  score?: number | null;
 }

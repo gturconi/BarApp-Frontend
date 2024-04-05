@@ -1,22 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { BadgeService } from '@common/services/badge.service';
 import { CartService } from '@common/services/cart.service';
 import { ImageService } from '@common/services/image.service';
 import { LoadingService } from '@common/services/loading.service';
+import { SocketService } from '@common/services/socket.service';
+import { NotificationService } from '@common/services/notification.service';
+import { OrderService } from '../services/order.service';
+import { LoginService } from '@common/services/login.service';
 
 import { CartProduct } from '@common/models/cartProduct';
 import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
 import { Avatar } from '@common/models/avatar';
-import Swal from 'sweetalert2';
+import { ORDER_STATES, OrderDetail } from '../models/order';
+
 import {
   DELETE_OPTS_CART,
   ORDER_CONFIRMATION_OPTS,
   ORDER_CONFIRMED_OPTS,
 } from '@common/constants/messages.constant';
-import { Router } from '@angular/router';
+import { OrderRequest } from '../models/order';
 
 @Component({
   selector: 'app-my-orders',
@@ -29,13 +37,19 @@ export class MyOrdersComponent implements OnInit {
   showData: boolean = false;
   total = 0;
   maxCharacters = 50;
+  scannedData = '';
 
   constructor(
     private badgeService: BadgeService,
     private cartService: CartService,
     private imageService: ImageService,
     private loadingService: LoadingService,
-    private router: Router
+    private socketService: SocketService,
+    private router: Router,
+    private barcodeScanner: BarcodeScanner,
+    private notificationService: NotificationService,
+    private orderService: OrderService,
+    private loginService: LoginService
   ) {}
 
   async ngOnInit() {
@@ -142,12 +156,85 @@ export class MyOrdersComponent implements OnInit {
   confirmOrder() {
     Swal.fire(ORDER_CONFIRMATION_OPTS).then(async result => {
       if (result.isConfirmed) {
-        Swal.fire(ORDER_CONFIRMED_OPTS);
-        const loading = await this.loadingService.loading();
-        await loading.present();
-        //this.cartService.clearCart();
-        loading.dismiss();
+        // if (this.scanCode()) {
+        this.socketService.sendMessage('order', '');
+        const res = this.createOrder();
+        //   }
       }
     });
+  }
+
+  scanCode(): boolean {
+    this.barcodeScanner
+      .scan()
+      .then(barcodeData => {
+        //alert('Barcode data ' + JSON.stringify(barcodeData));
+        this.scannedData = barcodeData.text;
+        return true;
+      })
+      .catch(err => {
+        this.notificationService.presentToast({
+          message:
+            'Ocurrió un error al escanear el código, por favor intentelo de nuevo',
+        });
+        return false;
+      });
+    return false;
+  }
+
+  async createOrder() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    const user = this.loginService.getUserInfo();
+    const index = Object.keys(ORDER_STATES).find(
+      key => ORDER_STATES[parseInt(key)] === 'A confirmar'
+    ) as string | undefined;
+
+    const orderDetails: OrderDetail[] = this.ordersList.map(order => {
+      let promId = null;
+      let prodId = null;
+
+      if (this.isProduct(order)) {
+        promId = null;
+        prodId = order.product.id;
+      } else {
+        promId = order.product.id;
+        prodId = null;
+        null;
+      }
+      const orderDetail = new OrderDetail(
+        null,
+        prodId,
+        promId,
+        order.product.quantity,
+        order.product.price,
+        order.comments != undefined ? order.comments : null
+      );
+      return orderDetail;
+    });
+
+    const order = new OrderRequest(
+      '1', //id de la Mesa (obtener del QR)
+      user.id,
+      null,
+      index,
+      this.total,
+      orderDetails,
+      undefined,
+      null
+    );
+
+    try {
+      this.orderService.postOrder(order).subscribe(() => {
+        //this.cartService.clearCart();
+        Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
+          this.router.navigate(['/orders/my-orders/confirmed']);
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      loading.dismiss();
+    }
   }
 }
