@@ -3,7 +3,7 @@
     <h2 class="section-title">Estado de mis pedidos</h2>
     <div class="wrapper2 orders-wrapper" #wrapper (scroll)="onScroll($event)">
       @for(order of orderList; track order.id; let idx = $index) {
-      <div class="item-p card-order" [class.appear-animation]="idx === 0">
+      <div class="item-p card-order" [style.animation-delay]="idx * 500 + 'ms'">
         <div class="card-order-info">
           <span><b>Pedido Nro:</b> {{ order.id }}</span>
           <span class="order-price">${{ order.total }}</span>
@@ -18,7 +18,15 @@
           </div>
         </div>
         <div class="card-order-state">
-          <div class="order-state">
+          <div
+            class="order-state"
+            [ngClass]="{
+              'bg-pending': order.state.description === 'A confirmar',
+              'bg-preparation': order.state.description === 'En preparacion',
+              'bg-delivered': order.state.description === 'Entregado',
+              'bg-paid': order.state.description === 'Pagado'
+            }"
+          >
             <ion-icon name="checkmark-outline"></ion-icon>
             <a href=""> {{ order.state.description }}</a>
           </div>

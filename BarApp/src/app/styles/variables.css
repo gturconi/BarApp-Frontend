@@ -23,6 +23,12 @@
 
   /*variable para tachar*/
   --color-13: #717d7e;
+
+  /*Variables para estado del pedido*/
+  --color-pending: #717d7e;
+  --color-preparation: #68a4d1;
+  --color-delivered: #1e4f7f;
+  --color-paid: #008f39;
 }
 
 /*

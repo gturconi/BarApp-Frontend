@@ -3,7 +3,8 @@
 .card-order {
   display: flex;
   justify-content: space-between;
-  animation: aparition 1s ease-in;
+  opacity: 0;
+  animation: aparition 1s ease-in forwards;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -15,21 +16,6 @@
   100% {
     opacity: 1;
     transform: scale(1);
-  }
-}
-
-.appear-animation {
-  animation: appear 1s ease-in;
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -64,7 +50,6 @@
   }
 
   .order-state {
-    background-color: var(--color-9);
     border-radius: 10px;
     width: 8rem;
     height: 2rem;
@@ -82,4 +67,20 @@
       font-size: 20px;
     }
   }
+}
+
+.bg-pending {
+  background-color: var(--color-pending);
+}
+
+.bg-preparation {
+  background-color: var(--color-preparation);
+}
+
+.bg-delivered {
+  background-color: var(--color-delivered);
+}
+
+.bg-paid {
+  background-color: var(--color-paid);
 }
