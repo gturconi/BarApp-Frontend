@@ -61,7 +61,6 @@ export class ConfirmedOrdersComponent implements OnInit {
             });
           }
           this.showData = true;
-          console.log(this.orderList);
         });
     } finally {
       loading.dismiss();

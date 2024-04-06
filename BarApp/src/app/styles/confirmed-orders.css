@@ -18,6 +18,21 @@
   }
 }
 
+.appear-animation {
+  animation: appear 1s ease-in;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .card-order-info {
   display: flex;
   flex-direction: column;

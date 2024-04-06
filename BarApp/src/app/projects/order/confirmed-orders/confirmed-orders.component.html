@@ -3,14 +3,17 @@
     <h2 class="section-title">Estado de mis pedidos</h2>
     <div class="wrapper2 orders-wrapper" #wrapper (scroll)="onScroll($event)">
       @for(order of orderList; track order.id; let idx = $index) {
-      <div class="item-p card-order">
+      <div class="item-p card-order" [class.appear-animation]="idx === 0">
         <div class="card-order-info">
           <span><b>Pedido Nro:</b> {{ order.id }}</span>
           <span class="order-price">${{ order.total }}</span>
           <div class="order-date">
             <ion-icon name="calendar-outline"></ion-icon>
             <span>
-              {{ order.date_created | date : "MMM dd, yyyy 'a las' hh:mm a" }}
+              {{
+                order.date_created
+                  | date : "MMM dd, yyyy 'a las' HH:mm a" : '+0000'
+              }}
             </span>
           </div>
         </div>

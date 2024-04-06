@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -225,16 +225,18 @@ export class MyOrdersComponent implements OnInit {
     );
 
     try {
-      this.orderService.postOrder(order).subscribe(() => {
-        //this.cartService.clearCart();
-        Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
-          this.router.navigate(['/orders/my-orders/confirmed']);
+      this.orderService
+        .postOrder(order)
+        .pipe(finalize(() => loading.dismiss()))
+        .subscribe(() => {
+          //this.cartService.clearCart();
+          loading.dismiss();
+          Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
+            this.router.navigate(['/orders/my-orders/confirmed']);
+          });
         });
-      });
     } catch (error) {
       console.log(error);
-    } finally {
-      loading.dismiss();
     }
   }
 }
