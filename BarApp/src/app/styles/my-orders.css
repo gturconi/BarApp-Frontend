@@ -71,6 +71,23 @@
   border-bottom-right-radius: 5px;
   font-size: 12px;
 }
+.barcode-scanning-active {
+  visibility: hidden;
+  --background: transparent;
+  --ion-background-color: transparent;
+}
+
+.barcode-scanning-modal {
+  visibility: visible;
+}
+
+@media (prefers-color-scheme: dark) {
+  .barcode-scanning-active {
+    visibility: hidden;
+    --background: transparent;
+    --ion-background-color: transparent;
+  }
+}
 
 @media (min-height: 932px) {
   .order-button {

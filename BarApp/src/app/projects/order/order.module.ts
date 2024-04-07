@@ -8,9 +8,15 @@ import { IonicModule } from '@ionic/angular';
 import { OrderComponent } from './order/order.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ConfirmedOrdersComponent } from './confirmed-orders/confirmed-orders.component';
+import { BarcodeScanningModalComponent } from './my-orders/barcode-scanning-modal.component';
 
 @NgModule({
-  declarations: [OrderComponent, MyOrdersComponent, ConfirmedOrdersComponent],
+  declarations: [
+    OrderComponent,
+    MyOrdersComponent,
+    ConfirmedOrdersComponent,
+    BarcodeScanningModalComponent,
+  ],
   imports: [CommonModule, OrderRoutingModule, CommonUiModule, IonicModule],
 })
 export class OrderModule {}

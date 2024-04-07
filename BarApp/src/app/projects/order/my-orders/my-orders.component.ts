@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+//import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { BadgeService } from '@common/services/badge.service';
 import { CartService } from '@common/services/cart.service';
@@ -25,6 +25,10 @@ import {
   ORDER_CONFIRMED_OPTS,
 } from '@common/constants/messages.constant';
 import { OrderRequest } from '../models/order';
+import { ModalController, Platform } from '@ionic/angular';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { format } from 'path';
+import { LensFacing, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
   selector: 'app-my-orders',
@@ -46,10 +50,12 @@ export class MyOrdersComponent implements OnInit {
     private loadingService: LoadingService,
     private socketService: SocketService,
     private router: Router,
-    private barcodeScanner: BarcodeScanner,
+    //private barcodeScanner: BarcodeScanner,
     private notificationService: NotificationService,
     private orderService: OrderService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private modalController: ModalController,
+    private plaform: Platform
   ) {}
 
   async ngOnInit() {
@@ -59,6 +65,12 @@ export class MyOrdersComponent implements OnInit {
     this.cartService.setVisited();
     this.prepareItems();
     loading.dismiss();
+
+    if (this.plaform.is('capacitor')) {
+      BarcodeScanner.isSupported().then();
+      BarcodeScanner.checkPermissions().then();
+      BarcodeScanner.removeAllListeners();
+    }
   }
 
   prepareItems() {
@@ -156,20 +168,26 @@ export class MyOrdersComponent implements OnInit {
   confirmOrder() {
     Swal.fire(ORDER_CONFIRMATION_OPTS).then(async result => {
       if (result.isConfirmed) {
-        // if (this.scanCode()) {
-        this.socketService.sendMessage('order', '');
-        const res = this.createOrder();
-        //   }
+        if (await this.scanCode()) {
+          this.socketService.sendMessage('order', '');
+          const res = this.createOrder();
+        }
+      } else {
+        this.notificationService.presentToast({
+          message:
+            'Ocurrió un error al escanear el código, por favor intentelo de nuevo',
+        });
       }
     });
   }
-
+  /*
   scanCode(): boolean {
     this.barcodeScanner
       .scan()
       .then(barcodeData => {
         //alert('Barcode data ' + JSON.stringify(barcodeData));
-        this.scannedData = barcodeData.text;
+        //Quitar Prefijo Mesa del string scaneado
+        this.scannedData = barcodeData.text!.replace('Mesa ', '');
         return true;
       })
       .catch(err => {
@@ -179,6 +197,28 @@ export class MyOrdersComponent implements OnInit {
         });
         return false;
       });
+    return false;
+  }*/
+
+  async scanCode() {
+    const modal = await this.modalController.create({
+      component: BarcodeScanningModalComponent,
+      cssClass: 'barcode-scanning-modal', //transparent background
+      showBackdrop: false,
+      componentProps: {
+        formats: [],
+        lensFacing: LensFacing.Back, //back camera
+      },
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data) {
+      this.scannedData = data?.barcode?.displayValue;
+      return true;
+    }
     return false;
   }
 
@@ -214,7 +254,7 @@ export class MyOrdersComponent implements OnInit {
     });
 
     const order = new OrderRequest(
-      '1', //id de la Mesa (obtener del QR)
+      this.scannedData, //id de la Mesa (obtener del QR)
       user.id,
       null,
       index,
@@ -229,7 +269,7 @@ export class MyOrdersComponent implements OnInit {
         .postOrder(order)
         .pipe(finalize(() => loading.dismiss()))
         .subscribe(() => {
-          //this.cartService.clearCart();
+          this.cartService.clearCart();
           loading.dismiss();
           Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
             this.router.navigate(['/orders/my-orders/confirmed']);

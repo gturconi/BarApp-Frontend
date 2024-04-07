@@ -4,7 +4,6 @@ import { RouteReuseStrategy } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import localeEsAr from '@angular/common/locales/es-AR';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -54,7 +53,6 @@ registerLocaleData(localeEsAr, 'es-Ar');
     },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
-    BarcodeScanner,
   ],
   bootstrap: [AppComponent],
 })
