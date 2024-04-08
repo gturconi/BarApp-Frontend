@@ -427,6 +427,11 @@
     height: 45vh;
   }
 }
+@media screen and (height< 660px) {
+  .wrapper2 {
+    height: 35vh;
+  }
+}
 
 @media screen and (height<= 805px) {
   .grid-item {
