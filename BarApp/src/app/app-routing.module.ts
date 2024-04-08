@@ -43,6 +43,11 @@ const routes: Routes = [
       import('./projects/users/users.module').then(m => m.UsersModule),
   },
   {
+    path: 'themes',
+    loadChildren: () =>
+      import('./projects/theme/theme.module').then(m => m.ThemeModule),
+  },
+  {
     path: '',
     redirectTo: 'intro',
     pathMatch: 'full',
