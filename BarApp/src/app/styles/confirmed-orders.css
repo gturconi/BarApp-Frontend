@@ -27,6 +27,7 @@
   .order-price {
     font-weight: bold;
     font-size: 25px;
+    margin-bottom: 20px;
   }
 }
 
@@ -35,6 +36,8 @@
   align-items: center;
   gap: 4px;
   font-size: 15px;
+  position: absolute;
+  bottom: 2px;
 }
 
 .card-order-state {
