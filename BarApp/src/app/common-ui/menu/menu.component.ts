@@ -33,7 +33,6 @@ export class MenuComponent implements OnInit {
   tabsItem: any[] = [];
 
   commonItems: any[] = [
-    { icon: 'home-outline', label: 'Inicio', route: '/home' },
     { icon: 'fast-food-outline', label: 'Carta', route: '/menu/categories' },
     { icon: 'mail-outline', label: 'Contacto', route: '' },
     { icon: 'help-outline', label: 'FAQs', route: '/faq' },
@@ -156,8 +155,14 @@ export class MenuComponent implements OnInit {
           isManage: false,
         },
         {
+          icon: 'bag-handle-outline',
+          label: 'Pedidos',
+          route: 'orders/my-orders/confirmed',
+          isManage: false,
+        },
+        {
           icon: 'cart-outline',
-          label: 'Mis Pedidos',
+          label: 'Carrito',
           route: 'orders/my-orders',
           isManage: false,
         }
@@ -166,7 +171,12 @@ export class MenuComponent implements OnInit {
         2,
         3,
         { icon: 'calendar-outline', label: 'Reservas', route: '' },
-        { icon: 'cart-outline', label: 'Pedidos', route: 'orders/my-orders' },
+        {
+          icon: 'bag-handle-outline',
+          label: 'Pedidos',
+          route: 'orders/my-orders/confirmed',
+        },
+        { icon: 'cart-outline', label: 'Carrito', route: 'orders/my-orders' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
@@ -255,7 +265,7 @@ export class MenuComponent implements OnInit {
       });
       this.tabsItem.splice(this.tabsItem.length - 2, 0, {
         icon: 'cart-outline',
-        label: 'Pedido',
+        label: 'Carrito',
         route: '',
       });
       this.tabsItem.pop();
