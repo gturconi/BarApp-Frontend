@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-//import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { BadgeService } from '@common/services/badge.service';
 import { CartService } from '@common/services/cart.service';
@@ -180,25 +179,6 @@ export class MyOrdersComponent implements OnInit {
       }
     });
   }
-  /*
-  scanCode(): boolean {
-    this.barcodeScanner
-      .scan()
-      .then(barcodeData => {
-        //alert('Barcode data ' + JSON.stringify(barcodeData));
-        //Quitar Prefijo Mesa del string scaneado
-        this.scannedData = barcodeData.text!.replace('Mesa ', '');
-        return true;
-      })
-      .catch(err => {
-        this.notificationService.presentToast({
-          message:
-            'Ocurrió un error al escanear el código, por favor intentelo de nuevo',
-        });
-        return false;
-      });
-    return false;
-  }*/
 
   async scanCode() {
     const modal = await this.modalController.create({
@@ -254,7 +234,7 @@ export class MyOrdersComponent implements OnInit {
     });
 
     const order = new OrderRequest(
-      this.scannedData, //id de la Mesa (obtener del QR)
+      this.scannedData.split(' ')[1],
       user.id,
       null,
       index,
