@@ -64,7 +64,7 @@ export class ProductsTypeListComponent implements OnInit {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
 
-    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
+    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight + 20) {
       if (
         this.productsTypeList.length < this.count &&
         !this.infiniteScrollLoading
