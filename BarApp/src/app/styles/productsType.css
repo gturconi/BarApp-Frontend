@@ -421,3 +421,15 @@
     height: 53vh;
   }
 }
+
+@media screen and (height< 825px) {
+  .wrapper2 {
+    height: 45vh;
+  }
+}
+
+@media screen and (height<= 805px) {
+  .grid-item {
+    padding: 20px 0px !important;
+  }
+}
