@@ -27,12 +27,18 @@ ion-toolbar {
 .background-menu {
   --background: var(--color-2);
   background-color: var(--color-2);
+  /* mask-image: linear-gradient(var(--color-2) 90%, transparent) !important;*/
 }
 
 ion-menu {
   top: 0;
   left: 0;
   height: 130vh;
+  mask-image: linear-gradient(var(--color-2) 85%, transparent) !important;
+}
+
+ion-menu::part(backdrop) {
+  mask-image: linear-gradient(rgba(0, 0, 0, 1) 85%, transparent) !important;
 }
 
 ion-menu::part(container) {
@@ -40,6 +46,8 @@ ion-menu::part(container) {
   box-shadow: none;
   border: none;
   background-color: var(--color-2);
+  mask-image: linear-gradient(var(--color-2) 85%, transparent) !important;
+
   position: fixed;
 }
 

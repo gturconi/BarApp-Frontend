@@ -245,14 +245,8 @@ export class MenuComponent implements OnInit {
         },
         { label: 'Usuarios', route: '/users', isManage: true },
         { label: 'Mesas', route: '/tables', isManage: true },
-        {
-          label: 'Categorías de Productos',
-          route: '/menu/categories',
-          isManage: true,
-        },
-        { label: 'Productos', route: '', isManage: true },
-        { label: 'Promociones', route: '/menu/categories', isManage: true },
-        { label: 'Cartas', route: '', isManage: true },
+        { label: 'Cartas', route: '/menu/categories', isManage: true },
+        { label: 'Pedidos', route: '', isManage: true },
         { label: 'Pantallas', route: '', isManage: true, isSetting: true },
         { label: 'Temas', route: '/themes', isManage: true, isSetting: true }
       );
