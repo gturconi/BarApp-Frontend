@@ -254,7 +254,7 @@ export class MenuComponent implements OnInit {
         { label: 'Promociones', route: '/menu/categories', isManage: true },
         { label: 'Cartas', route: '', isManage: true },
         { label: 'Pantallas', route: '', isManage: true, isSetting: true },
-        { label: 'Temas', route: '', isManage: true, isSetting: true }
+        { label: 'Temas', route: '/themes', isManage: true, isSetting: true }
       );
     } else {
       this.menuItems.splice(1, 0, {
