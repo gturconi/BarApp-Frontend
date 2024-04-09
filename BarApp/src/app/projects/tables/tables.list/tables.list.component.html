@@ -25,12 +25,14 @@
           </ion-card-header>
           <div class="tables-buttons">
             <div class="table-actions" *ngIf="admin">
-              <ion-icon
-                name="create-outline"
-                class="icons-admin icon-eye"
-                [class.disabled]="table.state == 'Occupied'"
-                [routerLink]="['/tables/edit', table.id]"
-              ></ion-icon>
+              <span title="Editar" class="icon-tooltip-pr">
+                <ion-icon
+                  name="create-outline"
+                  class="icons-admin icon-eye"
+                  [class.disabled]="table.state == 'Occupied'"
+                  [routerLink]="['/tables/edit', table.id]"
+                ></ion-icon>
+              </span>
             </div>
             <ion-button class="qrBtn" *ngIf="admin">
               <qrcode
@@ -44,12 +46,14 @@
               ></a>
             </ion-button>
             <div class="table-actions" *ngIf="admin">
-              <ion-icon
-                name="trash-outline"
-                class="icons-admin icon-eye"
-                [class.disabled]="table.state == 'Occupied'"
-                (click)="delete(table.id)"
-              ></ion-icon>
+              <span title="Eliminar" class="icon-tooltip-pr">
+                <ion-icon
+                  name="trash-outline"
+                  class="icons-admin icon-eye"
+                  [class.disabled]="table.state == 'Occupied'"
+                  (click)="delete(table.id)"
+                ></ion-icon
+              ></span>
             </div>
           </div>
           <ion-card-content
@@ -76,9 +80,10 @@
     <div class="grid-item">
       <div class="button-add-container" *ngIf="showData && admin">
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-          <ion-fab-button class="button-add" [routerLink]="['/tables/add']">
-            <ion-icon name="add"></ion-icon>
-          </ion-fab-button>
+          <span title="Añadir" class="icon-tooltip-pr">
+            <ion-fab-button class="button-add" [routerLink]="['/tables/add']">
+              <ion-icon name="add"></ion-icon> </ion-fab-button
+          ></span>
         </ion-fab>
       </div>
     </div>
