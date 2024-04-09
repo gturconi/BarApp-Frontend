@@ -433,7 +433,7 @@
   }
 }
 
-@media screen and (height<= 805px) {
+@media screen and (height<= 805px) and (width <= 1000px) {
   .grid-item {
     padding: 20px 0px !important;
   }
