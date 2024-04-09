@@ -168,8 +168,8 @@ export class MenuComponent implements OnInit {
         }
       );
       this.tabsItem.splice(
+        1,
         2,
-        3,
         { icon: 'calendar-outline', label: 'Reservas', route: '' },
         {
           icon: 'bag-handle-outline',
