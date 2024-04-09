@@ -168,7 +168,6 @@ export class MyOrdersComponent implements OnInit {
     Swal.fire(ORDER_CONFIRMATION_OPTS).then(async result => {
       if (result.isConfirmed) {
         if (await this.scanCode()) {
-          this.socketService.sendMessage('order', '');
           const res = this.createOrder();
         }
       } else {
@@ -254,6 +253,7 @@ export class MyOrdersComponent implements OnInit {
           Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
             this.router.navigate(['/orders/my-orders/confirmed']);
           });
+          this.socketService.sendMessage('order', '');
         });
     } catch (error) {
       console.log(error);
