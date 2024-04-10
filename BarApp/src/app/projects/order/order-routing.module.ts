@@ -5,6 +5,7 @@ import { OrderComponent } from './order/order.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { authGuard } from '@common/guards/auth.guard';
 import { ConfirmedOrdersComponent } from './confirmed-orders/confirmed-orders.component';
+import { OrderDetailsComponent } from './order.details/order.details.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       { path: '', redirectTo: 'my-orders', pathMatch: 'full' },
       { path: 'my-orders', component: MyOrdersComponent, pathMatch: 'full' },
       { path: 'my-orders/confirmed', component: ConfirmedOrdersComponent },
+      {
+        path: 'my-orders/confirmed/details/:idProd',
+        component: OrderDetailsComponent,
+      },
     ],
   },
 ];

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
@@ -33,11 +33,18 @@ export class ConfirmedOrdersComponent implements OnInit {
     private loginService: LoginService,
     private loadingService: LoadingService,
     private orderService: OrderService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.doSearch();
+  }
+
+  redirectToDetails(orderID: number) {
+    this.router.navigate(['my-orders/confirmed/details/', orderID], {
+      relativeTo: this.route.parent,
+    });
   }
 
   async doSearch() {
