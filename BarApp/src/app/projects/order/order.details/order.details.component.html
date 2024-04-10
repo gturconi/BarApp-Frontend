@@ -9,7 +9,6 @@
         <ion-card-title class="card-order-title"
           ><b>Pedido Nro:</b> {{ order.id }}</ion-card-title
         >
-        <ion-card-subtitle>${{ order.total }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <div>
@@ -21,12 +20,43 @@
             }}
           </span>
         </div>
-        <div class="table-number">
-          <span class="material-symbols-outlined table-icon"
+        <div class="data-order">
+          <span class="material-symbols-outlined data-order-icon"
             >table_restaurant</span
           >
           Mesa número {{ order.table_order.number }}
         </div>
+
+        <div class="data-order" *ngIf="order.employee">
+          <span class="material-symbols-outlined data-order-icon">
+            account_circle
+          </span>
+          Mesero asignado: {{ order.employee.name }}
+        </div>
+
+        <p>Detalle pedido:</p>
+        <div class="order-table">
+          <div class="order-row header-row">
+            <div class="order-cell product-promotion bold">
+              Producto/Promoción
+            </div>
+            <div class="order-cell price right-aligned bold">Precio</div>
+            <div class="order-cell quantity right-aligned bold">Cantidad</div>
+          </div>
+          <div class="order-row" *ngFor="let detail of order.orderDetails">
+            <div class="order-cell product-promotion">
+              {{ detail.productId }} {{ detail.promotionId }}
+            </div>
+            <div class="order-cell price right-aligned">
+              {{ detail.unitPrice }}
+            </div>
+            <div class="order-cell quantity right-aligned">
+              {{ detail.quantity }}
+            </div>
+          </div>
+        </div>
+
+        <div class="order-total">Total: ${{ order.total }}</div>
 
         <p>Estado del pedido:</p>
         <ol class="ProgressBar">

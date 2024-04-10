@@ -79,14 +79,47 @@
   }
 }
 
-.table-number {
+.data-order {
   display: flex;
   align-items: center;
 }
 
-.table-icon {
+.data-order-icon {
   margin-right: 3px;
   font-size: 16px;
+}
+
+.order-total {
+  text-align: start;
+  font-size: 1.1rem;
+  color: var(--color-8);
+}
+
+.order-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-row {
+  display: table-row;
+}
+
+.order-cell {
+  display: table-cell;
+  padding: 3px 0px;
+}
+
+.header-row {
+  font-weight: bold;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.right-aligned {
+  text-align: right;
 }
 
 @media (max-width: 768px) {
