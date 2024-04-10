@@ -17,7 +17,7 @@ const routes: Routes = [
       { path: 'my-orders', component: MyOrdersComponent, pathMatch: 'full' },
       { path: 'my-orders/confirmed', component: ConfirmedOrdersComponent },
       {
-        path: 'my-orders/confirmed/details/:idProd',
+        path: 'my-orders/confirmed/details/:idOrder',
         component: OrderDetailsComponent,
       },
     ],

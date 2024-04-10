@@ -9,11 +9,13 @@ import { OrderComponent } from './order/order.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ConfirmedOrdersComponent } from './confirmed-orders/confirmed-orders.component';
 import { BarcodeScanningModalComponent } from './my-orders/barcode-scanning-modal.component';
+import { OrderDetailsComponent } from './order.details/order.details.component';
 
 @NgModule({
   declarations: [
     OrderComponent,
     MyOrdersComponent,
+    OrderDetailsComponent,
     ConfirmedOrdersComponent,
     BarcodeScanningModalComponent,
   ],
