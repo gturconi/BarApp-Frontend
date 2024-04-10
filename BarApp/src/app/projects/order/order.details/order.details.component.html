@@ -30,12 +30,7 @@
 
         <p>Estado del pedido:</p>
         <ol class="ProgressBar">
-          <li
-            class="ProgressBar-step"
-            [ngClass]="{
-              'is-complete': order.state.description === 'A confirmar'
-            }"
-          >
+          <li class="ProgressBar-step is-complete">
             <svg class="ProgressBar-icon">
               <use xlink:href="#checkmark-bold" />
             </svg>
@@ -44,7 +39,7 @@
           <li
             class="ProgressBar-step"
             [ngClass]="{
-              'is-complete': order.state.description === 'En preparacion'
+              'is-complete': order.state.description != 'A confirmar'
             }"
           >
             <svg class="ProgressBar-icon">
@@ -55,7 +50,9 @@
           <li
             class="ProgressBar-step"
             [ngClass]="{
-              'is-complete': order.state.description === 'Entregado'
+              'is-complete':
+                order.state.description != 'A confirmar' &&
+                order.state.description != 'En preparacion'
             }"
           >
             <svg class="ProgressBar-icon">
@@ -66,7 +63,10 @@
           <li
             class="ProgressBar-step"
             [ngClass]="{
-              'is-complete': order.state.description === 'Pagado'
+              'is-complete':
+                order.state.description != 'A confirmar' &&
+                order.state.description != 'En preparacion' &&
+                order.state.description != 'Entregado'
             }"
           >
             <svg class="ProgressBar-icon">

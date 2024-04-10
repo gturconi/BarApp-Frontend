@@ -38,6 +38,11 @@
     display: none;
   }
 
+  &:after {
+    background-color: var(--color-2);
+    width: 0%;
+  }
+
   &.is-complete + &.is-current:after,
   &.is-complete + &.is-complete:after {
     width: 100%;
