@@ -6,9 +6,58 @@
     @if(this.order){
     <ion-card class="details-product">
       <ion-card-header>
-        <ion-card-title><b>Pedido Nro:</b> {{ order.id }}</ion-card-title>
+        <ion-card-title class="card-order-title"
+          ><b>Pedido Nro:</b> {{ order.id }}</ion-card-title
+        >
         <ion-card-subtitle>${{ order.total }}</ion-card-subtitle>
       </ion-card-header>
+
+      <ol class="ProgressBar">
+        <li
+          class="ProgressBar-step"
+          [ngClass]="{
+            'is-complete': order.state.description === 'A confirmar'
+          }"
+        >
+          <svg class="ProgressBar-icon">
+            <use xlink:href="#checkmark-bold" />
+          </svg>
+          <span class="ProgressBar-stepLabel">A confirmar</span>
+        </li>
+        <li
+          class="ProgressBar-step"
+          [ngClass]="{
+            'is-complete': order.state.description === 'En preparacion'
+          }"
+        >
+          <svg class="ProgressBar-icon">
+            <use xlink:href="#checkmark-bold" />
+          </svg>
+          <span class="ProgressBar-stepLabel">En preparacion</span>
+        </li>
+        <li
+          class="ProgressBar-step"
+          [ngClass]="{
+            'is-complete': order.state.description === 'Entregado'
+          }"
+        >
+          <svg class="ProgressBar-icon">
+            <use xlink:href="#checkmark-bold" />
+          </svg>
+          <span class="ProgressBar-stepLabel">Entregado</span>
+        </li>
+        <li
+          class="ProgressBar-step"
+          [ngClass]="{
+            'is-complete': order.state.description === 'Pagado'
+          }"
+        >
+          <svg class="ProgressBar-icon">
+            <use xlink:href="#checkmark-bold" />
+          </svg>
+          <span class="ProgressBar-stepLabel">Pagado</span>
+        </li>
+      </ol>
 
       <ion-card-content>
         <div class="order-date">
@@ -19,20 +68,6 @@
                 | date : "MMM dd, yyyy 'a las' HH:mm a" : '+0000'
             }}
           </span>
-        </div>
-        <div class="card-order-state">
-          <div
-            class="order-state"
-            [ngClass]="{
-              'bg-pending': order.state.description === 'A confirmar',
-              'bg-preparation': order.state.description === 'En preparacion',
-              'bg-delivered': order.state.description === 'Entregado',
-              'bg-paid': order.state.description === 'Pagado'
-            }"
-          >
-            <ion-icon name="checkmark-outline"></ion-icon>
-            <a href=""> {{ order.state.description }}</a>
-          </div>
         </div>
       </ion-card-content>
     </ion-card>
