@@ -2,12 +2,12 @@
 
 .card-order-title {
   text-align: center;
-  font-size: x-large;
+  font-size: 1.25rem;
 }
 
 .ProgressBar {
   margin: 0 auto;
-  padding: 2em 0 3em;
+  padding: 1em 0 3em;
   list-style: none;
   position: relative;
   display: flex;
@@ -63,7 +63,7 @@
 .ProgressBar-stepLabel {
   display: block;
   text-transform: uppercase;
-  color: var(--color-6);
+  color: var(--color-5);
   position: absolute;
   padding-top: 0.5em;
   width: 100%;
@@ -71,5 +71,21 @@
 
   .is-complete > & {
     color: var(--color-2);
+  }
+}
+
+.table-number {
+  display: flex;
+  align-items: center;
+}
+
+.table-icon {
+  margin-right: 3px;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .ProgressBar-stepLabel {
+    font-size: 10px;
   }
 }

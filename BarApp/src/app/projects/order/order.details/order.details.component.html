@@ -11,56 +11,8 @@
         >
         <ion-card-subtitle>${{ order.total }}</ion-card-subtitle>
       </ion-card-header>
-
-      <ol class="ProgressBar">
-        <li
-          class="ProgressBar-step"
-          [ngClass]="{
-            'is-complete': order.state.description === 'A confirmar'
-          }"
-        >
-          <svg class="ProgressBar-icon">
-            <use xlink:href="#checkmark-bold" />
-          </svg>
-          <span class="ProgressBar-stepLabel">A confirmar</span>
-        </li>
-        <li
-          class="ProgressBar-step"
-          [ngClass]="{
-            'is-complete': order.state.description === 'En preparacion'
-          }"
-        >
-          <svg class="ProgressBar-icon">
-            <use xlink:href="#checkmark-bold" />
-          </svg>
-          <span class="ProgressBar-stepLabel">En preparacion</span>
-        </li>
-        <li
-          class="ProgressBar-step"
-          [ngClass]="{
-            'is-complete': order.state.description === 'Entregado'
-          }"
-        >
-          <svg class="ProgressBar-icon">
-            <use xlink:href="#checkmark-bold" />
-          </svg>
-          <span class="ProgressBar-stepLabel">Entregado</span>
-        </li>
-        <li
-          class="ProgressBar-step"
-          [ngClass]="{
-            'is-complete': order.state.description === 'Pagado'
-          }"
-        >
-          <svg class="ProgressBar-icon">
-            <use xlink:href="#checkmark-bold" />
-          </svg>
-          <span class="ProgressBar-stepLabel">Pagado</span>
-        </li>
-      </ol>
-
       <ion-card-content>
-        <div class="order-date">
+        <div>
           <ion-icon name="calendar-outline"></ion-icon>
           <span>
             {{
@@ -69,6 +21,60 @@
             }}
           </span>
         </div>
+        <div class="table-number">
+          <span class="material-symbols-outlined table-icon"
+            >table_restaurant</span
+          >
+          Mesa número {{ order.table_order.number }}
+        </div>
+
+        <p>Estado del pedido:</p>
+        <ol class="ProgressBar">
+          <li
+            class="ProgressBar-step"
+            [ngClass]="{
+              'is-complete': order.state.description === 'A confirmar'
+            }"
+          >
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">A confirmar</span>
+          </li>
+          <li
+            class="ProgressBar-step"
+            [ngClass]="{
+              'is-complete': order.state.description === 'En preparacion'
+            }"
+          >
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">En preparacion</span>
+          </li>
+          <li
+            class="ProgressBar-step"
+            [ngClass]="{
+              'is-complete': order.state.description === 'Entregado'
+            }"
+          >
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">Entregado</span>
+          </li>
+          <li
+            class="ProgressBar-step"
+            [ngClass]="{
+              'is-complete': order.state.description === 'Pagado'
+            }"
+          >
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">Pagado</span>
+          </li>
+        </ol>
       </ion-card-content>
     </ion-card>
     }
