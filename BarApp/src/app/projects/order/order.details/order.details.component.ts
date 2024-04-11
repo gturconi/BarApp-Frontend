@@ -23,8 +23,14 @@ export class OrderDetailsComponent implements OnInit {
   error = false;
   orderId = null;
   order: OrderResponse | null = null;
-  orderDetails: { name: string; price: number; quantity: number }[] = [];
+  orderDetails: {
+    name: string;
+    price: number;
+    quantity: number;
+    comments: string;
+  }[] = [];
   mobileScreen = false;
+  comments: string[] = [];
 
   constructor(
     private loginService: LoginService,
@@ -63,7 +69,11 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   async getDetails() {
-    this.order?.orderDetails.forEach(orderDetail => {
+    this.order?.orderDetails.forEach(async orderDetail => {
+      if (orderDetail.comments) {
+        this.comments.push(orderDetail.comments);
+      }
+
       if (orderDetail.productId) {
         this.productService
           .getProduct(orderDetail.productId)
@@ -72,6 +82,7 @@ export class OrderDetailsComponent implements OnInit {
               name: product.name!,
               quantity: orderDetail.quantity!,
               price: product.price!,
+              comments: orderDetail.comments!,
             });
           });
       } else {
@@ -82,11 +93,22 @@ export class OrderDetailsComponent implements OnInit {
               name: promotion.description!,
               quantity: orderDetail.quantity!,
               price: promotion.price!,
+              comments: orderDetail.comments!,
             });
           });
       }
     });
   }
+
+  showComment(comment: string) {
+    Swal.fire({
+      title: 'Comentario realizado:',
+      text: comment,
+      icon: 'info',
+      confirmButtonText: 'Aceptar',
+    });
+  }
+
   async cancelOrder(): Promise<void> {
     if (this.order?.state.description != ORDER_STATES[1]) {
       this.toastrService.error(

@@ -127,6 +127,30 @@
   font-size: 1rem;
 }
 
+.order-detail-info small {
+  display: flex;
+  align-items: center;
+}
+
+.order-detail-info button {
+  background: none;
+  border: none;
+  color: var(--color-2);
+  font-size: inherit;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.order-detail-info button span {
+  font-size: inherit;
+}
+
+.order-detail-info button .material-symbols-outlined {
+  margin-left: 3px;
+}
+
 @media (max-width: 768px) {
   .ProgressBar-stepLabel {
     font-size: 10px;

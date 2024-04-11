@@ -89,6 +89,13 @@
               <div class="order-detail-info">
                 <span>{{ detail.name }}</span>
                 <small>Cantidad: {{ detail.quantity }}</small>
+                <small *ngIf="detail.comments" class="comment-container"
+                  >Comentario:
+                  <button (click)="showComment(detail.comments)">
+                    Ver
+                    <span class="material-symbols-outlined"> info </span>
+                  </button></small
+                >
               </div>
               <span>${{ detail.price }}</span>
             </div>
