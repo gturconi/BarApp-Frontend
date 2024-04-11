@@ -1,6 +1,6 @@
 <ion-content class="product-content">
   <div class="container-body">
-    <h2 class="section-title">Estado de mis pedidos</h2>
+    <h2 class="section-title">Mis pedidos</h2>
     <div class="wrapper2 productsList" #wrapper (scroll)="onScroll($event)">
       @for(order of orderList; track order.id; let idx = $index) {
       <div
