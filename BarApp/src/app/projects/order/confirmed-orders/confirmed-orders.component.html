@@ -5,7 +5,7 @@
       @for(order of orderList; track order.id; let idx = $index) {
       <div
         class="item-p card-order"
-        [style.animation-delay]="idx * 500 + 'ms'"
+        [style.animation-delay]="idx * 150 + 'ms'"
         (click)="redirectToDetails(order.id)"
       >
         <div class="card-order-info">
@@ -42,6 +42,7 @@
         </div>
       </div>
       }
+      <span class="loader" *ngIf="infiniteScrollLoading"></span>
     </div>
   </div>
 </ion-content>

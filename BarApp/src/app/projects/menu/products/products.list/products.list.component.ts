@@ -31,8 +31,8 @@ export class ProductsListComponent implements OnInit {
   category: string | undefined = '';
 
   currentPage = 1;
-  count = 0;
   infiniteScrollLoading = false;
+  noMoreData: boolean = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
@@ -59,10 +59,7 @@ export class ProductsListComponent implements OnInit {
     const wrapper = this.wrapperRef.nativeElement;
 
     if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight + 20) {
-      if (
-        this.productsList.length < this.count &&
-        !this.infiniteScrollLoading
-      ) {
+      if (!this.noMoreData && !this.infiniteScrollLoading) {
         this.loadMoreData();
       }
     }
@@ -113,7 +110,6 @@ export class ProductsListComponent implements OnInit {
         .getProducts(this.currentPage, 10, this.category)
         .subscribe(data => {
           this.productsList = data.results;
-          this.count = data.count;
           this.setImages(this.productsList);
           const hasVisibleProducts = this.productsList.some(
             product => product.baja === 0
@@ -144,6 +140,7 @@ export class ProductsListComponent implements OnInit {
     this.productsService
       .getProducts(this.currentPage, 10, this.category)
       .subscribe(response => {
+        if (response.results.length == 0) this.noMoreData = true;
         this.productsList.push(...response.results);
         this.setImages(this.productsList);
         this.currentPage++;

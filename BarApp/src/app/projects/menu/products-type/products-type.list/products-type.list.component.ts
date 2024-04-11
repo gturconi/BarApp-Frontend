@@ -38,8 +38,8 @@ export class ProductsTypeListComponent implements OnInit {
 
   currentPage = 1;
   currentPromPage = 1;
-  count = 0;
-  promCount = 0;
+  noMoreProductsTypes = false;
+  noMorePromotions = false;
   infiniteScrollLoading = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
@@ -65,10 +65,7 @@ export class ProductsTypeListComponent implements OnInit {
     const wrapper = this.wrapperRef.nativeElement;
 
     if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight + 20) {
-      if (
-        this.productsTypeList.length < this.count &&
-        !this.infiniteScrollLoading
-      ) {
+      if (!this.noMoreProductsTypes && !this.infiniteScrollLoading) {
         this.loadMoreData();
       }
     }
@@ -87,10 +84,7 @@ export class ProductsTypeListComponent implements OnInit {
     const element = event.target as HTMLElement;
     const wrapper2 = this.promWrapperRef.nativeElement;
     if (wrapper2.scrollHeight - wrapper2.scrollTop <= element.clientHeight) {
-      if (
-        this.promotionsList.length < this.promCount &&
-        !this.infiniteScrollLoading
-      ) {
+      if (!this.noMorePromotions && !this.infiniteScrollLoading) {
         this.loadMorePromData();
       }
     }
@@ -126,14 +120,12 @@ export class ProductsTypeListComponent implements OnInit {
         .subscribe({
           next: ({ productsTypes, promotions }) => {
             this.productsTypeList = productsTypes.results;
-            this.count = productsTypes.count;
             this.setImages(this.productsTypeList);
 
             this.promotionsList = promotions.results;
             this.validPromotionsList = this.getValidPromotions(
               this.promotionsList
             );
-            this.promCount = promotions.count;
             this.setImagesPromotions(this.promotionsList);
 
             loading.dismiss();
@@ -163,6 +155,7 @@ export class ProductsTypeListComponent implements OnInit {
     this.productsTypeService
       .getProductsTypes(this.currentPage, 10)
       .subscribe(response => {
+        if (response.results.length == 0) this.noMoreProductsTypes = true;
         this.productsTypeList.push(...response.results);
         this.setImages(this.productsTypeList);
         this.currentPage++;
@@ -176,6 +169,7 @@ export class ProductsTypeListComponent implements OnInit {
     this.promotionsService
       .getPromotions(this.currentPromPage, 10)
       .subscribe(data => {
+        if (data.results.length == 0) this.noMorePromotions = true;
         this.promotionsList.push(...data.results);
         this.validPromotionsList = this.getValidPromotions(this.promotionsList);
         this.setImagesPromotions(this.promotionsList);
