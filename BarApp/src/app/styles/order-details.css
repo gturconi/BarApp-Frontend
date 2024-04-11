@@ -121,37 +121,6 @@
 .right-aligned {
   text-align: right;
 }
-.card-hr {
-  height: 2px;
-  color: black;
-  opacity: 0.6;
-  background-image: linear-gradient(
-    to right,
-    transparent,
-    var(--color-2),
-    transparent
-  );
-}
-
-.order-detail {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.order-detail-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.order-button-pdf {
-  height: 2rem;
-  overflow-y: hidden !important;
-}
-
-.pdf__logo {
-  font-size: 1rem;
-}
 
 @media (max-width: 768px) {
   .ProgressBar-stepLabel {

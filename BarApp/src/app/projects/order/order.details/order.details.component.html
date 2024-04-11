@@ -119,39 +119,6 @@
             <span class="ProgressBar-stepLabel">Pagado</span>
           </li>
         </ol>
-        <hr class="card-hr" />
-        <div class="card-order-details">
-          <p>Detalles del pedido:</p>
-          <div class="order-details">
-            <div class="order-detail" *ngFor="let detail of orderDetails">
-              <div class="order-detail-info">
-                <span>{{ detail.name }}</span>
-                <small>Cantidad: {{ detail.quantity }}</small>
-              </div>
-              <span>${{ detail.price }}</span>
-            </div>
-          </div>
-        </div>
-        <hr class="card-hr" />
-        <div class="order-detail">
-          <span><b>Total</b></span>
-          <span>${{ order.total }}</span>
-        </div>
-        <hr class="card-hr" />
-
-        <div class="button-container">
-          <a
-            href="ruta/al/archivo/archivo.apk"
-            download="archivo.apk"
-            class="download__item order-button-pdf"
-          >
-            <ion-icon
-              name="document-outline"
-              class="download__logo pdf__logo"
-            ></ion-icon>
-            <h4 class="download__title">Descargar PDF</h4>
-          </a>
-        </div>
       </ion-card-content>
     </ion-card>
     }
