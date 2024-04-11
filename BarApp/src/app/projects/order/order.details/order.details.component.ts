@@ -61,6 +61,7 @@ export class OrderDetailsComponent implements OnInit {
     try {
       this.orderService.getOrder(id).subscribe(async data => {
         this.order = data;
+        console.log(data);
         await this.getDetails();
       });
     } finally {
