@@ -47,6 +47,7 @@
                     *ngIf="menuItem?.isManage && !menuItem?.isSetting"
                     class="menuItem background-menu"
                     [routerLink]="menuItem.route"
+                    (click)="toggleDesktopMenu('ellipsis-vertical-sharp')"
                   >
                     <ion-label>{{ menuItem.label }}</ion-label>
                   </ion-item>
@@ -73,6 +74,7 @@
                     *ngIf="menuItem?.isManage && menuItem?.isSetting"
                     class="menuItem background-menu"
                     [routerLink]="menuItem.route"
+                    (click)="toggleDesktopMenu('ellipsis-vertical-sharp')"
                   >
                     <ion-label>{{ menuItem.label }}</ion-label>
                   </ion-item>

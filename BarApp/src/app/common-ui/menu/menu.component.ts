@@ -112,6 +112,7 @@ export class MenuComponent implements OnInit {
       if (this.loginService.isAdmin() || !this.isScreenSmall) {
         this.showDesktopMenu = true;
         this.menuToggled.emit(this.showDesktopMenu);
+        this.toggleDesktopMenu('ellipsis-vertical-sharp');
       } else {
         this.showDesktopMenu = true;
         this.menuToggled.emit(this.showDesktopMenu);
