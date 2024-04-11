@@ -8,6 +8,16 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-buttons slot="end" *ngIf="client">
+      <ion-button>
+        <img
+          src="../../../assets/icon/campana.gif"
+          alt="GIF campana"
+          class="bell"
+          (click)="callWaiter()"
+        />
+      </ion-button>
+    </ion-buttons>
     <ion-title
       [ngClass]="{ logo_name_header: showBackButton }"
       class="logo__name"

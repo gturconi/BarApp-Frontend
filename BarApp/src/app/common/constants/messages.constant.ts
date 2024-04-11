@@ -61,3 +61,18 @@ export const ORDER_CONFIRMED_OPTS: SweetAlertOptions = {
   icon: 'success',
   confirmButtonText: 'Ir al pedido',
 };
+
+//call waiter
+export const CALL_WAITER_CONFIRMATION_MESSAGE: string =
+  '¿Estás seguro de que requieres de la atención del mesero?';
+export const CALL_WAITER: SweetAlertOptions = {
+  heightAuto: false,
+  title: 'Llamar al mesero',
+  text: CALL_WAITER_CONFIRMATION_MESSAGE,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí, Llamar',
+  cancelButtonText: 'Cancelar',
+};

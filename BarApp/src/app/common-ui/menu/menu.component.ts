@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 
 import { Output, EventEmitter } from '@angular/core';
 import { BadgeService } from '@common/services/badge.service';
+import Swal from 'sweetalert2';
+import { CALL_WAITER } from '@common/constants/messages.constant';
 
 interface MenuItem {
   isSetting?: boolean;
@@ -28,6 +30,7 @@ export class MenuComponent implements OnInit {
   isScreenSmall: boolean = false;
   admin: boolean = false;
   badgeValue = 0;
+  client: boolean = false;
 
   menuItems: MenuItem[] = [];
   tabsItem: any[] = [];
@@ -269,6 +272,7 @@ export class MenuComponent implements OnInit {
   }
 
   updateBackButtonVisibility(url: string) {
+    this.client = this.loginService.isClient();
     this.showBackButton = !['/home', '/intro'].includes(url);
     this.cdr.detectChanges();
   }
@@ -300,5 +304,9 @@ export class MenuComponent implements OnInit {
 
   hasManageItems(): boolean {
     return (this.menuItems as MenuItem[]).some(item => item && item.isManage);
+  }
+
+  callWaiter() {
+    Swal.fire(CALL_WAITER);
   }
 }

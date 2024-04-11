@@ -4,6 +4,8 @@ import { LoginService } from '@common/services/login.service';
 import { UserRoles } from '@common/constants/user.roles.enum';
 import { Input } from '@angular/core';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
+import { CALL_WAITER } from '@common/constants/messages.constant';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +15,7 @@ import { Location } from '@angular/common';
 export class HeaderComponent implements OnInit {
   @Input() showMenu: boolean = false;
   showBackButton: boolean = false;
+  client: boolean = false;
 
   onMenuToggle(showMenu: boolean) {
     this.showMenu = showMenu;
@@ -42,11 +45,16 @@ export class HeaderComponent implements OnInit {
   }
 
   updateBackButtonVisibility(url: string) {
+    this.client = this.loginService.isClient();
     this.showBackButton = !['/home', '/intro'].includes(url);
     this.cdr.detectChanges();
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  callWaiter() {
+    Swal.fire(CALL_WAITER);
   }
 }

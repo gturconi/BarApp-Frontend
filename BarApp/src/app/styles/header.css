@@ -1,4 +1,4 @@
-@import "variables.css";
+@import 'variables.css';
 
 .header-mobile {
   display: none;
@@ -8,6 +8,11 @@
   font-size: 24px;
   color: var(--color-7);
   margin-left: -48px;
+}
+
+.bell {
+  width: 24px;
+  height: 24px;
 }
 @media (max-width: 768px) {
   .header-mobile {
