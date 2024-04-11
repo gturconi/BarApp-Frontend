@@ -16,6 +16,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
+import { IntroModule } from './projects/intro/intro.module';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -37,6 +38,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       enableHtml: true,
     }),
     BrowserAnimationsModule,
+    IntroModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-AR' },

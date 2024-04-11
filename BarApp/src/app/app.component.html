@@ -1,3 +1,4 @@
+<app-intro *ngIf="!themeLoaded"></app-intro>
 <div class="main-container-app" *ngIf="themeLoaded">
   <ion-app>
     <app-header [showMenu]="showMenu"></app-header>
