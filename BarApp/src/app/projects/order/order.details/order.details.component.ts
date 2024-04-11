@@ -68,12 +68,13 @@ export class OrderDetailsComponent implements OnInit {
       loading.dismiss();
     }
   }
-
+  /*
+ESTO ME PARECE QUE NO ES NECESARIO PARA LOGRAR ESA FUNCIONALIDAD
   toggleDetailName(event: MouseEvent) {
     const element = event.target as HTMLElement;
     element.classList.toggle('truncate');
   }
-
+*/
   showFullText = false;
 
   toggleFullText() {
