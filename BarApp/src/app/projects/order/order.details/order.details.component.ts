@@ -48,7 +48,6 @@ export class OrderDetailsComponent implements OnInit {
     try {
       this.orderService.getOrder(id).subscribe(data => {
         this.order = data;
-        console.log(data);
       });
     } finally {
       loading.dismiss();
@@ -76,14 +75,5 @@ export class OrderDetailsComponent implements OnInit {
         }
       });
     }
-  }
-
-  showComment(comment: string) {
-    Swal.fire({
-      title: 'Comentario',
-      text: comment,
-      icon: 'info',
-      confirmButtonText: 'Aceptar',
-    });
   }
 }
