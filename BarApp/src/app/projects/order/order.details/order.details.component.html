@@ -42,16 +42,30 @@
             </div>
             <div class="order-cell price right-aligned bold">Precio</div>
             <div class="order-cell quantity right-aligned bold">Cantidad</div>
+            <div class="order-cell comments right-aligned bold">Comentario</div>
           </div>
           <div class="order-row" *ngFor="let detail of order.orderDetails">
             <div class="order-cell product-promotion">
               {{ detail.productId }} {{ detail.promotionId }}
             </div>
             <div class="order-cell price right-aligned">
-              {{ detail.unitPrice }}
+              ${{ detail.unitPrice }}
             </div>
             <div class="order-cell quantity right-aligned">
               {{ detail.quantity }}
+            </div>
+            <div
+              class="order-cell quantity right-aligned"
+              *ngIf="!detail.comments"
+            >
+              -
+            </div>
+            <div class="order-cell quantity right-aligned">
+              <ng-container *ngIf="detail.comments">
+                <button (click)="showComment(detail.comments)">
+                  <span class="material-symbols-outlined"> info </span>
+                </button>
+              </ng-container>
             </div>
           </div>
         </div>
