@@ -45,7 +45,7 @@ export class ProductsTypeListComponent implements OnInit {
   promCount = 0;
   infiniteScrollLoading = false;
 
-  showPromotions: boolean = false;
+  filterCheck: boolean = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
@@ -107,9 +107,9 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   togglePromotionsVisibility(event: any) {
-    this.showPromotions = event.detail.checked;
-    if (this.showPromotions) {
-      this.mostrar();
+    this.filterCheck = event.detail.checked;
+    if (this.filterCheck) {
+      this.filterData();
     } else {
       /*this.promotionsService
         .getPromotions(undefined, undefined)
@@ -121,10 +121,12 @@ export class ProductsTypeListComponent implements OnInit {
       this.promotionsList = this.oldpromotionsList;
       this.currentPage = 1;
       this.productsTypeList = this.oldProductsTypeList;
+      this.setImagesPromotions(this.promotionsList);
+      this.setImages(this.productsTypeList);
     }
   }
 
-  async mostrar() {
+  async filterData() {
     const loading = await this.loadingService.loading();
     await loading.present();
 
@@ -134,6 +136,12 @@ export class ProductsTypeListComponent implements OnInit {
     this.promotionsList = this.promotionsList.filter(promotion => {
       return !promotion.baja && this.isPromotionValid(promotion);
     });
+    this.setImagesPromotions(this.promotionsList);
+
+    this.productsTypeList = this.productsTypeList.filter(productsType => {
+      return !productsType.baja;
+    });
+    this.setImages(this.productsTypeList);
 
     //Filtrar categorias cuando se implemente la baja
 
@@ -215,7 +223,15 @@ export class ProductsTypeListComponent implements OnInit {
     this.productsTypeService
       .getProductsTypes(this.currentPage, 10)
       .subscribe(response => {
-        this.productsTypeList.push(...response.results);
+        if (this.filterCheck) {
+          this.productsTypeList.concat(
+            response.results.filter(prodType => {
+              return !prodType.baja;
+            })
+          );
+        } else {
+          this.productsTypeList.push(...response.results);
+        }
         this.setImages(this.productsTypeList);
         this.currentPage++;
         this.infiniteScroll && this.infiniteScroll.complete();
@@ -228,7 +244,15 @@ export class ProductsTypeListComponent implements OnInit {
     this.promotionsService
       .getPromotions(this.currentPromPage, 10)
       .subscribe(data => {
-        this.promotionsList.push(...data.results);
+        if (this.filterCheck) {
+          this.promotionsList.concat(
+            data.results.filter(promotion => {
+              return !promotion.baja && this.isPromotionValid(promotion);
+            })
+          );
+        } else {
+          this.promotionsList.push(...data.results);
+        }
         this.validPromotionsList = this.getValidPromotions(this.promotionsList);
         this.setImagesPromotions(this.promotionsList);
         this.currentPromPage++;

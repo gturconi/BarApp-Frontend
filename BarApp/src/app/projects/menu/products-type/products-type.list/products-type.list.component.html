@@ -2,7 +2,7 @@
   <div class="container-body">
     <ion-checkbox
       *ngIf="admin"
-      [(ngModel)]="showPromotions"
+      [(ngModel)]="filterCheck"
       (ionChange)="togglePromotionsVisibility($event)"
       class="p-checkbox"
     >
