@@ -68,6 +68,17 @@ export class OrderDetailsComponent implements OnInit {
     }
   }
 
+  toggleDetailName(event: MouseEvent) {
+    const element = event.target as HTMLElement;
+    element.classList.toggle('truncate');
+  }
+
+  showFullText = false;
+
+  toggleFullText() {
+    this.showFullText = !this.showFullText;
+  }
+
   async getDetails() {
     this.order?.orderDetails.forEach(async orderDetail => {
       if (orderDetail.comments) {

@@ -87,7 +87,21 @@
           <div class="order-details">
             <div class="order-detail" *ngFor="let detail of orderDetails">
               <div class="order-detail-info">
-                <span>{{ detail.name }}</span>
+                <span
+                  id="detailName"
+                  [ngClass]="{
+                    truncate: detail.name.length > 30 && !showFullText
+                  }"
+                  (click)="toggleFullText()"
+                >
+                  {{
+                    showFullText
+                      ? detail.name
+                      : detail.name.length > 30
+                      ? (detail.name | slice : 0 : 30) + '...'
+                      : detail.name
+                  }}
+                </span>
                 <small>Cantidad: {{ detail.quantity }}</small>
                 <small *ngIf="detail.comments" class="comment-container"
                   >Comentario:
