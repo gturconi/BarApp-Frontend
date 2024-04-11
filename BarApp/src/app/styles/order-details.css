@@ -95,31 +95,36 @@
   color: var(--color-8);
 }
 
-.order-table {
-  display: table;
-  width: 100%;
-  border-collapse: collapse;
+.card-hr {
+  height: 2px;
+  color: black;
+  opacity: 0.6;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--color-2),
+    transparent
+  );
 }
 
-.order-row {
-  display: table-row;
+.order-detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.order-cell {
-  display: table-cell;
-  padding: 3px 0px;
+.order-detail-info {
+  display: flex;
+  flex-direction: column;
 }
 
-.header-row {
-  font-weight: bold;
+.order-button-pdf {
+  height: 2rem;
+  overflow-y: hidden !important;
 }
 
-.bold {
-  font-weight: bold;
-}
-
-.right-aligned {
-  text-align: right;
+.pdf__logo {
+  font-size: 1rem;
 }
 
 @media (max-width: 768px) {

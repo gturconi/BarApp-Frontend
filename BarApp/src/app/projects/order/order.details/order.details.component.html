@@ -34,30 +34,6 @@
           Mesero asignado: {{ order.employee.name }}
         </div>
 
-        <p>Detalle pedido:</p>
-        <div class="order-table">
-          <div class="order-row header-row">
-            <div class="order-cell product-promotion bold">
-              Producto/Promoción
-            </div>
-            <div class="order-cell price right-aligned bold">Precio</div>
-            <div class="order-cell quantity right-aligned bold">Cantidad</div>
-          </div>
-          <div class="order-row" *ngFor="let detail of order.orderDetails">
-            <div class="order-cell product-promotion">
-              {{ detail.productId }} {{ detail.promotionId }}
-            </div>
-            <div class="order-cell price right-aligned">
-              {{ detail.unitPrice }}
-            </div>
-            <div class="order-cell quantity right-aligned">
-              {{ detail.quantity }}
-            </div>
-          </div>
-        </div>
-
-        <div class="order-total">Total: ${{ order.total }}</div>
-
         <p>Estado del pedido:</p>
         <ol class="ProgressBar">
           <li class="ProgressBar-step is-complete">
@@ -105,6 +81,39 @@
             <span class="ProgressBar-stepLabel">Pagado</span>
           </li>
         </ol>
+        <hr class="card-hr" />
+        <div class="card-order-details">
+          <p>Detalles del pedido:</p>
+          <div class="order-details">
+            <div class="order-detail" *ngFor="let detail of orderDetails">
+              <div class="order-detail-info">
+                <span>{{ detail.name }}</span>
+                <small>Cantidad: {{ detail.quantity }}</small>
+              </div>
+              <span>${{ detail.price }}</span>
+            </div>
+          </div>
+        </div>
+        <hr class="card-hr" />
+        <div class="order-detail">
+          <span><b>Total</b></span>
+          <span>${{ order.total }}</span>
+        </div>
+        <hr class="card-hr" />
+
+        <div class="button-container">
+          <a
+            href="ruta/al/archivo/archivo.apk"
+            download="archivo.apk"
+            class="download__item order-button-pdf"
+          >
+            <ion-icon
+              name="document-outline"
+              class="download__logo pdf__logo"
+            ></ion-icon>
+            <h4 class="download__title">Descargar PDF</h4>
+          </a>
+        </div>
       </ion-card-content>
     </ion-card>
     }

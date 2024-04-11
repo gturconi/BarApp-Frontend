@@ -8,6 +8,10 @@ import Swal from 'sweetalert2';
 import { DELETE_OPTS } from '@common/constants/messages.constant';
 import { finalize } from 'rxjs';
 import { ORDER_STATES, OrderResponse } from '../models/order';
+import { ProductsService } from '../../menu/products/services/products.service';
+import { PromotionsService } from '../../menu/promotions/services/promotions.service';
+import { Products } from '../../menu/products/models/products';
+import { Promotion } from '../../menu/promotions/models/promotion';
 
 @Component({
   selector: 'app-order.details',
@@ -19,11 +23,14 @@ export class OrderDetailsComponent implements OnInit {
   error = false;
   orderId = null;
   order: OrderResponse | null = null;
+  orderDetails: { name: string; price: number; quantity: number }[] = [];
   mobileScreen = false;
 
   constructor(
     private loginService: LoginService,
     private orderService: OrderService,
+    private productService: ProductsService,
+    private promotionService: PromotionsService,
     private route: ActivatedRoute,
     private router: Router,
     private loadingService: LoadingService,
@@ -46,14 +53,40 @@ export class OrderDetailsComponent implements OnInit {
     const loading = await this.loadingService.loading();
     await loading.present();
     try {
-      this.orderService.getOrder(id).subscribe(data => {
+      this.orderService.getOrder(id).subscribe(async data => {
         this.order = data;
+        await this.getDetails();
       });
     } finally {
       loading.dismiss();
     }
   }
 
+  async getDetails() {
+    this.order?.orderDetails.forEach(orderDetail => {
+      if (orderDetail.productId) {
+        this.productService
+          .getProduct(orderDetail.productId)
+          .subscribe(product => {
+            this.orderDetails.push({
+              name: product.name!,
+              quantity: orderDetail.quantity!,
+              price: product.price!,
+            });
+          });
+      } else {
+        this.promotionService
+          .getPromotion(orderDetail.promotionId!)
+          .subscribe(promotion => {
+            this.orderDetails.push({
+              name: promotion.description!,
+              quantity: orderDetail.quantity!,
+              price: promotion.price!,
+            });
+          });
+      }
+    });
+  }
   async cancelOrder(): Promise<void> {
     if (this.order?.state.description != ORDER_STATES[1]) {
       this.toastrService.error(
