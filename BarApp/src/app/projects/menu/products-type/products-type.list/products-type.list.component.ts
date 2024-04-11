@@ -41,8 +41,8 @@ export class ProductsTypeListComponent implements OnInit {
 
   currentPage = 1;
   currentPromPage = 1;
-  count = 0;
-  promCount = 0;
+  noMoreProductsTypes = false;
+  noMorePromotions = false;
   infiniteScrollLoading = false;
 
   filterCheck: boolean = false;
@@ -69,11 +69,8 @@ export class ProductsTypeListComponent implements OnInit {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
 
-    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
-      if (
-        this.productsTypeList.length < this.count &&
-        !this.infiniteScrollLoading
-      ) {
+    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight + 20) {
+      if (!this.noMoreProductsTypes && !this.infiniteScrollLoading) {
         this.loadMoreData();
       }
     }
@@ -91,11 +88,11 @@ export class ProductsTypeListComponent implements OnInit {
   onPromScroll(event: Event) {
     const element = event.target as HTMLElement;
     const wrapper2 = this.promWrapperRef.nativeElement;
-    if (wrapper2.scrollHeight - wrapper2.scrollTop <= element.clientHeight) {
-      if (
-        this.promotionsList.length < this.promCount &&
-        !this.infiniteScrollLoading
-      ) {
+    if (
+      wrapper2.scrollHeight - wrapper2.scrollTop <=
+      element.clientHeight + 20
+    ) {
+      if (!this.noMorePromotions && !this.infiniteScrollLoading) {
         this.loadMorePromData();
       }
     }
@@ -111,18 +108,14 @@ export class ProductsTypeListComponent implements OnInit {
     if (this.filterCheck) {
       this.filterData();
     } else {
-      /*this.promotionsService
-        .getPromotions(undefined, undefined)
-        .subscribe(data => {
-          this.promotionsList = data.results;
-          this.setImagesPromotions(this.promotionsList);
-        });*/
-      this.currentPromPage = 1;
+      this.currentPromPage = 2;
       this.promotionsList = this.oldpromotionsList;
-      this.currentPage = 1;
+      this.currentPage = 2;
       this.productsTypeList = this.oldProductsTypeList;
       this.setImagesPromotions(this.promotionsList);
       this.setImages(this.productsTypeList);
+      this.noMorePromotions = false;
+      this.noMoreProductsTypes = false;
     }
   }
 
@@ -143,31 +136,7 @@ export class ProductsTypeListComponent implements OnInit {
     });
     this.setImages(this.productsTypeList);
 
-    //Filtrar categorias cuando se implemente la baja
-
     loading.dismiss();
-    /* try {
-      this.promotionsService
-        .getPromotions(undefined, undefined)
-        .subscribe(data => {
-          this.promotionsList = this.promotionsList.filter(promotion => {
-            return !promotion.baja && this.isPromotionValid(promotion);
-          });
-          this.setImagesPromotions(this.promotionsList);
-           if (this.promotionsList.length === 0) {
-            Swal.fire({
-              icon: 'info',
-              title: 'Actualmente no hay promociones disponibles',
-              text: 'Por favor, revisa nuevamente más tarde.',
-            });
-            this.currentPromPage = 1;
-            this.doSearch();
-            this.showPromotions = false;
-          }
-        });
-    } finally {
-      loading.dismiss();
-    }*/
   }
 
   async doSearch() {
@@ -187,14 +156,12 @@ export class ProductsTypeListComponent implements OnInit {
       }).subscribe({
         next: ({ productsTypes, promotions }) => {
           this.productsTypeList = productsTypes.results;
-          this.count = productsTypes.count;
           this.setImages(this.productsTypeList);
 
           this.promotionsList = promotions.results;
           this.validPromotionsList = this.getValidPromotions(
             this.promotionsList
           );
-          this.promCount = promotions.count;
           this.setImagesPromotions(this.promotionsList);
 
           loading.dismiss();
@@ -223,11 +190,10 @@ export class ProductsTypeListComponent implements OnInit {
     this.productsTypeService
       .getProductsTypes(this.currentPage, 10)
       .subscribe(response => {
+        if (response.results.length == 0) this.noMoreProductsTypes = true;
         if (this.filterCheck) {
-          this.productsTypeList.concat(
-            response.results.filter(prodType => {
-              return !prodType.baja;
-            })
+          this.productsTypeList.push(
+            ...response.results.filter(prodType => prodType.baja == 0)
           );
         } else {
           this.productsTypeList.push(...response.results);
@@ -244,11 +210,13 @@ export class ProductsTypeListComponent implements OnInit {
     this.promotionsService
       .getPromotions(this.currentPromPage, 10)
       .subscribe(data => {
+        if (data.results.length == 0) this.noMorePromotions = true;
         if (this.filterCheck) {
           this.promotionsList.concat(
-            data.results.filter(promotion => {
-              return !promotion.baja && this.isPromotionValid(promotion);
-            })
+            data.results.filter(
+              promotion =>
+                promotion.baja == 0 && this.isPromotionValid(promotion)
+            )
           );
         } else {
           this.promotionsList.push(...data.results);

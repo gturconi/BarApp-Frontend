@@ -10,5 +10,5 @@ export class ProductsType {
   id: string;
   description?: string;
   image?: Avatar | PhotoResult;
-  baja?: boolean;
+  baja?: number;
 }
