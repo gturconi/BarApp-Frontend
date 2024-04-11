@@ -1,5 +1,6 @@
 <ion-header
   class="ion-no-border ion-text-center header-mobile"
+  [class.bell-present]="client"
   *ngIf="!isAdmin() && !showMenu"
 >
   <ion-toolbar>
@@ -21,6 +22,7 @@
     <ion-title
       [ngClass]="{ logo_name_header: showBackButton }"
       class="logo__name"
+      [class.without-bell]="!client"
       >TGD<span class="point">net.</span></ion-title
     >
   </ion-toolbar>
