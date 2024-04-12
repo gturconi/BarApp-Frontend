@@ -52,3 +52,13 @@ body {
 html {
   --ion-background-color: var(--color-1);
 }
+
+@media (prefers-color-scheme: dark) {
+  .md body {
+    --ion-background-color: var(--color-1);
+    --background: var(--color-1);
+    --ion-text-color: var(--color-8);
+    --ion-color-step-850: var(--color-8);
+    --ion-color-step-50: var(--color-7);
+  }
+}
