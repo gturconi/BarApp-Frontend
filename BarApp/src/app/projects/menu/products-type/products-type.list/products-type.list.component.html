@@ -1,13 +1,16 @@
 <ion-content scroll-y="false" class="product-content">
   <div class="container-body">
-    <ion-checkbox
+    <ion-toggle
+      labelPlacement="start"
+      class="menu-toggle"
+      justify="end"
       *ngIf="admin"
       [(ngModel)]="filterCheck"
       (ionChange)="togglePromotionsVisibility($event)"
-      class="p-checkbox"
     >
       Mostrar carta actual
-    </ion-checkbox>
+    </ion-toggle>
+
     @if(promotionsList && promotionsList.length > 0){
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper" #PromWrapper (scroll)="onPromScroll($event)">
