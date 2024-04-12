@@ -38,6 +38,7 @@ export class ProductsTypeListComponent implements OnInit {
   admin: boolean = false;
   showData: boolean = false;
   loading = true;
+  hide: boolean = true;
 
   currentPage = 1;
   currentPromPage = 1;
@@ -192,11 +193,12 @@ export class ProductsTypeListComponent implements OnInit {
       .subscribe(response => {
         if (response.results.length == 0) this.noMoreProductsTypes = true;
         if (this.filterCheck) {
-          this.productsTypeList.push(
+          this.productsTypeList.concat(
             ...response.results.filter(prodType => prodType.baja == 0)
           );
         } else {
-          this.productsTypeList.push(...response.results);
+          console.log(this.productsTypeList);
+          this.productsTypeList.concat(response.results);
         }
         this.setImages(this.productsTypeList);
         this.currentPage++;
@@ -219,7 +221,7 @@ export class ProductsTypeListComponent implements OnInit {
             )
           );
         } else {
-          this.promotionsList.push(...data.results);
+          this.promotionsList.concat(...data.results);
         }
         this.validPromotionsList = this.getValidPromotions(this.promotionsList);
         this.setImagesPromotions(this.promotionsList);
@@ -297,5 +299,11 @@ export class ProductsTypeListComponent implements OnInit {
 
   isPromotionValid(promotion: Promotion): boolean {
     return isPromotionValid(promotion);
+  }
+
+  showOrHideProductType(prodType: ProductsType) {
+    this.hide = !this.hide;
+    prodType.baja = this.hide ? 0 : 1;
+    this.productsTypeService.changeProductTypeView(prodType).subscribe();
   }
 }
