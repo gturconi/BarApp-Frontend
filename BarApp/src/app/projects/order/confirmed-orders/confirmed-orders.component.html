@@ -31,14 +31,12 @@
               'bg-paid': order.state.description === 'Pagado'
             }"
           >
-            <ion-icon name="checkmark-outline"></ion-icon>
+            <span class="material-symbols-outlined check-icon"> done </span>
             <a href=""> {{ order.state.description }}</a>
           </div>
-          <ion-icon
-            [routerLink]="[]"
-            class="icons-show order-details-icon"
-            name="chevron-forward-circle-outline"
-          ></ion-icon>
+          <span class="material-symbols-outlined icons-show order-details-icon">
+            arrow_circle_right
+          </span>
         </div>
       </div>
       }

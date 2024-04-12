@@ -40,6 +40,9 @@
   bottom: 2px;
 }
 
+.check-icon {
+  color: var(--color-7);
+}
 .card-order-state {
   display: flex;
   flex-direction: column;
