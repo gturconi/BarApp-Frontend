@@ -1,5 +1,16 @@
 <ion-content scroll-y="false" class="product-content">
   <div class="container-body">
+    <ion-toggle
+      labelPlacement="start"
+      class="menu-toggle"
+      justify="end"
+      *ngIf="admin"
+      [(ngModel)]="filterCheck"
+      (ionChange)="togglePromotionsVisibility($event)"
+    >
+      Mostrar carta actual
+    </ion-toggle>
+
     @if(promotionsList && promotionsList.length > 0){
     <h2 class="section-title" *ngIf="showData">Promociones</h2>
     <div class="wrapper" #PromWrapper (scroll)="onPromScroll($event)">
@@ -65,6 +76,7 @@
       </div>
       }
     </div>
+
     }@else if(showData && !loading){
     <div class="details-error">
       <h2>Aún no hay promociones cargadas</h2>
@@ -73,7 +85,7 @@
     <h2 class="section-title" *ngIf="showData">Categorias de productos</h2>
     <div class="wrapper2" #wrapper (scroll)="onScroll($event)">
       @for(productsType of productsTypeList; track productsType.id; let idx =
-      $index) {
+      $index) { @if(admin || !productsType.baja){
       <div
         class="item2"
         [routerLink]="['/menu/categories/', productsType.id, 'products']"
@@ -88,6 +100,15 @@
           ></ion-icon>
         </div>
         <div class="actions" *ngIf="admin">
+          <span title="Ocultar categoria al usuario" class="icon-tooltip">
+            <ion-icon
+              [name]="!productsType.baja ? 'eye-outline' : 'eye-off-outline'"
+              (click)="
+                $event.stopPropagation(); showOrHideProductType(productsType)
+              "
+              class="icons-admin icon-eye"
+            ></ion-icon>
+          </span>
           <ion-button
             [routerLink]="['/menu/categories/edit', productsType.id]"
             expand="block"
@@ -106,7 +127,7 @@
           ></ion-button>
         </div>
       </div>
-      }
+      }}
       <span class="loader" *ngIf="infiniteScrollLoading"></span>
     </div>
 
