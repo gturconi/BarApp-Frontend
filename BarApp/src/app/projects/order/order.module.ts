@@ -10,6 +10,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ConfirmedOrdersComponent } from './confirmed-orders/confirmed-orders.component';
 import { BarcodeScanningModalComponent } from './my-orders/barcode-scanning-modal.component';
 import { OrderDetailsComponent } from './order.details/order.details.component';
+import { OrderAdminListComponent } from './order.admin.list/order.admin.list.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { OrderDetailsComponent } from './order.details/order.details.component';
     OrderDetailsComponent,
     ConfirmedOrdersComponent,
     BarcodeScanningModalComponent,
+    OrderAdminListComponent,
   ],
   imports: [CommonModule, OrderRoutingModule, CommonUiModule, IonicModule],
 })
