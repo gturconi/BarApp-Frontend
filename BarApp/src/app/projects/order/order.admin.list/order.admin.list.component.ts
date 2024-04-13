@@ -34,6 +34,12 @@ export class OrderAdminListComponent implements OnInit {
       { key: 'user.name', label: 'Cliente' },
       { key: 'state.description', label: 'Estado' },
       { key: 'total', label: 'Total' },
+      {
+        key: '',
+        label: 'Detalle',
+        action: params => this.redirecToDetails(params),
+        actionClass: 'table-red-button',
+      },
     ] as TableColumn[];
 
     this.loading = true;
@@ -63,8 +69,8 @@ export class OrderAdminListComponent implements OnInit {
     }
   }
 
-  ocultarAccion(user: TableData) {
-    return !!user['baja'];
+  redirecToDetails(order: TableData) {
+    this.router.navigate(['orders/details/', order['id']]);
   }
 
   filterOrders(value: string) {

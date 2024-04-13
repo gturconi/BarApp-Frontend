@@ -26,6 +26,11 @@ const routes: Routes = [
         path: 'my-orders/confirmed/details/:idOrder',
         component: OrderDetailsComponent,
       },
+      {
+        path: 'details/:idOrder',
+        component: OrderDetailsComponent,
+        canActivate: [authGuard, adminGuard],
+      },
     ],
   },
 ];
