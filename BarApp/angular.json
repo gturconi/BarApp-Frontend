@@ -22,7 +22,8 @@
             "allowedCommonJsDependencies": [
               "sweetalert2",
               "crypto-js",
-              "qrcode"
+              "qrcode",
+              "pdfmake"
             ],
             "assets": [
               {
