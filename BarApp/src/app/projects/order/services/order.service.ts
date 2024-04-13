@@ -35,6 +35,10 @@ export class OrderService {
     return this.http.get<OrderResponse>(`${this.apiUrl}/orders/` + id);
   }
 
+  getLastOrderFromTable(id: string) {
+    return this.http.get<any>(`${this.apiUrl}/orders/tableOrder/` + id);
+  }
+
   postOrder(order: OrderRequest) {
     return this.http.post<OrderResponse>(`${this.apiUrl}/orders`, order);
   }

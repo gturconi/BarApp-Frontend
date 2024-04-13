@@ -22,6 +22,10 @@
   scale: 1.02 !important;
 }
 
+.table-card:active {
+  scale: 0.92 !important;
+}
+
 .table-image {
   margin-top: 1em;
   max-width: 250px;

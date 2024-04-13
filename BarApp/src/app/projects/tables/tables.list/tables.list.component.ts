@@ -11,7 +11,9 @@ import { LoginService } from '@common/services/login.service';
 import { Table } from '../models/table';
 import { DELETE_OPTS } from 'src/app/common/constants/messages.constant';
 import { SocketService } from '@common/services/socket.service';
+import { OrderService } from '../../order/services/order.service';
 import { SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tables.list',
@@ -36,7 +38,9 @@ export class TablesListComponent implements OnInit {
     private loadingService: LoadingService,
     private toastrService: ToastrService,
     private loginService: LoginService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private orderService: OrderService,
+    private router: Router
   ) {
     this.socketService.getMessage().subscribe(data => {
       this.currentPage = 1;
@@ -56,7 +60,7 @@ export class TablesListComponent implements OnInit {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
 
-    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
+    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight + 20) {
       if (this.tableList.length < this.count && !this.infiniteScrollLoading) {
         this.loadMoreData();
       }
@@ -122,5 +126,12 @@ export class TablesListComponent implements OnInit {
 
   onChangeURL(url: SafeUrl) {
     this.qrCodeDownloadLink = url;
+  }
+
+  openDetails(table: Table) {
+    if (table.state == 'Free') return;
+    this.orderService.getLastOrderFromTable(table.id).subscribe(order => {
+      this.router.navigate(['orders/my-orders/confirmed/details/', order.id]);
+    });
   }
 }

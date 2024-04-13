@@ -11,7 +11,11 @@
     >
       @for(table of tableList; track table.id; let idx = $index) {
       <article>
-        <ion-card class="table-card details-product">
+        <ion-card
+          class="table-card details-product"
+          (click)="openDetails(table)"
+          type="button"
+        >
           <img
             loading="lazy"
             src="assets/table.webp"
