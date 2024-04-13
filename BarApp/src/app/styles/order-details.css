@@ -124,6 +124,18 @@
   overflow-y: hidden !important;
 }
 
+.cancel-order-button {
+  background-color: #cc0000;
+  text-align: center;
+  height: 2rem;
+}
+
+.pay-order-button {
+  background-color: #008f39;
+  text-align: center;
+  height: 2rem;
+}
+
 .pdf__logo {
   font-size: 1rem;
 }

@@ -76,3 +76,18 @@ export const CALL_WAITER: SweetAlertOptions = {
   confirmButtonText: 'Sí, Llamar',
   cancelButtonText: 'Cancelar',
 };
+
+//cancel order
+export const CANCEL_ORDER_CONFIRMATION_MESSAGE: string =
+  '¿Estás seguro de que quieres cancelar el pedido?';
+export const CANCEL_ORDER: SweetAlertOptions = {
+  heightAuto: false,
+  title: '¿Cancelar Pedido?',
+  text: CANCEL_ORDER_CONFIRMATION_MESSAGE,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí, Cancelar',
+  cancelButtonText: 'No',
+};

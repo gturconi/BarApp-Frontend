@@ -130,6 +130,33 @@
         <hr class="card-hr" />
 
         <div class="button-container">
+          <button
+            class="download__item"
+            [ngClass]="{
+              'cancel-order-button': order.state.description === 'A confirmar',
+              'pay-order-button': order.state.description === 'Entregado'
+            }"
+            (click)="handleOrderAction()"
+          >
+            <ion-icon
+              [name]="
+                order.state.description === 'A confirmar'
+                  ? 'close-circle-outline'
+                  : 'cash-outline'
+              "
+              class="download__logo pdf__logo"
+            ></ion-icon>
+            <h4 class="download__title">
+              {{
+                order.state.description === 'A confirmar'
+                  ? 'Cancelar Pedido'
+                  : 'Pagar Pedido'
+              }}
+            </h4>
+          </button>
+        </div>
+
+        <div class="button-container">
           <a
             (click)="createPdf()"
             download="archivo.apk"

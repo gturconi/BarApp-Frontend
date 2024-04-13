@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from '@common/services/loading.service';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { DELETE_OPTS } from '@common/constants/messages.constant';
+import { CANCEL_ORDER } from '@common/constants/messages.constant';
 import { finalize } from 'rxjs';
 import { ORDER_STATES, OrderResponse } from '../models/order';
 import { ProductsService } from '../../menu/products/services/products.service';
@@ -125,7 +125,7 @@ export class OrderDetailsComponent implements OnInit {
         'No es posible cancelar un pedido que ya ha sido confirmado'
       );
     } else {
-      Swal.fire(DELETE_OPTS).then(async result => {
+      Swal.fire(CANCEL_ORDER).then(async result => {
         if (result.isConfirmed) {
           const loading = await this.loadingService.loading();
           await loading.present();
@@ -139,6 +139,13 @@ export class OrderDetailsComponent implements OnInit {
             });
         }
       });
+    }
+  }
+
+  handleOrderAction(): void {
+    if (this.order!.state.description === 'A confirmar') {
+      this.cancelOrder();
+    } else if (this.order!.state.description === 'Entregado') {
     }
   }
 
