@@ -194,6 +194,10 @@ export class OrderDetailsComponent implements OnInit {
           body: tableBody,
           widths: ['62%', '20%', '18%'], // para ancho de las columnas
         },
+        layout: {
+          hLineWidth: () => 0,
+          vLineWidth: () => 0,
+        },
         margin: [145, 0, 145, 10],
         style: 'tableContent',
       });
@@ -204,15 +208,22 @@ export class OrderDetailsComponent implements OnInit {
       columns: [
         { width: '*', text: '', bold: true, alignment: 'right' },
         { width: '*', text: '', bold: true, alignment: 'right' },
-        { width: '*', text: 'Total:', bold: true, alignment: 'right' },
+        {
+          width: '*',
+          text: 'Total:',
+          bold: true,
+          alignment: 'right',
+          fontSize: 11,
+        },
         {
           width: '*',
           text: `$${this.order.total}`,
           bold: true,
           alignment: 'center',
+          fontSize: 11,
         },
       ],
-      margin: [145, 0, 125, 10],
+      margin: [125, 0, 145, 10],
     });
 
     // para la estructura del PDF
