@@ -137,7 +137,7 @@ export class TablesListComponent implements OnInit {
       if (orders.length > 0) {
         orders.forEach((order: any) => {
           items.push({
-            value: 'Pedido Nro: ' + order.id + ' ' + 'Estado: ' + order.status,
+            value: 'Pedido: ' + order.id + ' ' + 'Estado: ' + order.status,
             link: 'orders/my-orders/confirmed/details/' + order.id,
           });
         });
@@ -148,7 +148,6 @@ export class TablesListComponent implements OnInit {
           link: '',
         });
       }
-      // this.router.navigate(['orders/my-orders/confirmed/details/', orders.id]);
     });
     await this.openModal({
       title: 'Pedidos de la mesa ' + table.number,

@@ -1,0 +1,26 @@
+ion-modal {
+  --height: 50%;
+  --width: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+  mask-image: linear-gradient(rgba(0, 0, 0, 1) 80%, transparent);
+}
+
+ion-modal#example-modal ion-title {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal .list-md {
+  --background: var(--color-4);
+}
+
+ion-modal ion-toolbar {
+  font-weight: bold;
+}
+
+ion-modal ion-item {
+  --border-color: var(--color-2);
+  font-weight: bold;
+  word-break: normal;
+}

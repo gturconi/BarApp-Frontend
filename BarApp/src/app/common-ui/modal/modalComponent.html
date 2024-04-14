@@ -1,4 +1,4 @@
-<ion-modal isOpen="true" id="example-modal">
+<ion-modal isOpen="true" id="example-modal" [presentingElement]="true">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -10,21 +10,15 @@
     </ion-header>
     <ion-list lines="none" class="modal-list">
       @for(item of items; track item; let idx = $index){
-      <ion-item button="true" detail="false" (click)="navigate(item.link)">
+      <ion-item
+        lines="inset"
+        button="true"
+        detail="false"
+        (click)="navigate(item.link)"
+      >
         <ion-label>{{ item.value }}</ion-label>
       </ion-item>
       }
-      <!-- <ion-icon name="person-circle"></ion-icon>
-        <ion-label>Item 1</ion-label>
-      </ion-item>
-      <ion-item button="true" detail="false">
-        <ion-icon name="person-circle"></ion-icon>
-        <ion-label>Item 2</ion-label>
-      </ion-item>
-      <ion-item button="true" detail="false">
-        <ion-icon name="person-circle"></ion-icon>
-        <ion-label>Item 3</ion-label>
-      </ion-item>-->
     </ion-list>
   </ng-template>
 </ion-modal>

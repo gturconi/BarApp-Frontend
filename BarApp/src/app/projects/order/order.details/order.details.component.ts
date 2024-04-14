@@ -25,6 +25,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 })
 export class OrderDetailsComponent implements OnInit {
   admin: boolean = false;
+  role = '';
   error = false;
   orderId = null;
   order: OrderResponse | null = null;
@@ -51,6 +52,8 @@ export class OrderDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
+    this.role = this.loginService.getUserRole();
+    console.log(this.role);
     this.route.params.subscribe(async params => {
       const orderId = params['idOrder'];
       if (orderId) {

@@ -131,6 +131,7 @@
 
         <div class="button-container">
           <button
+            *ngIf="role === 'customer'"
             class="download__item"
             [ngClass]="{
               'cancel-order-button': order.state.description === 'A confirmar',
@@ -156,7 +157,7 @@
           </button>
         </div>
 
-        <div class="button-container">
+        <div class="button-container" *ngIf="role === 'customer'">
           <a
             (click)="createPdf()"
             download="archivo.apk"
