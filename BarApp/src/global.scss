@@ -60,5 +60,26 @@ html {
     --ion-text-color: var(--color-8);
     --ion-color-step-850: var(--color-8);
     --ion-color-step-50: var(--color-7);
+    --ion-item-background: var(--color-1);
   }
+}
+ion-modal {
+  --height: 50%;
+  --width: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+  mask-image: linear-gradient(rgba(0, 0, 0, 1) 80%, transparent);
+}
+
+ion-modal#example-modal ion-title {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal .list-md {
+  --background: var(--color-4);
+}
+
+ion-modal .item-native {
+  border: 1px solid var(--color-5);
 }

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { finalize } from 'rxjs';
 
 import { TablesService } from '../services/tables.service';
@@ -14,6 +14,7 @@ import { SocketService } from '@common/services/socket.service';
 import { OrderService } from '../../order/services/order.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { ModalComponent } from '@common-ui/modal/modalComponent';
 
 @Component({
   selector: 'app-tables.list',
@@ -40,7 +41,8 @@ export class TablesListComponent implements OnInit {
     private loginService: LoginService,
     private socketService: SocketService,
     private orderService: OrderService,
-    private router: Router
+    private router: Router,
+    public modalController: ModalController
   ) {
     this.socketService.getMessage().subscribe(data => {
       this.currentPage = 1;
@@ -128,10 +130,36 @@ export class TablesListComponent implements OnInit {
     this.qrCodeDownloadLink = url;
   }
 
-  openDetails(table: Table) {
+  async openDetails(table: Table) {
+    let items: { value: string; link: string }[] = [];
     if (table.state == 'Free') return;
-    this.orderService.getLastOrderFromTable(table.id).subscribe(order => {
-      this.router.navigate(['orders/my-orders/confirmed/details/', order.id]);
+    this.orderService.getLastOrderFromTable(table.id).subscribe(orders => {
+      if (orders.length > 0) {
+        orders.forEach((order: any) => {
+          items.push({
+            value: 'Pedido Nro: ' + order.id + ' ' + 'Estado: ' + order.status,
+            link: 'orders/my-orders/confirmed/details/' + order.id,
+          });
+        });
+      } else {
+        items.push({
+          value:
+            'No hay pedidos para esta mesa, por favor actualice el estado de la misma a "Libre"  ',
+          link: '',
+        });
+      }
+      // this.router.navigate(['orders/my-orders/confirmed/details/', orders.id]);
     });
+    await this.openModal({
+      title: 'Pedidos de la mesa ' + table.number,
+      items: items,
+    });
+  }
+  async openModal(data: any) {
+    const modal = await this.modalController.create({
+      component: ModalComponent,
+      componentProps: { title: data.title, items: data.items },
+    });
+    await modal.present();
   }
 }
