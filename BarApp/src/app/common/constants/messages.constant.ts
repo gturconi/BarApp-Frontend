@@ -107,3 +107,17 @@ export const VACATE_TABLE: SweetAlertOptions = {
   confirmButtonText: 'Sí',
   cancelButtonText: 'Cancelar',
 };
+
+//no web QR compatibility
+export const NO_WEB_QR_COMPATIBILITY: SweetAlertOptions = {
+  icon: 'info',
+  title: '¡Ups! Función no disponible en web',
+  html:
+    'No podemos procesar tu pedido utilizando el escaneo QR en el navegador. Para continuar, por favor utiliza nuestra aplicación móvil.<br><br>' +
+    '<a href="ruta/al/archivo/archivo.apk" download="archivo.apk" class="btn btn-custom"><i class="fas fa-download"></i> Descargar la app</a>' +
+    '<button class="btn btn-custom btn-custom-open"><i class="fas fa-mobile-alt"></i> Abrir desde la app</button>',
+  showCancelButton: true,
+  cancelButtonText: 'Volver',
+  cancelButtonAriaLabel: 'Volver',
+  showConfirmButton: false,
+};

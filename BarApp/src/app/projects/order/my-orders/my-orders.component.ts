@@ -20,6 +20,7 @@ import { ORDER_STATES, OrderDetail } from '../models/order';
 
 import {
   DELETE_OPTS_CART,
+  NO_WEB_QR_COMPATIBILITY,
   ORDER_CONFIRMATION_OPTS,
   ORDER_CONFIRMED_OPTS,
 } from '@common/constants/messages.constant';
@@ -70,6 +71,13 @@ export class MyOrdersComponent implements OnInit {
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
+  }
+
+  detectEnvironment() {
+    if (!this.plaform.is('capacitor') || !this.plaform.is('cordova')) {
+      return false;
+    }
+    return true;
   }
 
   prepareItems() {
@@ -165,6 +173,12 @@ export class MyOrdersComponent implements OnInit {
   }
 
   confirmOrder() {
+    if (!this.detectEnvironment()) {
+      Swal.fire(NO_WEB_QR_COMPATIBILITY);
+      return;
+      //TODO: ACA FALTARIA QUE SI EL USER CLICKEA ABRIR APP, SE ABRA LA MISMA
+    }
+
     Swal.fire(ORDER_CONFIRMATION_OPTS).then(async result => {
       if (result.isConfirmed) {
         if (await this.scanCode()) {
