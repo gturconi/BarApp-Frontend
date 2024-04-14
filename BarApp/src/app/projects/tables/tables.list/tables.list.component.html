@@ -40,7 +40,7 @@
             </div>
             <ion-button class="qrBtn" *ngIf="admin">
               <qrcode
-                [qrdata]="'Mesa ' + table.number.toString()"
+                [qrdata]="getQRCode(table.number.toString())"
                 [width]="400"
                 cssClass="qrcode"
                 (qrCodeURL)="onChangeURL($event)"

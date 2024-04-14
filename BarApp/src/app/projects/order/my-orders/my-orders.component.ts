@@ -247,7 +247,7 @@ export class MyOrdersComponent implements OnInit {
     });
 
     const order = new OrderRequest(
-      this.scannedData.split(' ')[1],
+      this.scannedData,
       user.id,
       null,
       index,

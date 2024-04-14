@@ -16,10 +16,9 @@ import {
 import { SocketService } from '@common/services/socket.service';
 import { OrderService } from '../../order/services/order.service';
 import { SafeUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { ModalComponent } from '@common-ui/modal/modalComponent';
 import { ORDER_STATES } from '../../order/models/order';
-import { title } from 'process';
+import { QR } from '../models/qr';
 
 @Component({
   selector: 'app-tables.list',
@@ -28,6 +27,7 @@ import { title } from 'process';
 })
 export class TablesListComponent implements OnInit {
   tableList: Table[] = [];
+  qrsList: QR[] = [];
   currentPage = 1;
   count = 0;
   showData: boolean = false;
@@ -46,7 +46,6 @@ export class TablesListComponent implements OnInit {
     private loginService: LoginService,
     private socketService: SocketService,
     private orderService: OrderService,
-    private router: Router,
     public modalController: ModalController
   ) {
     this.socketService.getMessage().subscribe(data => {
@@ -57,6 +56,7 @@ export class TablesListComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
+    this.tableService.getQrs().subscribe(qr => this.qrsList.push(...qr));
   }
 
   ngOnDestroy() {
@@ -198,5 +198,13 @@ export class TablesListComponent implements OnInit {
       },
     });
     await modal.present();
+  }
+
+  getQRCode(tableNumber: string) {
+    let idx = this.qrsList.findIndex(qr => qr.tableNumber == tableNumber);
+    if (idx != -1) {
+      return this.qrsList[idx].token;
+    }
+    return '';
   }
 }

@@ -5,6 +5,7 @@ import { EntityListResponse } from '@common/models/entity.list.response';
 import { environment } from 'src/environments/environment';
 
 import { Table } from '../models/table';
+import { QR } from '../models/qr';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +41,13 @@ export class TablesService {
       `${this.apiUrl}/tables/state/` + table.id,
       table
     );
+  }
+
+  getQrs() {
+    return this.http.get<QR[]>(`${this.apiUrl}/qrs`);
+  }
+
+  generateQrs() {
+    return this.http.post<QR[]>(`${this.apiUrl}/qrs`, {});
   }
 }
