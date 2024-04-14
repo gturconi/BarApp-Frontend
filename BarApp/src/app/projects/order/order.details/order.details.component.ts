@@ -138,7 +138,7 @@ export class OrderDetailsComponent implements OnInit {
             .subscribe(() => {
               this.toastrService.success('Pedido cancelado');
               loading.dismiss();
-              this.router.navigate(['/my-orders']);
+              this.router.navigate(['orders/my-orders/confirmed']);
             });
         }
       });
