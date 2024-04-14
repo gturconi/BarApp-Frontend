@@ -27,3 +27,15 @@ ion-modal ion-item {
   justify-content: space-between;
   flex-direction: row;
 }
+
+.modal-btn {
+  background-color: var(--color-10);
+  border-radius: 20px;
+  width: fit-content;
+  margin: 0 auto;
+  color: var(--color-7);
+}
+
+.swal-table {
+  z-index: 99999;
+}

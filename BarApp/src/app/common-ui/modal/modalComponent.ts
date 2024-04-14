@@ -9,6 +9,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 export class ModalComponent {
   public title = '';
   public items: { key: string; value: string; link: string }[] = [];
+  public button: { title: string; fn: any } = { title: '', fn: () => {} };
 
   constructor(
     private modalController: ModalController,
@@ -19,6 +20,7 @@ export class ModalComponent {
   ngOnInit() {
     this.title = this.navParams.get('title');
     this.items = this.navParams.get('items');
+    this.button = this.navParams.get('button');
     const modal1 = document.getElementsByTagName('ion-modal')[0];
     modal1?.remove();
   }
@@ -32,5 +34,10 @@ export class ModalComponent {
       this.modalController.dismiss();
       this.router.navigate([link]);
     }
+  }
+
+  executeFn() {
+    this.button.fn();
+    this.closeModal();
   }
 }

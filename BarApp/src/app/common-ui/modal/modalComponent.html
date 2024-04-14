@@ -21,5 +21,12 @@
       </ion-item>
       }
     </ion-list>
+    @if(button.title != ''){
+    <ion-buttons class="modal-btn" shape="round">
+      <ion-button (click)=" executeFn()" [strong]="true">
+        {{ button.title }}</ion-button
+      >
+    </ion-buttons>
+    }
   </ng-template>
 </ion-modal>

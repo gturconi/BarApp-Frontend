@@ -91,3 +91,19 @@ export const CANCEL_ORDER: SweetAlertOptions = {
   confirmButtonText: 'Sí, Cancelar',
   cancelButtonText: 'No',
 };
+
+//vacate table
+export const VACATE_TABLE_CONFIRMATION_MESSAGE: string =
+  'Estas seguro de que quieres desocupar la mesa?';
+export const VACATE_TABLE: SweetAlertOptions = {
+  customClass: { container: 'swal-table' },
+  heightAuto: false,
+  title: '¿Desocupar la mesa?',
+  text: VACATE_TABLE_CONFIRMATION_MESSAGE,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí',
+  cancelButtonText: 'Cancelar',
+};
