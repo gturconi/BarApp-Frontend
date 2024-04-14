@@ -21,7 +21,7 @@
       </ion-item>
       }
     </ion-list>
-    @if(button.title != ''){
+    @if(button.title != '' && itemsRendered){
     <ion-buttons class="modal-btn" shape="round">
       <ion-button (click)=" executeFn()" [strong]="true">
         {{ button.title }}</ion-button

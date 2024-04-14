@@ -10,6 +10,7 @@ export class ModalComponent {
   public title = '';
   public items: { key: string; value: string; link: string }[] = [];
   public button: { title: string; fn: any } = { title: '', fn: () => {} };
+  public itemsRendered = false;
 
   constructor(
     private modalController: ModalController,
@@ -23,6 +24,10 @@ export class ModalComponent {
     this.button = this.navParams.get('button');
     const modal1 = document.getElementsByTagName('ion-modal')[0];
     modal1?.remove();
+
+    setTimeout(() => {
+      this.itemsRendered = true;
+    }, 1500);
   }
 
   closeModal() {
