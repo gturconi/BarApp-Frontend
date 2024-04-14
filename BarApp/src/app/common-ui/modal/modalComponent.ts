@@ -8,7 +8,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 })
 export class ModalComponent {
   public title = '';
-  public items: { value: string; link: string }[] = [];
+  public items: { key: string; value: string; link: string }[] = [];
 
   constructor(
     private modalController: ModalController,

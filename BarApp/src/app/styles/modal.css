@@ -23,4 +23,7 @@ ion-modal ion-item {
   --border-color: var(--color-2);
   font-weight: bold;
   word-break: normal;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }

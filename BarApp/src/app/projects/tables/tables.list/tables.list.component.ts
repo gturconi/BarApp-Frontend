@@ -131,20 +131,21 @@ export class TablesListComponent implements OnInit {
   }
 
   async openDetails(table: Table) {
-    let items: { value: string; link: string }[] = [];
+    let items: { key: string; value: string; link: string }[] = [];
     if (table.state == 'Free') return;
     this.orderService.getLastOrderFromTable(table.id).subscribe(orders => {
       if (orders.length > 0) {
         orders.forEach((order: any) => {
           items.push({
-            value: 'Pedido: ' + order.id + ' ' + 'Estado: ' + order.status,
+            key: 'Pedido: ' + order.id,
+            value: 'Estado: ' + order.status,
             link: 'orders/my-orders/confirmed/details/' + order.id,
           });
         });
       } else {
         items.push({
-          value:
-            'No hay pedidos para esta mesa, por favor actualice el estado de la misma a "Libre"  ',
+          key: 'No hay pedidos para esta mesa por favor actualice el estado de la misma a "Libre"',
+          value: ' ',
           link: '',
         });
       }
