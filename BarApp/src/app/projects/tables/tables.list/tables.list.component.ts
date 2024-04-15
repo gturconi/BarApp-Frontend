@@ -52,16 +52,17 @@ export class TablesListComponent implements OnInit {
     public modalController: ModalController,
     private platform: Platform
   ) {
+    this.admin = this.loginService.isAdmin();
     this.socketService.getMessage().subscribe(data => {
       this.currentPage = 1;
-      this.tableService.getQrs().subscribe(qr => this.qrsList.push(...qr));
+      if (this.admin) {
+        this.tableService.getQrs().subscribe(qr => this.qrsList.push(...qr));
+      }
       this.doSearch();
     });
   }
 
-  ngOnInit() {
-    this.admin = this.loginService.isAdmin();
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.socketService.disconnect();
