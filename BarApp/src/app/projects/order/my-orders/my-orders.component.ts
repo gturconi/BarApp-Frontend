@@ -265,9 +265,9 @@ export class MyOrdersComponent implements OnInit {
           this.cartService.clearCart();
           loading.dismiss();
           Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
+            this.socketService.sendMessage('order', '');
             this.router.navigate(['/orders/my-orders/confirmed']);
           });
-          this.socketService.sendMessage('order', '');
         });
     } catch (error) {
       console.log(error);
