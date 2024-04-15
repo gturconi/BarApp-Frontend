@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs';
+
 import { LoginService } from '@common/services/login.service';
 import { OrderService } from '../services/order.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from '@common/services/loading.service';
 import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2';
-import { CANCEL_ORDER } from '@common/constants/messages.constant';
-import { finalize } from 'rxjs';
-import { ORDER_STATES, OrderResponse } from '../models/order';
 import { ProductsService } from '../../menu/products/services/products.service';
 import { PromotionsService } from '../../menu/promotions/services/promotions.service';
+import { SocketService } from '@common/services/socket.service';
+
 import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
+import { ORDER_STATES, OrderResponse } from '../models/order';
+import { CANCEL_ORDER } from '@common/constants/messages.constant';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -47,7 +50,8 @@ export class OrderDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private loadingService: LoadingService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit() {
@@ -137,6 +141,7 @@ export class OrderDetailsComponent implements OnInit {
             .pipe(finalize(() => loading.dismiss()))
             .subscribe(() => {
               this.toastrService.success('Pedido cancelado');
+              this.socketService.sendMessage('order', '');
               loading.dismiss();
               this.router.navigate(['orders/my-orders/confirmed']);
             });

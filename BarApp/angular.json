@@ -23,7 +23,8 @@
               "sweetalert2",
               "crypto-js",
               "qrcode",
-              "pdfmake"
+              "pdfmake",
+              "html2canvas"
             ],
             "assets": [
               {

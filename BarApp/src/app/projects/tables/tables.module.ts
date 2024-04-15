@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CommonUiModule } from '@common-ui/common-ui.module';
 import { TablesRoutingModule } from './tables-routing.module';
 import { IonicModule } from '@ionic/angular';
-import { QRCodeModule } from 'angularx-qrcode';
+import { QrCodeModule } from 'ng-qrcode';
+
 import { OrderModule } from '../order/order.module';
 
 import { TablesComponent } from './tables/tables.component';
@@ -19,7 +20,7 @@ import { TablesService } from './services/tables.service';
     CommonUiModule,
     TablesRoutingModule,
     IonicModule,
-    QRCodeModule,
+    QrCodeModule,
     OrderModule,
   ],
   providers: [TablesService],

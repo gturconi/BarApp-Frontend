@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
-import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController, Platform } from '@ionic/angular';
 import { finalize } from 'rxjs';
 
 import { TablesService } from '../services/tables.service';
@@ -19,6 +19,9 @@ import { SafeUrl } from '@angular/platform-browser';
 import { ModalComponent } from '@common-ui/modal/modalComponent';
 import { ORDER_STATES } from '../../order/models/order';
 import { QR } from '../models/qr';
+import html2canvas from 'html2canvas';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-tables.list',
@@ -46,17 +49,18 @@ export class TablesListComponent implements OnInit {
     private loginService: LoginService,
     private socketService: SocketService,
     private orderService: OrderService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private platform: Platform
   ) {
     this.socketService.getMessage().subscribe(data => {
       this.currentPage = 1;
+      this.tableService.getQrs().subscribe(qr => this.qrsList.push(...qr));
       this.doSearch();
     });
   }
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
-    this.tableService.getQrs().subscribe(qr => this.qrsList.push(...qr));
   }
 
   ngOnDestroy() {
@@ -206,5 +210,56 @@ export class TablesListComponent implements OnInit {
       return this.qrsList[idx].token;
     }
     return '';
+  }
+
+  captureScreen(id: string) {
+    const element = document.getElementById('qr-image' + id) as HTMLElement;
+    const qrValue = this.getQRCode(id);
+    3;
+
+    html2canvas(element).then((canvas: HTMLCanvasElement) => {
+      if (this.platform.is('capacitor')) this.shareImage(canvas, id);
+      else this.downloadImage(canvas, id);
+    });
+  }
+
+  downloadImage(canvas: HTMLCanvasElement, id: string) {
+    //const link = document.getElementById('link' + id) as HTMLAnchorElement;
+    const link = document.createElement('a') as HTMLAnchorElement;
+    if (link) {
+      link.id = 'link' + id;
+      link.href = canvas.toDataURL();
+      link.download = 'qr.png';
+      link.click();
+    }
+  }
+
+  async shareImage(canvas: HTMLCanvasElement, id: string) {
+    let base64 = canvas.toDataURL();
+    let path = 'qr.png';
+
+    const loading = await this.loadingService.loading();
+    await loading.present();
+
+    await Filesystem.writeFile({
+      path: path,
+      data: base64,
+      directory: Directory.Cache,
+    })
+      .then(async res => {
+        let uri = res.uri;
+
+        await Share.share({
+          url: uri,
+        });
+
+        await Filesystem.deleteFile({
+          path: path,
+          directory: Directory.Cache,
+        });
+      })
+      .finally(() => {
+        loading.dismiss();
+      });
   }
 }
