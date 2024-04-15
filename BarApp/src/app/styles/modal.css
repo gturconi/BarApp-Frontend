@@ -39,3 +39,9 @@ ion-modal ion-item {
 .swal-table {
   z-index: 99999;
 }
+
+@media screen and (max-width: 678px) {
+  ion-modal {
+    --width: 80%;
+  }
+}
