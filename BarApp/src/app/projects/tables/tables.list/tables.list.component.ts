@@ -11,6 +11,7 @@ import { LoginService } from '@common/services/login.service';
 import { Table } from '../models/table';
 import {
   DELETE_OPTS,
+  REFRESH_TABLES,
   VACATE_TABLE,
 } from 'src/app/common/constants/messages.constant';
 import { SocketService } from '@common/services/socket.service';
@@ -262,5 +263,24 @@ export class TablesListComponent implements OnInit {
       .finally(() => {
         loading.dismiss();
       });
+  }
+
+  async refreshQR() {
+    Swal.fire(REFRESH_TABLES).then(async result => {
+      if (result.isConfirmed) {
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.qrsList = [];
+        this.tableService
+          .generateQrs()
+          .pipe(finalize(() => loading.dismiss()))
+          .subscribe(qr => {
+            this.qrsList.push(...qr);
+            this.toastrService.success('Códigos actualizados');
+            this.currentPage = 1;
+            this.doSearch();
+          });
+      }
+    });
   }
 }

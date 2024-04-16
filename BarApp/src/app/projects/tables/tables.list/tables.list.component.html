@@ -135,7 +135,11 @@
               </ion-fab-button>
             </span>
             <span title="Generar QRs" class="icon-tooltip-pr">
-              <ion-fab-button size="small" class="table-btn">
+              <ion-fab-button
+                size="small"
+                class="table-btn"
+                (click)="refreshQR()"
+              >
                 <ion-icon name="refresh-outline"></ion-icon>
               </ion-fab-button>
             </span>
