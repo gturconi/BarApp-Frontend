@@ -437,4 +437,14 @@
   .grid-item {
     padding: 20px 0px !important;
   }
+
+  .button-add {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (height<= 700px) and (width <= 1000px) {
+  .button-add {
+    margin-bottom: 40px;
+  }
 }

@@ -114,11 +114,32 @@
 
     <div class="grid-item">
       <div class="button-add-container" *ngIf="showData && admin">
-        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-          <span title="Añadir" class="icon-tooltip-pr">
-            <ion-fab-button class="button-add" [routerLink]="['/tables/add']">
-              <ion-icon name="add"></ion-icon> </ion-fab-button
-          ></span>
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="add"
+          [edge]="true"
+        >
+          <ion-fab-button class="button-add">
+            <ion-icon name="construct-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="top">
+            <span title="Añadir" class="icon-tooltip-pr">
+              <ion-fab-button
+                size="small"
+                class="table-btn"
+                [routerLink]="['/tables/add']"
+              >
+                <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+            </span>
+            <span title="Generar QRs" class="icon-tooltip-pr">
+              <ion-fab-button size="small" class="table-btn">
+                <ion-icon name="refresh-outline"></ion-icon>
+              </ion-fab-button>
+            </span>
+          </ion-fab-list>
         </ion-fab>
       </div>
     </div>
