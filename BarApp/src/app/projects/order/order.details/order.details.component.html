@@ -118,14 +118,14 @@
                   </button></small
                 >
               </div>
-              <span>${{ detail.price }}</span>
+              <span>${{ detail.price | number : '1.2-2' }}</span>
             </div>
           </div>
         </div>
         <hr class="card-hr" />
         <div class="order-detail">
           <span><b>Total</b></span>
-          <span>${{ order.total }}</span>
+          <span>${{ order.total | number : '1.2-2' }}</span>
         </div>
         <hr class="card-hr" />
 

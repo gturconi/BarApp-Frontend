@@ -34,7 +34,7 @@
             @if(isProduct(order)){
             <div class="price">
               ${{
-                castOrderToProduct(order.product).promotions
+                (castOrderToProduct(order.product).promotions
                   ? roundDiscount(
                       order.product.price! *
                         order.product.quantity! *
@@ -43,11 +43,15 @@
                             .discount!)
                     )
                   : order.product.price! * order.product.quantity!
+                ) | number : '1.2-2'
               }}
             </div>
             }@else{
             <div class="price">
-              ${{ order.product.price! * order.product.quantity! }}
+              ${{
+                order.product.price! * order.product.quantity!
+                  | number : '1.2-2'
+              }}
             </div>
             }
             <div class="quantity">
@@ -73,7 +77,9 @@
       </div>
       }
     </div>
-    <span *ngIf="showData" class="total">Total: ${{ total }}</span>
+    <span *ngIf="showData" class="total"
+      >Total: ${{ total | number : '1.2-2' }}</span
+    >
     <ion-button
       *ngIf="showData"
       expand="full"

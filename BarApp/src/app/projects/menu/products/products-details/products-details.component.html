@@ -40,7 +40,7 @@
               !this.product.promotions.length ||
               !this.product.promotions[0].discount
             "
-            >${{ this.product.price! * this.quantity }}</span
+            >${{ this.product.price! * this.quantity | number : '1.2-2' }}</span
           >
           <div
             *ngIf="
@@ -58,14 +58,14 @@
                   !hasDays(this.product.promotions[0]))
               "
             >
-              ${{ this.product.price! * this.quantity }}
+              ${{ this.product.price! * this.quantity | number : '1.2-2' }}
             </span>
             ${{
               roundDiscount(
                 this.product.price! *
                   this.quantity *
                   (1 - this.product.promotions[0].discount)
-              )
+              ) | number : '1.2-2'
             }}
           </div>
 

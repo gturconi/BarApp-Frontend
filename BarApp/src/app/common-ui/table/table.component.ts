@@ -65,7 +65,7 @@ export class TableComponent implements OnInit {
     }
 
     if (key === 'total') {
-      return '$' + value;
+      return '$' + parseFloat(value).toFixed(2).replace('.', ',');
     }
 
     if (key === 'date_created') {

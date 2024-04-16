@@ -20,7 +20,7 @@
         } @else{
         <div class="text-container-p">
           <span class="title-p">{{ products.name }}</span>
-          <span class="price-p">$ {{ products.price }}</span>
+          <span class="price-p">$ {{ products.price | number : '1.2-2' }}</span>
         </div>
         }
         <div class="actions" *ngIf="!admin">

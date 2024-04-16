@@ -10,7 +10,7 @@
       >
         <div class="card-order-info">
           <span><b>Pedido Nro:</b> {{ order.id }}</span>
-          <span class="order-price">${{ order.total }}</span>
+          <span class="order-price">${{ order.total | number : '1.2-2' }}</span>
           <div class="order-date">
             <ion-icon name="calendar-outline"></ion-icon>
             <span>
