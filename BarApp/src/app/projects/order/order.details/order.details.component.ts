@@ -19,6 +19,10 @@ import { CANCEL_ORDER } from '@common/constants/messages.constant';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
+import { File } from '@awesome-cordova-plugins/file';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener';
+import { Platform } from '@ionic/angular';
+
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -51,7 +55,8 @@ export class OrderDetailsComponent implements OnInit {
     private router: Router,
     private loadingService: LoadingService,
     private toastrService: ToastrService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
@@ -271,7 +276,16 @@ export class OrderDetailsComponent implements OnInit {
 
     //para crear el PDF
     const pdf = pdfMake.createPdf(pdfDefinition);
-    pdf.download(fileName);
+    if (this.platform.is('capacitor')) {
+      pdf.getBuffer(buffer => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+        File.writeFile(File.dataDirectory, fileName, blob, {
+          replace: true,
+        }).then(fileEntry => {
+          FileOpener.open(File.dataDirectory + fileName, 'application/pdf');
+        });
+      });
+    } else pdf.download(fileName);
   }
 
   private formatDate(dateString: string): string {
