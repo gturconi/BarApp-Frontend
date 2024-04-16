@@ -17,40 +17,29 @@ import {
 } from '@capacitor-mlkit/barcode-scanning';
 import { ModalController } from '@ionic/angular';
 
-
 @Component({
   selector: 'app-barcode-scanning',
   template: `
-    <ion-header class="ion-no-border">
-      <ion-toolbar color="tertiary">
-        <ion-buttons slot="end">
-          <ion-button (click)="closeModal()">
-            <ion-icon name="close"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
 
-    <ion-content>
-      <div #square class="square"></div>
-      <ion-fab
-        *ngIf="isTorchAvailable"
-        slot="fixed"
-        horizontal="end"
-        vertical="bottom"
-      >
-        <ion-fab-button (click)="toggleTorch()">
-          <ion-icon name="flashlight"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-content>
+    <div #square class="square"></div>
+    <ion-fab
+      *ngIf="isTorchAvailable"
+      slot="fixed"
+      horizontal="end"
+      vertical="bottom"
+    >
+      <ion-fab-button (click)="toggleTorch()">
+        <ion-icon name="flashlight"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   `,
   styles: [
     `
-      ion-content {
-        --background: transparent;
-      }
-
       .square {
         position: absolute;
         left: 50%;
@@ -62,11 +51,31 @@ import { ModalController } from '@ionic/angular';
         border: 6px solid white;
         box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
       }
+
+      // Hide all elements
+      body.barcode-scanner-active {
+        visibility: hidden;
+        --background: transparent;
+        --ion-background-color: transparent;
+      }
+
+      // Show only the barcode scanner modal
+      .barcode-scanner-modal {
+        visibility: visible;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .barcode-scanner-modal {
+          --background: transparent;
+          --ion-background-color: transparent;
+        }
+      }
     `,
   ],
 })
 export class BarcodeScanningModalComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @Input()
   public formats: BarcodeFormat[] = [];
   @Input()
@@ -80,10 +89,10 @@ export class BarcodeScanningModalComponent
   constructor(
     private readonly ngZone: NgZone,
     private modalController: ModalController
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
-    BarcodeScanner.isTorchAvailable().then((result) => {
+    BarcodeScanner.isTorchAvailable().then(result => {
       this.isTorchAvailable = result.available;
     });
   }
@@ -119,32 +128,32 @@ export class BarcodeScanningModalComponent
       this.squareElement?.nativeElement.getBoundingClientRect();
     const scaledRect = squareElementBoundingClientRect
       ? {
-        left: squareElementBoundingClientRect.left * window.devicePixelRatio,
-        right:
-          squareElementBoundingClientRect.right * window.devicePixelRatio,
-        top: squareElementBoundingClientRect.top * window.devicePixelRatio,
-        bottom:
-          squareElementBoundingClientRect.bottom * window.devicePixelRatio,
-        width:
-          squareElementBoundingClientRect.width * window.devicePixelRatio,
-        height:
-          squareElementBoundingClientRect.height * window.devicePixelRatio,
-      }
+          left: squareElementBoundingClientRect.left * window.devicePixelRatio,
+          right:
+            squareElementBoundingClientRect.right * window.devicePixelRatio,
+          top: squareElementBoundingClientRect.top * window.devicePixelRatio,
+          bottom:
+            squareElementBoundingClientRect.bottom * window.devicePixelRatio,
+          width:
+            squareElementBoundingClientRect.width * window.devicePixelRatio,
+          height:
+            squareElementBoundingClientRect.height * window.devicePixelRatio,
+        }
       : undefined;
     const detectionCornerPoints = scaledRect
       ? [
-        [scaledRect.left, scaledRect.top],
-        [scaledRect.left + scaledRect.width, scaledRect.top],
-        [
-          scaledRect.left + scaledRect.width,
-          scaledRect.top + scaledRect.height,
-        ],
-        [scaledRect.left, scaledRect.top + scaledRect.height],
-      ]
+          [scaledRect.left, scaledRect.top],
+          [scaledRect.left + scaledRect.width, scaledRect.top],
+          [
+            scaledRect.left + scaledRect.width,
+            scaledRect.top + scaledRect.height,
+          ],
+          [scaledRect.left, scaledRect.top + scaledRect.height],
+        ]
       : undefined;
     const listener = await BarcodeScanner.addListener(
       'barcodeScanned',
-      async (event) => {
+      async event => {
         this.ngZone.run(() => {
           const cornerPoints = event.barcode.cornerPoints;
           if (detectionCornerPoints && cornerPoints) {
