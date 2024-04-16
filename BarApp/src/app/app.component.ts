@@ -4,6 +4,7 @@ import { LoginService } from '@common/services/login.service';
 import { ThemeService } from './projects/theme/themes/services/theme.service';
 import { LoadingService } from '@common/services/loading.service';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -20,11 +21,14 @@ export class AppComponent implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private themeService: ThemeService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private platform: Platform
   ) {}
   themeData: any;
   async ngOnInit() {
-    await ScreenOrientation.lock({ orientation: 'portrait' });
+    if (this.platform.is('capacitor')) {
+      await ScreenOrientation.lock({ orientation: 'portrait' });
+    }
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
