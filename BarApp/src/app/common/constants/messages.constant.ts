@@ -140,7 +140,7 @@ export const NO_WEB_QR_COMPATIBILITY: SweetAlertOptions = {
 
 //Confirm changeOrderStatus
 export const CONFIRM_CHANGE_ORDER_STATUS: string =
-  'El estado del pedido cambiara automicamente';
+  'El estado del pedido cambiara automáticamente';
 export const CHANGE_ORDER_STATUS: SweetAlertOptions = {
   customClass: { container: 'swal-table' },
   heightAuto: false,
