@@ -207,7 +207,7 @@ export class MenuComponent implements OnInit {
         {
           icon: 'timer-outline',
           label: 'Historial de pedidos',
-          route: '',
+          route: 'orders/my-orders/confirmed',
           isManage: false,
         },
         {
@@ -221,7 +221,11 @@ export class MenuComponent implements OnInit {
         1,
         3,
         { icon: 'reader-outline', label: 'Pedidos', route: '/tables' },
-        { icon: 'timer-outline', label: 'Historial', route: '' },
+        {
+          icon: 'timer-outline',
+          label: 'Historial',
+          route: 'orders/my-orders/confirmed',
+        },
         { icon: 'notifications-outline', label: 'Notificación', route: '' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );

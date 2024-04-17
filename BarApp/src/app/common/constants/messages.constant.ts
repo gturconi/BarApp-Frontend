@@ -137,3 +137,19 @@ export const NO_WEB_QR_COMPATIBILITY: SweetAlertOptions = {
   cancelButtonAriaLabel: 'Volver',
   showConfirmButton: false,
 };
+
+//Confirm changeOrderStatus
+export const CONFIRM_CHANGE_ORDER_STATUS: string =
+  'El estado del pedido cambiara automicamente';
+export const CHANGE_ORDER_STATUS: SweetAlertOptions = {
+  customClass: { container: 'swal-table' },
+  heightAuto: false,
+  title: '¿Cambiar estado del pedido?',
+  text: CONFIRM_CHANGE_ORDER_STATUS,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí, Cambiar',
+  cancelButtonText: 'Cancelar',
+};

@@ -52,23 +52,31 @@ export class ConfirmedOrdersComponent implements OnInit {
     await loading.present();
     try {
       this.user = this.loginService.getUserInfo();
-      this.orderService
-        .getUserOrders(this.user.id, this.currentPage, 10, this.user.name)
-        .subscribe(data => {
-          this.count = data.count;
-          this.orderList = data.results;
-
-          if (this.orderList.length == 0) {
-            Swal.fire({
-              icon: 'info',
-              title: 'No hay pedidos pendientes',
-              text: 'No tienes ningún pedido pendiente, puedes realizar uno en el menu de categorías',
-            }).then(() => {
-              this.router.navigate(['/menu/categories']);
-            });
-          }
-          this.showData = true;
-        });
+      if ((this.user.roleId = 2)) {
+        this.orderService
+          .getOrders(this.currentPage, 10, this.user.name)
+          .subscribe(data => {
+            this.count = data.count;
+            this.orderList = data.results;
+          });
+      } else {
+        this.orderService
+          .getUserOrders(this.user.id, this.currentPage, 10, this.user.name)
+          .subscribe(data => {
+            this.count = data.count;
+            this.orderList = data.results;
+            if (this.orderList.length == 0) {
+              Swal.fire({
+                icon: 'info',
+                title: 'No hay pedidos pendientes',
+                text: 'No tienes ningún pedido pendiente, puedes realizar uno en el menu de categorías',
+              }).then(() => {
+                this.router.navigate(['/menu/categories']);
+              });
+            }
+            this.showData = true;
+          });
+      }
     } finally {
       loading.dismiss();
       this.currentPage++;
@@ -78,14 +86,27 @@ export class ConfirmedOrdersComponent implements OnInit {
 
   loadMoreData() {
     this.infiniteScrollLoading = true;
-    this.orderService
-      .getUserOrders(this.user.id, this.currentPage, 10, this.user.name)
-      .subscribe(response => {
-        this.orderList.push(...response.results);
-        this.currentPage++;
-        this.infiniteScroll && this.infiniteScroll.complete();
-        this.infiniteScrollLoading = false;
-      });
+
+    let getOrderFunction;
+    if (this.user.roleId === 2) {
+      getOrderFunction = () =>
+        this.orderService.getOrders(this.currentPage, 10, this.user.name);
+    } else {
+      getOrderFunction = () =>
+        this.orderService.getUserOrders(
+          this.user.id,
+          this.currentPage,
+          10,
+          this.user.name
+        );
+    }
+
+    getOrderFunction().subscribe(response => {
+      this.orderList.push(...response.results);
+      this.currentPage++;
+      this.infiniteScroll && this.infiniteScroll.complete();
+      this.infiniteScrollLoading = false;
+    });
   }
 
   onScroll(event: Event) {

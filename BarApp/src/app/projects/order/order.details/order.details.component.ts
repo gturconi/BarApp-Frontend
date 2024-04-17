@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { formatDate } from '@angular/common';
 
 import { LoginService } from '@common/services/login.service';
 import { OrderService } from '../services/order.service';
@@ -14,7 +15,10 @@ import { SocketService } from '@common/services/socket.service';
 import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
 import { ORDER_STATES, OrderResponse } from '../models/order';
-import { CANCEL_ORDER } from '@common/constants/messages.constant';
+import {
+  CANCEL_ORDER,
+  CHANGE_ORDER_STATUS,
+} from '@common/constants/messages.constant';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -155,11 +159,32 @@ export class OrderDetailsComponent implements OnInit {
     }
   }
 
+  changeOrderStatus(stateID: string): void {
+    Swal.fire(CHANGE_ORDER_STATUS).then(result => {
+      if (result.isConfirmed) {
+        if (stateID) {
+        } else {
+        }
+      }
+    });
+  }
+
   handleOrderAction(): void {
     if (this.order!.state.description === 'A confirmar') {
       this.cancelOrder();
     } else if (this.order!.state.description === 'Entregado') {
     }
+  }
+
+  getCurrentDate(): Date {
+    return new Date();
+  }
+
+  isTodayOrder(orderDate: string): boolean {
+    const today = new Date();
+    const formattedOrderDate = formatDate(orderDate, 'yyyy-MM-dd', 'en');
+    const formattedToday = formatDate(today, 'yyyy-MM-dd', 'en');
+    return formattedOrderDate === formattedToday;
   }
 
   createPdf() {

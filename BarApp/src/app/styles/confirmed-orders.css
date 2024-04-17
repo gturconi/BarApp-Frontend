@@ -57,11 +57,12 @@
 
   .order-state {
     border-radius: 10px;
-    width: 8rem;
+    width: 9rem;
     height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 14px;
 
     a {
       text-decoration: none;
