@@ -58,14 +58,14 @@
             <svg class="ProgressBar-icon">
               <use xlink:href="#checkmark-bold" />
             </svg>
-            <span class="ProgressBar-stepLabel">En preparacion</span>
+            <span class="ProgressBar-stepLabel">En preparación</span>
           </li>
           <li
             class="ProgressBar-step"
             [ngClass]="{
               'is-complete':
                 order.state.description != 'A confirmar' &&
-                order.state.description != 'En preparacion'
+                order.state.description != 'En preparación'
             }"
           >
             <svg class="ProgressBar-icon">
@@ -78,7 +78,7 @@
             [ngClass]="{
               'is-complete':
                 order.state.description != 'A confirmar' &&
-                order.state.description != 'En preparacion' &&
+                order.state.description != 'En preparación' &&
                 order.state.description != 'Entregado'
             }"
           >
