@@ -89,7 +89,7 @@ export class ConfirmedOrdersComponent implements OnInit {
     this.infiniteScrollLoading = true;
 
     let getOrderFunction;
-    if (this.user.roleId === 2) {
+    if (this.user.role === UserRoles.Employee) {
       getOrderFunction = () =>
         this.orderService.getOrders(this.currentPage, 10, this.user.name);
     } else {
