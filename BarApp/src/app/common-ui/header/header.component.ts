@@ -6,6 +6,12 @@ import { Input } from '@angular/core';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { CALL_WAITER } from '@common/constants/messages.constant';
+import { OrderService } from 'src/app/projects/order/services/order.service';
+import { ORDER_STATES } from 'src/app/projects/order/models/order';
+import { formatDate } from '@angular/common';
+import { BarcodeScanningModalComponent } from 'src/app/projects/order/my-orders/barcode-scanning-modal.component';
+import { ModalController } from '@ionic/angular';
+import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +22,7 @@ export class HeaderComponent implements OnInit {
   @Input() showMenu: boolean = false;
   showBackButton: boolean = false;
   client: boolean = false;
+  scannedData = '';
 
   onMenuToggle(showMenu: boolean) {
     this.showMenu = showMenu;
@@ -25,7 +32,9 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private loginService: LoginService,
-    private location: Location
+    private location: Location,
+    private orderService: OrderService,
+    private modalController: ModalController
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
@@ -55,6 +64,59 @@ export class HeaderComponent implements OnInit {
   }
 
   callWaiter() {
-    Swal.fire(CALL_WAITER);
+    console.log('callWaiter');
+    let userOrders = [];
+    Swal.fire(CALL_WAITER).then(async result => {
+      if (result.isConfirmed) {
+        let user = this.loginService.getUserInfo();
+        this.orderService
+          .getUserOrders(user.id, 1, 10, user.name)
+          .subscribe(async data => {
+            userOrders = data.results;
+            if (
+              userOrders.some(
+                order =>
+                  order.state.description != ORDER_STATES[4] &&
+                  this.isTodayOrder(order.date_created)
+              )
+            ) {
+              console.log('ENVIAR NOTIFICACION AL MOZO');
+            } else {
+              if (await this.scanCode()) {
+                console.log('ENVIAR NOTIFICACION AL MOZO');
+              }
+            }
+          });
+      }
+    });
+  }
+
+  async scanCode() {
+    const modal = await this.modalController.create({
+      component: BarcodeScanningModalComponent,
+      cssClass: 'barcode-scanning-modal', //transparent background
+      showBackdrop: false,
+      componentProps: {
+        formats: [],
+        lensFacing: LensFacing.Back, //back camera
+      },
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data) {
+      this.scannedData = data?.barcode?.displayValue;
+      return true;
+    }
+    return false;
+  }
+
+  isTodayOrder(orderDate: string): boolean {
+    const today = new Date();
+    const formattedOrderDate = formatDate(orderDate, 'yyyy-MM-dd', 'en');
+    const formattedToday = formatDate(today, 'yyyy-MM-dd', 'en');
+    return formattedOrderDate === formattedToday;
   }
 }

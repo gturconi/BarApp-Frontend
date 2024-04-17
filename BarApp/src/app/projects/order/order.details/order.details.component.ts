@@ -198,9 +198,9 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   handleOrderAction(): void {
-    if (this.order!.state.description === 'A confirmar') {
+    if (this.order!.state.description === ORDER_STATES[1]) {
       this.cancelOrder();
-    } else if (this.order!.state.description === 'Entregado') {
+    } else if (this.order!.state.description === ORDER_STATES[3]) {
     }
   }
 
