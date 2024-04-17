@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { formatDate } from '@angular/common';
+import { Location } from '@angular/common';
 
 import { LoginService } from '@common/services/login.service';
 import { OrderService } from '../services/order.service';
@@ -14,7 +15,7 @@ import { SocketService } from '@common/services/socket.service';
 
 import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
-import { ORDER_STATES, OrderResponse } from '../models/order';
+import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
   CANCEL_ORDER,
   CHANGE_ORDER_STATUS,
@@ -60,13 +61,13 @@ export class OrderDetailsComponent implements OnInit {
     private loadingService: LoadingService,
     private toastrService: ToastrService,
     private socketService: SocketService,
-    private platform: Platform
+    private platform: Platform,
+    private location: Location
   ) {}
 
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.role = this.loginService.getUserRole();
-    console.log(this.role);
     this.route.params.subscribe(async params => {
       const orderId = params['idOrder'];
       if (orderId) {
@@ -159,14 +160,41 @@ export class OrderDetailsComponent implements OnInit {
     }
   }
 
-  changeOrderStatus(stateID: string): void {
-    Swal.fire(CHANGE_ORDER_STATUS).then(result => {
-      if (result.isConfirmed) {
-        if (stateID) {
-        } else {
+  async changeOrderStatus(stateID: string) {
+    const confirmResult = await Swal.fire(CHANGE_ORDER_STATUS);
+    if (confirmResult.isConfirmed) {
+      if (stateID && this.order) {
+        let stateId: string;
+        switch (this.order.state.description) {
+          case 'A confirmar':
+            stateId = '2';
+            break;
+          case 'En preparación':
+            stateId = '3';
+            break;
+          default:
+            stateId = stateID;
+            break;
         }
+        const orderRequest: OrderRequest = {
+          tableId: this.order.table_order.id.toString(),
+          userId: this.order.user.id.toString(),
+          idState: stateId,
+          total: this.order.total,
+          orderDetails: this.order.orderDetails,
+        };
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.orderService
+          .putOrder(this.order.id.toString(), orderRequest)
+          .pipe(finalize(() => loading.dismiss()))
+          .subscribe(() => {
+            this.toastrService.success('Estado del pedido actualizado');
+            loading.dismiss();
+            this.location.back();
+          });
       }
-    });
+    }
   }
 
   handleOrderAction(): void {
