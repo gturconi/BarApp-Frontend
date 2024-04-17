@@ -209,6 +209,21 @@
   display: none;
 }
 
+@media (height <= 800px) {
+  .button-list-table {
+    margin-bottom: 80px;
+  }
+  .button-add-table {
+    margin-bottom: 0px !important;
+  }
+}
+
+@media (height <= 684px) {
+  .button-list-table {
+    margin-bottom: 100px;
+  }
+}
+
 @media (max-width: 768px) {
   table {
     border: 0;
