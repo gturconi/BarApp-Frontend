@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
   commonItems: any[] = [
     { icon: 'home-outline', label: 'Inicio', route: '/home' },
     { icon: 'fast-food-outline', label: 'Carta', route: '/menu/categories' },
-    { icon: 'mail-outline', label: 'Contacto', route: '' },
+    { icon: 'mail-outline', label: 'Contacto', route: '/about' },
     { icon: 'help-outline', label: 'FAQs', route: '/faq' },
   ];
 
