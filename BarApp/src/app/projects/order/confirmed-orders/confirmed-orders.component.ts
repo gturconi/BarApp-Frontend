@@ -10,6 +10,7 @@ import { OrderResponse } from '../models/order';
 
 import Swal from 'sweetalert2';
 import { User } from '@common/models/user';
+import { UserRoles } from '@common/constants/user.roles.enum';
 
 @Component({
   selector: 'app-confirmed-orders',
@@ -52,7 +53,7 @@ export class ConfirmedOrdersComponent implements OnInit {
     await loading.present();
     try {
       this.user = this.loginService.getUserInfo();
-      if (this.user.roleId == 2) {
+      if (this.user.role === UserRoles.Employee) {
         this.orderService
           .getOrders(this.currentPage, 10, this.user.name)
           .subscribe(data => {
