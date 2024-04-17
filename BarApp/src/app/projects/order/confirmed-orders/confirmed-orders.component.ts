@@ -52,7 +52,7 @@ export class ConfirmedOrdersComponent implements OnInit {
     await loading.present();
     try {
       this.user = this.loginService.getUserInfo();
-      if ((this.user.roleId = 2)) {
+      if (this.user.roleId == 2) {
         this.orderService
           .getOrders(this.currentPage, 10, this.user.name)
           .subscribe(data => {
