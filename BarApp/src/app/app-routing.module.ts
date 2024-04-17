@@ -22,7 +22,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./projects/faq/faq.module').then(m => m.FaqModule),
   },
-  
   {
     path: "about",
     loadChildren: () =>
