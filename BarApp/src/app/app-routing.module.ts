@@ -34,6 +34,11 @@ const routes: Routes = [
       import("./projects/about/about.module").then(m => m.AboutModule),
   },
   {
+    path: "about",
+    loadChildren: () =>
+      import("./projects/about/about.module").then(m => m.AboutModule),
+  },
+  {
     path: 'orders',
     loadChildren: () =>
       import('./projects/order/order.module').then(m => m.OrderModule),
@@ -47,6 +52,11 @@ const routes: Routes = [
     path: 'users',
     loadChildren: () =>
       import('./projects/users/users.module').then(m => m.UsersModule),
+  },
+  {
+    path: 'themes',
+    loadChildren: () =>
+      import('./projects/theme/theme.module').then(m => m.ThemeModule),
   },
   {
     path: '',

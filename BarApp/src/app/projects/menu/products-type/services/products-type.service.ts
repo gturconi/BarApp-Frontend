@@ -45,4 +45,9 @@ export class ProductsTypeService {
     const url = `${this.apiUrl}/productsType/${id}`;
     return this.http.put<ProductsType>(url, formData);
   }
+
+  changeProductTypeView(productType: ProductsType) {
+    const url = `${this.apiUrl}/productsType/${productType.id}`;
+    return this.http.put<ProductsType>(url, productType);
+  }
 }

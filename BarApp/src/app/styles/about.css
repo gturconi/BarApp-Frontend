@@ -1,0 +1,74 @@
+@import 'variables.css';
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-name {
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+}
+
+.contact-description {
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  margin: 0;
+}
+
+.icon-title {
+  display: flex;
+  align-items: center;
+  margin-right: 3px;
+}
+
+.icon-title ion-icon {
+  margin-right: 3px;
+}
+
+.contact-info {
+  margin: 0;
+  font-size: 18px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo {
+  padding: 10px;
+}
+
+.edit_button {
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 3px;
+  background-color: var(--color-2);
+  border: 1px solid black;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .contact-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

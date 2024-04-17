@@ -24,6 +24,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 })
 export class ProductsListComponent implements OnInit {
   productsList: Products[] = [];
+  oldProductsList: Products[] = [];
   imagesUrl$!: Observable<string>[];
   admin: boolean = false;
   showData: boolean = false;
@@ -31,8 +32,10 @@ export class ProductsListComponent implements OnInit {
   category: string | undefined = '';
 
   currentPage = 1;
-  count = 0;
   infiniteScrollLoading = false;
+  noMoreData: boolean = false;
+
+  filterCheck: boolean = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
@@ -58,11 +61,8 @@ export class ProductsListComponent implements OnInit {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
 
-    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
-      if (
-        this.productsList.length < this.count &&
-        !this.infiniteScrollLoading
-      ) {
+    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight + 20) {
+      if (!this.noMoreData && !this.infiniteScrollLoading) {
         this.loadMoreData();
       }
     }
@@ -113,7 +113,6 @@ export class ProductsListComponent implements OnInit {
         .getProducts(this.currentPage, 10, this.category)
         .subscribe(data => {
           this.productsList = data.results;
-          this.count = data.count;
           this.setImages(this.productsList);
           const hasVisibleProducts = this.productsList.some(
             product => product.baja === 0
@@ -144,7 +143,14 @@ export class ProductsListComponent implements OnInit {
     this.productsService
       .getProducts(this.currentPage, 10, this.category)
       .subscribe(response => {
-        this.productsList.push(...response.results);
+        if (response.results.length == 0) this.noMoreData = true;
+        if (this.filterCheck) {
+          this.productsList.push(
+            ...response.results.filter(prod => prod.baja == 0)
+          );
+        } else {
+          this.productsList.push(...response.results);
+        }
         this.setImages(this.productsList);
         this.currentPage++;
         this.infiniteScroll && this.infiniteScroll.complete();
@@ -189,5 +195,32 @@ export class ProductsListComponent implements OnInit {
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+  }
+
+  togglePromotionsVisibility(event: any) {
+    this.filterCheck = event.detail.checked;
+    if (this.filterCheck) {
+      this.filterData();
+    } else {
+      this.currentPage = 2;
+      this.productsList = this.oldProductsList;
+      this.currentPage = 2;
+      this.setImages(this.productsList);
+      this.noMoreData = false;
+    }
+  }
+
+  async filterData() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+
+    this.oldProductsList = this.productsList;
+
+    this.productsList = this.productsList.filter(products => {
+      return !products.baja;
+    });
+    this.setImages(this.productsList);
+
+    loading.dismiss();
   }
 }

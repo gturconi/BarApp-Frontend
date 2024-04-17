@@ -89,7 +89,7 @@
 }
 
 .not-available {
-  color: var(--color-11);
+  color: var(--color-12);
 }
 
 .wrapper .item .item1-description {
@@ -358,6 +358,19 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+.menu-toggle {
+  --track-background: var(--color-4);
+  --track-background-checked: var(--color-2);
+  --handle-background: var(--color-2);
+  --handle-background-checked: var(--color-4);
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  padding-top: 4px;
 }
 
 @media (max-width: 768px) {

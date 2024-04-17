@@ -29,18 +29,24 @@ import { EntityListResponse } from '@common/models/entity.list.response';
 export class ProductsTypeListComponent implements OnInit {
   productsTypeList!: ProductsType[];
   promotionsList!: Promotion[];
+  oldpromotionsList!: Promotion[];
+  oldProductsTypeList!: ProductsType[];
+
   validPromotionsList!: Promotion[];
   imagesUrl$!: Observable<string>[];
   imagesUrlPromotions$!: Observable<string>[];
   admin: boolean = false;
   showData: boolean = false;
   loading = true;
+  hide: boolean = true;
 
   currentPage = 1;
   currentPromPage = 1;
-  count = 0;
-  promCount = 0;
+  noMoreProductsTypes = false;
+  noMorePromotions = false;
   infiniteScrollLoading = false;
+
+  filterCheck: boolean = false;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
@@ -64,11 +70,8 @@ export class ProductsTypeListComponent implements OnInit {
     const element = event.target as HTMLElement;
     const wrapper = this.wrapperRef.nativeElement;
 
-    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight) {
-      if (
-        this.productsTypeList.length < this.count &&
-        !this.infiniteScrollLoading
-      ) {
+    if (wrapper.scrollHeight - wrapper.scrollTop <= element.clientHeight + 20) {
+      if (!this.noMoreProductsTypes && !this.infiniteScrollLoading) {
         this.loadMoreData();
       }
     }
@@ -86,11 +89,11 @@ export class ProductsTypeListComponent implements OnInit {
   onPromScroll(event: Event) {
     const element = event.target as HTMLElement;
     const wrapper2 = this.promWrapperRef.nativeElement;
-    if (wrapper2.scrollHeight - wrapper2.scrollTop <= element.clientHeight) {
-      if (
-        this.promotionsList.length < this.promCount &&
-        !this.infiniteScrollLoading
-      ) {
+    if (
+      wrapper2.scrollHeight - wrapper2.scrollTop <=
+      element.clientHeight + 20
+    ) {
+      if (!this.noMorePromotions && !this.infiniteScrollLoading) {
         this.loadMorePromData();
       }
     }
@@ -99,6 +102,42 @@ export class ProductsTypeListComponent implements OnInit {
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.doSearch();
+  }
+
+  togglePromotionsVisibility(event: any) {
+    this.filterCheck = event.detail.checked;
+    if (this.filterCheck) {
+      this.filterData();
+    } else {
+      this.currentPromPage = 2;
+      this.promotionsList = this.oldpromotionsList;
+      this.currentPage = 2;
+      this.productsTypeList = this.oldProductsTypeList;
+      this.setImagesPromotions(this.promotionsList);
+      this.setImages(this.productsTypeList);
+      this.noMorePromotions = false;
+      this.noMoreProductsTypes = false;
+    }
+  }
+
+  async filterData() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+
+    this.oldpromotionsList = this.promotionsList;
+    this.oldProductsTypeList = this.productsTypeList;
+
+    this.promotionsList = this.promotionsList.filter(promotion => {
+      return !promotion.baja && this.isPromotionValid(promotion);
+    });
+    this.setImagesPromotions(this.promotionsList);
+
+    this.productsTypeList = this.productsTypeList.filter(productsType => {
+      return !productsType.baja;
+    });
+    this.setImages(this.productsTypeList);
+
+    loading.dismiss();
   }
 
   async doSearch() {
@@ -118,14 +157,12 @@ export class ProductsTypeListComponent implements OnInit {
       }).subscribe({
         next: ({ productsTypes, promotions }) => {
           this.productsTypeList = productsTypes.results;
-          this.count = productsTypes.count;
           this.setImages(this.productsTypeList);
 
           this.promotionsList = promotions.results;
           this.validPromotionsList = this.getValidPromotions(
             this.promotionsList
           );
-          this.promCount = promotions.count;
           this.setImagesPromotions(this.promotionsList);
 
           loading.dismiss();
@@ -154,7 +191,15 @@ export class ProductsTypeListComponent implements OnInit {
     this.productsTypeService
       .getProductsTypes(this.currentPage, 10)
       .subscribe(response => {
-        this.productsTypeList.push(...response.results);
+        if (response.results.length == 0) this.noMoreProductsTypes = true;
+        if (this.filterCheck) {
+          this.productsTypeList.concat(
+            ...response.results.filter(prodType => prodType.baja == 0)
+          );
+        } else {
+          console.log(this.productsTypeList);
+          this.productsTypeList.concat(response.results);
+        }
         this.setImages(this.productsTypeList);
         this.currentPage++;
         this.infiniteScroll && this.infiniteScroll.complete();
@@ -167,7 +212,17 @@ export class ProductsTypeListComponent implements OnInit {
     this.promotionsService
       .getPromotions(this.currentPromPage, 10)
       .subscribe(data => {
-        this.promotionsList.push(...data.results);
+        if (data.results.length == 0) this.noMorePromotions = true;
+        if (this.filterCheck) {
+          this.promotionsList.concat(
+            data.results.filter(
+              promotion =>
+                promotion.baja == 0 && this.isPromotionValid(promotion)
+            )
+          );
+        } else {
+          this.promotionsList.concat(...data.results);
+        }
         this.validPromotionsList = this.getValidPromotions(this.promotionsList);
         this.setImagesPromotions(this.promotionsList);
         this.currentPromPage++;
@@ -244,5 +299,11 @@ export class ProductsTypeListComponent implements OnInit {
 
   isPromotionValid(promotion: Promotion): boolean {
     return isPromotionValid(promotion);
+  }
+
+  showOrHideProductType(prodType: ProductsType) {
+    this.hide = !this.hide;
+    prodType.baja = this.hide ? 0 : 1;
+    this.productsTypeService.changeProductTypeView(prodType).subscribe();
   }
 }
