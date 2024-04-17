@@ -13,9 +13,15 @@ export class AboutService {
   apiUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
-
+  
   getContact() {    
     return this.http.get<EntityListResponse<Contact>>(this.apiUrl + "/about/");
   }
 
+  putContact(selectedContact: Contact) {
+    return this.http.put<Contact>(
+      this.apiUrl + '/about/' + selectedContact.id,
+      selectedContact
+    );
+  }
 }

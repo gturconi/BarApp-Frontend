@@ -32,6 +32,11 @@
         </div>
         <span>{{ contact.contact_email }}</span>
       </div>
+      @if( isAdmin ){
+      <button class="edit_button" (click)="redirectToEditForm(contact)">
+        Editar
+      </button>
+      }
     </div>
   </div>
 </ion-content>
