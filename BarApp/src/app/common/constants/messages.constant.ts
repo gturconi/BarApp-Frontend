@@ -167,21 +167,3 @@ export const PAYMENT_METHOD: SweetAlertOptions = {
   confirmButtonText: 'MercadoPago',
   cancelButtonText: 'Efectivo/Otro',
 };
-
-//Confirm Payment
-export const CONFIRM_PAYMENT: string = '¿Está seguro de efectuar el pago';
-
-export const PAYMENT: (method: string) => SweetAlertOptions = method => ({
-  heightAuto: false,
-  title: '¿Confirmar pago?',
-  text:
-    method === 'MercadoPago'
-      ? `${CONFIRM_PAYMENT} con ${method}?`
-      : `${CONFIRM_PAYMENT} en ${method}?`,
-  icon: 'question',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: `Sí, pagar`,
-  cancelButtonText: 'Cancelar',
-});

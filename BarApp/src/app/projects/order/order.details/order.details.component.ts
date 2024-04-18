@@ -13,13 +13,10 @@ import { ProductsService } from '../../menu/products/services/products.service';
 import { PromotionsService } from '../../menu/promotions/services/promotions.service';
 import { SocketService } from '@common/services/socket.service';
 
-import { Products } from '../../menu/products/models/products';
-import { Promotion } from '../../menu/promotions/models/promotion';
 import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
   CANCEL_ORDER,
   CHANGE_ORDER_STATUS,
-  PAYMENT,
   PAYMENT_METHOD,
 } from '@common/constants/messages.constant';
 
@@ -205,20 +202,9 @@ export class OrderDetailsComponent implements OnInit {
     } else if (this.order!.state.description === ORDER_STATES[3]) {
       Swal.fire(PAYMENT_METHOD).then(result => {
         if (result.isConfirmed) {
-          //YO CREO QUE ESTA SEGUNDA CONFIRMACION ES MÁS MOLESTA QUE NECESARIA PARA EL CLIENTE
-          //Si decide pagar con MP de todas maneras va a tener que confirmar de nuevo en la
-          //vista de MP. Yo le dejaria solo el primer Alert en ambos casos
-          Swal.fire(PAYMENT('MercadoPago')).then(paymentResult => {
-            if (paymentResult.isConfirmed) {
-              //pagar
-            }
-          });
+          //pagar mp
         } else {
-          Swal.fire(PAYMENT('Efectivo/Otro')).then(paymentResult => {
-            if (paymentResult.isConfirmed) {
-              //llamar al mozo
-            }
-          });
+          //pagar efectivo, llamar mozo
         }
       });
     }
