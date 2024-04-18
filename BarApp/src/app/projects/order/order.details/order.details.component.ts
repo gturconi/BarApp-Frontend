@@ -19,6 +19,8 @@ import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
   CANCEL_ORDER,
   CHANGE_ORDER_STATUS,
+  PAYMENT,
+  PAYMENT_METHOD,
 } from '@common/constants/messages.constant';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
@@ -201,6 +203,21 @@ export class OrderDetailsComponent implements OnInit {
     if (this.order!.state.description === ORDER_STATES[1]) {
       this.cancelOrder();
     } else if (this.order!.state.description === ORDER_STATES[3]) {
+      Swal.fire(PAYMENT_METHOD).then(result => {
+        if (result.isConfirmed) {
+          Swal.fire(PAYMENT('MercadoPago')).then(paymentResult => {
+            if (paymentResult.isConfirmed) {
+              //pagar
+            }
+          });
+        } else {
+          Swal.fire(PAYMENT('Efectivo/Otro')).then(paymentResult => {
+            if (paymentResult.isConfirmed) {
+              //llamar al mozo
+            }
+          });
+        }
+      });
     }
   }
 

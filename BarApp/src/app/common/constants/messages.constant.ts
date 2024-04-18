@@ -153,3 +153,35 @@ export const CHANGE_ORDER_STATUS: SweetAlertOptions = {
   confirmButtonText: 'Sí, Cambiar',
   cancelButtonText: 'Cancelar',
 };
+
+//Select payment method
+export const SELECT_PAYMENT_METHOD: string = 'Seleccioná el método de pago';
+export const PAYMENT_METHOD: SweetAlertOptions = {
+  heightAuto: false,
+  title: '¿Cómo deseas realizar el pago?',
+  text: SELECT_PAYMENT_METHOD,
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'MercadoPago',
+  cancelButtonText: 'Efectivo/Otro',
+};
+
+//Confirm Payment
+export const CONFIRM_PAYMENT: string = '¿Está seguro de efectuar el pago';
+
+export const PAYMENT: (method: string) => SweetAlertOptions = method => ({
+  heightAuto: false,
+  title: '¿Confirmar pago?',
+  text:
+    method === 'MercadoPago'
+      ? `${CONFIRM_PAYMENT} con ${method}?`
+      : `${CONFIRM_PAYMENT} en ${method}?`,
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: `Sí, pagar`,
+  cancelButtonText: 'Cancelar',
+});
