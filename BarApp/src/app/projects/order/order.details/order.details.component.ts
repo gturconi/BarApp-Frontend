@@ -205,6 +205,9 @@ export class OrderDetailsComponent implements OnInit {
     } else if (this.order!.state.description === ORDER_STATES[3]) {
       Swal.fire(PAYMENT_METHOD).then(result => {
         if (result.isConfirmed) {
+          //YO CREO QUE ESTA SEGUNDA CONFIRMACION ES MÁS MOLESTA QUE NECESARIA PARA EL CLIENTE
+          //Si decide pagar con MP de todas maneras va a tener que confirmar de nuevo en la
+          //vista de MP. Yo le dejaria solo el primer Alert en ambos casos
           Swal.fire(PAYMENT('MercadoPago')).then(paymentResult => {
             if (paymentResult.isConfirmed) {
               //pagar

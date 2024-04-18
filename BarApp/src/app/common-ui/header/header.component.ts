@@ -69,6 +69,9 @@ export class HeaderComponent implements OnInit {
     Swal.fire(CALL_WAITER).then(async result => {
       if (result.isConfirmed) {
         let user = this.loginService.getUserInfo();
+        if (!user) {
+          return;
+        }
         this.orderService
           .getUserOrders(user.id, 1, 10, user.name)
           .subscribe(async data => {
@@ -83,7 +86,11 @@ export class HeaderComponent implements OnInit {
               console.log('ENVIAR NOTIFICACION AL MOZO');
             } else {
               if (await this.scanCode()) {
-                console.log('ENVIAR NOTIFICACION AL MOZO');
+                this.orderService.checkQR(this.scannedData).subscribe(msg => {
+                  if (msg == 'Codigo validado') {
+                    console.log('ENVIAR NOTIFICACION AL MOZO');
+                  }
+                });
               }
             }
           });

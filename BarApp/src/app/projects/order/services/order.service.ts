@@ -50,4 +50,8 @@ export class OrderService {
   deleteOrder(id: string) {
     return this.http.delete<string>(`${this.apiUrl}/orders/` + id);
   }
+
+  checkQR(code: string) {
+    return this.http.post<any>(`${this.apiUrl}/orders/checkQR`, code);
+  }
 }
