@@ -5,6 +5,7 @@ import { ThemeService } from './projects/theme/themes/services/theme.service';
 import { LoadingService } from '@common/services/loading.service';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { Platform } from '@ionic/angular';
+import { FcmService } from '@common/services/fcm.service';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +23,18 @@ export class AppComponent implements OnInit {
     private loginService: LoginService,
     private themeService: ThemeService,
     private loadingService: LoadingService,
-    private platform: Platform
-  ) {}
+    private platform: Platform,
+    private fcmService: FcmService
+  ) {
+    this.platform
+      .ready()
+      .then(() => {
+        this.fcmService.initPush();
+      })
+      .catch(e => {
+        console.log('error fcm: ', e);
+      });
+  }
   themeData: any;
   async ngOnInit() {
     if (this.platform.is('capacitor')) {
