@@ -1,42 +1,79 @@
 <ion-content>
-  <div class="main-container">
-    <h1 class="titulo">Sobre nosotros</h1>
-    <div *ngFor="let contact of data; let i = index" class="contact-container">
-      <h2 class="contact-name">{{ contact.name }}</h2>
-      <p class="contact-description">{{ contact.description }}</p>
-      <div class="contact-description">
-        <div class="icon-title">
-          <ion-icon name="location-outline"></ion-icon>
-          <span class="bold">Ubicación: </span>
+  <div class="about-max-container">
+    <div class="about-main-container">
+      <h1 class="about-titulo">Sobre nosotros</h1>
+      <div
+        *ngFor="let contact of data; let i = index"
+        class="about-contact-container"
+      >
+        <h2 class="about-contact-name">{{ contact.name }}</h2>
+        <p class="about-contact-description">{{ contact.description }}</p>
+        <div class="about-contact-description">
+          <div class="about-icon-title">
+            <ion-icon name="location-outline"></ion-icon>
+            <span class="about-bold">Ubicación: </span>
+          </div>
+          <span>{{ contact.address }}</span>
         </div>
-        <span>{{ contact.address }}</span>
-      </div>
-      <div class="contact-description">
-        <div class="icon-title">
-          <ion-icon name="time-outline"></ion-icon>
-          <span class="bold">Dias y Horarios de apertura: </span>
+        <div class="about-contact-description">
+          <div class="about-icon-title">
+            <ion-icon name="time-outline"></ion-icon>
+            <span class="about-bold">Dias y Horarios de apertura: </span>
+          </div>
+          <span>{{ contact.open_dayhr }}</span>
         </div>
-        <span>{{ contact.open_dayhr }}</span>
-      </div>
-      <div class="contact-description">
-        <div class="icon-title">
-          <ion-icon name="call-outline"></ion-icon>
-          <span class="bold">Tel/Cel: </span>
+        <div class="about-contact-description">
+          <div class="about-icon-title">
+            <ion-icon name="call-outline"></ion-icon>
+            <span class="about-bold">Tel/Cel: </span>
+          </div>
+          <span>{{ contact.tel }}</span>
         </div>
-        <span>{{ contact.tel }}</span>
-      </div>
-      <div class="contact-description">
-        <div class="icon-title">
-          <ion-icon name="mail-outline"></ion-icon>
-          <span class="bold">Correo: </span>
+        <div class="about-contact-description">
+          <div class="about-icon-title">
+            <ion-icon name="mail-outline"></ion-icon>
+            <span class="about-bold">Correo: </span>
+          </div>
+          <span>{{ contact.contact_email }}</span>
         </div>
-        <span>{{ contact.contact_email }}</span>
+        @if( isAdmin ){
+        <button class="about-edit_button" (click)="redirectToEditForm(contact)">
+          Editar
+        </button>
+        }
       </div>
-      @if( isAdmin ){
-      <button class="edit_button" (click)="redirectToEditForm(contact)">
-        Editar
-      </button>
-      }
+    </div>
+    <div class="about-main-container">
+      <form action="post" class="about-form-style">
+        <h3>¡Contactate con nosotros!</h3>
+        <input
+          type="text"
+          name="name"
+          placeholder="Nombre"
+          required
+          class="about-short-input-style"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          class="about-short-input-style"
+        />
+        <input
+          type="textarea"
+          name="description"
+          placeholder="Dejanos tu mensaje"
+          required
+          class="about-long-input-style"
+        />
+        <input
+          type="submit"
+          name="button"
+          value="Enviar"
+          class="about-form-button"
+        />
+      </form>
     </div>
   </div>
 </ion-content>

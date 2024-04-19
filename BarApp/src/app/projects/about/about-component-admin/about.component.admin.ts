@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
+import { LoadingService } from '@common/services/loading.service';
 
 @Component({
   templateUrl: "./about.component.admin.html",
@@ -14,7 +15,7 @@ import { Observable } from "rxjs";
 
 export class AboutComponentAdmin implements OnInit {
   data: Contact[] = [];
-  isLoading: boolean = false;
+  isLoading:any = false;
   form: FormGroup = new FormGroup({});
   editMode: boolean = true;
   formTitle: string = 'Editar Contacto';
@@ -23,7 +24,7 @@ export class AboutComponentAdmin implements OnInit {
   validationConfig!: any[];
   currentId!: string;
   
-  constructor(private aboutService: AboutService, private toastrService: ToastrService, private router:Router) {
+  constructor(private aboutService: AboutService, private toastrService: ToastrService, private router:Router, private loadingService: LoadingService) {
   }
 
   ngOnInit() {
@@ -42,9 +43,9 @@ export class AboutComponentAdmin implements OnInit {
         name: 'description',
         label: 'Descripcion',
         autocomplete: 'description',
-        inputType: 'text',
+        inputType: 'textarea',
         icon: 'material-symbols-outlined',
-        iconName: 'person',
+        iconName: 'info',
       },
       {
         type: 'input',
@@ -53,16 +54,16 @@ export class AboutComponentAdmin implements OnInit {
         autocomplete: 'address',
         inputType: 'text',
         icon: 'material-symbols-outlined',
-        iconName: 'person',
+        iconName: 'location_on',
       },
       {
         type: 'input',
         name: 'open_dayhr',
         label: 'Dias y horarios de atencion',
         autocomplete: 'open_dayhr',
-        inputType: 'text',
+        inputType: 'textarea',
         icon: 'material-symbols-outlined',
-        iconName: 'person',
+        iconName: 'schedule',
       },
       {
         type: 'input',
@@ -89,7 +90,13 @@ export class AboutComponentAdmin implements OnInit {
       { controlName: 'description', required: true },
       { controlName: 'address', required: true },
       { controlName: 'open_dayhr', required: true },
-      { controlName: 'tel', required: true },
+      {
+        controlName: 'tel',
+        required: true,
+        minLength: 10,
+        maxLength: 15,
+        pattern: '^[0-9]*$',
+      },
       { controlName: 'contact_email', email: true, required: true },
     ];
     
@@ -132,10 +139,13 @@ export class AboutComponentAdmin implements OnInit {
     this.form = form;
   }
 
-  onSubmit(form: FormGroup): void {
+  async onSubmit(form: FormGroup): Promise<void> {
     this.form = form;
+    this.isLoading = await this.loadingService.loading();
+    await this.isLoading.present();
     if (form.valid) {
        this.editContact(form).subscribe(() => {
+        this.isLoading.dismiss();
         this.router.navigate(['/about']);
         this.toastrService.success('Informacion del contacto editada');
        })

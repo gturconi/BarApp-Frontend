@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Contact } from "@common/models/about";
 import { AboutService } from "../services/about.service";
 import { Router } from "@angular/router";
+import { LoadingService } from '@common/services/loading.service';
 import { RoleService } from "../../users/services/role.service";
 import { LoginService } from "@common/services/login.service";
 
@@ -14,18 +15,25 @@ import { LoginService } from "@common/services/login.service";
 
 export class AboutComponent implements OnInit {
   data: Contact[] = [];
-  isLoading: boolean = false;
+  isLoading!: any;
   isAdmin: boolean = false;
+  
   
   constructor(private aboutService: AboutService,
     private loginService: LoginService,
-    public router: Router) {}
+    public router: Router, 
+    private loadingService: LoadingService) {}
+    
 
-  ngOnInit() {
-    this.isLoading = true;
+  async ngOnInit() {
+    this.isLoading = await this.loadingService.loading();
+    await this.isLoading.present();
+
+
     this.aboutService.getContact().subscribe((response) => {
       this.data = response.results;
-      this.isLoading = false;
+      this.isLoading.dismiss();
+
     })
     this.isAdmin = this.loginService.isAdmin();
   }
