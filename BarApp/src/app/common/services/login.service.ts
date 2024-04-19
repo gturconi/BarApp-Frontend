@@ -4,16 +4,23 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '@common/models/user';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { FcmService } from './fcm.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   apiUrl: string = environment.apiUrl;
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
+  constructor(
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService,
+    private fcmService: FcmService
+  ) {}
 
   authenticateUser(email: string, password: string) {
-    const credentials = { email, password };
+    let fcm_token =
+      this.fcmService.fcm_token != '' ? this.fcmService.fcm_token : null;
+    const credentials = { email, password, fcm_token };
     return this.http.post<User>(`${this.apiUrl}/auth/signin`, credentials);
   }
 

@@ -8,6 +8,8 @@ import {
 } from '@capacitor/push-notifications';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 export const FCM_TOKEN = 'push_notification_token';
 
@@ -16,12 +18,14 @@ export const FCM_TOKEN = 'push_notification_token';
 })
 export class FcmService {
   private _redirect = new BehaviorSubject<any>(null);
+  public fcm_token = '';
+  apiUrl: string = environment.apiUrl;
 
   get redirect() {
     return this._redirect.asObservable();
   }
 
-  constructor(private storage: StorageService) {}
+  constructor(private storage: StorageService, private http: HttpClient) {}
 
   initPush() {
     if (Capacitor.getPlatform() !== 'web') {
@@ -58,13 +62,13 @@ export class FcmService {
   addListeners() {
     PushNotifications.addListener('registration', async (token: Token) => {
       console.log('My token: ', token);
-      const fcm_token = token?.value;
+      this.fcm_token = token?.value;
       let go = 1;
       const saved_token = JSON.parse(
         (await this.storage.getStorage(FCM_TOKEN)).value
       );
       if (saved_token) {
-        if (fcm_token == saved_token) {
+        if (this.fcm_token == saved_token) {
           console.log('same token');
           go = 0;
         } else {
@@ -73,14 +77,14 @@ export class FcmService {
       }
       if (go == 1) {
         // save token
-        this.storage.setStorage(FCM_TOKEN, JSON.stringify(fcm_token));
+        this.storage.setStorage(FCM_TOKEN, JSON.stringify(this.fcm_token));
       } else if (go == 2) {
         // update token
         const data = {
           expired_token: saved_token,
-          refreshed_token: fcm_token,
+          refreshed_token: this.fcm_token,
         };
-        this.storage.setStorage(FCM_TOKEN, fcm_token);
+        this.storage.setStorage(FCM_TOKEN, this.fcm_token);
       }
     });
 
@@ -120,5 +124,14 @@ export class FcmService {
       console.log(e);
       throw e;
     }
+  }
+
+  sendPushNotification(title: string, body: string) {
+    const payload = {
+      title,
+      body,
+      receivedToken: this.fcm_token,
+    };
+    return this.http.post(`${this.apiUrl}/fcm/send-notification`, payload);
   }
 }

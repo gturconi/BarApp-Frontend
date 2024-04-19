@@ -12,6 +12,8 @@ import { formatDate } from '@angular/common';
 import { BarcodeScanningModalComponent } from 'src/app/projects/order/my-orders/barcode-scanning-modal.component';
 import { ModalController } from '@ionic/angular';
 import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { FcmService } from '@common/services/fcm.service';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +36,8 @@ export class HeaderComponent implements OnInit {
     private loginService: LoginService,
     private location: Location,
     private orderService: OrderService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private fmcService: FcmService
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
@@ -64,8 +67,16 @@ export class HeaderComponent implements OnInit {
   }
 
   callWaiter() {
-    console.log('callWaiter');
-    let userOrders = [];
+    if (Capacitor.getPlatform() !== 'web') {
+      console.log('callWaiter');
+      this.fmcService
+        .sendPushNotification(
+          'Solicitud de mozo',
+          'La mesa X solicita la presencia de un mozo'
+        )
+        .subscribe();
+    }
+    /* let userOrders = [];
     Swal.fire(CALL_WAITER).then(async result => {
       if (result.isConfirmed) {
         let user = this.loginService.getUserInfo();
@@ -95,7 +106,7 @@ export class HeaderComponent implements OnInit {
             }
           });
       }
-    });
+    });*/
   }
 
   async scanCode() {
