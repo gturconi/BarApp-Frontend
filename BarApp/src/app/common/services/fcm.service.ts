@@ -126,11 +126,11 @@ export class FcmService {
     }
   }
 
-  sendPushNotification(title: string, body: string) {
+  sendPushNotification(title: string, body: string, token?: string) {
     const payload = {
       title,
       body,
-      receivedToken: this.fcm_token,
+      receivedToken: token ? token : this.fcm_token,
     };
     return this.http.post(`${this.apiUrl}/fcm/send-notification`, payload);
   }

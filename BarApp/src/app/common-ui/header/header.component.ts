@@ -94,8 +94,8 @@ export class HeaderComponent implements OnInit {
                 this.sendNotification(userOrders[0].table_order.number);
               } else {
                 if (await this.scanCode()) {
-                  this.orderService.checkQR(this.scannedData).subscribe(msg => {
-                    if (msg == 'Codigo validado') {
+                  this.orderService.checkQR(this.scannedData).subscribe(res => {
+                    if (res.message == 'Codigo validado') {
                       this.sendNotification();
                     }
                   });
@@ -124,7 +124,8 @@ export class HeaderComponent implements OnInit {
       this.fmcService
         .sendPushNotification(
           'Solicitud de asistencia en mesa X',
-          `Un cliente en la mesa X ha solicitado tu asistencia. Por favor, acude a atenderlo lo antes posible`
+          `Un cliente en la mesa X ha solicitado tu asistencia. Por favor, acude a atenderlo lo antes posible`,
+          this.scannedData
         )
         .subscribe(() =>
           this.toastrService.success('Alerta enviada, en breve será atendido')
