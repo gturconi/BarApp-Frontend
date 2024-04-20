@@ -5,7 +5,10 @@ import { UserRoles } from '@common/constants/user.roles.enum';
 import { Input } from '@angular/core';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
-import { CALL_WAITER } from '@common/constants/messages.constant';
+import {
+  CALL_WAITER,
+  NO_WEB_QR_COMPATIBILITY,
+} from '@common/constants/messages.constant';
 import { OrderService } from 'src/app/projects/order/services/order.service';
 import { ORDER_STATES } from 'src/app/projects/order/models/order';
 import { formatDate } from '@angular/common';
@@ -14,6 +17,7 @@ import { ModalController } from '@ionic/angular';
 import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { FcmService } from '@common/services/fcm.service';
 import { Capacitor } from '@capacitor/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -37,7 +41,8 @@ export class HeaderComponent implements OnInit {
     private location: Location,
     private orderService: OrderService,
     private modalController: ModalController,
-    private fmcService: FcmService
+    private fmcService: FcmService,
+    private toastrService: ToastrService
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd || event instanceof NavigationStart) {
@@ -68,45 +73,63 @@ export class HeaderComponent implements OnInit {
 
   callWaiter() {
     if (Capacitor.getPlatform() !== 'web') {
-      console.log('callWaiter');
+      let userOrders = [];
+      Swal.fire(CALL_WAITER).then(async result => {
+        if (result.isConfirmed) {
+          let user = this.loginService.getUserInfo();
+          if (!user) {
+            return;
+          }
+          this.orderService
+            .getUserOrders(user.id, 1, 10, user.name)
+            .subscribe(async data => {
+              userOrders = data.results;
+              if (
+                userOrders.some(
+                  order =>
+                    order.state.description != ORDER_STATES[4] &&
+                    this.isTodayOrder(order.date_created)
+                )
+              ) {
+                this.sendNotification(userOrders[0].table_order.number);
+              } else {
+                if (await this.scanCode()) {
+                  this.orderService.checkQR(this.scannedData).subscribe(msg => {
+                    if (msg == 'Codigo validado') {
+                      this.sendNotification();
+                    }
+                  });
+                }
+              }
+            });
+        }
+      });
+    } else {
+      Swal.fire(NO_WEB_QR_COMPATIBILITY);
+      return;
+    }
+  }
+
+  sendNotification(table?: number) {
+    if (table) {
       this.fmcService
         .sendPushNotification(
-          'Solicitud de mozo',
-          'La mesa X solicita la presencia de un mozo'
+          'Solicitud de asistencia en mesa',
+          `Un cliente en la mesa ${table} ha solicitado tu asistencia. Por favor, acude a atenderlo lo antes posible`
         )
-        .subscribe();
+        .subscribe(() =>
+          this.toastrService.success('Alerta enviada, en breve será atendido')
+        );
+    } else {
+      this.fmcService
+        .sendPushNotification(
+          'Solicitud de asistencia en mesa X',
+          `Un cliente en la mesa X ha solicitado tu asistencia. Por favor, acude a atenderlo lo antes posible`
+        )
+        .subscribe(() =>
+          this.toastrService.success('Alerta enviada, en breve será atendido')
+        );
     }
-    /* let userOrders = [];
-    Swal.fire(CALL_WAITER).then(async result => {
-      if (result.isConfirmed) {
-        let user = this.loginService.getUserInfo();
-        if (!user) {
-          return;
-        }
-        this.orderService
-          .getUserOrders(user.id, 1, 10, user.name)
-          .subscribe(async data => {
-            userOrders = data.results;
-            if (
-              userOrders.some(
-                order =>
-                  order.state.description != ORDER_STATES[4] &&
-                  this.isTodayOrder(order.date_created)
-              )
-            ) {
-              console.log('ENVIAR NOTIFICACION AL MOZO');
-            } else {
-              if (await this.scanCode()) {
-                this.orderService.checkQR(this.scannedData).subscribe(msg => {
-                  if (msg == 'Codigo validado') {
-                    console.log('ENVIAR NOTIFICACION AL MOZO');
-                  }
-                });
-              }
-            }
-          });
-      }
-    });*/
   }
 
   async scanCode() {
