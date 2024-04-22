@@ -11,6 +11,7 @@ import { SocketService } from '@common/services/socket.service';
 import { NotificationService } from '@common/services/notification.service';
 import { OrderService } from '../services/order.service';
 import { LoginService } from '@common/services/login.service';
+import { FcmService } from '@common/services/fcm.service';
 
 import { CartProduct } from '@common/models/cartProduct';
 import { Products } from '../../menu/products/models/products';
@@ -27,7 +28,6 @@ import {
 import { OrderRequest } from '../models/order';
 import { ModalController, Platform } from '@ionic/angular';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
-import { format } from 'path';
 import { LensFacing, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
@@ -55,7 +55,8 @@ export class MyOrdersComponent implements OnInit {
     private orderService: OrderService,
     private loginService: LoginService,
     private modalController: ModalController,
-    private plaform: Platform
+    private plaform: Platform,
+    private fmcService: FcmService
   ) {}
 
   async ngOnInit() {
@@ -264,6 +265,11 @@ export class MyOrdersComponent implements OnInit {
         .subscribe(() => {
           this.cartService.clearCart();
           loading.dismiss();
+          this.fmcService.sendPushNotification(
+            'Nuevo pedido',
+            'Se ha realizado un nuevo pedido en la mesa X',
+            this.scannedData
+          );
           Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
             this.socketService.sendMessage('order', '');
             this.router.navigate(['/orders/my-orders/confirmed']);

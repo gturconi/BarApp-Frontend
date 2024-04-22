@@ -19,7 +19,9 @@ export class LoginService {
 
   authenticateUser(email: string, password: string) {
     let fcm_token =
-      this.fcmService.fcm_token != '' ? this.fcmService.fcm_token : null;
+      this.fcmService.getFcmToken() != ''
+        ? this.fcmService.getFcmToken()
+        : null;
     const credentials = { email, password, fcm_token };
     return this.http.post<User>(`${this.apiUrl}/auth/signin`, credentials);
   }

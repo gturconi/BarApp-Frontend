@@ -18,11 +18,15 @@ export const FCM_TOKEN = 'push_notification_token';
 })
 export class FcmService {
   private _redirect = new BehaviorSubject<any>(null);
-  public fcm_token = '';
+  private fcm_token = 'hola';
   apiUrl: string = environment.apiUrl;
 
   get redirect() {
     return this._redirect.asObservable();
+  }
+
+  getFcmToken() {
+    return this.fcm_token;
   }
 
   constructor(private storage: StorageService, private http: HttpClient) {}
@@ -126,11 +130,17 @@ export class FcmService {
     }
   }
 
-  sendPushNotification(title: string, body: string, token?: string) {
+  sendPushNotification(
+    title: string,
+    body: string,
+    token?: string,
+    userId?: string
+  ) {
     const payload = {
       title,
       body,
       receivedToken: token ? token : this.fcm_token,
+      userId: userId ? userId : '',
     };
     return this.http.post(`${this.apiUrl}/fcm/send-notification`, payload);
   }

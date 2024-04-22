@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from '../../menu/products/services/products.service';
 import { PromotionsService } from '../../menu/promotions/services/promotions.service';
 import { SocketService } from '@common/services/socket.service';
+import { FcmService } from '@common/services/fcm.service';
 
 import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
@@ -61,7 +62,8 @@ export class OrderDetailsComponent implements OnInit {
     private toastrService: ToastrService,
     private socketService: SocketService,
     private platform: Platform,
-    private location: Location
+    private location: Location,
+    private fmcService: FcmService
   ) {}
 
   ngOnInit() {
@@ -152,6 +154,10 @@ export class OrderDetailsComponent implements OnInit {
               this.toastrService.success('Pedido cancelado');
               this.socketService.sendMessage('order', '');
               loading.dismiss();
+              this.fmcService.sendPushNotification(
+                'Pedido cancelado',
+                `Se ha cancelado un pedido en la mesa ${this.order?.table_order.number}`
+              );
               this.router.navigate(['orders/my-orders/confirmed']);
             });
         }
@@ -190,6 +196,14 @@ export class OrderDetailsComponent implements OnInit {
           .subscribe(() => {
             this.toastrService.success('Estado del pedido actualizado');
             loading.dismiss();
+            this.fmcService.sendPushNotification(
+              'Estado del pedido actualizado',
+              stateId == '2'
+                ? 'El pedido ya se encuentra en preparación'
+                : 'El pedido ya fue entregado',
+              undefined,
+              this.order?.user.id.toString()
+            );
             this.location.back();
           });
       }
