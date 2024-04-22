@@ -54,4 +54,8 @@ export class OrderService {
   checkQR(code: string) {
     return this.http.post<any>(`${this.apiUrl}/orders/checkQR`, { code });
   }
+
+  payOrder(id: string) {
+    return this.http.post<any>(`${this.apiUrl}/payment/` + id, {});
+  }
 }

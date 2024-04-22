@@ -216,12 +216,28 @@ export class OrderDetailsComponent implements OnInit {
     } else if (this.order!.state.description === ORDER_STATES[3]) {
       Swal.fire(PAYMENT_METHOD).then(result => {
         if (result.isConfirmed) {
-          //pagar mp
+          this.payMP();
         } else {
           //pagar efectivo, llamar mozo
         }
       });
     }
+  }
+
+  async payMP() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.orderService
+      .payOrder(this.orderId!)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(() => {
+        loading.dismiss();
+        this.fmcService.sendPushNotification(
+          'Pago realizado',
+          `Un pedido de la mesa ${this.order?.table_order.number} ha sido pagado`
+        );
+        this.toastrService.success('Pago del pedido procesado con éxito!');
+      });
   }
 
   getCurrentDate(): Date {
