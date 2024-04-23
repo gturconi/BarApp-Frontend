@@ -27,6 +27,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { File } from '@awesome-cordova-plugins/file';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener';
 import { Platform } from '@ionic/angular';
+import { Browser } from '@capacitor/browser';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -230,13 +231,14 @@ export class OrderDetailsComponent implements OnInit {
     this.orderService
       .payOrder(this.orderId!)
       .pipe(finalize(() => loading.dismiss()))
-      .subscribe(() => {
-        loading.dismiss();
-        this.fmcService.sendPushNotification(
-          'Pago realizado',
-          `Un pedido de la mesa ${this.order?.table_order.number} ha sido pagado`
-        );
-        this.toastrService.success('Pago del pedido procesado con éxito!');
+      .subscribe(async link => {
+        if (this.platform.is('capacitor')) {
+          await Browser.open({ url: link })
+            .then(() => {})
+            .finally(() => loading.dismiss());
+        } else {
+          window.open(link, '_blank');
+        }
       });
   }
 
