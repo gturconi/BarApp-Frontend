@@ -309,8 +309,4 @@ export class MenuComponent implements OnInit {
   hasManageItems(): boolean {
     return (this.menuItems as MenuItem[]).some(item => item && item.isManage);
   }
-
-  callWaiter() {
-    Swal.fire(CALL_WAITER);
-  }
 }

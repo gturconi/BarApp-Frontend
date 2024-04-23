@@ -13,12 +13,14 @@ import { ProductsService } from '../../menu/products/services/products.service';
 import { PromotionsService } from '../../menu/promotions/services/promotions.service';
 import { SocketService } from '@common/services/socket.service';
 import { FcmService } from '@common/services/fcm.service';
+import { TablesService } from '../../tables/services/tables.service';
 
 import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
   CANCEL_ORDER,
   CHANGE_ORDER_STATUS,
   PAYMENT_METHOD,
+  VACATE_TABLE_CLIENT,
 } from '@common/constants/messages.constant';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
@@ -28,6 +30,7 @@ import { File } from '@awesome-cordova-plugins/file';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener';
 import { Platform } from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
+import { Table } from '../../tables/models/table';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -64,7 +67,8 @@ export class OrderDetailsComponent implements OnInit {
     private socketService: SocketService,
     private platform: Platform,
     private location: Location,
-    private fmcService: FcmService
+    private fmcService: FcmService,
+    private tablesService: TablesService
   ) {}
 
   ngOnInit() {
@@ -75,6 +79,15 @@ export class OrderDetailsComponent implements OnInit {
       if (orderId) {
         this.orderId = orderId;
         this.doSearch(orderId);
+      }
+    });
+    this.route.queryParams.subscribe(params => {
+      if (params['success'] === 'true') {
+        Swal.fire(VACATE_TABLE_CLIENT).then(async result => {
+          if (result.isConfirmed) {
+            this.vacateTable();
+          }
+        });
       }
     });
     this.mobileScreen = window.innerWidth < 768;
@@ -382,5 +395,23 @@ export class OrderDetailsComponent implements OnInit {
   private formatDate(dateString: string): string {
     const date = new Date(dateString);
     return date.toLocaleString();
+  }
+
+  async vacateTable() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    let table = new Table(
+      this.order?.table_order.id,
+      this.order?.table_order.number,
+      1
+    );
+    this.tablesService
+      .updateState(table)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(res => {
+        this.toastrService.success('Mesa desocupada');
+        this.socketService.sendMessage('order', '');
+        loading.dismiss();
+      });
   }
 }
