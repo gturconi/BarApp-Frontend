@@ -12,6 +12,8 @@ export class SocketService {
   io = io(environment.webSocketUrl, {
     autoConnect: true,
     withCredentials: true,
+    //esto para que funcione en el servidor en la nube
+    transports: ['websocket', 'polling', 'flashsocket'],
   });
   constructor() {
     this.io.on('newOrder', data => {

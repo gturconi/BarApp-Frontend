@@ -1,5 +1,6 @@
 <ion-header
   class="ion-no-border ion-text-center header-mobile"
+  [class.bell-present]="client"
   *ngIf="!isAdmin() && !showMenu"
 >
   <ion-toolbar>
@@ -8,10 +9,21 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-buttons slot="end" *ngIf="client">
+      <ion-button>
+        <img
+          src="../../../assets/icon/campana.gif"
+          alt="GIF campana"
+          class="bell"
+          (click)="callWaiter()"
+        />
+      </ion-button>
+    </ion-buttons>
     <ion-title
       [ngClass]="{ logo_name_header: showBackButton }"
       class="logo__name"
-      >TDG<span class="point">net.</span></ion-title
+      [class.without-bell]="!client"
+      >TGD<span class="point">net.</span></ion-title
     >
   </ion-toolbar>
 </ion-header>

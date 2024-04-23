@@ -31,19 +31,23 @@
           class="item1-image"
         />
         <div class="button-container" *ngIf="admin">
-          <button
-            class="button-on-image"
-            [routerLink]="['/menu/categories/editPromotion', promotion.id]"
-          >
-            <ion-icon name="create-outline" class="icons-accions"></ion-icon>
-          </button>
-          <button
-            class="button-on-image"
-            *ngIf="promotion.id !== undefined"
-            (click)="$event.stopPropagation(); deleteProm(promotion.id)"
-          >
-            <ion-icon name="trash-outline" class="icons-accions"></ion-icon>
-          </button>
+          <span title="Editar" class="icon-tooltip-p">
+            <button
+              class="button-on-image"
+              [routerLink]="['/menu/categories/editPromotion', promotion.id]"
+            >
+              <ion-icon name="create-outline" class="icons-accions"></ion-icon>
+            </button>
+          </span>
+          <span title="Eliminar" class="icon-tooltip-p">
+            <button
+              class="button-on-image"
+              *ngIf="promotion.id !== undefined"
+              (click)="$event.stopPropagation(); deleteProm(promotion.id)"
+            >
+              <ion-icon name="trash-outline" class="icons-accions"></ion-icon>
+            </button>
+          </span>
         </div>
         <h3
           *ngIf="!promotion.baja && isPromotionValid(promotion) && admin"
@@ -139,25 +143,27 @@
     <div class="grid-item">
       <div class="button-add-container" *ngIf="showData && admin && !loading">
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-          <ion-fab-button class="button-add">
-            <ion-icon name="add"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-list side="top">
-            <ion-fab-button
-              class="botton-add-expand"
-              [routerLink]="['/menu/categories/addPromotion']"
-            >
-              <ion-icon name="pricetags-outline"></ion-icon>
-              <span>Promoción</span>
+          <span title="Añadir" class="icon-tooltip-pr">
+            <ion-fab-button class="button-add">
+              <ion-icon name="add"></ion-icon>
             </ion-fab-button>
-            <ion-fab-button
-              class="botton-add-expand"
-              [routerLink]="['/menu/categories/add']"
-            >
-              <ion-icon name="reader-outline"></ion-icon>
-              <span>Categoría</span>
-            </ion-fab-button>
-          </ion-fab-list>
+            <ion-fab-list side="top">
+              <ion-fab-button
+                class="botton-add-expand"
+                [routerLink]="['/menu/categories/addPromotion']"
+              >
+                <ion-icon name="pricetags-outline"></ion-icon>
+                <span>Promoción</span>
+              </ion-fab-button>
+              <ion-fab-button
+                class="botton-add-expand"
+                [routerLink]="['/menu/categories/add']"
+              >
+                <ion-icon name="reader-outline"></ion-icon>
+                <span>Categoría</span>
+              </ion-fab-button>
+            </ion-fab-list>
+          </span>
         </ion-fab>
       </div>
     </div>

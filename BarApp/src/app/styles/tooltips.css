@@ -1,0 +1,71 @@
+/*promociones*/
+.icon-tooltip-p {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-tooltip-p:hover::after {
+  content: attr(title);
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 11px;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 75%;
+  left: 0%;
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+/*categorias*/
+.icon-tooltip-pr {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-tooltip-pr:hover::after {
+  content: attr(title);
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 11px;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px 5px;
+  position: absolute;
+  z-index: 1;
+  top: 75%;
+  left: 90%;
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+/*productos*/
+.icon-tooltip-pro {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-tooltip-pro:hover::after {
+  content: attr(title);
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 10px;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px 5px;
+  position: absolute;
+  z-index: 1;
+  top: 70%;
+  left: 35%;
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: opacity 0.3s;
+}

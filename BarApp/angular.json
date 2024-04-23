@@ -19,7 +19,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "allowedCommonJsDependencies": ["sweetalert2", "crypto-js","qrcode"],
+            "allowedCommonJsDependencies": [
+              "sweetalert2",
+              "crypto-js",
+              "qrcode",
+              "pdfmake",
+              "html2canvas"
+            ],
             "assets": [
               {
                 "glob": "**/*",
@@ -63,7 +69,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             },
             "ci": {
               "progress": false

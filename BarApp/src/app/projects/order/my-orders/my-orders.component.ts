@@ -1,18 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 import { BadgeService } from '@common/services/badge.service';
 import { CartService } from '@common/services/cart.service';
 import { ImageService } from '@common/services/image.service';
 import { LoadingService } from '@common/services/loading.service';
+import { SocketService } from '@common/services/socket.service';
+import { NotificationService } from '@common/services/notification.service';
+import { OrderService } from '../services/order.service';
+import { LoginService } from '@common/services/login.service';
+import { FcmService } from '@common/services/fcm.service';
 
 import { CartProduct } from '@common/models/cartProduct';
 import { Products } from '../../menu/products/models/products';
 import { Promotion } from '../../menu/promotions/models/promotion';
 import { Avatar } from '@common/models/avatar';
-import Swal from 'sweetalert2';
-import { DELETE_OPTS_CART } from '@common/constants/messages.constant';
-import { Router } from '@angular/router';
+import { ORDER_STATES, OrderDetail } from '../models/order';
+
+import {
+  DELETE_OPTS_CART,
+  NO_WEB_QR_COMPATIBILITY,
+  ORDER_CONFIRMATION_OPTS,
+  ORDER_CONFIRMED_OPTS,
+} from '@common/constants/messages.constant';
+import { OrderRequest } from '../models/order';
+import { ModalController, Platform } from '@ionic/angular';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { LensFacing, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
   selector: 'app-my-orders',
@@ -25,13 +41,22 @@ export class MyOrdersComponent implements OnInit {
   showData: boolean = false;
   total = 0;
   maxCharacters = 50;
+  scannedData = '';
 
   constructor(
     private badgeService: BadgeService,
     private cartService: CartService,
     private imageService: ImageService,
     private loadingService: LoadingService,
-    private router: Router
+    private socketService: SocketService,
+    private router: Router,
+    //private barcodeScanner: BarcodeScanner,
+    private notificationService: NotificationService,
+    private orderService: OrderService,
+    private loginService: LoginService,
+    private modalController: ModalController,
+    private plaform: Platform,
+    private fmcService: FcmService
   ) {}
 
   async ngOnInit() {
@@ -41,6 +66,19 @@ export class MyOrdersComponent implements OnInit {
     this.cartService.setVisited();
     this.prepareItems();
     loading.dismiss();
+
+    if (this.plaform.is('capacitor')) {
+      BarcodeScanner.isSupported().then();
+      BarcodeScanner.checkPermissions().then();
+      BarcodeScanner.removeAllListeners();
+    }
+  }
+
+  detectEnvironment() {
+    if (!this.plaform.is('capacitor') || !this.plaform.is('cordova')) {
+      return false;
+    }
+    return true;
   }
 
   prepareItems() {
@@ -133,5 +171,112 @@ export class MyOrdersComponent implements OnInit {
         loading.dismiss();
       }
     });
+  }
+
+  confirmOrder() {
+    if (!this.detectEnvironment()) {
+      Swal.fire(NO_WEB_QR_COMPATIBILITY);
+      return;
+      //TODO: ACA FALTARIA QUE SI EL USER CLICKEA ABRIR APP, SE ABRA LA MISMA
+    }
+
+    Swal.fire(ORDER_CONFIRMATION_OPTS).then(async result => {
+      if (result.isConfirmed) {
+        if (await this.scanCode()) {
+          const res = this.createOrder();
+        }
+      } else {
+        this.notificationService.presentToast({
+          message:
+            'Ocurrió un error al escanear el código, por favor intentelo de nuevo',
+        });
+      }
+    });
+  }
+
+  async scanCode() {
+    const modal = await this.modalController.create({
+      component: BarcodeScanningModalComponent,
+      cssClass: 'barcode-scanning-modal', //transparent background
+      showBackdrop: false,
+      componentProps: {
+        formats: [],
+        lensFacing: LensFacing.Back, //back camera
+      },
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data) {
+      this.scannedData = data?.barcode?.displayValue;
+      return true;
+    }
+    return false;
+  }
+
+  async createOrder() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    const user = this.loginService.getUserInfo();
+    const index = Object.keys(ORDER_STATES).find(
+      key => ORDER_STATES[parseInt(key)] === 'A confirmar'
+    ) as string | undefined;
+
+    const orderDetails: OrderDetail[] = this.ordersList.map(order => {
+      let promId = null;
+      let prodId = null;
+
+      if (this.isProduct(order)) {
+        promId = null;
+        prodId = order.product.id;
+      } else {
+        promId = order.product.id;
+        prodId = null;
+        null;
+      }
+      const orderDetail = new OrderDetail(
+        null,
+        prodId,
+        promId,
+        order.product.quantity,
+        order.product.price,
+        order.comments != undefined ? order.comments : null
+      );
+      return orderDetail;
+    });
+
+    const order = new OrderRequest(
+      this.scannedData,
+      user.id,
+      null,
+      index,
+      this.total,
+      orderDetails,
+      undefined,
+      null
+    );
+
+    try {
+      this.orderService
+        .postOrder(order)
+        .pipe(finalize(() => loading.dismiss()))
+        .subscribe(() => {
+          this.cartService.clearCart();
+          loading.dismiss();
+          this.fmcService.sendPushNotification(
+            'Nuevo pedido',
+            'Se ha realizado un nuevo pedido en la mesa X',
+            this.scannedData
+          );
+          Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
+            this.socketService.sendMessage('order', '');
+            this.router.navigate(['/orders/my-orders/confirmed']);
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

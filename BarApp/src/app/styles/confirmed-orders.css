@@ -1,0 +1,93 @@
+@import 'variables.css';
+
+.card-order {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  animation: aparition 1s ease-in forwards;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes aparition {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.card-order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .order-price {
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+}
+
+.order-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 15px;
+  position: absolute;
+  bottom: 2px;
+}
+
+.check-icon {
+  color: var(--color-7);
+}
+.card-order-state {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+
+  .order-details-icon {
+    font-size: 30px;
+    margin-right: -20px;
+    margin: 1px;
+  }
+
+  .order-state {
+    border-radius: 10px;
+    width: 9rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+
+    a {
+      text-decoration: none;
+      color: var(--color-7);
+    }
+
+    ion-icon {
+      color: var(--color-7);
+      font-size: 20px;
+    }
+  }
+}
+
+.bg-pending {
+  background-color: var(--color-pending);
+}
+
+.bg-preparation {
+  background-color: var(--color-preparation);
+}
+
+.bg-delivered {
+  background-color: var(--color-delivered);
+}
+
+.bg-paid {
+  background-color: var(--color-paid);
+}

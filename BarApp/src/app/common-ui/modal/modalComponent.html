@@ -1,0 +1,32 @@
+<ion-modal isOpen="true" id="example-modal" [presentingElement]="true">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ title }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-list lines="none" class="modal-list">
+      @for(item of items; track item; let idx = $index){
+      <ion-item
+        lines="inset"
+        button="true"
+        detail="false"
+        (click)="navigate(item.link)"
+      >
+        <ion-label>{{ item.key }}</ion-label>
+        <ion-label>{{ item.value }}</ion-label>
+      </ion-item>
+      }
+    </ion-list>
+    @if(button.title != '' && itemsRendered){
+    <ion-buttons class="modal-btn" shape="round">
+      <ion-button (click)=" executeFn()" [strong]="true">
+        {{ button.title }}</ion-button
+      >
+    </ion-buttons>
+    }
+  </ng-template>
+</ion-modal>

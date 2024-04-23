@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3306/api',
-  webSocketUrl: 'ws://localhost:3000/',
+  apiUrl: 'https://barapp-backend.onrender.com/api',
+  webSocketUrl: 'wss://barapp-websocket.onrender.com:443',
   siteKey: '6LejTp4pAAAAAKKuiGpghX2V6MJfniHKdqZdcUSk',
 };

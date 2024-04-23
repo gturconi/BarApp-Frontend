@@ -15,6 +15,7 @@ import { ComboComponent } from './combo/combo.component';
 import { CommonUiRoutingModule } from './common-ui-routing.module';
 import { SearchComponent } from './search/search.component';
 import { TableComponent } from './table/table.component';
+import { ModalComponent } from './modal/modalComponent';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TableComponent } from './table/table.component';
     ComboComponent,
     SearchComponent,
     TableComponent,
+    ModalComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,7 @@ import { TableComponent } from './table/table.component';
     ComboComponent,
     SearchComponent,
     TableComponent,
+    ModalComponent,
   ],
 })
 export class CommonUiModule {}

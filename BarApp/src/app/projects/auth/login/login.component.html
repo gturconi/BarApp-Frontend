@@ -23,4 +23,17 @@
       </ion-card-content>
     </ion-card>
   </div>
+  <div class="button-container">
+    <a
+      *ngIf="showDownloadButton"
+      href="ruta/al/archivo/archivo.apk"
+      download="archivo.apk"
+      class="download__item"
+    >
+      <span class="material-symbols-outlined download__logo">
+        system_update
+      </span>
+      <h4 class="download__title">¡Descarga BarApp Gratis Aquí!</h4>
+    </a>
+  </div>
 </ion-content>

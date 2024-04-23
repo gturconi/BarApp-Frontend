@@ -54,9 +54,33 @@ export class TableComponent implements OnInit {
     data: TableData,
     formatter?: (data: TableData) => void
   ) {
+    const keys = key.split('.');
+    let value: any = data;
+
+    for (const k of keys) {
+      value = value?.[k];
+      if (value === undefined || value === null) {
+        return data?.[key] || '';
+      }
+    }
+
+    if (key === 'total') {
+      return '$' + parseFloat(value).toFixed(2).replace('.', ',');
+    }
+
+    if (key === 'date_created') {
+      return this.formatDate(value);
+    }
+
     if (!!formatter && typeof formatter === 'function') {
       return formatter(data);
     }
-    return data?.[key] || '';
+
+    return value;
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleString();
   }
 }

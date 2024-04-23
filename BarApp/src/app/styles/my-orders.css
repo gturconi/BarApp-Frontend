@@ -71,6 +71,37 @@
   border-bottom-right-radius: 5px;
   font-size: 12px;
 }
+.barcode-scanning-active {
+  visibility: hidden;
+  --background: transparent;
+  --ion-background-color: transparent;
+}
+
+.barcode-scanning-modal {
+  visibility: visible;
+}
+
+.btn-custom {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  margin: 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.btn-custom-open {
+  padding: 13px 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .barcode-scanning-active {
+    visibility: hidden;
+    --background: transparent;
+    --ion-background-color: transparent;
+  }
+}
 
 @media (min-height: 932px) {
   .order-button {

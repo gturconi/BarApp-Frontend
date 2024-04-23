@@ -9,6 +9,7 @@ import { UserRoles } from '@common/constants/user.roles.enum';
 
 import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -21,14 +22,24 @@ export class LoginComponent implements OnInit {
   validUserRoles = [UserRoles.Admin, UserRoles.Employee, UserRoles.Client];
   helper = new JwtHelperService();
 
+  showDownloadButton: boolean = true;
+
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
     this.validateRol();
+    this.detectEnvironment();
+  }
+
+  detectEnvironment() {
+    if (this.platform.is('capacitor') || this.platform.is('cordova')) {
+      this.showDownloadButton = false;
+    }
   }
 
   async submit(form: FormGroup) {

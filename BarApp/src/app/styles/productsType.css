@@ -27,7 +27,7 @@
   min-width: 190px;
   width: 200px;
   height: 100%;
-  background-color: var(--color-4);
+  background-image: linear-gradient(var(--color-4), var(--color-3));
   margin-right: 2px;
   flex-basis: auto;
   animation: itemReveal 1.5s ease-in-out;
@@ -177,7 +177,7 @@
   display: flex;
   align-items: center;
   padding: 0.5em;
-  background-color: var(--color-4);
+  background-image: linear-gradient(var(--color-4), var(--color-3));
   margin-bottom: 2px;
   animation: reveal linear both;
   animation-timeline: view();
@@ -432,5 +432,32 @@
 @media screen and (min-height: 900px) {
   .wrapper2 {
     height: 53vh;
+  }
+}
+
+@media screen and (height< 825px) {
+  .wrapper2 {
+    height: 45vh;
+  }
+}
+@media screen and (height< 660px) {
+  .wrapper2 {
+    height: 35vh;
+  }
+}
+
+@media screen and (height<= 805px) and (width <= 1000px) {
+  .grid-item {
+    padding: 20px 0px !important;
+  }
+
+  .button-add {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (height<= 700px) and (width <= 1000px) {
+  .button-add {
+    margin-bottom: 40px;
   }
 }

@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import localeEsAr from '@angular/common/locales/es-AR';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -14,6 +15,10 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import { IntroModule } from './projects/intro/intro.module';
+
+registerLocaleData(localeEsAr, 'es-Ar');
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,8 +38,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       enableHtml: true,
     }),
     BrowserAnimationsModule,
+    IntroModule,
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'es-AR' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

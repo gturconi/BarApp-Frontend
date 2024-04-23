@@ -22,6 +22,10 @@
   scale: 1.02 !important;
 }
 
+.table-card:active {
+  scale: 0.92 !important;
+}
+
 .table-image {
   margin-top: 1em;
   max-width: 250px;
@@ -37,6 +41,13 @@
   gap: 15px;
 }
 
+.table-btn {
+  --background: var(--color-3);
+  --border-radius: 20px;
+  --color: black;
+  width: 2rem;
+  height: 2rem;
+}
 .state {
   width: 100%;
   color: var(--color-7);
@@ -198,6 +209,21 @@
   display: none;
 }
 
+@media (height <= 800px) {
+  .button-list-table {
+    margin-bottom: 80px;
+  }
+  .button-add-table {
+    margin-bottom: 0px !important;
+  }
+}
+
+@media (height <= 684px) {
+  .button-list-table {
+    margin-bottom: 100px;
+  }
+}
+
 @media (max-width: 768px) {
   table {
     border: 0;
@@ -266,3 +292,31 @@
     background-color: var(--color-3);
   }
 }
+
+/*
+ion-modal#example-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#example-modal ion-icon {
+  margin-right: 6px;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 4px 0;
+
+  color: #aaaaaa;
+}
+
+ion-modal#example-modal .wrapper {
+  margin-bottom: 10px;
+}*/

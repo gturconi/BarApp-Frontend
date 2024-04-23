@@ -11,7 +11,11 @@
     >
       @for(table of tableList; track table.id; let idx = $index) {
       <article>
-        <ion-card class="table-card details-product">
+        <ion-card
+          class="table-card details-product"
+          (click)="openDetails(table)"
+          type="button"
+        >
           <img
             loading="lazy"
             src="assets/table.webp"
@@ -25,14 +29,47 @@
           </ion-card-header>
           <div class="tables-buttons">
             <div class="table-actions" *ngIf="admin">
-              <ion-icon
-                name="create-outline"
-                class="icons-admin icon-eye"
-                [class.disabled]="table.state == 'Occupied'"
-                [routerLink]="['/tables/edit', table.id]"
-              ></ion-icon>
+              <span title="Editar" class="icon-tooltip-pr">
+                <ion-icon
+                  name="create-outline"
+                  class="icons-admin icon-eye"
+                  [class.disabled]="table.state == 'Occupied'"
+                  [routerLink]="['/tables/edit', table.id]"
+                ></ion-icon>
+              </span>
             </div>
-            <ion-button class="qrBtn" *ngIf="admin">
+
+            <div
+              style="
+                position: absolute;
+                left: -10000px;
+                top: auto;
+                width: 300px;
+                height: 300px;
+                overflow: hidden;
+              "
+              [id]="'qr-image' + table.number.toString()"
+            >
+              <qr-code
+                [value]="getQRCode(table.number.toString())"
+                size="300"
+                errorCorrectionLevel="M"
+              ></qr-code>
+            </div>
+
+            <ion-button
+              class="qrBtn"
+              *ngIf="admin"
+              (click)="
+                $event.stopPropagation(); captureScreen(table.number.toString())
+              "
+            >
+              <ion-icon name="qr-code-outline"></ion-icon>
+              <!--<a [id]="'link' + table.number.toString()"
+                ><ion-icon name="qr-code-outline"></ion-icon
+              ></a>-->
+            </ion-button>
+            <!--     <ion-button class="qrBtn" *ngIf="admin">
               <qrcode
                 [qrdata]="'Mesa ' + table.number.toString()"
                 [width]="400"
@@ -42,14 +79,16 @@
               <a [href]="qrCodeDownloadLink" download="qrcode"
                 ><ion-icon name="qr-code-outline"></ion-icon
               ></a>
-            </ion-button>
+            </ion-button>-->
             <div class="table-actions" *ngIf="admin">
-              <ion-icon
-                name="trash-outline"
-                class="icons-admin icon-eye"
-                [class.disabled]="table.state == 'Occupied'"
-                (click)="delete(table.id)"
-              ></ion-icon>
+              <span title="Eliminar" class="icon-tooltip-pr">
+                <ion-icon
+                  name="trash-outline"
+                  class="icons-admin icon-eye"
+                  [class.disabled]="table.state == 'Occupied'"
+                  (click)="delete(table.id)"
+                ></ion-icon
+              ></span>
             </div>
           </div>
           <ion-card-content
@@ -75,10 +114,36 @@
 
     <div class="grid-item">
       <div class="button-add-container" *ngIf="showData && admin">
-        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-          <ion-fab-button class="button-add" [routerLink]="['/tables/add']">
-            <ion-icon name="add"></ion-icon>
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="add"
+          [edge]="true"
+        >
+          <ion-fab-button class="button-add button-add-table">
+            <ion-icon name="construct-outline"></ion-icon>
           </ion-fab-button>
+          <ion-fab-list side="top" class="button-list-table">
+            <span title="Añadir" class="icon-tooltip-pr">
+              <ion-fab-button
+                size="small"
+                class="table-btn"
+                [routerLink]="['/tables/add']"
+              >
+                <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+            </span>
+            <span title="Generar QRs" class="icon-tooltip-pr">
+              <ion-fab-button
+                size="small"
+                class="table-btn"
+                (click)="refreshQR()"
+              >
+                <ion-icon name="refresh-outline"></ion-icon>
+              </ion-fab-button>
+            </span>
+          </ion-fab-list>
         </ion-fab>
       </div>
     </div>
