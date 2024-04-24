@@ -134,7 +134,8 @@
             *ngIf="
               role === 'customer' &&
               order.state.description !== 'En preparación' &&
-              order.state.description !== 'Pagado'
+              order.state.description !== 'Pagado' &&
+              isTodayOrder(order.date_created)
             "
             class="download__item"
             [ngClass]="{
