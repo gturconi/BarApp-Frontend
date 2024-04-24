@@ -261,9 +261,15 @@ export class OrderDetailsComponent implements OnInit {
 
   isTodayOrder(orderDate: string): boolean {
     const today = new Date();
-    const formattedOrderDate = formatDate(orderDate, 'yyyy-MM-dd', 'en');
+    const formattedOrderDate = new Date(orderDate);
     const formattedToday = formatDate(today, 'yyyy-MM-dd', 'en');
-    return formattedOrderDate === formattedToday;
+    const formattedOrder = formatDate(formattedOrderDate, 'yyyy-MM-dd', 'en');
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const formattedYesterday = formatDate(yesterday, 'yyyy-MM-dd', 'en');
+    return (
+      formattedOrder === formattedToday || formattedOrder === formattedYesterday
+    );
   }
 
   createPdf() {
