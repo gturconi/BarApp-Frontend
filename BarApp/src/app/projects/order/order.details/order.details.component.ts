@@ -191,6 +191,9 @@ export class OrderDetailsComponent implements OnInit {
           case 'En preparación':
             stateId = '3';
             break;
+          case 'Entregado':
+            stateId = '4';
+            break;
           default:
             stateId = stateID;
             break;
