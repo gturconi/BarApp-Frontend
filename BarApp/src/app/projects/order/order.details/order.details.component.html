@@ -128,7 +128,10 @@
           <span>${{ order.total | number : '1.2-2' }}</span>
         </div>
         <hr class="card-hr" />
-        <div *ngIf="order.state.description === 'Entregado'" class="tag-pay">
+        <div
+          *ngIf="role === 'employee' && order.state.description === 'Entregado'"
+          class="tag-pay"
+        >
           <ion-icon name="information-circle-outline"></ion-icon>
           En caso de que el cliente pague en efectivo/otro:
         </div>
