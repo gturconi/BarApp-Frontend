@@ -129,7 +129,11 @@
         </div>
         <hr class="card-hr" />
         <div
-          *ngIf="role === 'employee' && order.state.description === 'Entregado'"
+          *ngIf="
+            role === 'employee' &&
+            order.state.description === 'Entregado' &&
+            isTodayOrder(order.date_created)
+          "
           class="tag-pay"
         >
           <ion-icon name="information-circle-outline"></ion-icon>
