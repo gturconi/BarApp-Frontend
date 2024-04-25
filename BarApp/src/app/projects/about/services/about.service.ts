@@ -5,6 +5,7 @@ import { EntityListResponse } from "@common/models/entity.list.response";
 
 import { environment } from "src/environments/environment";
 import { Contact } from "@common/models/about";
+import { ContactMessage } from "@common/models/contactMessage";
 
 @Injectable({
   providedIn: "root",
@@ -24,4 +25,16 @@ export class AboutService {
       selectedContact
     );
   }
+
+  postContact(selectedContact: Contact) {
+    return this.http.post<Contact>(
+      this.apiUrl + '/about/',
+      selectedContact
+    );
+  }
+
+  postMessage(message: ContactMessage) {
+    return this.http.post<ContactMessage>(this.apiUrl + '/about/message', message);
+  }
+
 }
