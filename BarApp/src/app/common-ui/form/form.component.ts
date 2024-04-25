@@ -34,12 +34,7 @@ export class FormComponent implements OnInit {
       this.setCombos();
     }
     this.SetvalidationConfig();
-console.log(this.validationConfig, this.fields, this.form);
     this.formEdit.emit(this.form);
-  }
-
-  ngAfterViewInit() {
-    console.log(this.validationConfig, this.fields, this.form);
   }
 
   getFormControl(name: string): FormControl {
