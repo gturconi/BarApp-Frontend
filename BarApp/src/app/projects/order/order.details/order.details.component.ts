@@ -192,8 +192,8 @@ export class OrderDetailsComponent implements OnInit {
             stateId = '3';
             break;
           case 'Entregado':
-            stateId = '4';
-            break;
+            this.payCash();
+            return;
           default:
             stateId = stateID;
             break;
@@ -255,6 +255,19 @@ export class OrderDetailsComponent implements OnInit {
         } else {
           window.open(link, '_blank');
         }
+      });
+  }
+
+  async payCash() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.orderService
+      .payOrderCash(this.orderId!)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(() => {
+        this.toastrService.success('Pedido pagado en efectivo/otro');
+        loading.dismiss();
+        this.location.back();
       });
   }
 

@@ -58,4 +58,8 @@ export class OrderService {
   payOrder(id: string) {
     return this.http.post<any>(`${this.apiUrl}/payment/` + id, {});
   }
+
+  payOrderCash(id: string) {
+    return this.http.post<any>(`${this.apiUrl}/payment/cash/` + id, {});
+  }
 }
