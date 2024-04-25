@@ -44,7 +44,6 @@ export class ConfirmedOrdersComponent implements OnInit {
   redirectToDetails(orderID: number) {
     this.router.navigate(['my-orders/confirmed/details/', orderID], {
       relativeTo: this.route.parent,
-      queryParams: { success: true },
     });
   }
 
