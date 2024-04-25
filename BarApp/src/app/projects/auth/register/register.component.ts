@@ -115,7 +115,7 @@ export class RegisterComponent implements OnInit {
       controlName: 'name',
       required: true,
       minLength: 4,
-      pattern: '^[a-zA-Z]*$',
+      pattern: '^[a-z A-Z]*$', 
     },
     {
       controlName: 'tel',

@@ -1,0 +1,228 @@
+<ion-content
+  class="product-content"
+  [scrollY]="mobileScreen ? 'true' : 'false'"
+>
+  <div class="container-body">
+    @if(this.order){
+    <ion-card class="details-product">
+      <ion-card-header>
+        <ion-card-title class="card-order-title"
+          ><b>Pedido Nro:</b> {{ order.id }}</ion-card-title
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <div class="data-order">
+          <span class="material-symbols-outlined data-order-icon"
+            >account_circle</span
+          >
+          {{ order.user.name }}
+        </div>
+        <div>
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>
+            {{
+              order.date_created
+                | date : "MMM dd, yyyy 'a las' HH:mm a" : '+0000'
+            }}
+          </span>
+        </div>
+
+        <div class="data-order">
+          <span class="material-symbols-outlined data-order-icon"
+            >table_restaurant</span
+          >
+          Mesa número {{ order.table_order.number }}
+        </div>
+
+        <div class="data-order" *ngIf="order.employee">
+          <span class="material-symbols-outlined data-order-icon">
+            account_circle
+          </span>
+          Mesero asignado: {{ order.employee.name }}
+        </div>
+
+        <p>Estado del pedido:</p>
+        <ol class="ProgressBar">
+          <li class="ProgressBar-step is-complete">
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">A confirmar</span>
+          </li>
+          <li
+            class="ProgressBar-step"
+            [ngClass]="{
+              'is-complete': order.state.description != 'A confirmar'
+            }"
+          >
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">En preparación</span>
+          </li>
+          <li
+            class="ProgressBar-step"
+            [ngClass]="{
+              'is-complete':
+                order.state.description != 'A confirmar' &&
+                order.state.description != 'En preparación'
+            }"
+          >
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">Entregado</span>
+          </li>
+          <li
+            class="ProgressBar-step"
+            [ngClass]="{
+              'is-complete':
+                order.state.description != 'A confirmar' &&
+                order.state.description != 'En preparación' &&
+                order.state.description != 'Entregado'
+            }"
+          >
+            <svg class="ProgressBar-icon">
+              <use xlink:href="#checkmark-bold" />
+            </svg>
+            <span class="ProgressBar-stepLabel">Pagado</span>
+          </li>
+        </ol>
+        <hr class="card-hr" />
+        <div class="card-order-details">
+          <p>Detalles del pedido:</p>
+          <div class="order-details">
+            <div class="order-detail" *ngFor="let detail of orderDetails">
+              <div class="order-detail-info">
+                <span
+                  id="detailName"
+                  [ngClass]="{
+                    truncate: detail.name.length > 30 && !showFullText
+                  }"
+                  (click)="toggleFullText()"
+                >
+                  {{
+                    showFullText
+                      ? detail.name
+                      : detail.name.length > 30
+                      ? (detail.name | slice : 0 : 30) + '...'
+                      : detail.name
+                  }}
+                </span>
+                <small>Cantidad: {{ detail.quantity }}</small>
+                <small *ngIf="detail.comments" class="comment-container"
+                  >Comentario:
+                  <button (click)="showComment(detail.comments)">
+                    Ver
+                    <span class="material-symbols-outlined"> info </span>
+                  </button></small
+                >
+              </div>
+              <span>${{ detail.price | number : '1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+        <hr class="card-hr" />
+        <div class="order-detail">
+          <span><b>Total</b></span>
+          <span>${{ order.total | number : '1.2-2' }}</span>
+        </div>
+        <hr class="card-hr" />
+
+        <div class="button-container">
+          <button
+            *ngIf="
+              role === 'customer' &&
+              order.state.description !== 'En preparación' &&
+              order.state.description !== 'Pagado'
+            "
+            class="download__item"
+            [ngClass]="{
+              'cancel-order-button': order.state.description === 'A confirmar',
+              'pay-order-button': order.state.description === 'Entregado'
+            }"
+            (click)="handleOrderAction()"
+          >
+            <ion-icon
+              [name]="
+                order.state.description === 'A confirmar'
+                  ? 'close-circle-outline'
+                  : 'cash-outline'
+              "
+              class="download__logo pdf__logo"
+            ></ion-icon>
+            <h4 class="download__title">
+              {{
+                order.state.description === 'A confirmar'
+                  ? 'Cancelar Pedido'
+                  : 'Pagar Pedido'
+              }}
+            </h4>
+          </button>
+
+          <button
+            *ngIf="
+              role === 'employee' &&
+              order.state.description !== 'Pagado' &&
+              order.state.description !== 'Entregado' &&
+              isTodayOrder(order.date_created)
+            "
+            class="download__item"
+            [ngClass]="{
+              'cancel-order-button':
+                order.state.description === 'A confirmar' ||
+                order.state.description === 'En preparación',
+              'pay-order-button': order.state.description === 'Entregado'
+            }"
+            [style.backgroundColor]="
+              order.state.description === 'A confirmar'
+                ? 'var(--color-pending)'
+                : order.state.description === 'En preparación'
+                ? 'var(--color-preparation)'
+                : ''
+            "
+            (click)="changeOrderStatus(order.state.id)"
+          >
+            <ion-icon
+              [name]="
+                order.state.description === 'A confirmar'
+                  ? 'restaurant-outline'
+                  : order.state.description === 'En preparación'
+                  ? 'checkmark-done-circle-outline'
+                  : ''
+              "
+              class="download__logo pdf__logo"
+            ></ion-icon>
+            <h4 class="download__title">
+              {{
+                order.state.description === 'A confirmar'
+                  ? 'Cambiar a "En Preparación"'
+                  : order.state.description === 'En preparación'
+                  ? 'Cambiar a "Entregado"'
+                  : ''
+              }}
+            </h4>
+          </button>
+        </div>
+
+        <div
+          class="button-container"
+          *ngIf="role === 'customer' && order.state.description === 'Pagado'"
+        >
+          <a
+            (click)="createPdf()"
+            download="archivo.apk"
+            class="download__item order-button-pdf"
+          >
+            <ion-icon
+              name="document-outline"
+              class="download__logo pdf__logo"
+            ></ion-icon>
+            <h4 class="download__title">Descargar PDF</h4>
+          </a>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    }
+  </div>
+</ion-content>

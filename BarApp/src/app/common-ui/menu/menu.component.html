@@ -47,6 +47,7 @@
                     *ngIf="menuItem?.isManage && !menuItem?.isSetting"
                     class="menuItem background-menu"
                     [routerLink]="menuItem.route"
+                    (click)="toggleDesktopMenu('ellipsis-vertical-sharp')"
                   >
                     <ion-label>{{ menuItem.label }}</ion-label>
                   </ion-item>
@@ -73,6 +74,7 @@
                     *ngIf="menuItem?.isManage && menuItem?.isSetting"
                     class="menuItem background-menu"
                     [routerLink]="menuItem.route"
+                    (click)="toggleDesktopMenu('ellipsis-vertical-sharp')"
                   >
                     <ion-label>{{ menuItem.label }}</ion-label>
                   </ion-item>
@@ -92,8 +94,18 @@
         <ion-menu-button id="menuButton"></ion-menu-button>
       </ion-buttons>
       <ion-title class="logo__name"
-        >TDG<span class="point">net.</span></ion-title
+        >TGD<span class="point">net.</span></ion-title
       >
+      <ion-buttons slot="end" *ngIf="client">
+        <ion-button>
+          <img
+            src="../../../assets/icon/campana.gif"
+            alt="GIF campana"
+            class="bell"
+            (click)="callWaiter()"
+          />
+        </ion-button>
+      </ion-buttons>
       <ion-buttons slot="end" *ngIf="showBackButton">
         <ion-button (click)="goBack()">
           <ion-icon slot="icon-only" name="arrow-back"></ion-icon>

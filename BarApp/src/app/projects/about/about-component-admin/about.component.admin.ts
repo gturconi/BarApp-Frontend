@@ -1,30 +1,41 @@
-import { Component, OnInit } from "@angular/core";
-import { Contact } from "@common/models/about";
-import { AboutService } from "../services/about.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { Contact } from '@common/models/about';
+import { AboutService } from '../services/about.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { LoadingService } from '@common/services/loading.service';
 
 @Component({
-  templateUrl: "./about.component.admin.html",
-  styleUrls: ["./about.component.admin.scss"],
+  templateUrl: './about.component.admin.html',
+  styleUrls: ['./about.component.admin.scss'],
   providers: [AboutService],
 })
-
 export class AboutComponentAdmin implements OnInit {
+  id = '';
   data: Contact[] = [];
-  isLoading: boolean = false;
+  isLoading: any = false;
   form: FormGroup = new FormGroup({});
-  editMode: boolean = true;
-  formTitle: string = 'Editar Contacto';
+  editMode: boolean = false;
+  formTitle: string = 'Añadir Contacto';
   formFields!: any[];
-  myButtons!: any[];
+  myButtons = [
+    {
+      label: 'Añadir',
+      type: 'submit',
+    },
+  ];
   validationConfig!: any[];
   currentId!: string;
-  
-  constructor(private aboutService: AboutService, private toastrService: ToastrService, private router:Router) {
-  }
+
+  constructor(
+    private aboutService: AboutService,
+    private toastrService: ToastrService,
+    private router: Router,
+    private loadingService: LoadingService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.formFields = [
@@ -42,9 +53,9 @@ export class AboutComponentAdmin implements OnInit {
         name: 'description',
         label: 'Descripcion',
         autocomplete: 'description',
-        inputType: 'text',
+        inputType: 'textarea',
         icon: 'material-symbols-outlined',
-        iconName: 'person',
+        iconName: 'info',
       },
       {
         type: 'input',
@@ -53,16 +64,16 @@ export class AboutComponentAdmin implements OnInit {
         autocomplete: 'address',
         inputType: 'text',
         icon: 'material-symbols-outlined',
-        iconName: 'person',
+        iconName: 'location_on',
       },
       {
         type: 'input',
         name: 'open_dayhr',
         label: 'Dias y horarios de atencion',
         autocomplete: 'open_dayhr',
-        inputType: 'text',
+        inputType: 'textarea',
         icon: 'material-symbols-outlined',
-        iconName: 'person',
+        iconName: 'schedule',
       },
       {
         type: 'input',
@@ -83,31 +94,30 @@ export class AboutComponentAdmin implements OnInit {
         iconName: 'mail',
       },
     ];
-  
+
     this.validationConfig = [
       { controlName: 'name', required: true },
       { controlName: 'description', required: true },
       { controlName: 'address', required: true },
       { controlName: 'open_dayhr', required: true },
-      { controlName: 'tel', required: true },
+      {
+        controlName: 'tel',
+        required: true,
+        minLength: 10,
+        maxLength: 15,
+        pattern: '^[0-9]*$',
+      },
       { controlName: 'contact_email', email: true, required: true },
     ];
-    
-    this.myButtons = [
-      {
-        label: 'Editar',
-        type: 'submit',
-      },
-    ];
-    
   }
 
   ngAfterViewInit() {
     this.autocompleteForm();
   }
 
-  autocompleteForm(){
+  autocompleteForm() {
     const formData = this.getInitialFormData();
+
     if (formData) {
       this.currentId = formData.id;
       this.form.get('name')?.setValue(formData.name);
@@ -116,11 +126,19 @@ export class AboutComponentAdmin implements OnInit {
       this.form.get('open_dayhr')?.setValue(formData.open_dayhr);
       this.form.get('tel')?.setValue(formData.tel);
       this.form.get('contact_email')?.setValue(formData.contact_email);
+      this.editMode = true;
+      this.formTitle = 'Editar Contacto';
+      this.myButtons = [
+        {
+          label: 'Editar',
+          type: 'submit',
+        },
+      ];
     }
   }
 
   getInitialFormData() {
-    const data = window.localStorage.getItem("temporary_contact");
+    const data = window.localStorage.getItem('temporary_contact');
     if (!!data) {
       const contact = JSON.parse(data) as Contact;
       return contact;
@@ -132,23 +150,50 @@ export class AboutComponentAdmin implements OnInit {
     this.form = form;
   }
 
-  onSubmit(form: FormGroup): void {
+  async onSubmit(form: FormGroup): Promise<void> {
     this.form = form;
+    this.isLoading = await this.loadingService.loading();
+    await this.isLoading.present();
     if (form.valid) {
-       this.editContact(form).subscribe(() => {
+      if (!this.currentId) {
+        this.addContact(form);
+        this.isLoading.dismiss();
         this.router.navigate(['/about']);
-        this.toastrService.success('Informacion del contacto editada');
-       })
-       window.localStorage.removeItem("temporary_contact");
+        this.toastrService.success('Contacto agregado exitosamente');
+        window.localStorage.removeItem('temporary_contact');
+      } else {
+        this.editContact(form).subscribe(() => {
+          this.isLoading.dismiss();
+          this.router.navigate(['/about']);
+          this.toastrService.success('Informacion del contacto editada');
+        });
+        window.localStorage.removeItem('temporary_contact');
+      }
     }
   }
 
+  addContact(form: FormGroup): void {
+    const nuevoContact: Contact = {
+      id: '',
+      name: form.value.name,
+      description: form.value.description,
+      address: form.value.address,
+      open_dayhr: form.value.open_dayhr,
+      tel: form.value.tel,
+      contact_email: form.value.contact_email,
+    };
+
+    this.aboutService.postContact(nuevoContact).subscribe(() => {
+      this.toastrService.success('Usuario anadido');
+      this.router.navigate(['/about']);
+    });
+  }
   editContact(form: FormGroup): Observable<Contact> {
     const nuevoContact: Contact = {
       id: this.currentId,
       name: form.value.name,
-      description:  form.value.description,
-      address:  form.value.address,
+      description: form.value.description,
+      address: form.value.address,
       open_dayhr: form.value.open_dayhr,
       tel: form.value.tel,
       contact_email: form.value.contact_email,
@@ -156,4 +201,3 @@ export class AboutComponentAdmin implements OnInit {
     return this.aboutService.putContact(nuevoContact);
   }
 }
-

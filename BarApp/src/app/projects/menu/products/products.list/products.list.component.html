@@ -30,7 +30,7 @@
         } @else{
         <div class="text-container-p">
           <span class="title-p">{{ products.name }}</span>
-          <span class="price-p">$ {{ products.price }}</span>
+          <span class="price-p">$ {{ products.price | number : '1.2-2' }}</span>
         </div>
         }
         <div class="actions" *ngIf="!admin">
@@ -48,23 +48,28 @@
               class="icons-admin icon-eye"
             ></ion-icon>
           </span>
-
-          <ion-button
-            (click)="redirectToProductsEdit(products.id)"
-            expand="block"
-            fill="clear"
-            shape="round"
-            class="buttons-admin products-buttons"
-            ><ion-icon name="create-outline" class="icons-accions"></ion-icon
-          ></ion-button>
-          <ion-button
-            expand="block"
-            fill="clear"
-            shape="round"
-            class="buttons-admin products-buttons"
-            (click)="$event.stopPropagation(); delete(products.id)"
-            ><ion-icon name="trash-outline" class="icons-accions"></ion-icon
-          ></ion-button>
+          <span title="Editar" class="icon-tooltip-pro">
+            <ion-button
+              (click)="redirectToProductsEdit(products.id)"
+              expand="block"
+              fill="clear"
+              shape="round"
+              class="buttons-admin products-buttons"
+              ><ion-icon name="create-outline" class="icons-accions"></ion-icon
+            ></ion-button>
+          </span>
+          <span title="Eliminar" class="icon-tooltip-pro">
+            <ion-button
+              expand="block"
+              fill="clear"
+              shape="round"
+              class="buttons-admin products-buttons"
+              (click)="$event.stopPropagation(); delete(products.id)"
+              ><ion-icon
+                name="trash-outline"
+                class="icons-accions"
+              ></ion-icon></ion-button
+          ></span>
           <span>
             <ion-icon
               (click)="redirectToProductsEdit(products.id)"
@@ -92,9 +97,13 @@
     <div class="grid-item">
       <div class="button-add-container" *ngIf="showData && admin">
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-          <ion-fab-button class="button-add" (click)="redirectToProductsAdd()">
-            <ion-icon name="add"></ion-icon>
-          </ion-fab-button>
+          <span title="Añadir" class="icon-tooltip-pro">
+            <ion-fab-button
+              class="button-add"
+              (click)="redirectToProductsAdd()"
+            >
+              <ion-icon name="add"></ion-icon> </ion-fab-button
+          ></span>
         </ion-fab>
       </div>
     </div>

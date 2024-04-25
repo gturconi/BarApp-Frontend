@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { ThemeService } from './projects/theme/themes/services/theme.service';
+import { LoadingService } from '@common/services/loading.service';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { Platform } from '@ionic/angular';
+import { FcmService } from '@common/services/fcm.service';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +16,31 @@ export class AppComponent implements OnInit {
   showMenu: boolean = false;
   addMarginBottom: boolean = false;
   isAdmin: boolean = false;
+  themeLoaded: boolean = false;
 
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private themeService: ThemeService
-  ) {}
+    private themeService: ThemeService,
+    private loadingService: LoadingService,
+    private platform: Platform,
+    private fcmService: FcmService
+  ) {
+    this.platform
+      .ready()
+      .then(() => {
+        this.fcmService.initPush();
+      })
+      .catch(e => {
+        console.log('error fcm: ', e);
+      });
+  }
   themeData: any;
-  ngOnInit() {
+  async ngOnInit() {
+    if (this.platform.is('capacitor')) {
+      await ScreenOrientation.lock({ orientation: 'portrait' });
+    }
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/auth/profile') {
@@ -29,8 +50,12 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.themeService.getTheme(1).subscribe(theme => {
+    this.themeService.getTheme(1).subscribe(async theme => {
+      const loading = await this.loadingService.loading();
+      await loading.present();
       this.applyStyles(theme.cssProperties);
+      this.themeLoaded = true;
+      loading.dismiss();
     });
   }
 

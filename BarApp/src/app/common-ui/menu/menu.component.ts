@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 
 import { Output, EventEmitter } from '@angular/core';
 import { BadgeService } from '@common/services/badge.service';
+import Swal from 'sweetalert2';
+import { CALL_WAITER } from '@common/constants/messages.constant';
 
 interface MenuItem {
   isSetting?: boolean;
@@ -28,12 +30,12 @@ export class MenuComponent implements OnInit {
   isScreenSmall: boolean = false;
   admin: boolean = false;
   badgeValue = 0;
+  client: boolean = false;
 
   menuItems: MenuItem[] = [];
   tabsItem: any[] = [];
 
   commonItems: any[] = [
-    { icon: 'home-outline', label: 'Inicio', route: '/home' },
     { icon: 'fast-food-outline', label: 'Carta', route: '/menu/categories' },
     { icon: 'mail-outline', label: 'Contacto', route: '/about' },
     { icon: 'help-outline', label: 'FAQs', route: '/faq' },
@@ -113,6 +115,7 @@ export class MenuComponent implements OnInit {
       if (this.loginService.isAdmin() || !this.isScreenSmall) {
         this.showDesktopMenu = true;
         this.menuToggled.emit(this.showDesktopMenu);
+        this.toggleDesktopMenu('ellipsis-vertical-sharp');
       } else {
         this.showDesktopMenu = true;
         this.menuToggled.emit(this.showDesktopMenu);
@@ -156,17 +159,28 @@ export class MenuComponent implements OnInit {
           isManage: false,
         },
         {
+          icon: 'bag-handle-outline',
+          label: 'Pedidos',
+          route: 'orders/my-orders/confirmed',
+          isManage: false,
+        },
+        {
           icon: 'cart-outline',
-          label: 'Mis Pedidos',
+          label: 'Carrito',
           route: 'orders/my-orders',
           isManage: false,
         }
       );
       this.tabsItem.splice(
+        1,
         2,
-        3,
         { icon: 'calendar-outline', label: 'Reservas', route: '' },
-        { icon: 'cart-outline', label: 'Pedidos', route: 'orders/my-orders' },
+        {
+          icon: 'bag-handle-outline',
+          label: 'Pedidos',
+          route: 'orders/my-orders/confirmed',
+        },
+        { icon: 'cart-outline', label: 'Carrito', route: 'orders/my-orders' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isEmployee()) {
@@ -193,7 +207,7 @@ export class MenuComponent implements OnInit {
         {
           icon: 'timer-outline',
           label: 'Historial de pedidos',
-          route: '',
+          route: 'orders/my-orders/confirmed',
           isManage: false,
         },
         {
@@ -207,7 +221,11 @@ export class MenuComponent implements OnInit {
         1,
         3,
         { icon: 'reader-outline', label: 'Pedidos', route: '/tables' },
-        { icon: 'timer-outline', label: 'Historial', route: '' },
+        {
+          icon: 'timer-outline',
+          label: 'Historial',
+          route: 'orders/my-orders/confirmed',
+        },
         { icon: 'notifications-outline', label: 'Notificación', route: '' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
@@ -235,14 +253,8 @@ export class MenuComponent implements OnInit {
         },
         { label: 'Usuarios', route: '/users', isManage: true },
         { label: 'Mesas', route: '/tables', isManage: true },
-        {
-          label: 'Categorías de Productos',
-          route: '/menu/categories',
-          isManage: true,
-        },
-        { label: 'Productos', route: '', isManage: true },
-        { label: 'Promociones', route: '/menu/categories', isManage: true },
-        { label: 'Cartas', route: '', isManage: true },
+        { label: 'Cartas', route: '/menu/categories', isManage: true },
+        { label: 'Pedidos', route: '/orders', isManage: true },
         { label: 'Pantallas', route: '', isManage: true, isSetting: true },
         { label: 'Temas', route: '/themes', isManage: true, isSetting: true }
       );
@@ -255,7 +267,7 @@ export class MenuComponent implements OnInit {
       });
       this.tabsItem.splice(this.tabsItem.length - 2, 0, {
         icon: 'cart-outline',
-        label: 'Pedido',
+        label: 'Carrito',
         route: '',
       });
       this.tabsItem.pop();
@@ -264,6 +276,7 @@ export class MenuComponent implements OnInit {
   }
 
   updateBackButtonVisibility(url: string) {
+    this.client = this.loginService.isClient();
     this.showBackButton = !['/home', '/intro'].includes(url);
     this.cdr.detectChanges();
   }
@@ -295,5 +308,9 @@ export class MenuComponent implements OnInit {
 
   hasManageItems(): boolean {
     return (this.menuItems as MenuItem[]).some(item => item && item.isManage);
+  }
+
+  callWaiter() {
+    Swal.fire(CALL_WAITER);
   }
 }

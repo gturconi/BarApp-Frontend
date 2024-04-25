@@ -141,10 +141,9 @@ export class ProductsTypeListComponent implements OnInit {
   }
 
   async doSearch() {
+    let loading = await this.loadingService.loading();
+    await loading.present();
     try {
-      let loading = await this.loadingService.loading();
-      await loading.present();
-
       const productsTypes$ = this.productsTypeService.getProductsTypes();
       const promotions$ = this.promotionsService.getPromotions(
         this.currentPromPage,
@@ -174,9 +173,10 @@ export class ProductsTypeListComponent implements OnInit {
         },
       });
     } finally {
+      /* //loading.dismiss();
       this.currentPage++;
       this.currentPromPage++;
-      this.infiniteScroll && this.infiniteScroll.complete();
+      this.infiniteScroll && this.infiniteScroll.complete();*/
     }
   }
 

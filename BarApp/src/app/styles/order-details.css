@@ -1,0 +1,178 @@
+@import 'variables.css';
+
+.card-order-title {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.ProgressBar {
+  margin: 0 auto;
+  padding: 1em 0 3em;
+  list-style: none;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ProgressBar-step {
+  text-align: center;
+  position: relative;
+  width: 100%;
+
+  &:before,
+  &:after {
+    content: '';
+    height: 0.5em;
+    background-color: var(--color-6);
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    left: -50%;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.25s ease-out;
+  }
+
+  &:first-child:before,
+  &:first-child:after {
+    display: none;
+  }
+
+  &:after {
+    background-color: var(--color-2);
+    width: 0%;
+  }
+
+  &.is-complete + &.is-current:after,
+  &.is-complete + &.is-complete:after {
+    width: 100%;
+  }
+}
+
+.ProgressBar-icon {
+  width: 1.5em;
+  height: 1.5em;
+  background-color: var(--color-6);
+  border-radius: 50%;
+  padding: 0.5em;
+  max-width: 100%;
+  z-index: 10;
+  position: relative;
+
+  .is-complete & {
+    fill: white;
+    background-color: var(--color-2);
+  }
+}
+
+.ProgressBar-stepLabel {
+  display: block;
+  text-transform: uppercase;
+  color: var(--color-5);
+  position: absolute;
+  padding-top: 0.5em;
+  width: 100%;
+  font-size: 12px;
+
+  .is-complete > & {
+    color: var(--color-2);
+  }
+}
+
+.data-order {
+  display: flex;
+  align-items: center;
+}
+
+.data-order-icon {
+  margin-right: 3px;
+  font-size: 16px;
+}
+
+.order-total {
+  text-align: start;
+  font-size: 1.1rem;
+  color: var(--color-8);
+}
+
+.card-hr {
+  height: 2px;
+  color: black;
+  opacity: 0.6;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--color-2),
+    transparent
+  );
+}
+
+.order-detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.order-detail-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-button-pdf {
+  height: 2rem;
+  overflow-y: hidden !important;
+}
+
+.cancel-order-button {
+  background-color: #cc0000;
+  text-align: center;
+  height: 2rem;
+}
+
+.pay-order-button {
+  background-color: #008f39;
+  text-align: center;
+  height: 2rem;
+}
+
+.pdf__logo {
+  font-size: 1rem;
+}
+
+.order-detail-info small {
+  display: flex;
+  align-items: center;
+}
+
+.order-detail-info button {
+  background: none;
+  border: none;
+  color: var(--color-2);
+  font-size: inherit;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.order-detail-info button span {
+  font-size: inherit;
+}
+
+.order-detail-info button .material-symbols-outlined {
+  margin-left: 3px;
+}
+
+@media (max-width: 768px) {
+  .ProgressBar-stepLabel {
+    font-size: 10px;
+  }
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}

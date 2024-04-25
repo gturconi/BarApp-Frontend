@@ -1,0 +1,46 @@
+<ion-content class="product-content">
+  <div class="container-body">
+    <h2 class="section-title">Mis pedidos</h2>
+    <div class="wrapper2 productsList" #wrapper (scroll)="onScroll($event)">
+      @for(order of orderList; track order.id; let idx = $index) {
+      <div
+        class="item-p card-order"
+        [style.animation-delay]="idx * 150 + 'ms'"
+        (click)="redirectToDetails(order.id)"
+      >
+        <div class="card-order-info">
+          <span><b>Pedido Nro:</b> {{ order.id }}</span>
+          <span class="order-price">${{ order.total | number : '1.2-2' }}</span>
+          <div class="order-date">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>
+              {{
+                order.date_created
+                  | date : "MMM dd, yyyy 'a las' HH:mm a" : '+0000'
+              }}
+            </span>
+          </div>
+        </div>
+        <div class="card-order-state">
+          <div
+            class="order-state"
+            [ngClass]="{
+              'bg-pending': order.state.description === 'A confirmar',
+              'bg-preparation': order.state.description === 'En preparación',
+              'bg-delivered': order.state.description === 'Entregado',
+              'bg-paid': order.state.description === 'Pagado'
+            }"
+          >
+            <span class="material-symbols-outlined check-icon"> done </span>
+            <a href=""> {{ order.state.description }}</a>
+          </div>
+          <span class="material-symbols-outlined icons-show order-details-icon">
+            arrow_circle_right
+          </span>
+        </div>
+      </div>
+      }
+      <span class="loader" *ngIf="infiniteScrollLoading"></span>
+    </div>
+  </div>
+</ion-content>

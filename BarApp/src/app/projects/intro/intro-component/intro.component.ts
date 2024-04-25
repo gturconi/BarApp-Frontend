@@ -6,15 +6,12 @@ import { Router } from '@angular/router';
   templateUrl: './intro.component.html',
   styleUrls: ['./intro.component.scss'],
 })
-export class IntroComponent  implements OnInit {
-
-  constructor(private router:Router) { }
+export class IntroComponent implements OnInit {
+  constructor(private router: Router) {}
 
   ngOnInit() {
-
-    setTimeout(() =>{
-      this.router.navigateByUrl('/home')
-    }, 1500)
+    setTimeout(() => {
+      this.router.navigateByUrl('/auth');
+    }, 1500);
   }
-
 }

@@ -29,9 +29,15 @@
 @import './app/styles/users.css';
 @import './app/styles/table.css';
 @import './app/styles/promotions.css';
+@import './app/styles/confirmed-orders.css';
+@import './app/styles/login-download.css';
+@import './app/styles/variables.css';
 @import './app/styles/themes.css';
 
-// @import './app/styles/variables.css';
+@import './app/styles/tooltips.css';
+@import './app/styles/order-details.css';
+@import './app/styles/modal.css';
+//@import './app/styles/variables.css';*/
 @import './app/styles/about.css';
 
 @import 'ngx-toastr/toastr';
@@ -47,4 +53,22 @@ body {
 
 html {
   --ion-background-color: var(--color-1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .md body {
+    --ion-background-color: var(--color-1);
+    --background: var(--color-1);
+    --ion-text-color: var(--color-8);
+    --ion-color-step-850: var(--color-8);
+    --ion-color-step-50: var(--color-7);
+    --ion-item-background: var(--color-1);
+    --ion-color-light: var(--color-3);
+    --background: var(--color-3);
+    --ion-color-primary: var(--color-3);
+  }
+
+  table td {
+    color: var(--color-8);
+  }
 }
