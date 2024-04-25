@@ -34,7 +34,6 @@ export class FormComponent implements OnInit {
       this.setCombos();
     }
     this.SetvalidationConfig();
-
     this.formEdit.emit(this.form);
   }
 

@@ -35,6 +35,11 @@ export class UserListComponent {
 
   async ngOnInit() {
     this.columns = [
+      
+      {
+        key: 'email',
+        label: 'Email',
+      },
       {
         key: 'name',
         label: 'Nombre',

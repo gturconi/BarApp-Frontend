@@ -22,6 +22,22 @@ const routes: Routes = [
     loadChildren: () =>
       import('./projects/faq/faq.module').then(m => m.FaqModule),
   },
+  
+  {
+    path: "about",
+    loadChildren: () =>
+      import("./projects/about/about.module").then(m => m.AboutModule),
+  },
+  {
+    path: "about",
+    loadChildren: () =>
+      import("./projects/about/about.module").then(m => m.AboutModule),
+  },
+  {
+    path: "about",
+    loadChildren: () =>
+      import("./projects/about/about.module").then(m => m.AboutModule),
+  },
   {
     path: 'orders',
     loadChildren: () =>
