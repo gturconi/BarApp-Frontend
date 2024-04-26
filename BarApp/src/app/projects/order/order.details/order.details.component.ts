@@ -235,7 +235,16 @@ export class OrderDetailsComponent implements OnInit {
         if (result.isConfirmed) {
           this.payMP();
         } else {
-          //pagar efectivo, llamar mozo
+          this.fmcService
+            .sendPushNotification(
+              'Solicitud de asistencia en mesa',
+              `Un cliente en la mesa ${this.order?.table_order.number} ha solicitado tu asistencia. Por favor, acude a atenderlo lo antes posible`
+            )
+            .subscribe(() =>
+              this.toastrService.success(
+                'Alerta enviada, en breve será atendido'
+              )
+            );
         }
       });
     }
@@ -265,6 +274,7 @@ export class OrderDetailsComponent implements OnInit {
       .payOrderCash(this.orderId!)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
+        this.socketService.sendMessage('order', '');
         this.toastrService.success('Pedido pagado en efectivo/otro');
         loading.dismiss();
         this.location.back();
