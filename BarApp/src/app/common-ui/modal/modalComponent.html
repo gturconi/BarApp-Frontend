@@ -17,7 +17,24 @@
         (click)="navigate(item.link)"
       >
         <ion-label>{{ item.key }}</ion-label>
+
+        <ion-range
+          *ngIf="item.range"
+          [min]="1"
+          [max]="5"
+          [pin]="true"
+          [ticks]="true"
+          [snaps]="true"
+          [(ngModel)]="rangeValue"
+        >
+        </ion-range>
         <ion-label>{{ item.value }}</ion-label>
+        <ion-textarea
+          *ngIf="item.textArea"
+          placeholder="Añadir comentario"
+          maxlength="250"
+          [(ngModel)]="textAreaValue"
+        ></ion-textarea>
       </ion-item>
       }
     </ion-list>

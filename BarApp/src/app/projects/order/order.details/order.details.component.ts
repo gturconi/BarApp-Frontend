@@ -14,6 +14,7 @@ import { PromotionsService } from '../../menu/promotions/services/promotions.ser
 import { SocketService } from '@common/services/socket.service';
 import { FcmService } from '@common/services/fcm.service';
 import { TablesService } from '../../tables/services/tables.service';
+import { ModalComponent } from '@common-ui/modal/modalComponent';
 
 import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
@@ -28,7 +29,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 import { File } from '@awesome-cordova-plugins/file';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener';
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
 import { Table } from '../../tables/models/table';
 
@@ -68,7 +69,8 @@ export class OrderDetailsComponent implements OnInit {
     private platform: Platform,
     private location: Location,
     private fmcService: FcmService,
-    private tablesService: TablesService
+    private tablesService: TablesService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -86,6 +88,8 @@ export class OrderDetailsComponent implements OnInit {
         Swal.fire(VACATE_TABLE_CLIENT).then(async result => {
           if (result.isConfirmed) {
             this.vacateTable();
+            //ACA VA LA ENCUESTA
+            this.openQuizModal();
           }
         });
       }
@@ -233,7 +237,8 @@ export class OrderDetailsComponent implements OnInit {
     } else if (this.order!.state.description === ORDER_STATES[3]) {
       Swal.fire(PAYMENT_METHOD).then(result => {
         if (result.isConfirmed) {
-          this.payMP();
+          //this.payMP(); //descomentar
+          this.openQuizModal(); //eliminar no va es solo prueba
         } else {
           this.fmcService
             .sendPushNotification(
@@ -245,9 +250,63 @@ export class OrderDetailsComponent implements OnInit {
                 'Alerta enviada, en breve será atendido'
               )
             );
+          Swal.fire(VACATE_TABLE_CLIENT).then(async result => {
+            if (result.isConfirmed) {
+              this.vacateTable(); //esta alerta iria en efectivo? o se desocupa la mesa automaticamente?
+              this.openQuizModal();
+            }
+          });
         }
       });
     }
+  }
+
+  async openQuizModal() {
+    let items: {
+      key: string;
+      value: string;
+      link: string;
+      range?: boolean;
+      textArea?: boolean;
+    }[] = [];
+    items.push({
+      key: 'Calificacion: ',
+      value: '',
+      link: '',
+      range: true,
+    });
+    items.push({
+      key: 'Comentario',
+      value: '',
+      link: '',
+      textArea: true,
+    });
+
+    await this.openModal({
+      title: 'Encuesta',
+      items: items,
+      button: {
+        title: 'Enviar',
+        fn: (rangeValue: number, textAreaValue: string) =>
+          this.sendQuiz(rangeValue, textAreaValue),
+      },
+    });
+  }
+
+  sendQuiz(rangeValue: number, textAreaValue: string) {
+    console.log(rangeValue, textAreaValue);
+  }
+
+  async openModal(data: any) {
+    const modal = await this.modalController.create({
+      component: ModalComponent,
+      componentProps: {
+        title: data.title,
+        items: data.items,
+        button: data.button,
+      },
+    });
+    await modal.present();
   }
 
   async payMP() {
