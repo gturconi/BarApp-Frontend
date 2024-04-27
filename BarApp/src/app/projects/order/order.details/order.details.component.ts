@@ -237,8 +237,7 @@ export class OrderDetailsComponent implements OnInit {
     } else if (this.order!.state.description === ORDER_STATES[3]) {
       Swal.fire(PAYMENT_METHOD).then(result => {
         if (result.isConfirmed) {
-          //this.payMP(); //descomentar
-          this.openQuizModal(); //eliminar no va es solo prueba
+          this.payMP();
         } else {
           this.fmcService
             .sendPushNotification(
@@ -293,8 +292,28 @@ export class OrderDetailsComponent implements OnInit {
     });
   }
 
-  sendQuiz(rangeValue: number, textAreaValue: string) {
-    console.log(rangeValue, textAreaValue);
+  async sendQuiz(rangeValue: number, textAreaValue: string) {
+    if (this.order) {
+      const orderRequest: OrderRequest = {
+        tableId: this.order.table_order.id.toString(),
+        userId: this.order.user.id.toString(),
+        idState: this.order.state.id.toString(),
+        total: this.order.total,
+        orderDetails: this.order.orderDetails,
+        feedback: textAreaValue,
+        score: rangeValue,
+      };
+      const loading = await this.loadingService.loading();
+      await loading.present();
+      this.orderService
+        .putOrderQuiz(this.order.id.toString(), orderRequest)
+        .pipe(finalize(() => loading.dismiss()))
+        .subscribe(() => {
+          this.toastrService.success('¡Gracias por completar la encuesta!');
+          loading.dismiss();
+          this.location.back();
+        });
+    }
   }
 
   async openModal(data: any) {

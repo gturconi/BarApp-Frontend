@@ -47,6 +47,13 @@ export class OrderService {
     return this.http.put<OrderResponse>(`${this.apiUrl}/orders/` + id, order);
   }
 
+  putOrderQuiz(id: string, order: OrderRequest) {
+    return this.http.put<OrderResponse>(
+      `${this.apiUrl}/orders/quiz/` + id,
+      order
+    );
+  }
+
   deleteOrder(id: string) {
     return this.http.delete<string>(`${this.apiUrl}/orders/` + id);
   }
