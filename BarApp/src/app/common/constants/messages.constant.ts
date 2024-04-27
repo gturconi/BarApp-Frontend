@@ -183,3 +183,17 @@ export const VACATE_TABLE_CLIENT: SweetAlertOptions = {
   confirmButtonText: 'Sí',
   cancelButtonText: 'Cancelar',
 };
+
+//quiz
+export const COMPLETE_QUIZ_MESSAGE: string = 'Su opinión nos ayuda a mejorar';
+export const COMPLETE_QUIZ: SweetAlertOptions = {
+  title: '¿Le gustaría calificar el servicio?',
+  text: COMPLETE_QUIZ_MESSAGE,
+  icon: 'info',
+  showCancelButton: true,
+  showCloseButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí',
+  cancelButtonText: 'Cancelar',
+};

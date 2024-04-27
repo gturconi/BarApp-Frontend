@@ -20,6 +20,7 @@ import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
   CANCEL_ORDER,
   CHANGE_ORDER_STATUS,
+  COMPLETE_QUIZ,
   PAYMENT_METHOD,
   VACATE_TABLE_CLIENT,
 } from '@common/constants/messages.constant';
@@ -88,8 +89,9 @@ export class OrderDetailsComponent implements OnInit {
         Swal.fire(VACATE_TABLE_CLIENT).then(async result => {
           if (result.isConfirmed) {
             this.vacateTable();
-            //ACA VA LA ENCUESTA
-            this.openQuizModal();
+            Swal.fire(COMPLETE_QUIZ).then(async result => {
+              if (result.isConfirmed) this.openQuizModal();
+            });
           }
         });
       }
@@ -249,11 +251,8 @@ export class OrderDetailsComponent implements OnInit {
                 'Alerta enviada, en breve será atendido'
               )
             );
-          Swal.fire(VACATE_TABLE_CLIENT).then(async result => {
-            if (result.isConfirmed) {
-              this.vacateTable(); //esta alerta iria en efectivo? o se desocupa la mesa automaticamente?
-              this.openQuizModal();
-            }
+          Swal.fire(COMPLETE_QUIZ).then(async result => {
+            if (result.isConfirmed) this.openQuizModal();
           });
         }
       });
