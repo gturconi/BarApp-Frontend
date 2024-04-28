@@ -167,3 +167,33 @@ export const PAYMENT_METHOD: SweetAlertOptions = {
   confirmButtonText: 'MercadoPago',
   cancelButtonText: 'Efectivo/Otro',
 };
+
+//vacate client table
+export const VACATE_TABLE_CONFIRMATION_MESSAGE_CLIENT: string =
+  '¿Deseas desocupar la mesa ahora?';
+export const VACATE_TABLE_CLIENT: SweetAlertOptions = {
+  customClass: { container: 'swal-table' },
+  heightAuto: false,
+  title: 'Hemos recibido su pago con éxito',
+  text: VACATE_TABLE_CONFIRMATION_MESSAGE_CLIENT,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí',
+  cancelButtonText: 'Cancelar',
+};
+
+//quiz
+export const COMPLETE_QUIZ_MESSAGE: string = 'Su opinión nos ayuda a mejorar';
+export const COMPLETE_QUIZ: SweetAlertOptions = {
+  title: '¿Le gustaría calificar el servicio?',
+  text: COMPLETE_QUIZ_MESSAGE,
+  icon: 'info',
+  showCancelButton: true,
+  showCloseButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí',
+  cancelButtonText: 'Cancelar',
+};

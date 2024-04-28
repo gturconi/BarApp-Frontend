@@ -8,9 +8,21 @@ import { ModalController, NavParams } from '@ionic/angular';
 })
 export class ModalComponent {
   public title = '';
-  public items: { key: string; value: string; link: string }[] = [];
-  public button: { title: string; fn: any } = { title: '', fn: () => {} };
+  public items: {
+    key: string;
+    value: string;
+    link: string;
+    range?: boolean;
+    textArea?: boolean;
+  }[] = [];
+  public button: { title: string; fn: any } = {
+    title: '',
+    fn: (range?: boolean, textArea?: boolean) => {},
+  };
   public itemsRendered = false;
+
+  public rangeValue: number | null = null;
+  public textAreaValue: string | null = null;
 
   constructor(
     private modalController: ModalController,
@@ -42,7 +54,9 @@ export class ModalComponent {
   }
 
   executeFn() {
-    this.button.fn();
+    const rangeValue = this.rangeValue ?? '';
+    const textAreaValue = this.textAreaValue ?? '';
+    this.button.fn(rangeValue, textAreaValue);
     this.closeModal();
   }
 }

@@ -128,13 +128,25 @@
           <span>${{ order.total | number : '1.2-2' }}</span>
         </div>
         <hr class="card-hr" />
+        <div
+          *ngIf="
+            role === 'employee' &&
+            order.state.description === 'Entregado' &&
+            isTodayOrder(order.date_created)
+          "
+          class="tag-pay"
+        >
+          <ion-icon name="information-circle-outline"></ion-icon>
+          En caso de que el cliente pague en efectivo/otro:
+        </div>
 
         <div class="button-container">
           <button
             *ngIf="
               role === 'customer' &&
               order.state.description !== 'En preparación' &&
-              order.state.description !== 'Pagado'
+              order.state.description !== 'Pagado' &&
+              isTodayOrder(order.date_created)
             "
             class="download__item"
             [ngClass]="{
@@ -164,7 +176,6 @@
             *ngIf="
               role === 'employee' &&
               order.state.description !== 'Pagado' &&
-              order.state.description !== 'Entregado' &&
               isTodayOrder(order.date_created)
             "
             class="download__item"
@@ -199,6 +210,8 @@
                   ? 'Cambiar a "En Preparación"'
                   : order.state.description === 'En preparación'
                   ? 'Cambiar a "Entregado"'
+                  : order.state.description === 'Entregado'
+                  ? 'Cambiar a "Pagado"'
                   : ''
               }}
             </h4>

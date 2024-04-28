@@ -50,7 +50,6 @@ export class MyOrdersComponent implements OnInit {
     private loadingService: LoadingService,
     private socketService: SocketService,
     private router: Router,
-    //private barcodeScanner: BarcodeScanner,
     private notificationService: NotificationService,
     private orderService: OrderService,
     private loginService: LoginService,
