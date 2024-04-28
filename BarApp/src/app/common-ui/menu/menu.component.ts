@@ -248,7 +248,7 @@ export class MenuComponent implements OnInit {
         {
           icon: 'timer-outline',
           label: 'Dashboard',
-          route: '',
+          route: '/dashboard',
           isManage: false,
         },
         { label: 'Usuarios', route: '/users', isManage: true },
