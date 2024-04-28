@@ -13,7 +13,7 @@ export class DashboardService {
 
   constructor(private http: HttpClient) {}
 
-  mostSelledPorducts() {
+  mostSelledProducts() {
     return this.http.get<ProductSelled[]>(
       this.apiUrl + '/metric/most-selled-products'
     );
