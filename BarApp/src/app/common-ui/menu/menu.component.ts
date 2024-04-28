@@ -155,7 +155,7 @@ export class MenuComponent implements OnInit {
         {
           icon: 'calendar-outline',
           label: 'Mis Reservas',
-          route: '',
+          route: '/booking',
           isManage: false,
         },
         {
