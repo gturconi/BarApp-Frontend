@@ -4,7 +4,6 @@ import { DashboardService } from '../services/dashboard.service';
 import { LoadingService } from '@common/services/loading.service';
 
 import { ProductSelled } from '../models';
-import { color } from 'html2canvas/dist/types/css/types/color';
 
 declare var google: any;
 
@@ -16,15 +15,27 @@ declare var google: any;
 export class DashboardComponent implements OnInit {
   showData: boolean = false;
   mostSelledProducts: ProductSelled[] = [];
+  chartOptions: any = {
+    title: 'Productos más vendidos en el mes',
+    height: 300,
+    backgroundColor: '#f0ad48',
+    colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+    is3D: true,
+    titleTextStyle: {
+      fontSize: '20',
+      bold: 'true',
+    },
+  };
 
   constructor(
     private dashboardService: DashboardService,
     private loadingService: LoadingService
-  ) {}
+  ) {
+    this.getMetrics();
+  }
 
   ngOnInit() {
-    google.charts.load('current', { packages: ['corechart'] });
-    this.getMetrics();
+    google.charts.load('43', { packages: ['corechart'] });
   }
 
   async getMetrics() {
