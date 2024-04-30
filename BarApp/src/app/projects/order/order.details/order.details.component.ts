@@ -77,6 +77,7 @@ export class OrderDetailsComponent implements OnInit {
   ngOnInit() {
     this.admin = this.loginService.isAdmin();
     this.role = this.loginService.getUserRole();
+
     this.route.params.subscribe(async params => {
       const orderId = params['idOrder'];
       if (orderId) {
@@ -210,6 +211,8 @@ export class OrderDetailsComponent implements OnInit {
           idState: stateId,
           total: this.order.total,
           orderDetails: this.order.orderDetails,
+          employeeId:
+            stateId === '3' ? this.loginService.getUserInfo().id : null,
         };
         const loading = await this.loadingService.loading();
         await loading.present();
