@@ -212,7 +212,7 @@ export class OrderDetailsComponent implements OnInit {
           total: this.order.total,
           orderDetails: this.order.orderDetails,
           employeeId:
-            stateId === '3' ? this.loginService.getUserInfo().id : null,
+            stateId === '2' ? this.loginService.getUserInfo().id : null,
         };
         const loading = await this.loadingService.loading();
         await loading.present();
