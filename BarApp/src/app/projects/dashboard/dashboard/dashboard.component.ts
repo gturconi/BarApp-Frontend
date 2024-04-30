@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
             {
               ...this.chartOptions,
               title: 'Ventas semanales a lo largo del tiempo',
-              legend: { position: 'none' },
+              legend: { position: 'bottom' },
             },
             'LineChart',
             'chart_div3',
