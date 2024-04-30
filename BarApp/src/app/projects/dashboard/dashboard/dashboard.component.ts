@@ -8,6 +8,8 @@ import { finalize, forkJoin } from 'rxjs';
 
 declare var google: any;
 
+type ChartColumn = { type: string; name: string };
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -30,12 +32,10 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private loadingService: LoadingService
-  ) {
-    // this.getMetrics();
-  }
+  ) {}
 
   ngOnInit() {
-    google.charts.load('45.2', { packages: ['corechart'] });
+    google.charts.load('50', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(() => this.getMetrics());
   }
 
@@ -45,37 +45,58 @@ export class DashboardComponent implements OnInit {
     forkJoin([
       this.dashboardService.mostSelledProducts(),
       this.dashboardService.topFiveCustomers(),
+      this.dashboardService.weeklySalesHistory(),
     ])
       .pipe(finalize(() => loading.dismiss()))
-      .subscribe(([mostSelledProducts, topFiveCustomers]) => {
-        this.showData = true;
-        this.buildChart(
-          mostSelledProducts,
-          {
-            ...this.chartOptions,
-            title: 'Productos más vendidos en el mes',
-          },
-          'PieChart',
-          'chart_div'
-        );
+      .subscribe(
+        ([mostSelledProducts, topFiveCustomers, weeklySalesHistory]) => {
+          this.showData = true;
+          this.buildChart(
+            mostSelledProducts,
+            {
+              ...this.chartOptions,
+              title: 'Productos más vendidos en el mes',
+            },
+            'PieChart',
+            'chart_div'
+          );
 
-        this.buildChart(
-          topFiveCustomers,
-          {
-            ...this.chartOptions,
-            title: 'Top 5 clientes',
-          },
-          'BarChart',
-          'chart_div2'
-        );
-      });
+          this.buildChart(
+            topFiveCustomers,
+            {
+              ...this.chartOptions,
+              title: 'Top 5 clientes',
+              curveType: 'function',
+              legend: { position: 'none' },
+            },
+            'BarChart',
+            'chart_div2'
+          );
+
+          this.buildChart(
+            weeklySalesHistory,
+            {
+              ...this.chartOptions,
+              title: 'Ventas semanales a lo largo del tiempo',
+              legend: { position: 'none' },
+            },
+            'LineChart',
+            'chart_div3',
+            [
+              { name: 'Semana', type: 'string' },
+              { name: 'Ventas', type: 'number' },
+            ]
+          );
+        }
+      );
   }
 
   buildChart(
     dataSource: any[],
     options: any,
     chartType: string,
-    chartElementId: string
+    chartElementId: string,
+    columns?: ChartColumn[]
   ) {
     const chartWrapper = new google.visualization.ChartWrapper({
       chartType: chartType,
@@ -84,11 +105,17 @@ export class DashboardComponent implements OnInit {
     });
 
     const data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
+    if (columns) {
+      columns.forEach((column: ChartColumn) => {
+        data.addColumn(column.type, column.name);
+      });
+    } else {
+      data.addColumn('string', 'Topping');
+      data.addColumn('number', 'Slices');
+    }
 
     dataSource.forEach((item: any) => {
-      data.addRow([item.name, item.cant]);
+      data.addRow([item.name ?? item.week.toString(), item.cant]);
     });
 
     chartWrapper.setDataTable(data);

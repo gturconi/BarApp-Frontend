@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 
-import { ProductSelled, TopCustomers } from '../models';
+import { ProductSelled, TopCustomers, WeeklySalesHistory } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +22,12 @@ export class DashboardService {
   topFiveCustomers() {
     return this.http.get<TopCustomers[]>(
       this.apiUrl + '/metric/top-five-customers'
+    );
+  }
+
+  weeklySalesHistory() {
+    return this.http.get<WeeklySalesHistory[]>(
+      this.apiUrl + '/metric/weekly-sales-history'
     );
   }
 }
