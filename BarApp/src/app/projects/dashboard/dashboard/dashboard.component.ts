@@ -46,10 +46,16 @@ export class DashboardComponent implements OnInit {
       this.dashboardService.mostSelledProducts(),
       this.dashboardService.topFiveCustomers(),
       this.dashboardService.weeklySalesHistory(),
+      this.dashboardService.lessSelledProducts(),
     ])
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(
-        ([mostSelledProducts, topFiveCustomers, weeklySalesHistory]) => {
+        ([
+          mostSelledProducts,
+          topFiveCustomers,
+          weeklySalesHistory,
+          lessSelledProducts,
+        ]) => {
           this.showData = true;
           this.buildChart(
             mostSelledProducts,
@@ -86,7 +92,16 @@ export class DashboardComponent implements OnInit {
               { name: 'Semana', type: 'string' },
               { name: 'Ventas', type: 'number' },
             ]
-          );
+          ),
+            this.buildChart(
+              lessSelledProducts,
+              {
+                ...this.chartOptions,
+                title: 'Productos menos vendidos en el mes',
+              },
+              'PieChart',
+              'chart_div4'
+            );
         }
       );
   }

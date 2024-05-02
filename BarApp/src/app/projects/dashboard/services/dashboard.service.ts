@@ -19,6 +19,12 @@ export class DashboardService {
     );
   }
 
+  lessSelledProducts() {
+    return this.http.get<ProductSelled[]>(
+      this.apiUrl + '/metric/less-selled-products'
+    );
+  }
+
   topFiveCustomers() {
     return this.http.get<TopCustomers[]>(
       this.apiUrl + '/metric/top-five-customers'
