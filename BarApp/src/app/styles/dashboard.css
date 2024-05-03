@@ -46,3 +46,14 @@
 .div4 {
   grid-area: 2 / 2 / 3 / 3;
 }
+
+@media screen and (max-width: 600px) {
+  .container-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .container-dashboard .dashboard-section1 {
+    width: 100%;
+    align-items: center;
+  }
+}
