@@ -33,7 +33,7 @@
   >
   </ion-input>
   }@else if(type === 'time'){
-  <ion-datetime presentation="time" [formControl]="control"> </ion-datetime>
+  <ion-input type="time" [label]="label" [formControl]="control"> </ion-input>
   }@else if(type === 'textarea'){
   <ion-textarea
     labelPlacement="floating"

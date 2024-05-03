@@ -59,7 +59,9 @@ export class BookingFormComponent implements OnInit {
     this.mobileScreen = window.innerWidth < 768;
   }
 
-  loadDays() {
+  async loadDays() {
+    this.loading = await this.loadingService.loading();
+    await this.loading.present();
     const daysOfWeek = Object.keys(DaysOfWeek).map(key => ({
       id: key,
       description: key,
@@ -67,10 +69,12 @@ export class BookingFormComponent implements OnInit {
 
     const res = new EntityListResponse(daysOfWeek.length, daysOfWeek, 1, 1);
 
-    this.comboParam[2].fields!.next(res);
+    this.comboParam[0].fields!.next(res);
 
     const days = res.results;
-    this.comboParam[2].defaultValue!.next(days[0]?.description!);
+    this.comboParam[0].defaultValue!.next(days[0]?.description!);
+    console.log(this.comboParam);
+    this.loading.dismiss();
   }
 
   setFormInputs() {
@@ -102,6 +106,7 @@ export class BookingFormComponent implements OnInit {
     this.validationConfig = [
       { controlName: 'valid_from', required: true },
       { controlName: 'valid_to', required: true },
+      { controlName: 'Dias' },
     ];
   }
 }
