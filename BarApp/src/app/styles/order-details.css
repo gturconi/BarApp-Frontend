@@ -164,6 +164,12 @@
   margin-left: 3px;
 }
 
+.tag-pay {
+  font-weight: none;
+  color: #cc0000;
+  padding-top: 5px;
+}
+
 @media (max-width: 768px) {
   .ProgressBar-stepLabel {
     font-size: 10px;

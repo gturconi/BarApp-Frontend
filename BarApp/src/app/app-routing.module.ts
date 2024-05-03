@@ -65,7 +65,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'intro',
+    redirectTo: 'booking',
     pathMatch: 'full',
   },
   //{ path: '**', redirectTo: 'intro' },

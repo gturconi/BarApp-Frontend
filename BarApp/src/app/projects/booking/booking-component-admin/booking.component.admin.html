@@ -1,0 +1,12 @@
+<div class="bookingAdminContainer">
+  <h1>Reservas</h1>
+  <app-table class="bookingAdminTable" [columns]="columns" [data]="data" />
+  <div class="bookingAdminPagination">
+    <app-pagination
+      [currentPage]="pageIndex"
+      [totalPages]="totalPages"
+      [limit]="pageSize"
+      (changePage)="onPageChanged($event)"
+    />
+  </div>
+</div>

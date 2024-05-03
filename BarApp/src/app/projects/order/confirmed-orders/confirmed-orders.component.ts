@@ -1,14 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
 import { OrderService } from '../services/order.service';
 
 import { OrderResponse } from '../models/order';
-
-import Swal from 'sweetalert2';
 import { User } from '@common/models/user';
 import { UserRoles } from '@common/constants/user.roles.enum';
 

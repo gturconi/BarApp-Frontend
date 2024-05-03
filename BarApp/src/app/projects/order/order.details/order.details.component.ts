@@ -13,12 +13,16 @@ import { ProductsService } from '../../menu/products/services/products.service';
 import { PromotionsService } from '../../menu/promotions/services/promotions.service';
 import { SocketService } from '@common/services/socket.service';
 import { FcmService } from '@common/services/fcm.service';
+import { TablesService } from '../../tables/services/tables.service';
+import { ModalComponent } from '@common-ui/modal/modalComponent';
 
 import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
 import {
   CANCEL_ORDER,
   CHANGE_ORDER_STATUS,
+  COMPLETE_QUIZ,
   PAYMENT_METHOD,
+  VACATE_TABLE_CLIENT,
 } from '@common/constants/messages.constant';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
@@ -26,8 +30,9 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 import { File } from '@awesome-cordova-plugins/file';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener';
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
+import { Table } from '../../tables/models/table';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -64,7 +69,9 @@ export class OrderDetailsComponent implements OnInit {
     private socketService: SocketService,
     private platform: Platform,
     private location: Location,
-    private fmcService: FcmService
+    private fmcService: FcmService,
+    private tablesService: TablesService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -75,6 +82,18 @@ export class OrderDetailsComponent implements OnInit {
       if (orderId) {
         this.orderId = orderId;
         this.doSearch(orderId);
+      }
+    });
+    this.route.queryParams.subscribe(params => {
+      if (params['success'] === 'true') {
+        Swal.fire(VACATE_TABLE_CLIENT).then(async result => {
+          if (result.isConfirmed) {
+            this.vacateTable();
+            Swal.fire(COMPLETE_QUIZ).then(async result => {
+              if (result.isConfirmed) this.openQuizModal();
+            });
+          }
+        });
       }
     });
     this.mobileScreen = window.innerWidth < 768;
@@ -178,6 +197,9 @@ export class OrderDetailsComponent implements OnInit {
           case 'En preparación':
             stateId = '3';
             break;
+          case 'Entregado':
+            this.payCash();
+            return;
           default:
             stateId = stateID;
             break;
@@ -219,10 +241,90 @@ export class OrderDetailsComponent implements OnInit {
         if (result.isConfirmed) {
           this.payMP();
         } else {
-          //pagar efectivo, llamar mozo
+          this.fmcService
+            .sendPushNotification(
+              'Solicitud de asistencia en mesa',
+              `Un cliente en la mesa ${this.order?.table_order.number} ha solicitado tu asistencia. Por favor, acude a atenderlo lo antes posible`
+            )
+            .subscribe(() =>
+              this.toastrService.success(
+                'Alerta enviada, en breve será atendido'
+              )
+            );
+          Swal.fire(COMPLETE_QUIZ).then(async result => {
+            if (result.isConfirmed) this.openQuizModal();
+          });
         }
       });
     }
+  }
+
+  async openQuizModal() {
+    let items: {
+      key: string;
+      value: string;
+      link: string;
+      range?: boolean;
+      textArea?: boolean;
+    }[] = [];
+    items.push({
+      key: 'Calificacion: ',
+      value: '',
+      link: '',
+      range: true,
+    });
+    items.push({
+      key: 'Comentario',
+      value: '',
+      link: '',
+      textArea: true,
+    });
+
+    await this.openModal({
+      title: 'Encuesta',
+      items: items,
+      button: {
+        title: 'Enviar',
+        fn: (rangeValue: number, textAreaValue: string) =>
+          this.sendQuiz(rangeValue, textAreaValue),
+      },
+    });
+  }
+
+  async sendQuiz(rangeValue: number, textAreaValue: string) {
+    if (this.order) {
+      const orderRequest: OrderRequest = {
+        tableId: this.order.table_order.id.toString(),
+        userId: this.order.user.id.toString(),
+        idState: this.order.state.id.toString(),
+        total: this.order.total,
+        orderDetails: this.order.orderDetails,
+        feedback: textAreaValue,
+        score: rangeValue,
+      };
+      const loading = await this.loadingService.loading();
+      await loading.present();
+      this.orderService
+        .putOrderQuiz(this.order.id.toString(), orderRequest)
+        .pipe(finalize(() => loading.dismiss()))
+        .subscribe(() => {
+          this.toastrService.success('¡Gracias por completar la encuesta!');
+          loading.dismiss();
+          this.location.back();
+        });
+    }
+  }
+
+  async openModal(data: any) {
+    const modal = await this.modalController.create({
+      component: ModalComponent,
+      componentProps: {
+        title: data.title,
+        items: data.items,
+        button: data.button,
+      },
+    });
+    await modal.present();
   }
 
   async payMP() {
@@ -242,15 +344,35 @@ export class OrderDetailsComponent implements OnInit {
       });
   }
 
+  async payCash() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    this.orderService
+      .payOrderCash(this.orderId!)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(() => {
+        this.socketService.sendMessage('order', '');
+        this.toastrService.success('Pedido pagado en efectivo/otro');
+        loading.dismiss();
+        this.location.back();
+      });
+  }
+
   getCurrentDate(): Date {
     return new Date();
   }
 
   isTodayOrder(orderDate: string): boolean {
     const today = new Date();
-    const formattedOrderDate = formatDate(orderDate, 'yyyy-MM-dd', 'en');
+    const formattedOrderDate = new Date(orderDate);
     const formattedToday = formatDate(today, 'yyyy-MM-dd', 'en');
-    return formattedOrderDate === formattedToday;
+    const formattedOrder = formatDate(formattedOrderDate, 'yyyy-MM-dd', 'en');
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const formattedYesterday = formatDate(yesterday, 'yyyy-MM-dd', 'en');
+    return (
+      formattedOrder === formattedToday || formattedOrder === formattedYesterday
+    );
   }
 
   createPdf() {
@@ -382,5 +504,23 @@ export class OrderDetailsComponent implements OnInit {
   private formatDate(dateString: string): string {
     const date = new Date(dateString);
     return date.toLocaleString();
+  }
+
+  async vacateTable() {
+    const loading = await this.loadingService.loading();
+    await loading.present();
+    let table = new Table(
+      this.order?.table_order.id,
+      this.order?.table_order.number,
+      1
+    );
+    this.tablesService
+      .updateState(table)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(res => {
+        this.toastrService.success('Mesa desocupada');
+        this.socketService.sendMessage('order', '');
+        loading.dismiss();
+      });
   }
 }

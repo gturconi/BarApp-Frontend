@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 export type TableData = Record<string, string | number>;
 
 export interface TableColumn {
@@ -24,6 +24,12 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.actionsColumns = this.getColumsActions();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes?.['data']) {
+      this.data = changes['data'].currentValue;
+    }
   }
 
   getButtonColumnClass(column: TableColumn) {
