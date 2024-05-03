@@ -55,7 +55,7 @@ export class BookingFormComponent implements OnInit {
   ngOnInit() {
     this.loadDays();
     this.setFormInputs();
-    //this.setupValidationConfig();
+    this.setupValidationConfig();
     this.mobileScreen = window.innerWidth < 768;
   }
 
@@ -92,6 +92,14 @@ export class BookingFormComponent implements OnInit {
         inputType: 'time',
       },
     ];
+    this.myButtons = [
+      {
+        label: this.editMode ? 'Editar' : 'Añadir',
+        type: 'submit',
+        routerLink: '',
+        icon: 'add-circle-outline',
+      },
+    ];
   }
 
   setForm(form: FormGroup): void {
@@ -104,7 +112,32 @@ export class BookingFormComponent implements OnInit {
 
   setupValidationConfig() {
     this.validationConfig = [
-      { controlName: 'valid_from', required: true },
+      {
+        controlName: 'valid_from',
+        required: true,
+        customValidation: (form: FormGroup) => {
+          const validFrom = form.get('valid_from');
+          const validTo = form.get('valid_to');
+
+          if (validFrom && validTo) {
+            const fromDate = validFrom.value;
+            const toDate = validTo.value;
+
+            if ((fromDate && !toDate) || (!fromDate && toDate)) {
+              validFrom.setErrors({ Timevalid: true });
+              validTo.setErrors({ Timevalid: true });
+            } else if (fromDate > toDate) {
+              validFrom.setErrors({ TimeInvalidRange: true });
+              validTo.setErrors(null);
+            } else {
+              validFrom.setErrors(null);
+              validTo.setErrors(null);
+            }
+          }
+
+          return null;
+        },
+      },
       { controlName: 'valid_to', required: true },
       { controlName: 'Dias' },
     ];

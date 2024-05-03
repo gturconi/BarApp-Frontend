@@ -43,7 +43,7 @@ export class FormComponent implements OnInit {
 
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
-
+    console.log(control);
     if (control?.errors && control.touched) {
       if (control.errors['required']) {
         return 'Este campo es requerido';
@@ -81,6 +81,10 @@ export class FormComponent implements OnInit {
         return 'El valor ingresado no es válido';
       } else if (control.errors['Datevalid']) {
         return 'Debes proporcionar ambas fechas o ninguna';
+      } else if (control.errors['Timevalid']) {
+        return 'Debes proporcionar ambas horas o ninguna';
+      } else if (control.errors['TimeInvalidRange']) {
+        return 'La hora desde debe ser menor a la hora hasta';
       } else if (control.errors['DateInvalidRange']) {
         return 'La fecha desde debe ser menor a la fecha hasta';
       }
