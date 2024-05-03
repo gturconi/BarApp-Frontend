@@ -4,6 +4,7 @@ import { BookingComponent } from './booking-component/booking.component';
 import {BookingRouteComponent } from './booking-route/booking.route.component';
 import { BookingService } from './services/booking.service';
 import { BookingComponentAdmin } from './booking-component-admin/booking.component.admin';
+import { MyBookingsComponent } from './my-bookings-component/my.bookings.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
         path: 'admin',
         component: BookingComponentAdmin,
       },
+      {
+        path: 'my-bookings',
+        component: MyBookingsComponent
+      }
     ]
   },
 ];

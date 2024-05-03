@@ -11,7 +11,7 @@ export class IntroComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.router.navigateByUrl('/booking/admin');
+      this.router.navigateByUrl('/auth');
     }, 1500);
   }
 }
