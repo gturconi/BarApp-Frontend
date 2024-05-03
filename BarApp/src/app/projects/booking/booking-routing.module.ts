@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookingComponent } from './booking-component/booking.component';
 import {BookingRouteComponent } from './booking-route/booking.route.component';
 import { BookingService } from './services/booking.service';
+import { BookingComponentAdmin } from './booking-component-admin/booking.component.admin';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: '',
         component: BookingComponent,
+      },
+      {
+        path: 'admin',
+        component: BookingComponentAdmin,
       },
     ]
   },

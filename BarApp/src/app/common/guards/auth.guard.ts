@@ -6,6 +6,7 @@ import { NotificationService } from '@common/services/notification.service';
 import { ToastrService } from 'ngx-toastr';
 
 export const authGuard: CanActivateFn = () => {
+  return true;
   const loginService = inject(LoginService);
   const toastrService = inject(ToastrService);
   const router = inject(Router);

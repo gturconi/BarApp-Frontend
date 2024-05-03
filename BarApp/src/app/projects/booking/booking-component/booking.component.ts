@@ -9,9 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from "@angular/forms";
 import { ContactMessage } from "@common/models/contactMessage";
 import { ToastrService } from "ngx-toastr";
-import { BookingDay } from "@common/models/booking";
+import { Booking, BookingDay } from "@common/models/booking";
 import { DaysOfWeek } from "@common/constants/days.of.week.enum";
 import { MonthsOfYear } from "@common/constants/month.of.years.enum";
+import * as moment from "moment-timezone";
 
 interface AvailableHours {
   id: number;
@@ -26,7 +27,6 @@ interface SelectedHour {
 @Component({
   selector: "app-booking",
   templateUrl: "./booking.component.html",
-  styleUrls: ["./booking.component.scss"],
   providers: [BookingService],
 })
 
@@ -70,15 +70,6 @@ export class BookingComponent implements OnInit {
           iconName: 'groups',
         },
         {
-          type: 'input',
-          name: 'date_hour',
-          autocomplete: '',
-          label: 'Fecha y hora',
-          inputType: 'date',
-          icon: 'material-symbols-outlined',
-          iconName: 'calendar_clock',
-        },
-        {
             type: 'input',
             name: 'description',
             autocomplete: '',
@@ -95,7 +86,6 @@ export class BookingComponent implements OnInit {
         minLength: 1,
         maxLength: 3,
         pattern: '^[0-9]*$',},
-        { controlName: 'date_hour', required: true },
       ];
     }
 
@@ -212,6 +202,7 @@ export class BookingComponent implements OnInit {
 
   onHourClick(params: SelectedHour) {
     this.selectedHour = params;
+    console.log({params});
   }
   
   setBookingForm(form: FormGroup): void {
@@ -219,18 +210,24 @@ export class BookingComponent implements OnInit {
   }
 
   async onSubmit(form: FormGroup): Promise<void> {
-    this.form = form;/*
+    this.form = form;
     this.isLoading = await this.loadingService.loading();
     await this.isLoading.present();
-    if (form.valid) {
-      const {name, email, description} = this.form.value;
-      const message = new ContactMessage(name, email, description);
-        this.aboutService.postMessage(message).subscribe(() => {
-         this.isLoading.dismiss();
-         this.form.reset();
-         this.toastrService.success('Mensaje enviado exitosamente');
-        })
-    }*/
+    if (form.valid && this.selectedDate && this.selectedHour) {
+      const {description, quota} = this.form.value;
+      const date = new Date(`${this.selectedDate.formattedDate} ${this.selectedHour.hour}`);
+      console.log(date, this.selectedDate.formattedDate, this.selectedHour.hour);
+      const utcDateTime = moment.utc(date.toISOString());
+      const localDateTime = utcDateTime.tz('America/Buenos_Aires');
+      console.log(localDateTime.format());
+      const booking = new Booking(localDateTime.format(), this.loginService.getUserInfo().id, parseInt(quota, 10), 1, this.selectedHour.id);
+      console.log({booking})
+      this.bookingService.postSelectedBooking(booking).subscribe(() => {
+        this.isLoading.dismiss();
+        this.form.reset();
+        this.toastrService.success('Tu reserva esta en proceso.');
+      })
+    }
   }
 
 }

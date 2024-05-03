@@ -10,6 +10,57 @@
 .booking-hours-cards-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 10px;
+  max-width: 440px;
+  justify-content: space-between;
+}
+
+.booking-hour-card,
+.booking-hour-card.selected {
+  height: min-content;
+  padding: 10px;
+  margin: 0;
+}
+
+.booking-hour-card {
+  background-color: var(--color-3);
+}
+
+.booking-hour-card.selected {
+  background-color: var(--color-5);
+}
+
+.booking-hour-card h6 {
+  font-size: 14px;
+}
+
+.booking-hour-card *,
+.booking-hour-card.selected * {
+  padding: 0;
+  margin: 0;
+}
+
+.booking-card {
+  width: 100px;
+  height: 90px;
+  margin: 0;
+  background-color: var(--color-3);
+}
+
+h6.booking-date-title {
+  font-size: 12px;
+  margin: 0;
+}
+
+h1.booking-date-number {
+  font-size: 14px;
+  margin: 0;
+}
+
+h2.booking-date-day {
+  font-size: 12px;
+  margin: 0;
 }
 
 .booking-card:hover,
@@ -18,7 +69,41 @@
   background-color: antiquewhite;
 }
 
-.selected {
+.booking-card.selected {
   background-color: var(--color-5);
-  color: #fff;
+}
+
+.booking-hour-card.selected:hover,
+.booking-card.selected:hover {
+  cursor: default;
+  background-color: var(--color-5);
+}
+
+.bookingAdminContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-1);
+  height: 100%;
+}
+
+.bookingAdminTable {
+  width: 100%;
+  padding: 10px 15px 10px 15px;
+}
+
+.bookingAdminPagination {
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+.bookingAdminConfirmButton {
+  width: max-content;
+}
+
+@media (max-width: 768px) {
+  .bookingAdminPagination {
+    margin: 0;
+    padding-left: 8px;
+    padding-bottom: 10px;
+  }
 }

@@ -6,9 +6,10 @@ import { CommonUiModule } from '@common-ui/common-ui.module';
 import { BookingComponent } from './booking-component/booking.component';
 import {BookingRoutingModule } from './booking-routing.module';
 import { BookingRouteComponent } from './booking-route/booking.route.component';
+import { BookingComponentAdmin } from './booking-component-admin/booking.component.admin';
 
 @NgModule({
-  declarations: [BookingRouteComponent, BookingComponent],
+  declarations: [BookingRouteComponent, BookingComponent, BookingComponentAdmin],
   imports: [CommonModule, BookingRoutingModule, CommonUiModule, IonicModule],
   exports: [BookingRouteComponent],
 })
