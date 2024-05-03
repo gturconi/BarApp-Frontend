@@ -153,9 +153,15 @@ export class MenuComponent implements OnInit {
           isManage: false,
         },
         {
+          icon: 'calendar-add-on',
+          label: 'Realizar Reserva',
+          route: '/booking',
+          isManage: false,
+        },
+        {
           icon: 'calendar-outline',
           label: 'Mis Reservas',
-          route: '',
+          route: '/booking/my-bookings',
           isManage: false,
         },
         {
@@ -252,6 +258,12 @@ export class MenuComponent implements OnInit {
           isManage: false,
         },
         { label: 'Usuarios', route: '/users', isManage: true },
+        {
+          icon: 'calendar-outline',
+          label: 'Reservas',
+          route: '/booking/admin',
+          isManage: true,
+        },
         { label: 'Mesas', route: '/tables', isManage: true },
         { label: 'Cartas', route: '/menu/categories', isManage: true },
         { label: 'Pedidos', route: '/orders', isManage: true },

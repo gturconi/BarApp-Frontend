@@ -1,0 +1,62 @@
+<ion-content>
+  <div class="booking-max-container">
+    <h1 class="booking-titulo">Reservas</h1>
+    <h4 class="booking-form-title">{{ formTitle }}</h4>
+    <div class="booking-date-cards-container">
+      <ng-container *ngFor="let date of getDates()">
+        <ion-card
+          [class]="getSelectedDateClass(date.formattedDate)"
+          (click)="
+            onDayClick({
+              formattedDate: date.formattedDate,
+              dayName: date.dayName
+            })
+          "
+        >
+          <ion-card-header>
+            <ion-card-title
+              ><h6 class="booking-date-title">
+                {{ date.title }}
+              </h6></ion-card-title
+            >
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title
+              ><h1 class="booking-date-number">
+                {{ date.dayNumber }}
+              </h1></ion-card-title
+            >
+            <ion-card-title
+              ><h2 class="booking-date-day">
+                {{ date.dayName }}
+              </h2></ion-card-title
+            >
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </div>
+    <div class="booking-hours-cards-container">
+      <ng-container *ngFor="let availableRange of getHours()">
+        <ion-card
+          (click)="onHourClick(availableRange)"
+          [class]="getSelectedHourClass(availableRange)"
+        >
+          <ion-card-header>
+            <ion-card-title
+              ><h6>{{ availableRange.hour.slice(0, 5) }}</h6></ion-card-title
+            >
+          </ion-card-header>
+        </ion-card>
+      </ng-container>
+    </div>
+    <app-form
+      [form]="form"
+      [fields]="formFields"
+      [editMode]="editMode"
+      [validationConfig]="validationConfig"
+      [buttons]="myButtons"
+      (formSubmit)="onSubmit($event)"
+      (formEdit)="setBookingForm($event)"
+    />
+  </div>
+</ion-content>

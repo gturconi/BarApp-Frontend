@@ -39,6 +39,11 @@ const routes: Routes = [
       import("./projects/about/about.module").then(m => m.AboutModule),
   },
   {
+    path: "booking",
+    loadChildren: () =>
+      import("./projects/booking/booking.module").then(m => m.BookingModule),
+  },
+  {
     path: 'orders',
     loadChildren: () =>
       import('./projects/order/order.module').then(m => m.OrderModule),
@@ -60,10 +65,10 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'intro',
+    redirectTo: 'booking',
     pathMatch: 'full',
   },
-  { path: '**', redirectTo: 'intro' },
+  //{ path: '**', redirectTo: 'intro' },
 ];
 
 @NgModule({

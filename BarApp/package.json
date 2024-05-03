@@ -51,6 +51,7 @@
     "crypto-js": "^4.2.0",
     "html2canvas": "^1.4.1",
     "ionicons": "^7.0.0",
+    "moment-timezone": "^0.5.45",
     "ng-qrcode": "^17.0.0",
     "ngx-captcha": "^13.0.0",
     "ngx-toastr": "^18.0.0",
