@@ -68,7 +68,7 @@ export class TableComponent implements OnInit {
       return '$' + parseFloat(value).toFixed(2).replace('.', ',');
     }
 
-    if (key === 'date_created') {
+    if (key.includes('date')) {
       return this.formatDate(value);
     }
 

@@ -1,0 +1,26 @@
+<div class="usersListContainer">
+  @if(!loading){
+  <div class="actionsContainer">
+    <app-search
+      class="search-input"
+      id="search-filter"
+      (searchChanged)="filterOrders($event)"
+      placeholder="Buscar reserva..."
+    ></app-search>
+  </div>
+  <app-table
+    class="table"
+    [columns]="columns"
+    [data]="data"
+    [loading]="loading"
+  />
+  <div class="pagination">
+    <app-pagination
+      [currentPage]="pageIndex"
+      [totalPages]="totalPages"
+      [limit]="pageSize"
+      (changePage)="onPageChanged($event)"
+    />
+  </div>
+  }
+</div>

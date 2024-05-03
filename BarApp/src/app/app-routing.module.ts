@@ -22,21 +22,21 @@ const routes: Routes = [
     loadChildren: () =>
       import('./projects/faq/faq.module').then(m => m.FaqModule),
   },
-  
+
   {
-    path: "about",
+    path: 'about',
     loadChildren: () =>
-      import("./projects/about/about.module").then(m => m.AboutModule),
+      import('./projects/about/about.module').then(m => m.AboutModule),
   },
   {
-    path: "about",
+    path: 'about',
     loadChildren: () =>
-      import("./projects/about/about.module").then(m => m.AboutModule),
+      import('./projects/about/about.module').then(m => m.AboutModule),
   },
   {
-    path: "about",
+    path: 'about',
     loadChildren: () =>
-      import("./projects/about/about.module").then(m => m.AboutModule),
+      import('./projects/about/about.module').then(m => m.AboutModule),
   },
   {
     path: 'orders',
@@ -57,6 +57,11 @@ const routes: Routes = [
     path: 'themes',
     loadChildren: () =>
       import('./projects/theme/theme.module').then(m => m.ThemeModule),
+  },
+  {
+    path: 'booking',
+    loadChildren: () =>
+      import('./projects/booking/booking.module').then(m => m.BookingModule),
   },
   {
     path: '',

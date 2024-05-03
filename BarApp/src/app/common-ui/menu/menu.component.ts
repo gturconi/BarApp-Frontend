@@ -154,8 +154,14 @@ export class MenuComponent implements OnInit {
         },
         {
           icon: 'calendar-outline',
+          label: 'Reservar',
+          route: 'booking/add',
+          isManage: false,
+        },
+        {
+          icon: 'calendar-outline',
           label: 'Mis Reservas',
-          route: '',
+          route: 'booking/my-bookings',
           isManage: false,
         },
         {
@@ -174,7 +180,7 @@ export class MenuComponent implements OnInit {
       this.tabsItem.splice(
         1,
         2,
-        { icon: 'calendar-outline', label: 'Reservas', route: '' },
+        { icon: 'calendar-outline', label: 'Reservas', route: 'booking/add' },
         {
           icon: 'bag-handle-outline',
           label: 'Pedidos',
@@ -255,6 +261,7 @@ export class MenuComponent implements OnInit {
         { label: 'Mesas', route: '/tables', isManage: true },
         { label: 'Cartas', route: '/menu/categories', isManage: true },
         { label: 'Pedidos', route: '/orders', isManage: true },
+        { label: 'Reservas', route: '/booking', isManage: true },
         { label: 'Pantallas', route: '', isManage: true, isSetting: true },
         { label: 'Temas', route: '/themes', isManage: true, isSetting: true }
       );

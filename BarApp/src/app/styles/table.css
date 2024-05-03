@@ -170,7 +170,6 @@
   padding: 7px;
   border-radius: 3px;
   font-size: 14px;
-  width: 75px;
 }
 .buttonTable:hover {
   background-color: var(--color-7);
