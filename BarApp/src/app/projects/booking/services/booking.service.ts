@@ -29,6 +29,17 @@ export class BookingService {
     return this.http.get<BookingDay[]>(this.apiUrl + '/bookingDays/');
   }
 
+  deleteBookingDay(id: string) {
+    return this.http.delete(this.apiUrl + '/bookingDays/' + id);
+  }
+
+  postBookingDays(bookingDay: BookingDay) {
+    return this.http.post<BookingDay>(
+      this.apiUrl + '/bookingDays/',
+      bookingDay
+    );
+  }
+
   getUserFutureBookings(userId: number) {
     return this.http.get<UserFutureBookings[]>(
       this.apiUrl + '/bookings/user/' + userId

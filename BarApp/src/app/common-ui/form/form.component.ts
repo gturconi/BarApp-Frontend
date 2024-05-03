@@ -43,7 +43,6 @@ export class FormComponent implements OnInit {
 
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
-    console.log(control);
     if (control?.errors && control.touched) {
       if (control.errors['required']) {
         return 'Este campo es requerido';

@@ -7,3 +7,12 @@ export enum DaysOfWeek {
   Viernes = 'Viernes',
   Sábado = 'Sábado',
 }
+export const MapDayOfWeek = [
+  'Domingo',
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+];

@@ -71,13 +71,12 @@ export class UserFutureBookings {
 }
 
 export class BookingDay {
-  constructor(id = '', day_of_week = '', end_hour = '', init_hour = '') {
-    this.id = id;
+  constructor(day_of_week = '', init_hour = '', end_hour = '') {
     this.day_of_week = day_of_week;
-    this.end_hour = end_hour;
     this.init_hour = init_hour;
+    this.end_hour = end_hour;
   }
-  id: string;
+  id?: string;
   day_of_week: string;
   end_hour: string;
   init_hour: string;
