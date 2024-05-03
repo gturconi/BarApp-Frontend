@@ -292,6 +292,18 @@
   }
 }
 
+/* para la tabla de booking days*/
+.BookingListContainer {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .BookingListContainer {
+    max-width: 320px;
+  }
+}
+
 /*
 ion-modal#example-modal {
   --width: fit-content;
