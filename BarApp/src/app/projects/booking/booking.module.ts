@@ -9,6 +9,7 @@ import { BookingAddComponent } from './booking.add/booking.add.component';
 import { BookingAdminListComponent } from './booking.admin.list/booking.admin.list.component';
 import { BookingComponent } from './booking/booking.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
+import { BookingFormComponent } from './booking.form/booking.form.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
     BookingAdminListComponent,
     BookingComponent,
     MyBookingsComponent,
+    BookingFormComponent,
   ],
   imports: [CommonModule, BookingRoutingModule, CommonUiModule, IonicModule],
 })

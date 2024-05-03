@@ -32,6 +32,8 @@
     [min]="minDate"
   >
   </ion-input>
+  }@else if(type === 'time'){
+  <ion-datetime presentation="time" [formControl]="control"> </ion-datetime>
   }@else if(type === 'textarea'){
   <ion-textarea
     labelPlacement="floating"
