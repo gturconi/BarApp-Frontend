@@ -5,7 +5,6 @@ import { BookingComponent } from './booking/booking.component';
 import { adminGuard, authGuard } from '@common/guards';
 import { BookingAdminListComponent } from './booking.admin.list/booking.admin.list.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
-import { BookingAddComponent } from './booking.add/booking.add.component';
 import { BookingFormComponent } from './booking.form/booking.form.component';
 
 const routes: Routes = [
@@ -28,11 +27,6 @@ const routes: Routes = [
         path: 'day',
         component: BookingFormComponent,
         canActivate: [authGuard, adminGuard],
-      },
-      {
-        path: 'add',
-        component: BookingAddComponent,
-        canActivate: [authGuard],
       },
     ],
   },
