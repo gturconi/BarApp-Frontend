@@ -131,15 +131,6 @@ export class MyBookingsComponent implements OnInit {
         .getUserFutureBookings(this.user.id)
         .subscribe(data => {
           this.bookingList = data;
-          if (this.bookingList.length == 0) {
-            Swal.fire({
-              icon: 'info',
-              title: 'No hay Reservas realizadas',
-              text: 'No tienes ninguna reserva pendiente, puedes realizar uno en el menu de reservas',
-            }).then(() => {
-              this.router.navigate(['/bookings/add']);
-            });
-          }
           this.showData = true;
         });
     } finally {
