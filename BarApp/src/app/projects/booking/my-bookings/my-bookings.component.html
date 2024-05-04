@@ -54,16 +54,17 @@
         </ion-card>
       </ng-container>
     </div>
-    <app-form
-      [form]="form"
-      [fields]="formFields"
-      [editMode]="editMode"
-      [validationConfig]="validationConfig"
-      [buttons]="myButtons"
-      (formSubmit)="onSubmit($event)"
-      (formEdit)="setBookingForm($event)"
-    />
-
+    <div class="form-container-r">
+      <app-form
+        [form]="form"
+        [fields]="formFields"
+        [editMode]="editMode"
+        [validationConfig]="validationConfig"
+        [buttons]="myButtons"
+        (formSubmit)="onSubmit($event)"
+        (formEdit)="setBookingForm($event)"
+      />
+    </div>
     <h2 class="section-title">Mis reservas</h2>
     <div
       class="wrapper2 productsList booking-list"

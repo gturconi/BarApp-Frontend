@@ -52,6 +52,7 @@ export class MyBookingsComponent implements OnInit {
     {
       label: 'Reservar',
       type: 'submit',
+      icon: 'add-circle-outline',
     },
   ];
 

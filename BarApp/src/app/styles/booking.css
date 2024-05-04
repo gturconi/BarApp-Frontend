@@ -116,7 +116,16 @@ h2.booking-date-day {
 }
 
 .day-disabled {
-  background-color: grey;
+  background-color: #f3f3f3;
+}
+
+.form-container-r {
+  display: flex;
+  justify-content: center;
+}
+
+.booking-list {
+  height: 17.1rem;
 }
 
 @media (max-width: 768px) {
