@@ -174,10 +174,12 @@ export class OrderDetailsComponent implements OnInit {
               this.toastrService.success('Pedido cancelado');
               this.socketService.sendMessage('order', '');
               loading.dismiss();
-              this.fmcService.sendPushNotification(
-                'Pedido cancelado',
-                `Se ha cancelado un pedido en la mesa ${this.order?.table_order.number}`
-              );
+              this.fmcService
+                .sendPushNotification(
+                  'Pedido cancelado',
+                  `Se ha cancelado un pedido en la mesa ${this.order?.table_order.number}`
+                )
+                .subscribe();
               this.router.navigate(['orders/my-orders/confirmed']);
             });
         }
@@ -219,14 +221,16 @@ export class OrderDetailsComponent implements OnInit {
           .subscribe(() => {
             this.toastrService.success('Estado del pedido actualizado');
             loading.dismiss();
-            this.fmcService.sendPushNotification(
-              'Estado del pedido actualizado',
-              stateId == '2'
-                ? 'El pedido ya se encuentra en preparación'
-                : 'El pedido ya fue entregado',
-              undefined,
-              this.order?.user.id.toString()
-            );
+            this.fmcService
+              .sendPushNotification(
+                'Estado del pedido actualizado',
+                stateId == '2'
+                  ? 'El pedido ya se encuentra en preparación'
+                  : 'El pedido ya fue entregado',
+                undefined,
+                this.order?.user.id.toString()
+              )
+              .subscribe();
             this.location.back();
           });
       }
