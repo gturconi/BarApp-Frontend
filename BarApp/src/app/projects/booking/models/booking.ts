@@ -1,4 +1,4 @@
-type BookingState = Record<number, string>;
+export type BookingState = Record<number, string>;
 
 export type State = {
   id: string;

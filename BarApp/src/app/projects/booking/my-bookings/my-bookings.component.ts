@@ -3,12 +3,13 @@ import { BookingService } from '../services/booking.service';
 import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
 import { User } from '@common/models/user';
-import { UserFutureBookings } from '../models/booking';
+import { BookingState, UserFutureBookings } from '../models/booking';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { BOOKING_CANCEL } from '@common/constants/messages.constant';
+import { BOOKING_STATES } from '../models/booking';
 
 @Component({
   selector: 'app-my-bookings',
@@ -19,6 +20,7 @@ export class MyBookingsComponent implements OnInit {
   user!: User;
   bookingList: UserFutureBookings[] = [];
   showData: boolean = false;
+  states: BookingState = [];
 
   @ViewChild('wrapper') wrapperRef!: ElementRef<HTMLDivElement>;
   scrollingTimer: any;
@@ -33,6 +35,7 @@ export class MyBookingsComponent implements OnInit {
 
   ngOnInit() {
     this.doSearch();
+    this.states = BOOKING_STATES;
   }
 
   async doSearch() {
@@ -44,7 +47,6 @@ export class MyBookingsComponent implements OnInit {
         .getUserFutureBookings(this.user.id)
         .subscribe(data => {
           this.bookingList = data;
-          console.log(this.bookingList);
           if (this.bookingList.length == 0) {
             Swal.fire({
               icon: 'info',
@@ -58,20 +60,6 @@ export class MyBookingsComponent implements OnInit {
         });
     } finally {
       loading.dismiss();
-    }
-  }
-
-  getStatus(stateId: string): string {
-    const id = Number(stateId);
-    switch (id) {
-      case 1:
-        return 'Pendiente';
-      case 2:
-        return 'Confirmada';
-      case 3:
-        return 'Cancelada';
-      default:
-        return '';
     }
   }
 
