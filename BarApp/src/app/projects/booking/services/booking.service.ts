@@ -40,7 +40,7 @@ export class BookingService {
     );
   }
 
-  getUserFutureBookings(userId: number) {
+  getUserFutureBookings(userId: string) {
     return this.http.get<UserFutureBookings[]>(
       this.apiUrl + '/bookings/user/' + userId
     );

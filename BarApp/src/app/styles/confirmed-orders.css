@@ -91,3 +91,24 @@
 .bg-paid {
   background-color: var(--color-paid);
 }
+
+/*para las reservas del usuario*/
+
+.card-order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .booking-quota {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+}
+
+.card-order-info ion-icon {
+  margin-right: 10px;
+}
+
+.bg-cancel {
+  background-color: var(--color-10);
+}
