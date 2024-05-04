@@ -6,6 +6,9 @@ import { User } from '@common/models/user';
 import { UserFutureBookings } from '../models/booking';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { BOOKING_CANCEL } from '@common/constants/messages.constant';
 
 @Component({
   selector: 'app-my-bookings',
@@ -24,7 +27,8 @@ export class MyBookingsComponent implements OnInit {
     private bookingService: BookingService,
     private loadingService: LoadingService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit() {
@@ -83,5 +87,22 @@ export class MyBookingsComponent implements OnInit {
         wrapper.classList.remove('show-scrollbar');
       }, 1500);
     }
+  }
+
+  async cancelBooking(id: string) {
+    Swal.fire(BOOKING_CANCEL).then(async result => {
+      if (result.isConfirmed) {
+        const loading = await this.loadingService.loading();
+        await loading.present();
+        this.bookingService
+          .cancelBooking(id)
+          .pipe(finalize(() => loading.dismiss()))
+          .subscribe(() => {
+            this.toastrService.success('Reserva cancelada');
+            loading.dismiss();
+            this.doSearch();
+          });
+      }
+    });
   }
 }
