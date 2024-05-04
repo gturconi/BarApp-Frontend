@@ -126,3 +126,9 @@ h2.booking-date-day {
     padding-bottom: 10px;
   }
 }
+
+@media screen and (height<= 805px) and (width <= 1500px) {
+  .booking-list {
+    height: 17.1rem;
+  }
+}

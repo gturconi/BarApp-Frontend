@@ -41,6 +41,7 @@ export class MyBookingsComponent implements OnInit {
   states: BookingState = [];
   bookingsDays: Record<string, BookingDay[]> = {};
   isLoading!: any;
+  mobileScreen = false;
 
   form: FormGroup = new FormGroup({});
   editMode = false;
@@ -117,6 +118,7 @@ export class MyBookingsComponent implements OnInit {
       );
       this.isLoading.dismiss();
     });
+    this.mobileScreen = window.innerWidth < 768;
   }
 
   async doSearch() {

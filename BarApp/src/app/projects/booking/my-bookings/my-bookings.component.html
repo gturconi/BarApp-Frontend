@@ -1,4 +1,7 @@
-<ion-content class="product-content">
+<ion-content
+  class="product-content"
+  [scrollY]="mobileScreen ? 'true' : 'false'"
+>
   <div class="container-body">
     <h2 class="section-title">Realizar Reserva</h2>
     <div class="booking-date-cards-container">
@@ -62,7 +65,11 @@
     />
 
     <h2 class="section-title">Mis reservas</h2>
-    <div class="wrapper2 productsList" #wrapper (scroll)="onScroll($event)">
+    <div
+      class="wrapper2 productsList booking-list"
+      #wrapper
+      (scroll)="onScroll($event)"
+    >
       @for(booking of bookingList; track booking.id; let idx = $index) {
       <div class="item-p card-order" [style.animation-delay]="idx * 150 + 'ms'">
         <div class="card-order-info">
