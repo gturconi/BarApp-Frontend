@@ -179,7 +179,9 @@ export class OrderDetailsComponent implements OnInit {
                   'Pedido cancelado',
                   `Se ha cancelado un pedido en la mesa ${this.order?.table_order.number}`
                 )
-                .subscribe();
+                .subscribe(() =>
+                  this.toastrService.success('Pedido cancelado')
+                );
               this.router.navigate(['orders/my-orders/confirmed']);
             });
         }
@@ -230,7 +232,9 @@ export class OrderDetailsComponent implements OnInit {
                 undefined,
                 this.order?.user.id.toString()
               )
-              .subscribe();
+              .subscribe(() =>
+                this.toastrService.success('Estado del pedido actualizado')
+              );
             this.location.back();
           });
       }
@@ -255,6 +259,7 @@ export class OrderDetailsComponent implements OnInit {
                 'Alerta enviada, en breve será atendido'
               )
             );
+          this.toastrService.success('Alerta enviada, en breve será atendido');
           Swal.fire(COMPLETE_QUIZ).then(async result => {
             if (result.isConfirmed) this.openQuizModal();
           });
