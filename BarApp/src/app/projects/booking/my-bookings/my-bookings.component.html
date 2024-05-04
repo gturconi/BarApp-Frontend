@@ -6,6 +6,8 @@
         <ion-card
           class="booking-card-c"
           [class]="getSelectedDateClass(date.formattedDate)"
+          [ngClass]="{ 'day-disabled': !bookingsDays[date.dayName] }"
+          [disabled]="!bookingsDays[date.dayName]"
           (click)="
             onDayClick({
               formattedDate: date.formattedDate,
