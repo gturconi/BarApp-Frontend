@@ -213,12 +213,6 @@ export class MenuComponent implements OnInit {
           label: 'Historial de pedidos',
           route: 'orders/my-orders/confirmed',
           isManage: false,
-        },
-        {
-          icon: 'notifications-outline',
-          label: 'Notificación Estado',
-          route: '',
-          isManage: false,
         }
       );
       this.tabsItem.splice(
@@ -230,7 +224,6 @@ export class MenuComponent implements OnInit {
           label: 'Historial',
           route: 'orders/my-orders/confirmed',
         },
-        { icon: 'notifications-outline', label: 'Notificación', route: '' },
         { icon: 'ellipsis-vertical-sharp', label: '' }
       );
     } else if (userLoggedIn && this.loginService.isAdmin()) {
@@ -260,20 +253,30 @@ export class MenuComponent implements OnInit {
         { label: 'Cartas', route: '/menu/categories', isManage: true },
         { label: 'Pedidos', route: '/orders', isManage: true },
         { label: 'Reservas', route: '/booking', isManage: true },
-        { label: 'Pantallas', route: '', isManage: true, isSetting: true },
+        {
+          label: 'Pantallas',
+          route: '/about',
+          isManage: true,
+          isSetting: true,
+        },
         { label: 'Temas', route: '/themes', isManage: true, isSetting: true }
       );
     } else {
-      this.menuItems.splice(1, 0, {
+      this.menuItems.splice(0, 0, {
         icon: 'person-circle-outline',
         label: 'Iniciar Sesión',
         route: 'auth',
         isManage: false,
       });
-      this.tabsItem.splice(this.tabsItem.length - 2, 0, {
-        icon: 'cart-outline',
-        label: 'Carrito',
-        route: '',
+      this.tabsItem.splice(this.tabsItem.length - 3, 0, {
+        icon: 'person-circle-outline',
+        label: 'Ingresar',
+        route: '/auth',
+      });
+      this.tabsItem.splice(this.tabsItem.length - 1, 0, {
+        icon: 'help-outline',
+        label: 'FAQs',
+        route: '/faq',
       });
       this.tabsItem.pop();
       this.tabsItem.push({ icon: 'ellipsis-vertical-sharp', label: '' });
