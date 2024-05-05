@@ -182,3 +182,51 @@
   text-overflow: ellipsis;
   cursor: pointer;
 }
+
+/*para el feedback */
+
+.card-r {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header-r {
+  background-image: linear-gradient(to left, var(--color-1), var(--color-2));
+
+  padding: 10px;
+  border-bottom: 1px solid var(--color-2);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body-r {
+  padding: 10px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.stars::before {
+  content: '★★★★★';
+  letter-spacing: 3px;
+  font-size: 20px;
+  color: var(--color-6);
+  background: linear-gradient(
+    90deg,
+    var(--color-6) calc(var(--rating) * 20%),
+    #9b9b9b calc(var(--rating) * 20%)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.score {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.comment {
+  margin-top: 10px;
+}

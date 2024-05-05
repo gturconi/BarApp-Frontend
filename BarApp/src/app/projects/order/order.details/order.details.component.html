@@ -128,6 +128,20 @@
           <span>${{ order.total | number : '1.2-2' }}</span>
         </div>
         <hr class="card-hr" />
+        <div class="card-r" *ngIf="order.score && order.feedback">
+          <div class="card-header-r">Opinión del pedido</div>
+          <div class="card-body-r">
+            <div class="rating">
+              <span class="score">Puntaje:</span>
+              <span class="stars" style="--rating: {{ order.score }}"></span>
+            </div>
+
+            <div class="comment">
+              <span>Comentario:</span>
+              {{ order.feedback }}
+            </div>
+          </div>
+        </div>
         <div
           *ngIf="
             role === 'employee' &&
