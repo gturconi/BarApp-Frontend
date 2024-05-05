@@ -128,6 +128,60 @@ h2.booking-date-day {
   height: 17.1rem;
 }
 
+/*para las reservas del usuario*/
+
+.card-order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .booking-quota {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+}
+
+.bg-cancel {
+  background-color: var(--color-10);
+}
+
+.icon-r {
+  margin-right: 0px;
+  font-size: 17px;
+}
+
+.card-order-state {
+  .booking-state {
+    border-radius: 10px;
+    width: 6.5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+
+    a {
+      text-decoration: none;
+      color: var(--color-7);
+    }
+
+    ion-icon {
+      color: var(--color-7);
+      font-size: 20px;
+    }
+  }
+}
+
+.bg-cancel-r {
+  background-color: var(--color-12);
+  color: var(--color-7);
+}
+
+.check-icon-r {
+  color: var(--color-7);
+  font-size: 15px;
+}
+
 @media (max-width: 768px) {
   .bookingAdminPagination {
     margin: 0;

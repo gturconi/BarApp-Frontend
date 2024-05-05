@@ -76,11 +76,13 @@
         <div class="card-order-info">
           <span><b>Reserva Nro:</b> {{ booking.id }}</span>
           <span class="booking-quota">
-            <ion-icon name="people-outline"></ion-icon>
+            <span class="material-symbols-outlined icon-r"> groups </span>
             Comensales: {{ booking.quota }}
           </span>
           <div class="order-date">
-            <ion-icon name="calendar-outline"></ion-icon>
+            <span class="material-symbols-outlined icon-r">
+              calendar_month
+            </span>
             <span>
               {{
                 booking.date_hour
@@ -91,22 +93,25 @@
         </div>
         <div class="card-order-state">
           <div
-            class="order-state"
+            class="booking-state"
             [ngClass]="{
               'bg-pending': +booking.stateId === 1,
               'bg-paid': +booking.stateId === 2,
               'bg-cancel': +booking.stateId === 3,
             }"
           >
-            <span class="material-symbols-outlined check-icon"> done </span>
-            <a href=""> {{ this.states[+booking.stateId] }}</a>
+            <span class="material-symbols-outlined check-icon-r"> done </span>
+            <a (click)="$event.stopPropagation()">
+              {{ this.states[+booking.stateId] }}</a
+            >
           </div>
           <button
             *ngIf="+booking.stateId === 1"
             ion-button
-            class="order-state bg-cancel"
+            class="booking-state bg-cancel-r"
             (click)="cancelBooking(booking.id.toString())"
           >
+            <span class="material-symbols-outlined check-icon-r"> cancel </span>
             Cancelar
           </button>
         </div>
