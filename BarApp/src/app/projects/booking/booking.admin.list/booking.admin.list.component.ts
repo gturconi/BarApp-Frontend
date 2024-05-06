@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { TableColumn, TableData } from '@common-ui/table/table.component';
+import Swal from 'sweetalert2';
+
 import { BookingService } from '../services/booking.service';
 import { LoadingService } from '@common/services/loading.service';
-import { BOOKING_STATES, BoookingResponse, State } from '../models/booking';
-import Swal from 'sweetalert2';
+import { FcmService } from '@common/services/fcm.service';
 import { ToastrService } from 'ngx-toastr';
+
+import { TableColumn, TableData } from '@common-ui/table/table.component';
+import { BOOKING_STATES, State } from '../models/booking';
 import {
   BOOKING_CANCEL,
   BOOKING_CONFIRM,
@@ -28,9 +30,9 @@ export class BookingAdminListComponent implements OnInit {
 
   constructor(
     private bookingService: BookingService,
-    private router: Router,
     private loadingService: LoadingService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private fmcService: FcmService
   ) {}
 
   async ngOnInit() {
@@ -84,6 +86,12 @@ export class BookingAdminListComponent implements OnInit {
             if (idx !== -1) {
               this.data.splice(idx, 1, { ...booking, stateId: 3 });
             }
+            this.fmcService.sendPushNotification(
+              'Reserva Cancelada',
+              `Lamentamos informarle que no hay mesas disponibles en este momento`,
+              '',
+              JSON.parse(JSON.stringify(booking['user'])).id
+            );
             loading.dismiss();
             this.toastrService.success('Reserva cancelada exitosamente.');
             this.doSearch();
@@ -104,6 +112,12 @@ export class BookingAdminListComponent implements OnInit {
             if (idx !== -1) {
               this.data.splice(idx, 1, { ...booking, stateId: 2 });
             }
+            this.fmcService.sendPushNotification(
+              '¡Reserva Confirmada!',
+              `Le informamos que su reserva ya ha sido confirmada.`,
+              '',
+              JSON.parse(JSON.stringify(booking['user'])).id
+            );
             loading.dismiss();
             this.toastrService.success('Reserva confirmada exitosamente.');
             this.doSearch();

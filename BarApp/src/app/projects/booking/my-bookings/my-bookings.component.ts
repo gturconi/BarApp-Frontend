@@ -1,7 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import Swal from 'sweetalert2';
+
 import { BookingService } from '../services/booking.service';
 import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
+import { FcmService } from '@common/services/fcm.service';
+import { ToastrService } from 'ngx-toastr';
+
 import { User } from '@common/models/user';
 import {
   BookingDay,
@@ -9,15 +16,11 @@ import {
   BookingState,
   UserFutureBookings,
 } from '../models/booking';
-import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { BOOKING_CANCEL } from '@common/constants/messages.constant';
-import { BOOKING_STATES } from '../models/booking';
 import { MonthsOfYear } from '@common/constants/month.of.year.enum';
 import { DaysOfWeek } from '@common/constants/days.of.week.enum';
 import { FormGroup } from '@angular/forms';
+import { BOOKING_CANCEL } from '@common/constants/messages.constant';
+import { BOOKING_STATES } from '../models/booking';
 
 interface SelectedHour {
   hour: string;
@@ -73,7 +76,8 @@ export class MyBookingsComponent implements OnInit {
     private loadingService: LoadingService,
     private loginService: LoginService,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private fmcService: FcmService
   ) {
     this.formFields = [
       {
@@ -295,6 +299,12 @@ export class MyBookingsComponent implements OnInit {
         .postSelectedBooking(booking)
         .pipe(finalize(() => loading.dismiss()))
         .subscribe(() => {
+          this.fmcService.sendPushNotification(
+            '¡Nueva Reserva Realizada!',
+            `El usuario ${
+              this.loginService.getUserInfo().name
+            } ha realizado una nueva reserva `
+          );
           this.isLoading.dismiss();
           this.form.reset();
           this.toastrService.success(
