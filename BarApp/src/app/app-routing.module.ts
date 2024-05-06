@@ -65,12 +65,12 @@ const routes: Routes = [
         m => m.DashboardModule
       ),
   },
-  /* {
+  {
     path: '',
     redirectTo: 'intro',
     pathMatch: 'full',
-  },*/
-  // { path: '**', redirectTo: 'intro' },
+  },
+  { path: '**', redirectTo: 'intro' },
 ];
 
 @NgModule({
