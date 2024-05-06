@@ -170,7 +170,6 @@
   padding: 7px;
   border-radius: 3px;
   font-size: 14px;
-  width: 75px;
 }
 .buttonTable:hover {
   background-color: var(--color-7);
@@ -290,6 +289,18 @@
 
   .tableRow:hover {
     background-color: var(--color-3);
+  }
+}
+
+/* para la tabla de booking days*/
+.BookingListContainer {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .BookingListContainer {
+    max-width: 320px;
   }
 }
 

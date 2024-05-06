@@ -66,6 +66,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'booking',
+    loadChildren: () =>
+      import('./projects/booking/booking.module').then(m => m.BookingModule),
+  },
+  {
     path: '',
     redirectTo: 'intro',
     pathMatch: 'full',

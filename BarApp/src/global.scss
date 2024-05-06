@@ -42,6 +42,7 @@
 
 //@import './app/styles/variables.css';*/
 @import './app/styles/about.css';
+@import './app/styles/booking.css';
 
 @import 'ngx-toastr/toastr';
 
@@ -73,5 +74,9 @@ html {
 
   table td {
     color: var(--color-8);
+  }
+
+  input[type='time']::-webkit-calendar-picker-indicator {
+    filter: invert(100%);
   }
 }

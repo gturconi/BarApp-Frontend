@@ -120,6 +120,7 @@ export class HeaderComponent implements OnInit {
         .subscribe(() =>
           this.toastrService.success('Alerta enviada, en breve será atendido')
         );
+      this.toastrService.success('Alerta enviada, en breve será atendido');
     } else {
       this.fmcService
         .sendPushNotification(

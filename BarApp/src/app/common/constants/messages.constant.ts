@@ -197,3 +197,33 @@ export const COMPLETE_QUIZ: SweetAlertOptions = {
   confirmButtonText: 'Sí',
   cancelButtonText: 'Cancelar',
 };
+
+//cancel booking
+export const CANCEL_BOOKING_CONFIRMATION_MESSAGE: string =
+  '¿Estás seguro de que quieres cancelar la reserva?';
+export const BOOKING_CANCEL: SweetAlertOptions = {
+  heightAuto: false,
+  title: '¿Cancelar Reserva?',
+  text: CANCEL_BOOKING_CONFIRMATION_MESSAGE,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí, Cancelar',
+  cancelButtonText: 'No',
+};
+
+//confirm booking
+export const CONFIRM_BOOKING_CONFIRMATION_MESSAGE: string =
+  '¿Estás seguro de que quieres confirmar la reserva?';
+export const BOOKING_CONFIRM: SweetAlertOptions = {
+  heightAuto: false,
+  title: 'Confirmar Reserva?',
+  text: CONFIRM_BOOKING_CONFIRMATION_MESSAGE,
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#28B463',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí, Confirmar',
+  cancelButtonText: 'No',
+};

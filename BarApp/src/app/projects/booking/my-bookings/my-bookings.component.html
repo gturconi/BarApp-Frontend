@@ -1,0 +1,122 @@
+<ion-content
+  class="product-content"
+  [scrollY]="mobileScreen ? 'true' : 'false'"
+>
+  <div class="container-body">
+    <h2 class="section-title">Realizar Reserva</h2>
+    <div class="booking-date-cards-container">
+      <ng-container *ngFor="let date of getDates()">
+        <ion-card
+          class="booking-card-c"
+          [class]="getSelectedDateClass(date.formattedDate)"
+          [ngClass]="{ 'day-disabled': !bookingsDays[date.dayName] }"
+          [disabled]="!bookingsDays[date.dayName]"
+          (click)="
+            onDayClick({
+              formattedDate: date.formattedDate,
+              dayName: date.dayName
+            })
+          "
+        >
+          <ion-card-header>
+            <ion-card-title
+              ><h6 class="booking-date-title">
+                {{ date.title }}
+              </h6></ion-card-title
+            >
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title
+              ><h1 class="booking-date-number">
+                {{ date.dayNumber }}
+              </h1></ion-card-title
+            >
+            <ion-card-title
+              ><h2 class="booking-date-day">
+                {{ date.dayName }}
+              </h2></ion-card-title
+            >
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </div>
+    <div class="booking-hours-cards-container">
+      <ng-container *ngFor="let availableRange of getHours()">
+        <ion-card
+          [class]="getSelectedHourClass(availableRange)"
+          (click)="onHourClick(availableRange)"
+        >
+          <ion-card-header>
+            <ion-card-title
+              ><h6>{{ availableRange.hour.slice(0, 5) }}</h6></ion-card-title
+            >
+          </ion-card-header>
+        </ion-card>
+      </ng-container>
+    </div>
+    <div class="form-container-r">
+      <app-form
+        [form]="form"
+        [fields]="formFields"
+        [editMode]="editMode"
+        [validationConfig]="validationConfig"
+        [buttons]="myButtons"
+        (formSubmit)="onSubmit($event)"
+        (formEdit)="setBookingForm($event)"
+      />
+    </div>
+    <h2 class="section-title">Mis reservas</h2>
+    <div
+      class="wrapper2 productsList booking-list"
+      #wrapper
+      (scroll)="onScroll($event)"
+    >
+      @for(booking of bookingList; track booking.id; let idx = $index) {
+      <div class="item-p card-order" [style.animation-delay]="idx * 150 + 'ms'">
+        <div class="card-order-info">
+          <span><b>Reserva Nro:</b> {{ booking.id }}</span>
+          <span class="booking-quota">
+            <span class="material-symbols-outlined icon-r"> groups </span>
+            Comensales: {{ booking.quota }}
+          </span>
+          <div class="order-date">
+            <span class="material-symbols-outlined icon-r">
+              calendar_month
+            </span>
+            <span>
+              {{
+                booking.date_hour
+                  | date : "MMM dd, yyyy 'a las' HH:mm a" : '+0000'
+              }}
+            </span>
+          </div>
+        </div>
+        <div class="card-order-state">
+          <div
+            class="booking-state"
+            [ngClass]="{
+              'bg-pending': +booking.stateId === 1,
+              'bg-paid': +booking.stateId === 2,
+              'bg-cancel': +booking.stateId === 3,
+            }"
+          >
+            <span class="material-symbols-outlined check-icon-r"> done </span>
+            <a (click)="$event.stopPropagation()">
+              {{ this.states[+booking.stateId] }}</a
+            >
+          </div>
+          <button
+            *ngIf="+booking.stateId === 1"
+            ion-button
+            class="booking-state bg-cancel-r"
+            (click)="cancelBooking(booking.id.toString())"
+          >
+            <span class="material-symbols-outlined check-icon-r"> cancel </span>
+            Cancelar
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</ion-content>
