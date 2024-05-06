@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoginService } from '@common/services/login.service';
 import { ThemeService } from './projects/theme/themes/services/theme.service';
@@ -6,6 +6,8 @@ import { LoadingService } from '@common/services/loading.service';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { Platform } from '@ionic/angular';
 import { FcmService } from '@common/services/fcm.service';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +26,8 @@ export class AppComponent implements OnInit {
     private themeService: ThemeService,
     private loadingService: LoadingService,
     private platform: Platform,
-    private fcmService: FcmService
+    private fcmService: FcmService,
+    private zone: NgZone
   ) {
     this.platform
       .ready()
@@ -34,6 +37,21 @@ export class AppComponent implements OnInit {
       .catch(e => {
         console.log('error fcm: ', e);
       });
+
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      this.zone.run(() => {
+        // Example url: https://beerswift.app/tabs/tab2
+        // slug = /tabs/tab2
+        const domain =
+          'https://bar-app-frontend-qjwwg04gi-turco-xeneise-8-hotmailcoms-projects.vercel.app';
+        const slug = event.url.split(domain).pop();
+        if (slug) {
+          this.router.navigateByUrl(slug);
+        }
+        // If no match, do nothing - let regular routing
+        // logic take over
+      });
+    });
   }
   themeData: any;
   async ngOnInit() {

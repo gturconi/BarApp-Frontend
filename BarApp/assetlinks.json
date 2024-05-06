@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.barApp.notifications",
+      "sha256_cert_fingerprints": [
+        "C7:A8:24:5A:9B:E4:D6:3D:97:F3:AC:37:23:DE:B6:7C:8D:B9:D7:19:25:1E:30:A0:E7:AF:10:97:94:C1:7B:72"
+      ]
+    }
+  }
+]
