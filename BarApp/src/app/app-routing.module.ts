@@ -70,7 +70,7 @@ const routes: Routes = [
     redirectTo: 'intro',
     pathMatch: 'full',
   },
-  { path: '**', redirectTo: 'intro' },
+  // { path: '**', redirectTo: 'intro' },
 ];
 
 @NgModule({
