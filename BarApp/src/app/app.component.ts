@@ -42,8 +42,7 @@ export class AppComponent implements OnInit {
       this.zone.run(() => {
         // Example url: https://beerswift.app/tabs/tab2
         // slug = /tabs/tab2
-        const domain =
-          'https://bar-app-frontend-qjwwg04gi-turco-xeneise-8-hotmailcoms-projects.vercel.app';
+        const domain = 'https://https://bar-app-frontend.vercel.app';
         const slug = event.url.split(domain).pop();
         if (slug) {
           this.router.navigateByUrl(slug);
