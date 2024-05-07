@@ -7,7 +7,10 @@ import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { Platform } from '@ionic/angular';
 import { FcmService } from '@common/services/fcm.service';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
-import { environment } from 'src/environments/environment';
+
+import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
+import { ConfirmedOrdersComponent } from './projects/order/confirmed-orders/confirmed-orders.component';
+import { match } from 'assert';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +30,8 @@ export class AppComponent implements OnInit {
     private loadingService: LoadingService,
     private platform: Platform,
     private fcmService: FcmService,
-    private zone: NgZone
+    private zone: NgZone,
+    private deeplinks: Deeplinks
   ) {
     this.platform
       .ready()
@@ -38,7 +42,19 @@ export class AppComponent implements OnInit {
         console.log('error fcm: ', e);
       });
 
-    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+    this.deeplinks
+      .route({
+        '/orders/my-orders/confirmed': ConfirmedOrdersComponent,
+      })
+      .subscribe(
+        match => {
+          console.log('Successfully matched route', match);
+        },
+        nomatch => {
+          console.error('No match', nomatch);
+        }
+      );
+    /*  App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
         // Example url: https://beerswift.app/tabs/tab2
         // slug = /tabs/tab2
@@ -50,7 +66,7 @@ export class AppComponent implements OnInit {
         // If no match, do nothing - let regular routing
         // logic take over
       });
-    });
+    });*/
   }
   themeData: any;
   async ngOnInit() {
