@@ -18,8 +18,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import { IntroModule } from './projects/intro/intro.module';
 
-import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
-
 registerLocaleData(localeEsAr, 'es-Ar');
 
 @NgModule({
@@ -57,7 +55,6 @@ registerLocaleData(localeEsAr, 'es-Ar');
     },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
-    Deeplinks,
   ],
   bootstrap: [AppComponent],
 })
