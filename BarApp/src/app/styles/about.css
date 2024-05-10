@@ -16,7 +16,16 @@
   font-size: 20px;
   margin: 0;
 }
-
+.section-title-p {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
+}
 .about-contact-description {
   display: flex;
   flex-direction: row;
