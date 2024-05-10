@@ -1,7 +1,7 @@
 <ion-content
   class="ion-padding-top ion-text-center form-container-p profile-content"
 >
-  <h1 class="section-title-p">Mi Perfil</h1>
+  <h1 class="section-title-p margin-title">Mi Perfil</h1>
   <ion-card class="card-profile">
     <ion-avatar class="avatar">
       @if(user?.avatar){
@@ -28,7 +28,8 @@
         {{ user?.email }}
       </p>
       <p>
-        <ion-icon class="icon-profile" name="call-outline"></ion-icon> Telefono:
+        <ion-icon class="icon-profile" name="call-outline"></ion-icon>
+        Telefono:
         {{ user?.tel }}
       </p>
     </div>

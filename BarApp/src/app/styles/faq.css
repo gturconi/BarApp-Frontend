@@ -1,20 +1,10 @@
 @import 'variables.css';
+@import 'products.css';
 
 .main-container {
   max-width: 1000px;
   width: 90%;
   margin: 40px auto;
-}
-
-.section-title-p {
-  text-align: left;
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: var(--color-11);
-  text-transform: capitalize;
-  letter-spacing: 1px;
-  font-weight: bold;
-  border-bottom: 2px solid var(--color-2);
 }
 
 .subtitulo {

@@ -15,6 +15,12 @@
   font-weight: bold;
   border-bottom: 2px solid var(--color-2);
 }
+
+.margin-title {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 .icons-admin {
   background-color: var(--color-3);
   padding: 5px;
