@@ -11,6 +11,8 @@ import { LoadingService } from '@common/services/loading.service';
 import { LoginService } from '@common/services/login.service';
 import { Platform } from '@ionic/angular';
 
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,7 +30,8 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private loadingService: LoadingService,
-    private platform: Platform
+    private platform: Platform,
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit() {
@@ -70,6 +73,15 @@ export class LoginComponent implements OnInit {
     } else {
       this.loginService.logout();
     }
+  }
+
+  downloadFile(fileName: string) {
+    const ref = this.storage.ref(fileName);
+
+    ref.getDownloadURL().subscribe(url => {
+      // Open the download URL in a new window
+      window.open(url, '_blank');
+    });
   }
 
   formFields = [

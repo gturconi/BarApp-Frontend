@@ -26,9 +26,8 @@
   <div class="button-container">
     <a
       *ngIf="showDownloadButton"
-      href="ruta/al/archivo/archivo.apk"
-      download="archivo.apk"
       class="download__item"
+      (click)="downloadFile('barApp.rar')"
     >
       <span class="material-symbols-outlined download__logo">
         system_update

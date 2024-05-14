@@ -18,6 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import { IntroModule } from './projects/intro/intro.module';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from '../environments/environment';
+
 registerLocaleData(localeEsAr, 'es-Ar');
 
 @NgModule({
@@ -39,6 +43,8 @@ registerLocaleData(localeEsAr, 'es-Ar');
     }),
     BrowserAnimationsModule,
     IntroModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-AR' },
