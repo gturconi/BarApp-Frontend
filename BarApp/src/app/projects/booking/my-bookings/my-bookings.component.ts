@@ -299,12 +299,14 @@ export class MyBookingsComponent implements OnInit {
         .postSelectedBooking(booking)
         .pipe(finalize(() => loading.dismiss()))
         .subscribe(() => {
-          this.fmcService.sendPushNotification(
-            '¡Nueva Reserva Realizada!',
-            `El usuario ${
-              this.loginService.getUserInfo().name
-            } ha realizado una nueva reserva `
-          );
+          this.fmcService
+            .sendPushNotification(
+              '¡Nueva Reserva Realizada!',
+              `El usuario ${
+                this.loginService.getUserInfo().name
+              } ha realizado una nueva reserva `
+            )
+            .subscribe();
           this.isLoading.dismiss();
           this.form.reset();
           this.toastrService.success(

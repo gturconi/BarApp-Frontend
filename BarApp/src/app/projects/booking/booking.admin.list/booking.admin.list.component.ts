@@ -86,12 +86,14 @@ export class BookingAdminListComponent implements OnInit {
             if (idx !== -1) {
               this.data.splice(idx, 1, { ...booking, stateId: 3 });
             }
-            this.fmcService.sendPushNotification(
-              'Reserva Cancelada',
-              `Lamentamos informarle que no hay mesas disponibles en este momento`,
-              '',
-              JSON.parse(JSON.stringify(booking['user'])).id
-            );
+            this.fmcService
+              .sendPushNotification(
+                'Reserva Cancelada',
+                `Lamentamos informarle que no hay mesas disponibles en este momento`,
+                '',
+                JSON.parse(JSON.stringify(booking['user'])).id
+              )
+              .subscribe();
             loading.dismiss();
             this.toastrService.success('Reserva cancelada exitosamente.');
             this.doSearch();
@@ -112,12 +114,14 @@ export class BookingAdminListComponent implements OnInit {
             if (idx !== -1) {
               this.data.splice(idx, 1, { ...booking, stateId: 2 });
             }
-            this.fmcService.sendPushNotification(
-              '¡Reserva Confirmada!',
-              `Le informamos que su reserva ya ha sido confirmada.`,
-              '',
-              JSON.parse(JSON.stringify(booking['user'])).id
-            );
+            this.fmcService
+              .sendPushNotification(
+                '¡Reserva Confirmada!',
+                `Le informamos que su reserva ya ha sido confirmada.`,
+                '',
+                JSON.parse(JSON.stringify(booking['user'])).id
+              )
+              .subscribe();
             loading.dismiss();
             this.toastrService.success('Reserva confirmada exitosamente.');
             this.doSearch();
