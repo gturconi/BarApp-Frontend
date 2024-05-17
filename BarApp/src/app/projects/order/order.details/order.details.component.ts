@@ -93,6 +93,8 @@ export class OrderDetailsComponent implements OnInit {
             Swal.fire(COMPLETE_QUIZ).then(async result => {
               if (result.isConfirmed) this.openQuizModal();
             });
+          } else {
+            this.doSearch(this.orderId!);
           }
         });
       }
@@ -318,7 +320,12 @@ export class OrderDetailsComponent implements OnInit {
       await loading.present();
       this.orderService
         .putOrderQuiz(this.order.id.toString(), orderRequest)
-        .pipe(finalize(() => loading.dismiss()))
+        .pipe(
+          finalize(() => {
+            loading.dismiss();
+            this.doSearch(this.orderId!);
+          })
+        )
         .subscribe(() => {
           this.toastrService.success('¡Gracias por completar la encuesta!');
           loading.dismiss();
