@@ -120,6 +120,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   async getDetails() {
+    this.orderDetails = [];
     this.order?.orderDetails.forEach(async orderDetail => {
       if (orderDetail.comments) {
         this.comments.push(orderDetail.comments);
