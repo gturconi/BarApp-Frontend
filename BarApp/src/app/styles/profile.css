@@ -4,7 +4,19 @@
   background-color: var(--color-4);
   min-width: 400px;
 }
-
+.section-title-p {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
+  margin: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
 .avatar {
   width: 140px;
   height: 140px;

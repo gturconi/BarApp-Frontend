@@ -4,7 +4,17 @@
   text-align: center;
   font-size: 1.25rem;
 }
-
+.section-title-p {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
+  margin: 15px;
+}
 .ProgressBar {
   margin: 0 auto;
   padding: 1em 0 3em;
@@ -218,6 +228,7 @@
     var(--color-6) calc(var(--rating) * 20%),
     #9b9b9b calc(var(--rating) * 20%)
   );
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

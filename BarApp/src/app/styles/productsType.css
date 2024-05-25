@@ -10,7 +10,16 @@
 .product-content {
   overflow-y: hidden !important;
 }
-
+.section-title-p {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
+}
 .wrapper {
   max-height: 300px;
   display: flex;

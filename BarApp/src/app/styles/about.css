@@ -90,7 +90,14 @@
 }
 
 .about-titulo {
-  padding: 10px;
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
 }
 
 .about-edit_button {

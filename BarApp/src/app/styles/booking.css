@@ -106,7 +106,17 @@ h2.booking-date-day {
 .bookingAdminConfirmButton {
   width: max-content;
 }
-
+.section-title-p {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
+  margin: 15px;
+}
 .myBookingsContainer {
   padding: 15px;
   display: flex;

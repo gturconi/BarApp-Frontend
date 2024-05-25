@@ -47,6 +47,16 @@ div.description {
 .products-icons {
   display: none;
 }
+.section-title-p {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-2);
+}
 
 @media (max-width: 1080px) {
   .productsList {
@@ -76,7 +86,9 @@ div.description {
     gap: 1;
     bottom: 5px;
   }
-
+  .section-title-p {
+    margin: 10px;
+  }
   .products-buttons {
     display: none;
   }
