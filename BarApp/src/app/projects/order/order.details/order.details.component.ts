@@ -372,7 +372,16 @@ export class OrderDetailsComponent implements OnInit {
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
         this.socketService.sendMessage('order', '');
-        this.toastrService.success('Pedido pagado en efectivo/otro');
+        this.fmcService
+          .sendPushNotification(
+            'Pedido pagado en efectivo/otro',
+            '¡Gracias por elegirnos!',
+            undefined,
+            this.order?.user.id.toString()
+          )
+          .subscribe(() =>
+            this.toastrService.success('Pedido pagado en efectivo/otro')
+          );
         loading.dismiss();
         this.location.back();
       });

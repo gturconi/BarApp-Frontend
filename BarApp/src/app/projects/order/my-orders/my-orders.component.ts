@@ -264,11 +264,13 @@ export class MyOrdersComponent implements OnInit {
         .subscribe(() => {
           this.cartService.clearCart();
           loading.dismiss();
-          this.fmcService.sendPushNotification(
-            'Nuevo pedido',
-            'Se ha realizado un nuevo pedido en la mesa X',
-            this.scannedData
-          );
+          this.fmcService
+            .sendPushNotification(
+              'Nuevo pedido',
+              'Se ha realizado un nuevo pedido en la mesa X',
+              this.scannedData
+            )
+            .subscribe();
           Swal.fire(ORDER_CONFIRMED_OPTS).then(() => {
             this.socketService.sendMessage('order', '');
             this.router.navigate(['/orders/my-orders/confirmed']);
