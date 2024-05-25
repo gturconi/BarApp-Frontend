@@ -1,4 +1,5 @@
 @import 'variables.css';
+@import 'products.css';
 
 .usersListContainer {
   display: flex;

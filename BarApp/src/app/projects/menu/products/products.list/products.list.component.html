@@ -10,6 +10,7 @@
     >
       Mostrar carta actual
     </ion-toggle>
+
     <h2 class="section-title" *ngIf="showData">{{ category }}</h2>
     @if(productsList.length > 0){
     <div class="wrapper2 productsList" #wrapper (scroll)="onScroll($event)">

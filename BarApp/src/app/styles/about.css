@@ -1,4 +1,6 @@
 @import 'variables.css';
+@import 'products.css';
+
 .form-container {
   margin-bottom: 60px;
 }
