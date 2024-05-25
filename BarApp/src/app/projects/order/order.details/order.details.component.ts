@@ -92,6 +92,7 @@ export class OrderDetailsComponent implements OnInit {
             this.vacateTable();
             Swal.fire(COMPLETE_QUIZ).then(async result => {
               if (result.isConfirmed) this.openQuizModal();
+              else this.doSearch(this.orderId!);
             });
           } else {
             this.doSearch(this.orderId!);
