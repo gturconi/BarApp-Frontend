@@ -16,12 +16,16 @@ import { FcmService } from '@common/services/fcm.service';
 import { TablesService } from '../../tables/services/tables.service';
 import { ModalComponent } from '@common-ui/modal/modalComponent';
 
-import { ORDER_STATES, OrderRequest, OrderResponse } from '../models/order';
+import {
+  ORDER_STATES,
+  PAYMENT_METHOD,
+  OrderRequest,
+  OrderResponse,
+} from '../models/order';
 import {
   CANCEL_ORDER,
   CHANGE_ORDER_STATUS,
   COMPLETE_QUIZ,
-  PAYMENT_METHOD,
   VACATE_TABLE_CLIENT,
 } from '@common/constants/messages.constant';
 
@@ -437,7 +441,8 @@ export class OrderDetailsComponent implements OnInit {
         text: `Estado del Pedido: ${this.order.state.description}`,
         style: 'content',
         margin: [0, 0, 0, 10],
-      }
+      },
+      { text: this.getPaymentMethod(), style: 'content' }
     );
     if (this.orderDetails && this.orderDetails.length > 0) {
       const tableBody = [['Producto / Promoción', 'Cantidad', 'Precio']];
@@ -552,5 +557,16 @@ export class OrderDetailsComponent implements OnInit {
         this.socketService.sendMessage('order', '');
         loading.dismiss();
       });
+  }
+
+  getPaymentMethod() {
+    const method = this.order?.payment_method;
+    if (method === PAYMENT_METHOD[1]) {
+      return 'Pedido pagado por Mercado Pago';
+    } else if (method === PAYMENT_METHOD[2]) {
+      return 'Pedido pagado por Efectivo/Otro';
+    }
+
+    return '';
   }
 }

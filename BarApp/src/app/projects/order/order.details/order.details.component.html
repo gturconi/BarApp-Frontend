@@ -128,6 +128,12 @@
           <span>${{ order.total | number : '1.2-2' }}</span>
         </div>
         <hr class="card-hr" />
+        <div class="order-detail" *ngIf="order.state.description === 'Pagado'">
+          <span
+            ><b>{{ getPaymentMethod() }}</b></span
+          >
+        </div>
+        <hr class="card-hr" />
         <div class="card-r" *ngIf="order.score || order.feedback">
           <div class="card-header-r">Opinión del pedido</div>
           <div class="card-body-r">

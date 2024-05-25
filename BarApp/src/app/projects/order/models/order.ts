@@ -10,6 +10,11 @@ export const ORDER_STATES: OrderState = {
   4: 'Pagado',
 };
 
+export const PAYMENT_METHOD: OrderState = {
+  1: 'account_money',
+  2: 'cash_payment',
+};
+
 export type State = {
   id: string;
   description: string;
@@ -51,7 +56,8 @@ export class OrderResponse {
     feedback = '',
     score = 0,
     employee = { id: '', name: '' },
-    orderDetails = []
+    orderDetails = [],
+    payment_method = ''
   ) {
     this.id = id;
     this.table_order = table_order;
@@ -63,6 +69,7 @@ export class OrderResponse {
     this.score = score;
     this.employee = employee;
     this.orderDetails = orderDetails;
+    this.payment_method = payment_method;
   }
 
   id: number;
@@ -75,6 +82,7 @@ export class OrderResponse {
   score?: number;
   employee?: { id: string; name: string };
   orderDetails: OrderDetail[];
+  payment_method?: string;
 }
 
 export class OrderRequest {
