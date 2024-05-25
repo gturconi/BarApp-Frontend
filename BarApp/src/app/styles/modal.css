@@ -41,8 +41,16 @@ ion-modal ion-item {
   z-index: 99999;
 }
 
+.modal-content {
+  height: 250px;
+}
+
 @media screen and (max-width: 678px) {
   ion-modal {
     --width: 80%;
+  }
+
+  .modal-content {
+    height: 400px;
   }
 }

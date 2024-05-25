@@ -8,42 +8,44 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-list lines="none" class="modal-list">
-      @for(item of items; track item; let idx = $index){
-      <ion-item
-        lines="inset"
-        button="true"
-        detail="false"
-        (click)="navigate(item.link)"
-      >
-        <ion-label>{{ item.key }}</ion-label>
-
-        <ion-range
-          *ngIf="item.range"
-          [min]="1"
-          [max]="5"
-          [pin]="true"
-          [ticks]="true"
-          [snaps]="true"
-          [(ngModel)]="rangeValue"
+    <ion-content class="ion-padding modal-content">
+      <ion-list lines="none" class="modal-list">
+        @for(item of items; track item; let idx = $index){
+        <ion-item
+          lines="inset"
+          button="true"
+          detail="false"
+          (click)="navigate(item.link)"
         >
-        </ion-range>
-        <ion-label>{{ item.value }}</ion-label>
-        <ion-textarea
-          *ngIf="item.textArea"
-          placeholder="Añadir comentario"
-          maxlength="250"
-          [(ngModel)]="textAreaValue"
-        ></ion-textarea>
-      </ion-item>
+          <ion-label>{{ item.key }}</ion-label>
+
+          <ion-range
+            *ngIf="item.range"
+            [min]="1"
+            [max]="5"
+            [pin]="true"
+            [ticks]="true"
+            [snaps]="true"
+            [(ngModel)]="rangeValue"
+          >
+          </ion-range>
+          <ion-label>{{ item.value }}</ion-label>
+          <ion-textarea
+            *ngIf="item.textArea"
+            placeholder="Añadir comentario"
+            maxlength="250"
+            [(ngModel)]="textAreaValue"
+          ></ion-textarea>
+        </ion-item>
+        }
+      </ion-list>
+      @if(button.title != '' && itemsRendered){
+      <ion-buttons class="modal-btn" shape="round">
+        <ion-button (click)=" executeFn()" [strong]="true">
+          {{ button.title }}</ion-button
+        >
+      </ion-buttons>
       }
-    </ion-list>
-    @if(button.title != '' && itemsRendered){
-    <ion-buttons class="modal-btn" shape="round">
-      <ion-button (click)=" executeFn()" [strong]="true">
-        {{ button.title }}</ion-button
-      >
-    </ion-buttons>
-    }
+    </ion-content>
   </ng-template>
 </ion-modal>
