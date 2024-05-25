@@ -253,12 +253,6 @@ export class MenuComponent implements OnInit {
         { label: 'Cartas', route: '/menu/categories', isManage: true },
         { label: 'Pedidos', route: '/orders', isManage: true },
         { label: 'Reservas', route: '/booking', isManage: true },
-        {
-          label: 'Pantallas',
-          route: '/about',
-          isManage: true,
-          isSetting: true,
-        },
         { label: 'Temas', route: '/themes', isManage: true, isSetting: true }
       );
     } else {
