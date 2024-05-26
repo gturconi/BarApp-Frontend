@@ -127,7 +127,7 @@
           <span><b>Total</b></span>
           <span>${{ order.total | number : '1.2-2' }}</span>
         </div>
-        <hr class="card-hr" />
+        <hr class="card-hr" *ngIf="order.state.description === 'Pagado'" />
         <div class="order-detail" *ngIf="order.state.description === 'Pagado'">
           <span
             ><b>{{ getPaymentMethod() }}</b></span

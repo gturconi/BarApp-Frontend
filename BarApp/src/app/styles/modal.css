@@ -51,6 +51,6 @@ ion-modal ion-item {
   }
 
   .modal-content {
-    height: 400px;
+    --height: 300px;
   }
 }

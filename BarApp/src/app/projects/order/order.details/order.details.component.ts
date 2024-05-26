@@ -564,7 +564,7 @@ export class OrderDetailsComponent implements OnInit {
     if (method === PAYMENT_METHOD[1]) {
       return 'Pedido pagado por Mercado Pago';
     } else if (method === PAYMENT_METHOD[2]) {
-      return 'Pedido pagado por Efectivo/Otro';
+      return 'Pedido pagado en Efectivo/Otro';
     }
 
     return '';
