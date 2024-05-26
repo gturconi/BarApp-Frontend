@@ -167,7 +167,7 @@
               order.state.description !== 'En preparación' &&
               order.state.description !== 'Pagado' &&
               isTodayOrder(order.date_created) &&
-              order.comments == null
+              order.feedback == null
             "
             class="download__item"
             [ngClass]="{
