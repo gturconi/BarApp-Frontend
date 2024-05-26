@@ -21,7 +21,7 @@ export class ModalComponent {
   };
   public itemsRendered = false;
 
-  public rangeValue: number | null = null;
+  public rangeValue: number | null = 1;
   public textAreaValue: string | null = null;
 
   constructor(

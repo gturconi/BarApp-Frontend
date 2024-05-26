@@ -10,7 +10,7 @@ export const ORDER_STATES: OrderState = {
   4: 'Pagado',
 };
 
-export const PAYMENT_METHOD: OrderState = {
+export const PAYMENT_METHOD_ENUM: OrderState = {
   1: 'account_money',
   2: 'cash_payment',
 };

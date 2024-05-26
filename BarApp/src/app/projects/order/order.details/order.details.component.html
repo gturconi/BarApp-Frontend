@@ -166,7 +166,8 @@
               role === 'customer' &&
               order.state.description !== 'En preparación' &&
               order.state.description !== 'Pagado' &&
-              isTodayOrder(order.date_created)
+              isTodayOrder(order.date_created) &&
+              order.comments == null
             "
             class="download__item"
             [ngClass]="{

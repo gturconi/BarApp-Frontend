@@ -18,7 +18,7 @@ import { ModalComponent } from '@common-ui/modal/modalComponent';
 
 import {
   ORDER_STATES,
-  PAYMENT_METHOD,
+  PAYMENT_METHOD_ENUM,
   OrderRequest,
   OrderResponse,
 } from '../models/order';
@@ -27,6 +27,7 @@ import {
   CHANGE_ORDER_STATUS,
   COMPLETE_QUIZ,
   VACATE_TABLE_CLIENT,
+  PAYMENT_METHOD,
 } from '@common/constants/messages.constant';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
@@ -376,7 +377,6 @@ export class OrderDetailsComponent implements OnInit {
       .payOrderCash(this.orderId!)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(() => {
-        this.socketService.sendMessage('order', '');
         this.fmcService
           .sendPushNotification(
             'Pedido pagado en efectivo/otro',
@@ -384,9 +384,10 @@ export class OrderDetailsComponent implements OnInit {
             undefined,
             this.order?.user.id.toString()
           )
-          .subscribe(() =>
-            this.toastrService.success('Pedido pagado en efectivo/otro')
-          );
+          .subscribe(() => {
+            this.socketService.sendMessage('order', '');
+            this.toastrService.success('Pedido pagado en efectivo/otro');
+          });
         loading.dismiss();
         this.location.back();
       });
@@ -561,9 +562,9 @@ export class OrderDetailsComponent implements OnInit {
 
   getPaymentMethod() {
     const method = this.order?.payment_method;
-    if (method === PAYMENT_METHOD[1]) {
+    if (method === PAYMENT_METHOD_ENUM[1]) {
       return 'Pedido pagado por Mercado Pago';
-    } else if (method === PAYMENT_METHOD[2]) {
+    } else if (method === PAYMENT_METHOD_ENUM[2]) {
       return 'Pedido pagado en Efectivo/Otro';
     }
 
