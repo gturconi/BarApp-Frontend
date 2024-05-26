@@ -166,6 +166,14 @@ export class MyBookingsComponent implements OnInit {
           .pipe(finalize(() => loading.dismiss()))
           .subscribe(() => {
             this.toastrService.success('Reserva cancelada');
+            this.fmcService
+              .sendPushNotification(
+                'Cancelación de reserva',
+                `El usuario ${
+                  this.loginService.getUserInfo().name
+                } ha cancelado su reserva `
+              )
+              .subscribe();
             loading.dismiss();
             this.doSearch();
           });
