@@ -53,13 +53,15 @@ export class UserFutureBookings {
     userId = '',
     stateId = '',
     quota = 0,
-    bookingDayId = 0
+    bookingDayId = 0,
+    reason = ''
   ) {
     this.id = id;
     (this.date_hour = date_hour), (this.userId = userId);
     this.stateId = stateId;
     this.quota = quota;
     this.bookingDayId = bookingDayId;
+    this.reason = reason;
   }
 
   id: number;
@@ -68,6 +70,7 @@ export class UserFutureBookings {
   stateId: string;
   quota: number;
   bookingDayId: number;
+  reason: string;
 }
 
 export class BookingDay {

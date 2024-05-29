@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 
 import { BookingService } from '../services/booking.service';
@@ -12,6 +12,7 @@ import {
   BOOKING_CANCEL,
   BOOKING_CONFIRM,
 } from '@common/constants/messages.constant';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-booking.admin.list',
@@ -27,13 +28,20 @@ export class BookingAdminListComponent implements OnInit {
   pageSize: number = 10;
   pageIndex: number = 1;
   filtro: string = '';
+  form!: FormGroup;
+  @ViewChild('myForm', { static: false })
+  myForm!: ElementRef;
 
   constructor(
     private bookingService: BookingService,
     private loadingService: LoadingService,
     private toastrService: ToastrService,
     private fmcService: FcmService
-  ) {}
+  ) {
+    this.form = new FormGroup({
+      cancelReason: new FormControl(''),
+    });
+  }
 
   async ngOnInit() {
     this.columns = [
@@ -74,32 +82,39 @@ export class BookingAdminListComponent implements OnInit {
       });
   }
 
+  getCancelReasonControl = () => {
+    return this.form.get('cancelReason') as FormControl;
+  };
+
   async cancelarReserva(booking: TableData) {
-    Swal.fire(BOOKING_CANCEL).then(async result => {
-      if (result.isConfirmed) {
-        const loading = await this.loadingService.loading();
-        await loading.present();
-        this.bookingService
-          .cancelBooking(booking['id'] as string)
-          .subscribe(() => {
-            const idx = this.data.findIndex(u => u['id'] === booking['id']);
-            if (idx !== -1) {
-              this.data.splice(idx, 1, { ...booking, stateId: 3 });
-            }
-            this.fmcService
-              .sendPushNotification(
-                'Reserva Cancelada',
-                `Lamentamos informarle que no hay mesas disponibles en este momento`,
-                '',
-                JSON.parse(JSON.stringify(booking['user'])).id
-              )
-              .subscribe();
-            loading.dismiss();
-            this.toastrService.success('Reserva cancelada exitosamente.');
-            this.doSearch();
-          });
+    Swal.fire({ ...BOOKING_CANCEL, html: this.myForm.nativeElement }).then(
+      async result => {
+        if (result.isConfirmed) {
+          const loading = await this.loadingService.loading();
+          await loading.present();
+          const cancelReason = this.form.get('cancelReason')?.value;
+          this.bookingService
+            .cancelBooking(booking['id'] as string, cancelReason)
+            .subscribe(() => {
+              const idx = this.data.findIndex(u => u['id'] === booking['id']);
+              if (idx !== -1) {
+                this.data.splice(idx, 1, { ...booking, stateId: 3 });
+              }
+              this.fmcService
+                .sendPushNotification(
+                  'Reserva Cancelada',
+                  `Lamentamos informarle que no hay mesas disponibles en este momento`,
+                  '',
+                  JSON.parse(JSON.stringify(booking['user'])).id
+                )
+                .subscribe();
+              loading.dismiss();
+              this.toastrService.success('Reserva cancelada exitosamente.');
+              this.doSearch();
+            });
+        }
       }
-    });
+    );
   }
 
   async confirmarReserva(booking: TableData) {

@@ -54,8 +54,8 @@ export class BookingService {
     );
   }
 
-  cancelBooking(id: string) {
-    return this.http.put(this.apiUrl + '/bookings/cancel/' + id, {});
+  cancelBooking(id: string, reason = '') {
+    return this.http.put(this.apiUrl + '/bookings/cancel/' + id, { reason });
   }
 
   confirmBooking(id: string) {

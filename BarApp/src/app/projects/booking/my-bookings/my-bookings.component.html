@@ -79,6 +79,10 @@
             <span class="material-symbols-outlined icon-r"> groups </span>
             Comensales: {{ booking.quota }}
           </span>
+          @if(booking.reason){
+          <span><b>Razon:</b> {{ booking.reason }}</span
+          ><br />
+          }
           <div class="order-date">
             <span class="material-symbols-outlined icon-r">
               calendar_month
