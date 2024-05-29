@@ -110,7 +110,7 @@ export class BookingAdminListComponent implements OnInit {
               this.fmcService
                 .sendPushNotification(
                   'Reserva Cancelada',
-                  `Lamentamos informarle que no hay mesas disponibles en este momento`,
+                  `Por favor, diríjase a la sección de reservas para consultar el motivo de la cancelación`,
                   '',
                   JSON.parse(JSON.stringify(booking['user'])).id
                 )
