@@ -51,6 +51,13 @@ export class BookingAdminListComponent implements OnInit {
       { key: 'quota', label: 'Comensales' },
       {
         key: '',
+        label: 'Motivo',
+        action: params => this.mostrarMotivo(params),
+        hideAction: this.ocultarMotivo,
+        actionClass: 'table-red-button',
+      },
+      {
+        key: '',
         label: 'Cancelar',
         action: params => this.cancelarReserva(params),
         hideAction: this.ocultarAccion,
@@ -145,11 +152,28 @@ export class BookingAdminListComponent implements OnInit {
     });
   }
 
+  mostrarMotivo(data: TableData) {
+    Swal.fire({
+      title: 'Motivo Cancelación',
+      html: data['reason'],
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+    });
+  }
+
   ocultarAccion(data: TableData): boolean {
     const dataJson = JSON.parse(
       JSON.stringify(data['state'] as string)
     ) as State;
     return dataJson.description !== BOOKING_STATES[1];
+  }
+
+  ocultarMotivo(data: TableData): boolean {
+    const dataJson2 = JSON.parse(JSON.stringify(data['reason'] as string));
+    if (dataJson2) {
+      return false;
+    }
+    return true;
   }
 
   onPageChanged(e: number): void {
