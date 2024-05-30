@@ -79,17 +79,25 @@
             <span class="material-symbols-outlined icon-r"> groups </span>
             Comensales: {{ booking.quota }}
           </span>
-          <div class="order-date">
+          <span class="booking-quota">
             <span class="material-symbols-outlined icon-r">
               calendar_month
             </span>
-            <span>
-              {{
-                booking.date_hour
-                  | date : "MMM dd, yyyy 'a las' HH:mm a" : '+0000'
-              }}
+            {{
+              booking.date_hour
+                | date : "MMM dd, yyyy 'a las' HH:mm a" : '+0000'
+            }}
+          </span>
+          @if(booking.reason){
+          <span class="booking-quota">
+            <span class="material-symbols-outlined icon-r icon-info-r">
+              info
             </span>
-          </div>
+            <button (click)="showAlert(booking.reason)" class="btn-reason">
+              Ver Motivo Cancelación
+            </button>
+          </span>
+          }
         </div>
         <div class="card-order-state">
           <div

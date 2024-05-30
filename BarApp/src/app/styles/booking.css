@@ -147,7 +147,6 @@ h2.booking-date-day {
 
   .booking-quota {
     font-size: 15px;
-    margin-bottom: 20px;
   }
 }
 
@@ -190,6 +189,20 @@ h2.booking-date-day {
 .check-icon-r {
   color: var(--color-7);
   font-size: 15px;
+}
+
+.btn-reason {
+  background: none;
+  border: none;
+  color: var(--color-10);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.icon-info-r {
+  color: var(--color-10);
 }
 
 @media (max-width: 768px) {

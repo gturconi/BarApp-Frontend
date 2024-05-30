@@ -28,4 +28,13 @@
     />
   </div>
   }
+  <div style="display: none">
+    <form #myForm [formGroup]="form">
+      <app-input
+        label="Razon (opcional)"
+        type="textarea"
+        [control]="this.getCancelReasonControl()"
+      />
+    </form>
+  </div>
 </div>

@@ -326,4 +326,13 @@ export class MyBookingsComponent implements OnInit {
       this.toastrService.error('Debes seleccionar una fecha y una hora');
     }
   }
+
+  showAlert(reason: string) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Motivo de Cancelación',
+      text: reason,
+      confirmButtonText: 'Entendido',
+    });
+  }
 }
